@@ -12,10 +12,13 @@ let i = 0;
 let correct = 0;
 let name = "";
 
-fetch("data/questions.json")
-  .then((r) => r.json())
-  .then((data) => { all = data.questions; })
-  .catch(() => { feedback.textContent = "Could not load questions.json"; });
+Promise.all([
+  fetch("data/questions.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+  fetch("data/questions-1-101.json").then((r) => r.json()).catch(() => ({questions: []})),
+  fetch("data/questions-102-202.json").then((r) => r.json()).catch(() => ({questions: []}))
+]).then(([full, a, b]) => {
+  all = (full && full.questions && full.questions.length) ? full.questions : [...(a.questions || []), ...(b.questions || [])];
+}).catch(() => { feedback.textContent = "Could not load questions"; });
 
 document.getElementById("startBtn").onclick = () => {
   name = document.getElementById("playerName").value.trim();
