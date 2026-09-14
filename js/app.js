@@ -1,4 +1,4 @@
-const theme=document.createElement('link');theme.rel='stylesheet';theme.href='css/theme.css';document.head.appendChild(theme);
+const theme=document.createElement('link');theme.rel='stylesheet';theme.href='css/theme.css';document.head.appendChild(theme);const favicon=document.createElement('link');favicon.rel='icon';favicon.type='image/svg+xml';favicon.href='assets/testyourself-icon.svg';document.head.appendChild(favicon);
 
 const state={grade:'Year 5',path:'Learn & Practice'};
 const gradePills=[...document.querySelectorAll('#gradePills button')],pathCards=[...document.querySelectorAll('.path-card')],gradeCards=[...document.querySelectorAll('[data-grade-card]')],selectedPath=document.getElementById('selectedPath'),continueBtn=document.getElementById('continueBtn'),toast=document.getElementById('toast'),menuBtn=document.querySelector('.menu-btn'),mainNav=document.querySelector('.main-nav'),navCta=document.querySelector('.nav-cta');
