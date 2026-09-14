@@ -1,3 +1,5 @@
+const theme=document.createElement('link');theme.rel='stylesheet';theme.href='css/theme.css';document.head.appendChild(theme);
+
 const state = {
   grade: "Year 5",
   path: "Learn & Practice"
