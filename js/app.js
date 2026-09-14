@@ -1,248 +1,110 @@
-const home = document.getElementById("home");
-const quiz = document.getElementById("quiz");
-const done = document.getElementById("done");
-const inputs = document.getElementById("inputs");
-const feedback = document.getElementById("feedback");
-const nextBtn = document.getElementById("nextBtn");
-const checkBtn = document.getElementById("checkBtn");
-const skipBtn = document.getElementById("skipBtn");
-const timerEl = document.getElementById("timer");
-const dataStatus = document.getElementById("dataStatus");
+const state = {
+  grade: "Year 5",
+  path: "Learn & Practice"
+};
 
-let all = [];
-let set = [];
-let i = 0;
-let partsCorrect = 0;
-let partsTotal = 0;
-let streak = 0;
-let bestStreak = 0;
-let name = "";
-let mode = "practice";
-let limitSec = 0;
-let tick = null;
-let left = 0;
-let locked = false;
-let log = [];
-let lastMisses = [];
+const gradePills = [...document.querySelectorAll("#gradePills button")];
+const pathCards = [...document.querySelectorAll(".path-card")];
+const gradeCards = [...document.querySelectorAll("[data-grade-card]")];
+const selectedPath = document.getElementById("selectedPath");
+const continueBtn = document.getElementById("continueBtn");
+const toast = document.getElementById("toast");
+const menuBtn = document.querySelector(".menu-btn");
+const mainNav = document.querySelector(".main-nav");
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let n = a.length - 1; n > 0; n--) {
-    const j = Math.floor(Math.random() * (n + 1));
-    [a[n], a[j]] = [a[j], a[n]];
-  }
-  return a;
+function updateSelection() {
+  selectedPath.textContent = `${state.grade} · ${state.path}`;
 }
 
-function num(v) {
-  if (v === "" || v == null) return NaN;
-  return Number(String(v).replace(/[$,\s]/g, ""));
-}
-
-function same(a, b) {
-  return Number.isFinite(a) && Math.abs(a - b) < 1e-9;
-}
-
-function boot(list) {
-  all = list || [];
-  dataStatus.textContent = all.length ? `${all.length} questions ready` : "No questions available";
-  const skills = [...new Set(all.flatMap((q) => q.skills || []))].sort();
-  const sel = document.getElementById("skillSelect");
-  skills.forEach((s) => {
-    const o = document.createElement("option");
-    o.value = s;
-    o.textContent = s;
-    sel.appendChild(o);
+function selectGrade(grade) {
+  state.grade = grade;
+  gradePills.forEach((button) => {
+    const active = button.dataset.grade === grade;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
   });
+  updateSelection();
 }
 
-if (window.BANK && window.BANK.questions) {
-  boot(window.BANK.questions);
-} else {
-  fetch("YR5/SHTest07/questions.json")
-    .then((r) => (r.ok ? r.json() : null))
-    .then((full) => boot(full && full.questions ? full.questions : []))
-    .catch(() => { dataStatus.textContent = "Could not load questions"; });
+function selectPath(path) {
+  state.path = path;
+  pathCards.forEach((button) => {
+    const active = button.dataset.path === path;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+  updateSelection();
 }
 
-function buildSet(fromMisses) {
-  name = document.getElementById("playerName").value.trim();
-  mode = document.getElementById("modeSelect").value;
-  limitSec = Number(document.getElementById("timerSec").value) || 0;
-  if (fromMisses && lastMisses.length) {
-    set = lastMisses.map((m) => all.find((q) => q.id === m.id)).filter(Boolean);
-  } else {
-    const start = Math.max(1, Number(document.getElementById("startFrom").value) || 1);
-    const skill = document.getElementById("skillSelect").value;
-    let pool = all.filter((q) => q.id >= start);
-    if (skill !== "all") pool = pool.filter((q) => (q.skills || []).includes(skill));
-    if (document.getElementById("orderSelect").value === "shuffle") pool = shuffle(pool);
-    const countVal = document.getElementById("countSelect").value;
-    const n = countVal === "all" ? pool.length : Number(countVal);
-    set = pool.slice(0, n);
-  }
-  i = 0;
-  partsCorrect = 0;
-  partsTotal = 0;
-  streak = 0;
-  bestStreak = 0;
-  log = [];
-  return set.length > 0;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
-function goQuiz() {
-  home.classList.add("hidden");
-  done.classList.add("hidden");
-  quiz.classList.remove("hidden");
-  show();
-}
+gradePills.forEach((button) => {
+  button.addEventListener("click", () => selectGrade(button.dataset.grade));
+});
 
-document.getElementById("startBtn").onclick = () => {
-  if (!buildSet(false)) {
-    dataStatus.textContent = "No questions available";
-    return;
-  }
-  goQuiz();
-};
+pathCards.forEach((button) => {
+  button.addEventListener("click", () => selectPath(button.dataset.path));
+});
 
-document.getElementById("retryMissBtn").onclick = () => {
-  if (!buildSet(true)) return;
-  goQuiz();
-};
+gradeCards.forEach((card) => {
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `Choose ${card.dataset.gradeCard}`);
 
-function stopTimer() {
-  if (tick) clearInterval(tick);
-  tick = null;
-}
+  const choose = () => {
+    selectGrade(card.dataset.gradeCard);
+    document.getElementById("quick-start").scrollIntoView({ behavior: "smooth" });
+  };
 
-function startTimer() {
-  stopTimer();
-  if (!limitSec) {
-    timerEl.textContent = "";
-    return;
-  }
-  left = limitSec;
-  timerEl.textContent = left + "s";
-  tick = setInterval(() => {
-    left -= 1;
-    timerEl.textContent = left + "s";
-    if (left <= 0) {
-      stopTimer();
-      mark(true);
+  card.addEventListener("click", choose);
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      choose();
     }
-  }, 1000);
-}
-
-function show() {
-  const q = set[i];
-  locked = false;
-  document.getElementById("progress").textContent = `${i + 1}/${set.length}  #${q.id}`;
-  document.getElementById("score").textContent = `${partsCorrect}/${partsTotal || 0}  streak ${streak}`;
-  document.getElementById("qTitle").textContent = `Question ${q.id}`;
-  document.getElementById("skills").textContent = (q.skills || []).join(" · ");
-  document.getElementById("qText").textContent = q.text;
-  document.getElementById("qPrompt").textContent = q.prompt;
-  inputs.innerHTML = "";
-  q.answers.forEach((_, idx) => {
-    const inp = document.createElement("input");
-    inp.type = "number";
-    inp.step = "any";
-    inp.className = "ans";
-    inp.id = "a" + idx;
-    inp.placeholder = q.answers.length > 1 ? (idx === 0 ? "(a)" : "(b)") : "Answer";
-    inp.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        if (!locked) mark(false);
-        else next();
-      }
-    });
-    inputs.appendChild(inp);
   });
-  feedback.textContent = "";
-  feedback.className = "";
-  nextBtn.classList.add("hidden");
-  checkBtn.classList.remove("hidden");
-  skipBtn.classList.toggle("hidden", mode === "exam");
-  document.getElementById("a0").focus();
-  startTimer();
-}
+});
 
-function readGiven(q) {
-  return q.answers.map((_, idx) => num(document.getElementById("a" + idx).value));
-}
-
-function mark(timedOut) {
-  if (locked) return;
-  locked = true;
-  stopTimer();
-  const q = set[i];
-  const given = readGiven(q);
-  const flags = q.answers.map((ans, idx) => same(given[idx], ans));
-  const nOk = flags.filter(Boolean).length;
-  partsCorrect += nOk;
-  partsTotal += q.answers.length;
-  const allOk = nOk === q.answers.length;
-  if (allOk) {
-    streak += 1;
-    bestStreak = Math.max(bestStreak, streak);
-  } else streak = 0;
-  log.push({ id: q.id, text: q.text, given, answers: q.answers, flags, timedOut });
-  document.getElementById("score").textContent = `${partsCorrect}/${partsTotal}  streak ${streak}`;
-  if (mode === "practice") {
-    feedback.className = allOk ? "ok" : "bad";
-    feedback.textContent = timedOut
-      ? "Time up. Answer: " + q.answers.join(", ")
-      : allOk
-        ? (q.answers.length > 1 ? `Correct (${nOk}/${q.answers.length})` : "Correct")
-        : `Answer: ${q.answers.join(", ")}  (${nOk}/${q.answers.length})`;
-    q.answers.forEach((_, idx) => {
-      document.getElementById("a" + idx).classList.add(flags[idx] ? "ok-box" : "bad-box");
-    });
-    checkBtn.classList.add("hidden");
-    nextBtn.classList.remove("hidden");
-    nextBtn.focus();
+continueBtn.addEventListener("click", () => {
+  if (state.grade === "Year 5") {
+    showToast(`${state.grade} · ${state.path} selected. The existing Year 5 question bank will be connected next.`);
   } else {
-    next();
+    showToast(`${state.grade} · ${state.path} selected. This learning path is ready for content to be added.`);
   }
-}
+});
 
-checkBtn.onclick = () => mark(false);
-skipBtn.onclick = () => mark(false);
-nextBtn.onclick = next;
+document.querySelectorAll("[data-test]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const test = button.dataset.test;
+    state.path = "Test Preparation";
 
-function next() {
-  i += 1;
-  if (i >= set.length) finish();
-  else show();
-}
+    if (test.includes("NAPLAN")) state.grade = "Year 5";
+    if (test.includes("Opportunity")) state.grade = "Year 4";
+    if (test.includes("Selective")) state.grade = "Year 6";
 
-function finish() {
-  stopTimer();
-  quiz.classList.add("hidden");
-  done.classList.remove("hidden");
-  lastMisses = log.filter((r) => r.flags.some((f) => !f));
-  const who = name ? name + ": " : "";
-  const pct = partsTotal ? Math.round((100 * partsCorrect) / partsTotal) : 0;
-  document.getElementById("summary").textContent =
-    `${who}${partsCorrect}/${partsTotal} parts (${pct}%). Best streak ${bestStreak}. Missed ${lastMisses.length}.`;
-  const ul = document.getElementById("review");
-  ul.innerHTML = "";
-  lastMisses.forEach((r) => {
-    const li = document.createElement("li");
-    li.textContent = `#${r.id}: you ${r.given.map((v) => (Number.isFinite(v) ? v : "—")).join(", ")} · answer ${r.answers.join(", ")}`;
-    ul.appendChild(li);
+    selectGrade(state.grade);
+    selectPath(state.path);
+    showToast(`${test} selected. Practice modules will be connected to this pathway.`);
   });
-  document.getElementById("retryNowBtn").classList.toggle("hidden", !lastMisses.length);
-  document.getElementById("retryMissBtn").classList.toggle("hidden", !lastMisses.length);
-}
+});
 
-document.getElementById("againBtn").onclick = () => {
-  done.classList.add("hidden");
-  home.classList.remove("hidden");
-};
+menuBtn.addEventListener("click", () => {
+  const open = mainNav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  menuBtn.textContent = open ? "×" : "☰";
+});
 
-document.getElementById("retryNowBtn").onclick = () => {
-  if (!buildSet(true)) return;
-  goQuiz();
-};
+mainNav.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    mainNav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.textContent = "☰";
+  });
+});
+
+updateSelection();
