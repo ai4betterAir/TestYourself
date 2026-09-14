@@ -3,80 +3,211 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TestYourself — Level 1</title>
+  <meta name="description" content="TestYourself Maths — colourful primary maths practice from Kindergarten to Year 6, including NAPLAN, OC and Selective preparation." />
+  <title>TestYourself Maths | K–6 Maths, NAPLAN, OC & Selective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header>
-    <h1>TestYourself</h1>
-    <p>Level 1 word problems</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="#top" aria-label="TestYourself Maths home">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <span>Test<span>Yourself</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#grades">Grades</a>
+        <a href="#topics">Topics</a>
+        <a href="#test-prep">Test Prep</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+      <a class="nav-cta" href="#quick-start">Start practising</a>
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
   </header>
-  <section id="home" class="card">
-    <label>Your name
-      <input id="playerName" type="text" placeholder="Optional" />
-    </label>
-    <label>How many questions?
-      <select id="countSelect">
-        <option value="10">10</option>
-        <option value="20" selected>20</option>
-        <option value="50">50</option>
-        <option value="all">All</option>
-      </select>
-    </label>
-    <label>Start from #
-      <input id="startFrom" type="number" min="1" max="202" value="1" />
-    </label>
-    <label>Skill
-      <select id="skillSelect">
-        <option value="all">All skills</option>
-      </select>
-    </label>
-    <label>Order
-      <select id="orderSelect">
-        <option value="seq">In order</option>
-        <option value="shuffle">Shuffle</option>
-      </select>
-    </label>
-    <label>Mode
-      <select id="modeSelect">
-        <option value="practice">Practice (see answers)</option>
-        <option value="exam">Exam (answers at end)</option>
-      </select>
-    </label>
-    <label>Seconds per question (0 = off)
-      <input id="timerSec" type="number" min="0" max="300" value="0" />
-    </label>
-    <p id="dataStatus" class="status" role="status"></p>
-    <button id="startBtn" type="button">Start</button>
-    <button id="retryMissBtn" type="button" class="ghost hidden">Retry last misses</button>
-  </section>
-  <section id="quiz" class="card hidden">
-    <div class="meta">
-      <span id="progress"></span>
-      <span id="timer"></span>
-      <span id="score"></span>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-shape hero-shape-one" aria-hidden="true"></div>
+      <div class="hero-shape hero-shape-two" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>★</span> Maths made clear, colourful and confidence-building</div>
+          <h1>Learn maths.<br /><span>Build confidence.</span><br />Test yourself.</h1>
+          <p class="hero-text">A friendly maths practice space for Australian primary students from <strong>Kindergarten to Year 6</strong>, with dedicated preparation for <strong>NAPLAN, Opportunity Class and Selective School</strong> maths.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#quick-start">Start learning <span>→</span></a>
+            <a class="btn btn-secondary" href="#test-prep">Explore test prep</a>
+          </div>
+          <div class="hero-trust" aria-label="Website features">
+            <span>✓ Learn the basics</span>
+            <span>✓ Practise by topic</span>
+            <span>✓ Challenge yourself</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Maths practice preview">
+          <div class="floating-card mini-card-one"><span>×</span> Multiplication</div>
+          <div class="floating-card mini-card-two"><span>⅔</span> Fractions</div>
+          <div class="practice-card">
+            <div class="practice-top">
+              <span class="practice-tag">Year 4 · Number</span>
+              <span class="practice-progress">3 / 10</span>
+            </div>
+            <div class="progress-track"><span></span></div>
+            <p class="practice-label">Quick Challenge</p>
+            <h2>What is 6 × 8?</h2>
+            <div class="answer-grid" aria-hidden="true">
+              <span>42</span><span class="selected">48</span><span>54</span><span>56</span>
+            </div>
+            <div class="correct-note">✓ Great work! 6 groups of 8 = 48</div>
+          </div>
+          <div class="hero-badge"><strong>7</strong><span>learning<br />levels</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-start section" id="quick-start">
+      <div class="section-heading compact">
+        <span class="kicker">QUICK START</span>
+        <h2>Where would you like to begin?</h2>
+        <p>Choose a school year or a test pathway. You can change it anytime.</p>
+      </div>
+
+      <div class="chooser-card">
+        <div class="chooser-step">
+          <div class="step-title"><span>1</span> Choose your year</div>
+          <div class="grade-pills" id="gradePills" role="group" aria-label="Choose a school year">
+            <button type="button" data-grade="Kindergarten">Kindy</button>
+            <button type="button" data-grade="Year 1">Year 1</button>
+            <button type="button" data-grade="Year 2">Year 2</button>
+            <button type="button" data-grade="Year 3">Year 3</button>
+            <button type="button" data-grade="Year 4">Year 4</button>
+            <button type="button" data-grade="Year 5" class="active">Year 5</button>
+            <button type="button" data-grade="Year 6">Year 6</button>
+          </div>
+        </div>
+        <div class="chooser-divider"></div>
+        <div class="chooser-step">
+          <div class="step-title"><span>2</span> Choose what to practise</div>
+          <div class="path-options" role="group" aria-label="Choose practice type">
+            <button type="button" class="path-card active" data-path="Learn & Practice"><span class="path-icon blue">✎</span><span><strong>Learn & Practice</strong><small>Basics, examples and topic practice</small></span></button>
+            <button type="button" class="path-card" data-path="Mixed Challenge"><span class="path-icon purple">⚡</span><span><strong>Mixed Challenge</strong><small>Questions from different maths skills</small></span></button>
+            <button type="button" class="path-card" data-path="Test Preparation"><span class="path-icon orange">★</span><span><strong>Test Preparation</strong><small>NAPLAN, OC and Selective maths</small></span></button>
+          </div>
+        </div>
+        <div class="selection-summary">
+          <span>Selected: <strong id="selectedPath">Year 5 · Learn & Practice</strong></span>
+          <button type="button" id="continueBtn">Continue <span>→</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grades-section section" id="grades">
+      <div class="section-heading">
+        <span class="kicker">LEARN BY SCHOOL YEAR</span>
+        <h2>Maths that grows with your child</h2>
+        <p>Each level begins with core ideas and moves towards reasoning, problem solving and confident independent practice.</p>
+      </div>
+      <div class="grade-grid" id="gradeGrid">
+        <article class="grade-card g-k" data-grade-card="Kindergarten"><div class="grade-number">K</div><div><h3>Kindergarten</h3><p>Count, compare, patterns, shapes and early number sense.</p><span>Explore Kindy maths →</span></div></article>
+        <article class="grade-card g-1" data-grade-card="Year 1"><div class="grade-number">1</div><div><h3>Year 1</h3><p>Numbers to 100, addition, subtraction, time and measurement.</p><span>Explore Year 1 →</span></div></article>
+        <article class="grade-card g-2" data-grade-card="Year 2"><div class="grade-number">2</div><div><h3>Year 2</h3><p>Place value, operations, equal groups, fractions and graphs.</p><span>Explore Year 2 →</span></div></article>
+        <article class="grade-card g-3" data-grade-card="Year 3"><div class="grade-number">3</div><div><h3>Year 3</h3><p>Times tables, division, fractions, money and problem solving.</p><span>Explore Year 3 →</span></div></article>
+        <article class="grade-card g-4" data-grade-card="Year 4"><div class="grade-number">4</div><div><h3>Year 4</h3><p>Larger numbers, multiplication, division, decimals and angles.</p><span>Explore Year 4 →</span></div></article>
+        <article class="grade-card g-5 featured" data-grade-card="Year 5"><div class="popular">POPULAR</div><div class="grade-number">5</div><div><h3>Year 5</h3><p>Fractions, decimals, percentages, geometry and multi-step problems.</p><span>Explore Year 5 →</span></div></article>
+        <article class="grade-card g-6" data-grade-card="Year 6"><div class="grade-number">6</div><div><h3>Year 6</h3><p>Ratios, percentages, algebra patterns, data and advanced reasoning.</p><span>Explore Year 6 →</span></div></article>
+      </div>
+    </section>
+
+    <section class="topics-section section" id="topics">
+      <div class="section-heading">
+        <span class="kicker">BUILD STRONG FOUNDATIONS</span>
+        <h2>Master maths one topic at a time</h2>
+        <p>Short explanations help students understand the idea before they start answering questions.</p>
+      </div>
+      <div class="topic-grid">
+        <article class="topic-card"><div class="topic-icon t-blue">123</div><h3>Number & Place Value</h3><p>Read, write, compare and understand how numbers are built.</p><span>Counting · place value · rounding</span></article>
+        <article class="topic-card"><div class="topic-icon t-red">+ −</div><h3>Addition & Subtraction</h3><p>Build mental strategies, written methods and problem-solving skills.</p><span>Mental maths · regrouping · word problems</span></article>
+        <article class="topic-card"><div class="topic-icon t-purple">× ÷</div><h3>Multiplication & Division</h3><p>Understand equal groups, facts, written methods and remainders.</p><span>Tables · factors · division</span></article>
+        <article class="topic-card"><div class="topic-icon t-orange">½</div><h3>Fractions & Decimals</h3><p>See parts of a whole, compare values and connect fractions to decimals.</p><span>Equivalent fractions · decimals · percentages</span></article>
+        <article class="topic-card"><div class="topic-icon t-green">△</div><h3>Geometry & Measurement</h3><p>Explore shape, angle, length, area, volume, mass and time.</p><span>2D/3D shapes · angles · units</span></article>
+        <article class="topic-card"><div class="topic-icon t-pink">▥</div><h3>Data & Probability</h3><p>Read tables and graphs, describe chance and make sensible conclusions.</p><span>Graphs · statistics · probability</span></article>
+        <article class="topic-card"><div class="topic-icon t-teal">?</div><h3>Problem Solving</h3><p>Choose strategies, find patterns and solve unfamiliar multi-step questions.</p><span>Reasoning · patterns · logic</span></article>
+        <article class="topic-card"><div class="topic-icon t-yellow">⚡</div><h3>Maths Fluency</h3><p>Improve speed and accuracy with short, focused daily practice.</p><span>Quick facts · mental maths · challenges</span></article>
+      </div>
+    </section>
+
+    <section class="test-section section" id="test-prep">
+      <div class="section-heading light">
+        <span class="kicker">TEST PREPARATION</span>
+        <h2>Practise for the tests that matter</h2>
+        <p>Build familiarity with mathematical reasoning in a calm, supportive practice environment.</p>
+      </div>
+      <div class="test-grid">
+        <article class="test-card naplan">
+          <div class="test-icon">N</div>
+          <div class="test-label">YEARS 3 & 5</div>
+          <h3>NAPLAN Numeracy</h3>
+          <p>Curriculum-based numeracy practice covering number, measurement, space, statistics and probability.</p>
+          <div class="test-features"><span>✓ Topic practice</span><span>✓ Mixed numeracy</span><span>✓ Timed practice</span></div>
+          <button type="button" data-test="NAPLAN Numeracy">Start NAPLAN Maths →</button>
+        </article>
+        <article class="test-card oc">
+          <div class="test-icon">OC</div>
+          <div class="test-label">YEAR 4 PATHWAY</div>
+          <h3>Opportunity Class Maths</h3>
+          <p>Develop mathematical reasoning and flexible problem-solving for NSW Opportunity Class preparation.</p>
+          <div class="test-features"><span>✓ Reasoning questions</span><span>✓ No-calculator skills</span><span>✓ Practice sets</span></div>
+          <button type="button" data-test="Opportunity Class Maths">Explore OC Maths →</button>
+        </article>
+        <article class="test-card selective">
+          <div class="test-icon">S</div>
+          <div class="test-label">YEAR 6 PATHWAY</div>
+          <h3>Selective School Maths</h3>
+          <p>Challenge students with higher-order mathematical reasoning, patterns and multi-step problem solving.</p>
+          <div class="test-features"><span>✓ Advanced reasoning</span><span>✓ Exam-style practice</span><span>✓ Review mistakes</span></div>
+          <button type="button" data-test="Selective School Maths">Explore Selective Maths →</button>
+        </article>
+      </div>
+      <p class="test-note">TestYourself is an independent learning resource and is not affiliated with or endorsed by ACARA or the NSW Department of Education.</p>
+    </section>
+
+    <section class="how-section section" id="how-it-works">
+      <div class="section-heading">
+        <span class="kicker">SIMPLE LEARNING FLOW</span>
+        <h2>Understand first. Practise next. Improve every time.</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card"><span class="step-num">1</span><div class="step-illustration i-learn">💡</div><h3>Learn the idea</h3><p>Read a short, child-friendly explanation with a worked example.</p></div>
+        <div class="step-card"><span class="step-num">2</span><div class="step-illustration i-practise">✏️</div><h3>Practise the skill</h3><p>Start with focused questions and build confidence at your own pace.</p></div>
+        <div class="step-card"><span class="step-num">3</span><div class="step-illustration i-challenge">🏆</div><h3>Take a challenge</h3><p>Mix skills, work under time when ready and learn from mistakes.</p></div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-inner">
+        <div><span class="kicker">READY TO BEGIN?</span><h2>Make today a maths day.</h2><p>Choose your year level and start with one small challenge.</p></div>
+        <a class="btn btn-white" href="#quick-start">Choose my level →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark">✓</span><span>Test<span>Yourself</span></span></a><p>Primary maths practice designed to make learning clear, engaging and rewarding.</p></div>
+      <div><h4>Learn</h4><a href="#grades">Kindergarten–Year 6</a><a href="#topics">Maths topics</a><a href="#quick-start">Mixed practice</a></div>
+      <div><h4>Test Prep</h4><a href="#test-prep">NAPLAN</a><a href="#test-prep">Opportunity Class</a><a href="#test-prep">Selective School</a></div>
+      <div><h4>For families</h4><a href="#how-it-works">How it works</a><a href="#topics">Learning approach</a></div>
     </div>
-    <h2 id="qTitle"></h2>
-    <p id="skills" class="skills"></p>
-    <p id="qText"></p>
-    <p id="qPrompt" class="prompt"></p>
-    <div id="inputs"></div>
-    <p id="feedback"></p>
-    <div class="row">
-      <button id="checkBtn" type="button">Check</button>
-      <button id="skipBtn" type="button" class="ghost">Skip</button>
-      <button id="nextBtn" type="button" class="hidden">Next</button>
-    </div>
-  </section>
-  <section id="done" class="card hidden">
-    <h2>Finished</h2>
-    <p id="summary"></p>
-    <ul id="review"></ul>
-    <div class="row">
-      <button id="againBtn" type="button">Home</button>
-      <button id="retryNowBtn" type="button" class="ghost">Retry misses</button>
-    </div>
-  </section>
+    <div class="footer-bottom"><span>© 2026 TestYourself Maths</span><span>Built for curious young mathematicians in Australia.</span></div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/app.js"></script>
 </body>
 </html>
