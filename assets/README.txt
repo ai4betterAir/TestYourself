@@ -1,0 +1,1 @@
+Brand assets for Test Yourself. Use testyourself-icon.svg for compact UI/favicons and testyourself-logo.svg for full logo lockups.
