@@ -47,3 +47,8 @@ button {
 .ok { color: var(--ok); font-weight: 700; }
 .bad { color: var(--bad); font-weight: 700; }
 .ans { width: 8rem; display: inline-block; margin: 0.3rem 0.5rem 0.3rem 0; }
+.ghost { background: #5a6b7d; }
+.skills { font-size: 0.85rem; color: #5a6b7d; margin: 0 0 0.4rem; }
+#review { padding-left: 1.1rem; max-height: 240px; overflow: auto; }
+.ok-box { outline: 2px solid var(--ok); }
+.bad-box { outline: 2px solid var(--bad); }

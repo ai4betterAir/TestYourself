@@ -20,33 +20,61 @@
         <option value="10">10</option>
         <option value="20" selected>20</option>
         <option value="50">50</option>
-        <option value="all">All 202</option>
+        <option value="all">All</option>
       </select>
     </label>
-    <label>Start from
+    <label>Start from #
       <input id="startFrom" type="number" min="1" max="202" value="1" />
     </label>
-    <button id="startBtn" type="button">Start practice</button>
+    <label>Skill
+      <select id="skillSelect">
+        <option value="all">All skills</option>
+      </select>
+    </label>
+    <label>Order
+      <select id="orderSelect">
+        <option value="seq">In order</option>
+        <option value="shuffle">Shuffle</option>
+      </select>
+    </label>
+    <label>Mode
+      <select id="modeSelect">
+        <option value="practice">Practice (see answers)</option>
+        <option value="exam">Exam (answers at end)</option>
+      </select>
+    </label>
+    <label>Seconds per question (0 = off)
+      <input id="timerSec" type="number" min="0" max="300" value="0" />
+    </label>
+    <button id="startBtn" type="button">Start</button>
+    <button id="retryMissBtn" type="button" class="ghost hidden">Retry last misses</button>
   </section>
   <section id="quiz" class="card hidden">
     <div class="meta">
       <span id="progress"></span>
+      <span id="timer"></span>
       <span id="score"></span>
     </div>
     <h2 id="qTitle"></h2>
+    <p id="skills" class="skills"></p>
     <p id="qText"></p>
     <p id="qPrompt" class="prompt"></p>
     <div id="inputs"></div>
     <p id="feedback"></p>
     <div class="row">
       <button id="checkBtn" type="button">Check</button>
+      <button id="skipBtn" type="button" class="ghost">Skip</button>
       <button id="nextBtn" type="button" class="hidden">Next</button>
     </div>
   </section>
   <section id="done" class="card hidden">
-    <h2>Well done</h2>
+    <h2>Finished</h2>
     <p id="summary"></p>
-    <button id="againBtn" type="button">Practice again</button>
+    <ul id="review"></ul>
+    <div class="row">
+      <button id="againBtn" type="button">Home</button>
+      <button id="retryNowBtn" type="button" class="ghost">Retry misses</button>
+    </div>
   </section>
   <script src="js/app.js"></script>
 </body>
