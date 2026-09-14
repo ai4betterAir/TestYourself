@@ -57,15 +57,10 @@ function boot(list) {
 if (window.BANK && window.BANK.questions) {
   boot(window.BANK.questions);
 } else {
-  Promise.all([
-    fetch("data/questions.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
-    fetch("data/questions-1-101.json").then((r) => r.json()).catch(() => ({ questions: [] })),
-    fetch("data/questions-102-202.json").then((r) => r.json()).catch(() => ({ questions: [] }))
-  ]).then(([full, a, b]) => {
-    boot(full && full.questions && full.questions.length
-      ? full.questions
-      : [...(a.questions || []), ...(b.questions || [])]);
-  }).catch(() => { feedback.textContent = "Could not load questions"; });
+  fetch("YR5/SHTest07/questions.json")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((full) => boot(full && full.questions ? full.questions : []))
+    .catch(() => { feedback.textContent = "Could not load questions"; });
 }
 
 function buildSet(fromMisses) {
