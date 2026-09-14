@@ -1,3 +1,4 @@
+const theme=document.createElement('link');theme.rel='stylesheet';theme.href='css/theme.css';document.head.appendChild(theme);
 const state={level:1,type:'All',questions:[],filtered:[],index:0,done:new Set()};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const els={title:$('#practiceTitle'),available:$('#availableText'),sideLevel:$('#sideLevel'),sideType:$('#sideType'),counterNow:$('#counterNow'),counterTotal:$('#counterTotal'),problemId:$('#problemId'),problemText:$('#problemText'),working:$('#studentWorking'),note:$('#problemNote'),complete:$('#completeBtn'),prev:$('#prevBtn'),next:$('#nextBtn'),browse:$('#browsePanel'),browseList:$('#browseList')};
