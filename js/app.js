@@ -7,6 +7,7 @@ const nextBtn = document.getElementById("nextBtn");
 const checkBtn = document.getElementById("checkBtn");
 const skipBtn = document.getElementById("skipBtn");
 const timerEl = document.getElementById("timer");
+const dataStatus = document.getElementById("dataStatus");
 
 let all = [];
 let set = [];
@@ -44,6 +45,7 @@ function same(a, b) {
 
 function boot(list) {
   all = list || [];
+  dataStatus.textContent = all.length ? `${all.length} questions ready` : "No questions available";
   const skills = [...new Set(all.flatMap((q) => q.skills || []))].sort();
   const sel = document.getElementById("skillSelect");
   skills.forEach((s) => {
@@ -60,7 +62,7 @@ if (window.BANK && window.BANK.questions) {
   fetch("YR5/SHTest07/questions.json")
     .then((r) => (r.ok ? r.json() : null))
     .then((full) => boot(full && full.questions ? full.questions : []))
-    .catch(() => { feedback.textContent = "Could not load questions"; });
+    .catch(() => { dataStatus.textContent = "Could not load questions"; });
 }
 
 function buildSet(fromMisses) {
@@ -96,7 +98,10 @@ function goQuiz() {
 }
 
 document.getElementById("startBtn").onclick = () => {
-  if (!buildSet(false)) return;
+  if (!buildSet(false)) {
+    dataStatus.textContent = "No questions available";
+    return;
+  }
   goQuiz();
 };
 
