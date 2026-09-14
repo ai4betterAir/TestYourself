@@ -91,6 +91,21 @@ if (fractionCard) {
   });
 }
 
+const problemCard = [...document.querySelectorAll(".topic-card")].find((card) =>
+  card.querySelector("h3")?.textContent.includes("Problem Solving")
+);
+
+if (problemCard) {
+  problemCard.style.cursor = "pointer";
+  problemCard.tabIndex = 0;
+  problemCard.addEventListener("click", () => {
+    window.location.href = "word-problems.html";
+  });
+  problemCard.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") window.location.href = "word-problems.html";
+  });
+}
+
 document.querySelectorAll("[data-test]").forEach((button) => {
   button.addEventListener("click", () => {
     const test = button.dataset.test;
