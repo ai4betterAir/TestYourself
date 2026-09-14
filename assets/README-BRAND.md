@@ -1,0 +1,1 @@
+Use `testyourself-icon.svg` at small sizes and `testyourself-logo.svg` for full lock-ups. Site-wide styling is in `css/pro.css`.
