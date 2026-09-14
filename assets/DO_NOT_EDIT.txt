@@ -1,1 +1,0 @@
-Generated branding assets. Main implementation files: testyourself-logo.svg, testyourself-icon.svg, ../css/pro.css.
