@@ -1,0 +1,1 @@
+(function(){if(localStorage.getItem('tyProfile'))return;const q=new URLSearchParams(location.search);localStorage.setItem('tyProfile',JSON.stringify({studentName:'Learner',grade:q.get('grade')||'1',guest:true,createdAt:new Date().toISOString()}));})();
