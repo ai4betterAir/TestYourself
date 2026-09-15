@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SkillUP English learning and practice for Years 1–6: reading, grammar, spelling and writing.">
+<title>English Practice | SkillUP</title>
+<link rel="icon" type="image/svg+xml" href="assets/skillup-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/english-course.css">
+</head>
+<body>
+<header class="course-header">
+<a class="course-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
+<button id="courseMenu" class="course-menu" aria-label="Open menu">☰</button>
+<nav id="courseNav"><a href="index.html">Home</a><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a class="active" href="english.html">English</a><a href="selective-practice.html">Selective</a></nav>
+<div class="course-mark"><span>⭐</span><div><small>English progress</small><b id="englishMark">Start learning</b></div></div>
+</header>
+<main>
+<section class="course-hero">
+<div><span class="eyebrow">SKILLUP ENGLISH · YEARS 1–6</span><h1>Read clearly.<br><em>Write confidently.</em></h1><p>Choose your year and skill. Learn the key idea, practise with feedback, and build stronger English step by step.</p>
+<label class="grade-control">School year <select id="gradeSelect"><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select></label></div>
+<div class="english-path"><div><b>1</b><span>Learn</span><small>See the rule</small></div><i>→</i><div><b>2</b><span>Practise</span><small>Use the skill</small></div><i>→</i><div><b>3</b><span>Improve</span><small>Review feedback</small></div></div>
+</section>
+<section class="course-wrap">
+<div class="skill-tabs" id="skillTabs">
+<button data-skill="reading"><span>📖</span><b>Reading</b><small>Passages + comprehension</small></button>
+<button data-skill="grammar"><span>ABC</span><b>Grammar</b><small>Sentences + punctuation</small></button>
+<button data-skill="spelling"><span>🔤</span><b>Spelling</b><small>Patterns + tricky words</small></button>
+<button data-skill="writing"><span>✏️</span><b>Writing</b><small>Ideas + structure</small></button>
+</div>
+<section class="english-workspace">
+<div class="workspace-head"><div><span id="yearSkillTag">YEAR 1 · READING</span><h2 id="workspaceTitle">Reading</h2><p id="workspaceIntro"></p></div><div class="mini-progress"><span>Completed</span><b id="completeCount">0</b></div></div>
+<div class="lesson-grid" id="lessonGrid"></div>
+<section class="activity-panel" id="activityPanel">
+<div class="learn-strip"><span>LEARN</span><div><h3 id="learnTitle"></h3><p id="learnText"></p></div></div>
+<div id="readingActivity" hidden>
+<div class="passage-card"><span id="passageLevel"></span><h3 id="passageTitle"></h3><p id="passageText"></p></div>
+<div class="question-card"><div class="question-meta"><span id="questionCount"></span><b id="questionType"></b></div><h3 id="readingQuestion"></h3><div class="answers" id="readingAnswers"></div><div class="feedback" id="readingFeedback"></div><div class="actions"><button class="secondary" id="readingPrev">← Previous</button><button class="primary" id="readingNext">Next →</button></div></div>
+</div>
+<div id="quizActivity" hidden>
+<div class="question-card"><div class="question-meta"><span id="quizCount"></span><b id="quizType"></b></div><h3 id="quizQuestion"></h3><div class="answers" id="quizAnswers"></div><div class="feedback" id="quizFeedback"></div><div class="coach"><b>💡 SkillUP Coach</b><p id="quizHint"></p></div><div class="actions"><button class="secondary" id="quizPrev">← Previous</button><button class="primary" id="quizNext">Next →</button></div></div>
+</div>
+<div id="writingActivity" hidden>
+<div class="writing-prompt"><span id="writingType"></span><h3 id="writingTitle"></h3><p id="writingPrompt"></p><div class="plan-grid" id="writingPlan"></div><label>Your writing<textarea id="writingBox" rows="10" placeholder="Write here..."></textarea></label><div class="writing-tools"><div><b>Checklist</b><div id="writingChecklist"></div></div><div><b>Word count</b><strong id="wordCount">0</strong><small id="wordGoal"></small></div></div><div class="actions"><button class="secondary" id="clearWriting">Clear</button><button class="primary" id="saveWriting">Save on this device ✓</button></div><div class="feedback" id="writingFeedback"></div></div>
+</div>
+</section>
+</section>
+</section>
+</main>
+<footer><div class="footer-bottom"><span>© 2026 SkillUP</span><span>English · Learn · Practise · Improve</span></div></footer>
+<script src="js/english-course.js"></script>
+</body></html>
