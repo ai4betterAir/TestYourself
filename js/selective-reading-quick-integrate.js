@@ -68,5 +68,6 @@
   const oldMr=mr.question.bind(mr);
   mr.question=function(id){return id==='sel_number'?numberQuestion():oldMr(id)};
 })();
-// Topic 2 is kept in its own module so the book-based upgrades remain easy to maintain topic by topic.
+// Book-informed Selective topics are kept in separate modules for maintainability.
 document.write('<script src="js/selective-book-topic2-estimation.js"><\/script>');
+document.write('<script src="js/selective-book-topic3-multiplication.js"><\/script>');
