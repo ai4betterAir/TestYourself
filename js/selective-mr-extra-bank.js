@@ -1,0 +1,71 @@
+(function(){
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[rnd(0,a.length-1)];
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+const Q=(text,answer,choices,tip,topic,name)=>({text,answer:String(answer),choices:shuffle([...new Set(choices.map(String))]),tip,topic,name});
+const topics=[
+ ['sel_multistep','🧩','Multi-step Problems','Several operations in one problem'],
+ ['sel_rate','🚴','Speed & Rate','Distance, time, work and unit rates'],
+ ['sel_fraction','◒','Fractions & Ratios','Fractions of remainders, ratios and sharing'],
+ ['sel_percent','%','Percent & Profit','Percentage change, discount and profit'],
+ ['sel_geometry','△','Geometry & Perimeter','Composite perimeter, area, angles and bearings'],
+ ['sel_data','▥','Graphs & Data','Averages, tables, charts and missing values'],
+ ['sel_probability','🎲','Probability','Spinners, dice and equally likely outcomes'],
+ ['sel_algebra','x','Algebra & Reverse Operations','Hidden values, simultaneous clues and flow charts'],
+ ['sel_time','◷','Time & Timetables','Elapsed time, calendars and time zones'],
+ ['sel_measure','▣','Measurement & Volume','Capacity, volume, scale and unit conversion'],
+ ['sel_patterns','↗','Patterns & Sequences','Number patterns and structural rules'],
+ ['sel_spatial','⬡','Spatial Reasoning','Nets, coordinates, cross-sections and 3D reasoning']
+];
+function multistep(){const t=rnd(0,3);if(t===0){const n=30,av=70,join=100,low=55;const ans=(n*av+join+2*low)/(n+3);return Q(`A team of ${n} players has an average mass of ${av} kg. One player of ${join} kg and two players of ${low} kg join. What is the new average mass?`,ans,[ans,72.5,69.5,75],'Find the original total first, add the new masses, then divide by the new number of players.','sel_multistep','Multi-step Problems')}
+if(t===1){const a=rnd(40,70),fraction=4/9,b=Math.round(a*fraction),extra=rnd(30,50),third=a+b+extra,total=a+b+third;return Q(`Tank A holds ${a} L. Tank B holds 4/9 as much as Tank A. Tank C holds ${extra} L more than A and B combined. How much do all three tanks hold?`,total,[total,total-extra,a+b+extra,a+b],'Work out B, then C, then add all three tanks.','sel_multistep','Multi-step Problems')}
+if(t===2){const price=pick([240000,320000,380000]),pct=pick([20,25,40]),sell=price*(1+pct/100);return Q(`A house was bought for $${price.toLocaleString()} and later sold for $${sell.toLocaleString()}. What was the percentage profit?`,pct+'%',[pct+'%',(pct+5)+'%',(pct-5)+'%',(pct*2)+'%'],'Profit = selling price − cost price, then divide by cost price.','sel_multistep','Multi-step Problems')}
+return Q('A tournament has 7 players and everyone plays every other player exactly once. How many games are played?',21,['21','14','28','42'],'Count unique pairs: 7 × 6 ÷ 2.','sel_multistep','Multi-step Problems')}
+function rate(){const t=rnd(0,3);if(t===0){const d=pick([90,120,150]),t1=3,inc=20;const v=d/t1;const t2=d/(v+inc);return Q(`A trip of ${d} km takes ${t1} hours. If the speed increases by ${inc} km/h, how long will the trip take?`,t2+' hours',[t2+' hours',(t2+1)+' hours',(t2+.5)+' hours','1 hour'],'Find the original speed, add the increase, then use time = distance ÷ speed.','sel_rate','Speed & Rate')}
+if(t===1)return Q('Three workers complete a job in 2 hours 30 minutes at equal rates. At the same individual rate, how long would five workers take?', '1 hour 30 minutes',['1 hour 30 minutes','2 hours','1 hour','2 hours 15 minutes'],'Total work is worker-hours: 3 × 2.5 = 7.5 worker-hours.','sel_rate','Speed & Rate');
+if(t===2){const per=1.75,len=pick([245,350,490]),ans=len/per;return Q(`A measuring wheel travels ${per} metres per revolution. How many full revolutions are needed to measure ${len} metres?`,ans,[ans,ans+1,ans-1,Math.round(len)],'Divide the total distance by distance per revolution.','sel_rate','Speed & Rate')}
+return Q('A machine makes 8 parts every 5 minutes. At the same rate, how many parts does it make in 40 minutes?',64,['64','48','40','80'],'40 minutes contains eight 5-minute batches.','sel_rate','Speed & Rate')}
+function fraction(){const t=rnd(0,3);if(t===0)return Q('Mia ate 1/4 of a cake. Noah ate 1/3 of what remained. What fraction of the original cake is left?','1/2',['1/2','5/12','2/3','1/4'],'After 1/4 is eaten, 3/4 remains. One third of 3/4 is 1/4.','sel_fraction','Fractions & Ratios');
+if(t===1)return Q('Red and white paint are mixed in the ratio 4:10. If 28 tubes are used altogether, how many are red?',8,['8','10','12','16'],'There are 14 ratio parts. Each part is 2 tubes.','sel_fraction','Fractions & Ratios');
+if(t===2)return Q('A container is 3/8 full and contains 375 mL. How much more liquid is needed to make it half full?','125 mL',['125 mL','250 mL','500 mL','625 mL'],'Find the full capacity from 3/8, then compare 3/8 with 1/2.','sel_fraction','Fractions & Ratios');
+return Q('A pizza has 24 equal slices. Olivia eats 1/4 of the pizza and Daniel eats 2 slices. How many slices remain?',16,['16','18','14','12'],'One quarter of 24 is 6. Then subtract 6 and 2.','sel_fraction','Fractions & Ratios')}
+function percent(){const t=rnd(0,3);if(t===0)return Q('A jacket costs $120 and is discounted by 15%. What is the sale price?','$102',['$102','$105','$108','$100'],'15% of 120 is 18; subtract it from 120.','sel_percent','Percent & Profit');
+if(t===1)return Q('A value rises from 80 to 100. What is the percentage increase?','25%',['25%','20%','80%','125%'],'Increase is 20. Divide 20 by the original 80.','sel_percent','Percent & Profit');
+if(t===2)return Q('A shop bought an item for $250 and sold it for $325. What percentage profit was made?','30%',['30%','25%','75%','23%'],'Profit is 75. Use profit ÷ cost × 100.','sel_percent','Percent & Profit');
+return Q('75% of 500 eggs were used. How many eggs remain?',125,['125','375','250','100'],'If 75% were used, 25% remain.','sel_percent','Percent & Profit')}
+function geometry(){const t=rnd(0,4);if(t===0)return Q('A rectangle is 12 cm long and 5 cm wide. A 4 cm by 2 cm rectangular notch is cut from one corner. What is the perimeter of the new shape?','34 cm',['34 cm','30 cm','38 cm','26 cm'],'A corner notch removes two outer lengths but adds equal inner lengths, so the perimeter stays the same as the original rectangle.','sel_geometry','Geometry & Perimeter');
+if(t===1)return Q('A hiker walks NE while another walks SSE. What is the smaller angle between their directions?','112.5°',['112.5°','67.5°','90°','135°'],'Compass directions are separated by 22.5° steps.','sel_geometry','Geometry & Perimeter');
+if(t===2)return Q('A right triangle has one acute angle of 38°. What is the other acute angle?','52°',['52°','42°','62°','38°'],'The two acute angles in a right triangle add to 90°.','sel_geometry','Geometry & Perimeter');
+if(t===3)return Q('A square has side length 11 cm. What is its area?','121 cm²',['121 cm²','44 cm²','22 cm²','110 cm²'],'Area of a square = side × side.','sel_geometry','Geometry & Perimeter');
+return Q('A triangle has base 10 cm and perpendicular height 6 cm. What is its area?','30 cm²',['30 cm²','60 cm²','16 cm²','24 cm²'],'Triangle area = 1/2 × base × height.','sel_geometry','Geometry & Perimeter')}
+function data(){const t=rnd(0,3);if(t===0)return Q('Five test scores are 18, 24, 25, 27 and 31. What is the median?','25',['25','24','27','21'],'Order the values and choose the middle one.','sel_data','Graphs & Data');
+if(t===1)return Q('The average of five daily sales figures is 24. The first four figures are 18, 20, 26 and 30. What is the fifth figure?','26',['26','24','22','30'],'The total for five days must be 5 × 24. Subtract the first four.','sel_data','Graphs & Data');
+if(t===2)return Q('A pie chart sector represents 35% of a circle. What angle is the sector?','126°',['126°','98°','135°','104°'],'35% of 360° = 0.35 × 360°.','sel_data','Graphs & Data');
+return Q('A table has a total of 100 students. 27 chose A, 31 chose B and 18 chose C. How many chose D?',24,['24','22','26','20'],'Subtract the known categories from the total.','sel_data','Graphs & Data')}
+function probability(){const t=rnd(0,3);if(t===0)return Q('A spinner has five equal sections numbered 1 to 5. What is the probability of spinning a number greater than 2?','3/5',['3/5','2/5','1/2','4/5'],'The favourable outcomes are 3, 4 and 5.','sel_probability','Probability');
+if(t===1)return Q('A bag contains 4 red, 5 blue and 3 green counters. What is the probability of NOT choosing blue?','7/12',['7/12','5/12','7/5','5/7'],'There are 12 counters; 7 are not blue.','sel_probability','Probability');
+if(t===2)return Q('Two fair dice are rolled. Which total is most likely?','7',['7','2','12','5'],'Seven can be made in the greatest number of ways.','sel_probability','Probability');
+return Q('A fair coin is tossed three times. How many different outcome sequences are possible?',8,['8','6','4','3'],'Each toss has 2 outcomes, so 2 × 2 × 2.','sel_probability','Probability')}
+function algebra(){const t=rnd(0,3);if(t===0)return Q('Jace buys 3 pears and 2 mandarins for $3.70. Chandra buys 1 pear and 4 mandarins for $3.90. What is the price of one pear?','$0.70',['$0.70','$0.60','$0.80','$0.50'],'Solve the two equations together.','sel_algebra','Algebra & Reverse Operations');
+if(t===1)return Q('A number is divided by 5, then 3.6 is added, then the result is divided by 7 to give 0.7. What was the starting number?','6.5',['6.5','5.5','7.5','4.5'],'Reverse the operations from the end.','sel_algebra','Algebra & Reverse Operations');
+if(t===2)return Q('If A + B = 10, D + E + F = 10, and B + C = E + F, which expression must equal A?','C + D',['C + D','B + D','C + E','D + F'],'Substitute and compare the equal totals.','sel_algebra','Algebra & Reverse Operations');
+return Q('The sum of two numbers is 54 and their difference is 12. What is the larger number?',33,['33','21','27','42'],'Add the sum and difference, then divide by 2.','sel_algebra','Algebra & Reverse Operations')}
+function time(){const t=rnd(0,3);if(t===0)return Q('A ferry leaves at 8:16 am. The drive to the terminal takes 33 minutes and parking plus walking takes 6 minutes. What is the latest time to leave home?','7:37 am',['7:37 am','7:43 am','7:31 am','7:47 am'],'Subtract both travel stages from 8:16.','sel_time','Time & Timetables');
+if(t===1)return Q('A movie starts at 7:45 pm and lasts 2 hours 18 minutes. When does it finish?','10:03 pm',['10:03 pm','9:53 pm','10:13 pm','9:03 pm'],'Add 2 hours, then 18 minutes.','sel_time','Time & Timetables');
+if(t===2)return Q('A meeting occurs every 3 days. If the first is on 10 March, how many meetings occur up to and including 31 March?',8,['8','7','6','9'],'List 10, 13, 16, 19, 22, 25, 28, 31.','sel_time','Time & Timetables');
+return Q('A flight departs at 2:37 pm Friday and lasts 18 hours. What local clock time would it be 18 hours later, ignoring time zones?','8:37 am Saturday',['8:37 am Saturday','6:37 am Saturday','8:37 pm Friday','10:37 am Saturday'],'Add 12 hours, then 6 more hours.','sel_time','Time & Timetables')}
+function measure(){const t=rnd(0,3);if(t===0)return Q('A rectangular prism measures 20 cm by 5 cm by 8 cm. What is its volume?','800 cm³',['800 cm³','400 cm³','160 cm³','200 cm³'],'Volume = length × width × height.','sel_measure','Measurement & Volume');
+if(t===1)return Q('A pool is 10 m long and 4 m wide. The water depth rises from 7 m to 12 m. How many cubic metres of water were added?','200 m³',['200 m³','480 m³','280 m³','50 m³'],'Find the change in depth, then multiply by length and width.','sel_measure','Measurement & Volume');
+if(t===2)return Q('375 mL is 3/8 of a container. What is the container’s full capacity?','1000 mL',['1000 mL','875 mL','750 mL','500 mL'],'Divide by 3 and multiply by 8.','sel_measure','Measurement & Volume');
+return Q('A map scale is 1 cm : 4 km. Two towns are 7.5 cm apart on the map. What is the real distance?','30 km',['30 km','11.5 km','18 km','3 km'],'Multiply the map distance by 4.','sel_measure','Measurement & Volume')}
+function patterns(){const t=rnd(0,3);if(t===0)return Q('A sequence is 8, 14, 20, 26, ... What is the next term?','32',['32','30','34','28'],'The rule is add 6.','sel_patterns','Patterns & Sequences');
+if(t===1)return Q('A pattern starts 3, 7, 15, 31, ... What comes next?','63',['63','47','62','61'],'Each term is double the previous term plus 1.','sel_patterns','Patterns & Sequences');
+if(t===2)return Q('In an arithmetic sequence the 3rd term is 11 and the 5th term is 19. What is the common difference?','4',['4','8','3','5'],'Two equal gaps take the value from 11 to 19.','sel_patterns','Patterns & Sequences');
+return Q('A shape pattern uses 8 tiles, then 14, then 20. If the pattern continues, how many tiles are in the 6th shape?',38,['38','32','44','36'],'The pattern increases by 6 each time.','sel_patterns','Patterns & Sequences')}
+function spatial(){const t=rnd(0,3);if(t===0)return Q('A point is 3 units left of the y-axis and 2 units above the x-axis. What are its coordinates?','(-3, 2)',['(-3, 2)','(3, 2)','(-3, -2)','(2, -3)'],'Left means negative x; above means positive y.','sel_spatial','Spatial Reasoning');
+if(t===1)return Q('A cube is painted on all six faces and cut into 27 equal smaller cubes. How many small cubes have exactly two painted faces?','12',['12','8','6','18'],'Cubes with exactly two painted faces lie on edges but not corners.','sel_spatial','Spatial Reasoning');
+if(t===2)return Q('A triangular prism is sliced perpendicular to its long direction. What shape is the cross-section?','Triangle',['Triangle','Rectangle','Circle','Pentagon'],'A perpendicular slice matches the prism’s end face.','sel_spatial','Spatial Reasoning');
+return Q('A rectangular prism has 6 faces. How many pairs of opposite faces does it have?',3,['3','6','4','2'],'Each face has exactly one opposite partner.','sel_spatial','Spatial Reasoning')}
+const gens={sel_multistep:multistep,sel_rate:rate,sel_fraction:fraction,sel_percent:percent,sel_geometry:geometry,sel_data:data,sel_probability:probability,sel_algebra:algebra,sel_time:time,sel_measure:measure,sel_patterns:patterns,sel_spatial:spatial};
+window.SKILLUP_MR_EXTRA={topics,question(id='mixed'){const use=id==='mixed'?pick(topics)[0]:id;return (gens[use]||multistep)()}};
+})();
