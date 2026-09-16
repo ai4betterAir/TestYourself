@@ -75,3 +75,4 @@ document.write('<script src="js/selective-book-topic4-division.js"><\/script>');
 document.write('<script src="js/selective-book-topic5-factors.js"><\/script>');
 document.write('<script src="js/selective-book-topic6-fraction-sense.js"><\/script>');
 document.write('<script src="js/selective-book-topic7-fraction-addsub.js"><\/script>');
+document.write('<script src="js/selective-book-topic8-fraction-multdiv.js"><\/script>');
