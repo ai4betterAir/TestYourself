@@ -10,15 +10,16 @@
     const ans=String(answer);
     let c=unique(choices||[]);
     if(!c.includes(ans))c.unshift(ans);
-    while(c.length<4)c.push(String(Number(answer)||0)+c.length);
-    return {text,answer:ans,choices:shuffle(unique(c).slice(0,4)),tip,explanation};
+    const fallback=['They are equal','Cannot be determined','None of these','0'];
+    for(const v of fallback){if(c.length>=4)break;if(!c.includes(v))c.push(v)}
+    return {text,answer:ans,choices:shuffle(c.slice(0,4)),tip,explanation};
   }
   const places=[
     [1,'ones'],[10,'tens'],[100,'hundreds'],[1000,'thousands'],[10000,'ten-thousands'],[100000,'hundred-thousands'],
     [1000000,'millions'],[10000000,'ten-millions'],[100000000,'hundred-millions'],[1000000000,'billions'],[10000000000,'ten-billions']
   ];
   function expanded(n){
-    let s=String(Math.trunc(n)),out=[];
+    const s=String(Math.trunc(n)),out=[];
     for(let i=0;i<s.length;i++){
       const d=Number(s[i]),p=10**(s.length-i-1);
       if(d)out.push(fmt(d*p));
@@ -52,7 +53,7 @@
     }
     if(mode===4){
       a=R(100000000,9999999999); b=a+pick([-1,1])*R(1000,9000000); if(b<0)b=a+R(1000,9000000); ans=Math.max(a,b);
-      return Q(`Which number is greater?\n${fmt(a)}   or   ${fmt(b)}`,fmt(ans),[fmt(a),fmt(b)],'Compare from the left. The first different digit decides.',`Reading from the greatest place value, ${fmt(ans)} has the larger digit at the first place where the numbers differ.`);
+      return Q(`Which number is greater?\n${fmt(a)}   or   ${fmt(b)}`,fmt(ans),[fmt(a),fmt(b),'They are equal','Cannot be determined'],'Compare from the left. The first different digit decides.',`Reading from the greatest place value, ${fmt(ans)} has the larger digit at the first place where the numbers differ.`);
     }
     if(mode===5){
       a=R(1000000,900000000); b=a+R(1000,900000); c=Math.max(1,a-R(1000,900000)); const vals=[a,b,c].sort((x,y)=>x-y); ans=vals.map(fmt).join(' < ');
@@ -68,15 +69,15 @@
       return Q(`Which decimal has the same value as ${s}?`,ans,[ans,(base+0.01).toFixed(3),(base+0.1).toFixed(3),(base*10).toFixed(3)],'Zeros added at the end of a decimal do not change its value.',`${s}, ${base.toFixed(2)} and ${base.toFixed(3)} are equivalent decimals.`);
     }
     if(mode===8){
-      const base=R(1000,999000)/1000; const delta=pick([0.001,0.01,0.1]); const dir=Math.random()<.5?1:-1; const target=base+dir*delta; const wording=dir>0?'greater':'less'; ans=target.toFixed(3);
+      const base=R(1000,999000)/1000,delta=pick([0.001,0.01,0.1]),dir=Math.random()<.5?1:-1,target=base+dir*delta,wording=dir>0?'greater':'less'; ans=target.toFixed(3);
       return Q(`What number is ${delta} ${wording} than ${base.toFixed(3)}?`,ans,[ans,(base-dir*delta).toFixed(3),(base+delta*10).toFixed(3),base.toFixed(3)],'Change only the place named by the amount.',`${base.toFixed(3)} ${dir>0?'+':'−'} ${delta} = ${ans}.`);
     }
     if(mode===9){
-      n=R(100000000,9000000000); p=pick([1000,10000,100000,1000000]); const dir=Math.random()<.5?1:-1; if(dir<0&&n<p)dir=1; ans=n+dir*p;
+      n=R(100000000,9000000000); p=pick([1000,10000,100000,1000000]); const dir=Math.random()<.5?1:-1; ans=n+dir*p;
       return Q(`Starting with ${fmt(n)}, what number is ${fmt(p)} ${dir>0?'greater':'less'}?`,fmt(ans),[fmt(ans),fmt(n+dir*p*10),fmt(n-dir*p),fmt(n)],'Add or subtract exactly one place-value amount.',`${fmt(n)} ${dir>0?'+':'−'} ${fmt(p)} = ${fmt(ans)}.`);
     }
     if(mode===10){
-      const digits=shuffle([2,4,6,7,8,9]).slice(0,4); const limit=8; const available=digits.filter(x=>x<limit); if(!available.length)return placeQuestion(); const first=Math.max(...available); const rest=digits.filter(x=>x!==first).sort((x,y)=>y-x); ans=Number(String(first)+rest.join(''));
+      const digits=shuffle([2,4,6,7,8,9]).slice(0,4),limit=8,available=digits.filter(x=>x<limit); if(!available.length)return placeQuestion(); const first=Math.max(...available),rest=digits.filter(x=>x!==first).sort((x,y)=>y-x); ans=Number(String(first)+rest.join(''));
       return Q(`Use the digits ${digits.join(', ')} once each. What is the greatest 4-digit number less than 8,000?`,fmt(ans),[fmt(ans),fmt(Number([...digits].sort((x,y)=>y-x).join(''))),fmt(Number([...digits].sort((x,y)=>x-y).join(''))),fmt(ans-9)],'The thousands digit must be less than 8. Then make the remaining places as large as possible.',`Choose ${first} for the thousands place, then arrange the remaining digits from greatest to least: ${fmt(ans)}.`);
     }
     if(mode===11){
@@ -84,10 +85,10 @@
       return Q(`Which Roman numeral represents ${n}?`,ans,[ans,roman(Math.max(1,n-1)),roman(n+1),roman(Math.max(1,n-10))],'Build the numeral from the largest Roman values first.',`${n} is written as ${ans}.`);
     }
     if(mode===12){
-      const m=pick([2,3,4,5,6,8]); ans=m*1000;
-      return Q(`How many thousands are equal to ${m} billion?`,fmt(ans),[fmt(ans),fmt(m*100),fmt(m*10000),fmt(m)],'1 billion = 1,000 million = 1,000,000 thousands.',`${m} billion = ${m} × 1,000,000 thousands = ${fmt(ans)} thousands.`);
+      const m=pick([2,3,4,5,6,8]); ans=m*1000000;
+      return Q(`How many thousands are equal to ${m} billion?`,fmt(ans),[fmt(ans),fmt(m*1000),fmt(m*100000),fmt(m*10000000)],'1 billion = 1,000,000 thousands.',`${m} billion = ${m} × 1,000,000 thousands = ${fmt(ans)} thousands.`);
     }
-    const start=R(20,800)/1000,step=pick([0.001,0.002,0.005,0.01]); const seq=[start,start+step,start+2*step,start+3*step]; ans=(start+4*step).toFixed(3);
+    const start=R(20,800)/1000,step=pick([0.001,0.002,0.005,0.01]),seq=[start,start+step,start+2*step,start+3*step]; ans=(start+4*step).toFixed(3);
     return Q(`What comes next?\n${seq.map(x=>x.toFixed(3)).join(', ')}, ?`,ans,[ans,(start+5*step).toFixed(3),(start+3*step).toFixed(3),(start+4*step+0.01).toFixed(3)],`The pattern increases by ${step.toFixed(3)} each time.`,`${seq[3].toFixed(3)} + ${step.toFixed(3)} = ${ans}.`);
   }
 
