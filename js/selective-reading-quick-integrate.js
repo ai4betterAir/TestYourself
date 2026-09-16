@@ -71,3 +71,4 @@
 // Book-informed Selective topics are kept in separate modules for maintainability.
 document.write('<script src="js/selective-book-topic2-estimation.js"><\/script>');
 document.write('<script src="js/selective-book-topic3-multiplication.js"><\/script>');
+document.write('<script src="js/selective-book-topic4-division.js"><\/script>');
