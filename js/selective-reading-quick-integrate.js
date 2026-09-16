@@ -77,3 +77,4 @@ document.write('<script src="js/selective-book-topic6-fraction-sense.js"><\/scri
 document.write('<script src="js/selective-book-topic7-fraction-addsub.js"><\/script>');
 document.write('<script src="js/selective-book-topic8-fraction-multdiv.js"><\/script>');
 document.write('<script src="js/selective-book-topic9-decimals.js"><\/script>');
+document.write('<script src="js/selective-book-topic10-probability-statistics.js"><\/script>');
