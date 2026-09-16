@@ -1,0 +1,25 @@
+// Selective Topic 2: Addition, Subtraction & Estimation reasoning.
+// Newly written SkillUP questions based on the reasoning styles of the uploaded Grade 5 book.
+(function(){
+  if(!window.SKILLUP_MR_EXTRA)return;
+  const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)],shuffle=a=>[...a].sort(()=>Math.random()-.5),fmt=n=>Number(n).toLocaleString('en-AU');
+  const Q=(text,answer,choices,tip)=>({text,answer:String(answer),choices:shuffle([...new Set(choices.map(String))]),tip,topic:'sel_estimation',name:'Add, Subtract & Estimate'});
+  const near=(n,p)=>Math.round(n/p)*p;
+  function question(){const t=R(0,10);let a,b,c,d,ans,e;
+    if(t===0){a=R(3000,9800);b=R(1000,a-500);ans=near(a,1000)-near(b,1000);return Q(`Estimate ${fmt(a)} − ${fmt(b)} by rounding each number to the nearest thousand.`,fmt(ans),[fmt(ans),fmt(a-b),fmt(ans+1000),fmt(Math.max(0,ans-1000))],'Round both numbers first, then subtract.');}
+    if(t===1){a=R(12000,88000);b=R(12000,88000);c=R(12000,88000);ans=near(a,10000)+near(b,10000)+near(c,10000);return Q(`Which is the best estimate for ${fmt(a)} + ${fmt(b)} + ${fmt(c)}?`,fmt(ans),[fmt(ans),fmt(a+b+c),fmt(ans+50000),fmt(Math.max(0,ans-50000))],'Round each number to the nearest ten-thousand before adding.');}
+    if(t===2){a=R(30000,90000);b=R(10000,a-5000);const exact=a-b,opts=[near(exact,10000),near(exact,1000),exact+20000,Math.max(0,exact-20000)];ans=near(exact,10000);return Q(`Without exact calculation, which is the most reasonable estimate for ${fmt(a)} − ${fmt(b)}?`,fmt(ans),opts.map(fmt),'Estimate the size of the difference using rounded values.');}
+    if(t===3){a=R(100000,900000);b=R(10000,90000);c=a+b;ans=a;return Q(`□ + ${fmt(b)} = ${fmt(c)}. What is □?`,fmt(ans),[fmt(ans),fmt(c+b),fmt(c-b+1000),fmt(b)],'Use the inverse operation: subtract the known addend from the total.');}
+    if(t===4){a=R(200000,800000);b=R(100000,a-50000);c=a-b;ans=a;return Q(`□ − ${fmt(b)} = ${fmt(c)}. What is □?`,fmt(ans),[fmt(ans),fmt(c-b),fmt(c+b+1000),fmt(b)],'A missing minuend equals difference + subtrahend.');}
+    if(t===5){a=R(10000,90000);b=R(10000,90000);c=R(10000,90000);d=R(10000,90000);const left=a+b,right=c+d;ans=left>right?'A + B':'C + D';return Q(`A=${fmt(a)}, B=${fmt(b)}, C=${fmt(c)}, D=${fmt(d)}. Which sum is greater?`,ans,[ans,ans==='A + B'?'C + D':'A + B','They are equal','Cannot be determined'],'Estimate each pair first, then compare. Exact addition is only needed if the estimates are very close.');}
+    if(t===6){const cases=[[5785,1315],[5168,3209],[5185,2316],[5774,3894]];const target=3000;let winner=cases.find(x=>near(x[0],1000)-near(x[1],1000)===target);if(!winner)return question();ans=`${winner[0]} − ${winner[1]}`;return Q('Which subtraction has an estimated difference of about 3,000 when both numbers are rounded to the nearest thousand?',ans,cases.map(x=>`${x[0]} − ${x[1]}`),'Round each pair to the nearest thousand and compare the estimated differences.');}
+    if(t===7){a=R(40000,90000);b=R(20000,70000);const exact=a+b,e1=near(a,10000)+near(b,10000);ans=Math.abs(exact-e1)<=10000?'reasonable':'not reasonable';return Q(`A student estimates ${fmt(a)} + ${fmt(b)} as ${fmt(e1)}. Is the estimate reasonable?`,ans,['reasonable','not reasonable'],'Compare the rounded-number estimate with the size of the exact sum.');}
+    if(t===8){a=R(500000,900000);b=R(100000,a-100000);const exact=a-b;const choices=[exact,near(exact,100000),exact+300000,Math.max(0,exact-300000)];ans=exact;return Q(`A subtraction result must be between ${fmt(Math.floor(exact/100000)*100000)} and ${fmt(Math.ceil(exact/100000)*100000)}. Which answer could be exact for ${fmt(a)} − ${fmt(b)}?`,fmt(ans),choices.map(fmt),'Use estimation bounds to reject impossible answers.');}
+    if(t===9){a=R(10000,90000);b=R(10000,90000);c=R(10000,90000);const vals=[a,b,c],exact=vals.reduce((s,x)=>s+x,0);ans=exact;return Q(`A charity receives ${fmt(a)}, ${fmt(b)} and ${fmt(c)} items from three centres. What is the exact total?`,fmt(ans),[fmt(ans),fmt(near(ans,10000)),fmt(ans+1000),fmt(ans-1000)],'Estimate first, then calculate exactly and check the exact result against the estimate.');}
+    a=R(150000000,250000000);b=R(90000000,a-10000000);const land=a-b;ans=near(land,1000000);return Q(`A country has ${fmt(a)} km² total area and ${fmt(b)} km² water. About how much land is there, to the nearest million?`,fmt(ans),[fmt(ans),fmt(near(a+b,1000000)),fmt(ans+1000000),fmt(Math.max(0,ans-1000000))],'Subtract the areas, then round the difference to the nearest million.');
+  }
+  const topic=['sel_estimation','±','Add, Subtract & Estimate','Reasonable estimates, missing values, large sums and differences'];
+  if(!window.SKILLUP_MR_EXTRA.topics.some(x=>x[0]==='sel_estimation'))window.SKILLUP_MR_EXTRA.topics.splice(1,0,topic);
+  const old=window.SKILLUP_MR_EXTRA.question.bind(window.SKILLUP_MR_EXTRA);
+  window.SKILLUP_MR_EXTRA.question=id=>id==='sel_estimation'?question():old(id);
+})();
