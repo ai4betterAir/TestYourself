@@ -7,5 +7,6 @@ document.write('<script src="js/year5-book-topic4-division.js"><\/script>');
 document.write('<script src="js/year5-book-topic5-factors.js"><\/script>');
 document.write('<script src="js/year5-book-topic6-fraction-sense.js"><\/script>');
 document.write('<script src="js/year5-book-topic7-fraction-addsub.js"><\/script>');
+document.write('<script src="js/year5-book-topic8-fraction-multdiv.js"><\/script>');
 // Cleaner Learn presentation: no small 1,2,3 badges or numbered formula lines.
 (function(){const s=document.createElement('style');s.textContent='.steps-card li b{display:none!important}.steps-card li{padding-left:0!important}.worked-example ol{list-style:none!important;padding-left:0!important}.worked-example ol li{margin:.45rem 0}.worked-example ol li:before{content:"→ ";color:#7658c7;font-weight:900}';document.head.appendChild(s)})();
