@@ -82,3 +82,4 @@ document.write('<script src="js/selective-book-topic11-geometry-angles.js"><\/sc
 document.write('<script src="js/selective-book-topic12-perimeter-area.js"><\/script>');
 document.write('<script src="js/selective-book-topic13-volume-3d.js"><\/script>');
 document.write('<script src="js/selective-book-topic14-measurement-time.js"><\/script>');
+document.write('<script src="js/selective-book-topic15-coordinates-scale.js"><\/script>');
