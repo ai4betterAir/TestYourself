@@ -79,3 +79,4 @@ document.write('<script src="js/selective-book-topic8-fraction-multdiv.js"><\/sc
 document.write('<script src="js/selective-book-topic9-decimals.js"><\/script>');
 document.write('<script src="js/selective-book-topic10-probability-statistics.js"><\/script>');
 document.write('<script src="js/selective-book-topic11-geometry-angles.js"><\/script>');
+document.write('<script src="js/selective-book-topic12-perimeter-area.js"><\/script>');
