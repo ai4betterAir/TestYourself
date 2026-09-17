@@ -85,3 +85,4 @@ document.write('<script src="js/selective-book-topic14-measurement-time.js"><\/s
 document.write('<script src="js/selective-book-topic15-coordinates-scale.js"><\/script>');
 document.write('<script src="js/selective-book-topic16-algebra-patterns.js"><\/script>');
 document.write('<script src="js/selective-book-topic17-integers.js"><\/script>');
+document.write('<script src="js/selective-book-topic18-ratio-percent.js"><\/script>');
