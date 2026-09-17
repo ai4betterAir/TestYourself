@@ -88,3 +88,4 @@ document.write('<script src="js/selective-book-topic17-integers.js"><\/script>')
 document.write('<script src="js/selective-book-topic18-ratio-percent.js"><\/script>');
 document.write('<script src="js/selective-book-topic19-problem-solving.js"><\/script>');
 document.write('<script src="js/selective-book-topic20-exponents-order.js"><\/script>');
+document.write('<script src="js/selective-book-topic21-number-enrichment.js"><\/script>');
