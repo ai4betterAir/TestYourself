@@ -91,3 +91,5 @@ document.write('<script src="js/selective-book-topic20-exponents-order.js"><\/sc
 document.write('<script src="js/selective-book-topic21-number-enrichment.js"><\/script>');
 document.write('<script src="js/selective-book-topic22-logic-venn.js"><\/script>');
 document.write('<script src="js/selective-book-topic23-rational-numbers.js"><\/script>');
+document.write('<script src="js/selective-book-topic24-solid-views.js"><\/script>');
+document.write('<script src="js/selective-book-topic25-comparative-graphs.js"><\/script>');
