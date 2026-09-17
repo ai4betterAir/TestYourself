@@ -90,3 +90,4 @@ document.write('<script src="js/selective-book-topic19-problem-solving.js"><\/sc
 document.write('<script src="js/selective-book-topic20-exponents-order.js"><\/script>');
 document.write('<script src="js/selective-book-topic21-number-enrichment.js"><\/script>');
 document.write('<script src="js/selective-book-topic22-logic-venn.js"><\/script>');
+document.write('<script src="js/selective-book-topic23-rational-numbers.js"><\/script>');
