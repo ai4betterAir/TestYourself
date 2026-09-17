@@ -19,5 +19,6 @@ document.write('<script src="js/year5-book-topic16-algebra-patterns.js"><\/scrip
 document.write('<script src="js/year5-book-topic17-integers.js"><\/script>');
 document.write('<script src="js/year5-book-topic18-ratio-percent.js"><\/script>');
 document.write('<script src="js/year5-book-topic19-problem-solving.js"><\/script>');
+document.write('<script src="js/year5-book-topic20-exponents-order.js"><\/script>');
 // Cleaner Learn presentation: no small 1,2,3 badges or numbered formula lines.
 (function(){const s=document.createElement('style');s.textContent='.steps-card li b{display:none!important}.steps-card li{padding-left:0!important}.worked-example ol{list-style:none!important;padding-left:0!important}.worked-example ol li{margin:.45rem 0}.worked-example ol li:before{content:"→ ";color:#7658c7;font-weight:900}';document.head.appendChild(s)})();
