@@ -6,8 +6,10 @@
   const shuffle=a=>[...a].sort(()=>Math.random()-.5);
   const uniq=a=>[...new Set(a.map(String))];
   function Q(text,answer,choices,tip,explanation){
-    const ans=String(answer);let c=uniq((choices||[]).map(String));if(!c.includes(ans))c.unshift(ans);
-    return {text,answer:ans,choices:shuffle(c).slice(0,4),tip,explanation};
+    const ans=String(answer);
+    const pool=uniq((choices||[]).map(String)).filter(x=>x!==ans);
+    const shown=shuffle([ans,...shuffle(pool).slice(0,3)]);
+    return {text,answer:ans,choices:shown,tip,explanation};
   }
   const angleType=n=>n===90?'right':n===180?'straight':n<90?'acute':'obtuse';
   const polygonName={3:'triangle',4:'quadrilateral',5:'pentagon',6:'hexagon',7:'heptagon',8:'octagon',9:'nonagon',10:'decagon'};
@@ -39,7 +41,7 @@
     }
     if(mode===6){
       const cases=[['three acute angles','acute triangle'],['one right angle','right triangle'],['one obtuse angle','obtuse triangle']];const z=pick(cases);ans=z[1];
-      return Q(`A triangle has ${z[0]}. How is it classified by angles?`,ans,[ans,'acute triangle','right triangle','obtuse triangle'],'A triangle is named by its largest angle type.',`It is an ${ans}.`);
+      return Q(`A triangle has ${z[0]}. How is it classified by angles?`,ans,[ans,'acute triangle','right triangle','obtuse triangle'],'A triangle is named by its largest angle type.',`It is a ${ans}.`);
     }
     if(mode===7){
       a=R(3,10);ans=polygonName[a];
@@ -127,7 +129,6 @@
     if(row){row[1]='∠';row[2]='Geometry & Angles';row[3]='Angles, polygons, triangles, quadrilaterals, circles, symmetry and transformations';}
   }
   if(window.TY_YEAR5_TESTS){
-    // Consolidate older separate angle/symmetry cards into this one book-informed Geometry topic.
     window.TY_YEAR5_TESTS.topics=window.TY_YEAR5_TESTS.topics.filter(x=>!['angles','symmetry'].includes(x[0]));
     const row=window.TY_YEAR5_TESTS.topics.find(x=>x[0]==='geometry');
     if(row){row[1]='∠';row[2]='Geometry & Angles';row[3]='Angles, polygons, triangles, quadrilaterals, circles, symmetry and transformations';}
