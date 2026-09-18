@@ -95,3 +95,5 @@ document.write('<script src="js/selective-book-topic24-solid-views.js"><\/script
 document.write('<script src="js/selective-book-topic25-comparative-graphs.js"><\/script>');
 document.write('<script src="js/selective-book-topic26-density-fractions.js"><\/script>');
 document.write('<script src="js/selective-book-topic27-unit-fractions.js"><\/script>');
+document.write('<script src="js/selective-book-topic28-fractions-decimals.js"><\/script>');
+document.write('<script src="js/selective-book-topic29-percent-patterns.js"><\/script>');
