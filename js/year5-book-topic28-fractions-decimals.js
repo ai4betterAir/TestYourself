@@ -23,7 +23,7 @@
   ];
   function question(){
     const m=R(0,15);let p,ans;
-    if(m===0){p=pick(term);return Q('Rename '+p[0]+' as a decimal.',p[1],[p[1],String(Number(p[1])+0.1),String(Math.max(0,Number(p[1])-0.1)),p[1]+'0'],'A fraction bar means division, so divide the numerator by the denominator.',p[0]+' = '+p[1]+'.');}
+    if(m===0){p=pick(term);return Q('Rename '+p[0]+' as a decimal.',p[1],[p[1],String(Number(p[1])+0.1),String(Math.max(0,Number(p[1])-0.1)),String(Math.min(1,Number(p[1])+0.2))],'A fraction bar means division, so divide the numerator by the denominator.',p[0]+' = '+p[1]+'.');}
     if(m===1){p=pick([['1/2','5/10','0.5'],['1/4','25/100','0.25'],['3/4','75/100','0.75'],['2/5','4/10','0.4'],['7/20','35/100','0.35']]);return Q('Which power-of-10 fraction helps rename '+p[0]+' as a decimal?',p[1],[p[1],p[0],'1/10','10/100'],'Rename the fraction so the denominator is 10, 100, 1000, and so on.',p[0]+' = '+p[1]+' = '+p[2]+'.');}
     if(m===2){p=pick(repeat);return Q('Rename '+p[0]+' as a decimal.',p[1],[p[1],p[1].replace('…',''), '0.5','1.0'],'Divide numerator by denominator and watch for a repeating remainder pattern.',p[0]+' = '+p[1]+'; the digits continue repeating.');}
     if(m===3){p=pick(term);return Q(p[0]+' gives '+p[1]+'. Is this decimal terminating or repeating?','terminating',['terminating','repeating','whole number only','not a decimal'],'A terminating decimal ends because the division remainder becomes 0.',p[1]+' ends, so it is terminating.');}
