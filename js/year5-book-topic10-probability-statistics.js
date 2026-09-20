@@ -1,5 +1,5 @@
 // Topic 10 upgrade: Year 5 Probability & Statistics.
-// Newly written SkillUP material using the uploaded Grade 5 book as a curriculum/style reference.
+// Newly written SkillUP material covering the Year 5 curriculum and problem-solving style.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

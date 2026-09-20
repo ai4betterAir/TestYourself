@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">SkillUP icon</title>
+  <desc id="desc">An open book with a rising spark on a blue background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a438f"/><stop offset="1" stop-color="#258fe6"/></linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#dff5ff"/></linearGradient>
+    <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffd84d"/><stop offset="1" stop-color="#ff9418"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <path d="M76 280c62-28 122-18 180 29 58-47 118-57 180-29v106c-66-19-126-7-180 36-54-43-114-55-180-36z" fill="#083c82" opacity=".72"/>
+  <path d="M93 245c57-23 111-10 163 38v103c-50-43-104-58-163-39z" fill="url(#page)"/>
+  <path d="M419 245c-57-23-111-10-163 38v103c50-43 104-58 163-39z" fill="#c7efff"/>
+  <path d="M256 280c-20-69-58-110-104-129 53 5 91 38 104 100 13-62 51-95 104-100-46 19-84 60-104 129z" fill="#58c9f2"/>
+  <circle cx="256" cy="130" r="24" fill="url(#spark)"/>
+  <path d="M256 68v24M207 88l17 18M305 88l-17 18" fill="none" stroke="#ffd84d" stroke-width="13" stroke-linecap="round"/>
+</svg>

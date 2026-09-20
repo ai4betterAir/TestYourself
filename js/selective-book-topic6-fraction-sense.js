@@ -1,5 +1,5 @@
 // Selective Topic 6: Fraction Sense & Comparison reasoning.
-// Newly written SkillUP questions based on the uploaded Grade 5 book's fraction chapter.
+// Newly written SkillUP questions covering the Year 5 book's fraction chapter.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)],shuffle=a=>[...a].sort(()=>Math.random()-.5),gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a),lcm=(a,b)=>Math.abs(a*b)/gcd(a,b),F=(n,d)=>`${n}/${d}`;

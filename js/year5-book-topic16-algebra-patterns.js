@@ -1,5 +1,5 @@
 // Topic 16 upgrade: Year 5 Algebra, Patterns & Equations.
-// Newly written SkillUP material using the uploaded Grade 5 algebra/function-table chapter as the curriculum reference.
+// Newly written SkillUP material covering Year 5 algebra/function-table chapter as the curriculum reference.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

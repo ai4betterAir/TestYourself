@@ -56,8 +56,14 @@ const lessons=[
 
 const chapters={1:'Context Clues',2:'Words and Their Parts',3:'Content Words',4:'Words and Their Histories'};
 const $=id=>document.getElementById(id),shuffle=a=>[...a].sort(()=>Math.random()-.5);
-let activeLesson=0,mode='learn',practice=[],test=[],practiceIndex=0,testIndex=0,practiceScore=0,testScore=0,selected=null,checked=false,filter=0;
-let completed=new Set(JSON.parse(localStorage.getItem('skillup-y4-reading-complete')||'[]'));
+let activeLesson=0,mode='learn',practice=[],test=[],practiceIndex=0,testIndex=0,practiceScore=0,testScore=0,testAnswers=[],selected=null,checked=false,filter=0;
+let completed;
+try {
+  const saved=JSON.parse(localStorage.getItem('skillup-y4-reading-complete')||'[]');
+  completed=new Set(Array.isArray(saved)?saved:[]);
+} catch (error) {
+  completed=new Set();
+}
 
 function makeChoices(answer,pool){return shuffle([answer,...shuffle([...new Set(pool.filter(x=>x!==answer))]).slice(0,3)]);}
 function questions(lesson){
@@ -80,18 +86,18 @@ function openLesson(i){
   activeLesson=i;const l=lessons[i];
   $('lessonChapter').textContent=`CHAPTER ${l.c} · ${chapters[l.c]}`;$('lessonTitle').textContent=`Lesson ${i+1}: ${l.t}`;$('lessonObjective').textContent=l.o;$('lessonStrategy').textContent=l.s;
   $('wordTeachGrid').innerHTML=l.w.map(x=>`<article class="teach-word"><strong>${x[0]}</strong><p>${x[1]}</p><em>${x[2]}</em></article>`).join('');
-  practice=questions(l).filter((_,n)=>n%2===i%2).slice(0,5);test=shuffle(questions(l));practiceIndex=testIndex=practiceScore=testScore=0;
-  $('lessonBrowser')?.setAttribute('hidden','');$('lessonList').hidden=true;$('lessonWorkspace').hidden=false;setMode('learn');renderQuiz('practice');renderQuiz('test');
+  practice=questions(l).filter((_,n)=>n%2===i%2).slice(0,5);test=shuffle(questions(l));practiceIndex=testIndex=practiceScore=testScore=0;testAnswers=Array(test.length).fill(null);
+  $('lessonList').hidden=true;$('lessonWorkspace').hidden=false;setMode('learn');renderQuiz('practice');renderQuiz('test');
   $('lessonWorkspace').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function setMode(next){mode=next;document.querySelectorAll('.mode-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.mode===next));['learn','practice','test'].forEach(x=>$(x+'Panel').hidden=x!==next);if(next!=='learn')renderQuiz(next);}
 function renderQuiz(kind){
   const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex,z=list[index],prefix=isTest?'test':'practice';
-  selected=null;checked=false;$(prefix+'Question').textContent=z.q;$(prefix+'Progress').textContent=`${index+1} / ${list.length}`;$(prefix+'Bar').style.width=`${((index+1)/list.length)*100}%`;$(prefix+'Feedback').textContent='';$(prefix+'Feedback').className='reading-feedback';
+  selected=isTest?testAnswers[index]:null;checked=isTest;$(prefix+'Question').textContent=z.q;$(prefix+'Progress').textContent=`${index+1} / ${list.length}`;$(prefix+'Bar').style.width=`${((index+1)/list.length)*100}%`;$(prefix+'Feedback').textContent='';$(prefix+'Feedback').className='reading-feedback';
   $(prefix+'Answers').innerHTML=z.c.map((x,n)=>`<button data-n="${n}">${x}</button>`).join('');
-  $(prefix+'Answers').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(checked)return;$(prefix+'Answers').querySelectorAll('button').forEach(y=>y.classList.remove('selected'));b.classList.add('selected');selected=+b.dataset.n;});
+  $(prefix+'Answers').querySelectorAll('button').forEach(b=>{if(isTest&&+b.dataset.n===selected)b.classList.add('selected');b.onclick=()=>{if(checked&&!isTest)return;$(prefix+'Answers').querySelectorAll('button').forEach(y=>y.classList.remove('selected'));b.classList.add('selected');selected=+b.dataset.n;if(isTest)testAnswers[index]=selected;};});
   $(isTest?'nextTest':'nextPractice').textContent=index===list.length-1?(isTest?'Finish test':'Start test →'):'Next →';
-  if(isTest)$('testResult').hidden=true;
+  if(isTest){$('checkTest').hidden=true;$('testResult').hidden=true;}
 }
 function check(kind){
   if(checked)return;const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex,prefix=isTest?'test':'practice';if(selected===null){$(prefix+'Feedback').textContent='Choose an answer first.';return;}
@@ -99,10 +105,10 @@ function check(kind){
   $(prefix+'Feedback').textContent=ok?`✓ Correct! ${z.why}`:`Not quite. ${z.why}`;$(prefix+'Feedback').classList.add(ok?'right':'try-again');
 }
 function next(kind){
-  const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex;if(!checked){$(kind+'Feedback').textContent='Check your answer before moving on.';return;}
+  const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex;if(!isTest&&!checked){$(kind+'Feedback').textContent='Check your answer before moving on.';return;}
   if(index<list.length-1){isTest?testIndex++:practiceIndex++;renderQuiz(kind);return;}
   if(!isTest){setMode('test');return;}
-  const passed=testScore>=8;if(passed){completed.add(activeLesson);localStorage.setItem('skillup-y4-reading-complete',JSON.stringify([...completed]));renderCards();}
+  testScore=list.reduce((total,z,n)=>total+(testAnswers[n]===z.c.indexOf(z.a)?1:0),0);const passed=testScore>=8;if(passed){completed.add(activeLesson);localStorage.setItem('skillup-y4-reading-complete',JSON.stringify([...completed]));renderCards();}
   $('testResult').hidden=false;$('testResult').innerHTML=`<b>${testScore} / 10</b>${passed?'Excellent—this lesson is complete!':'Good effort. Review the Learn cards, then try the test again.'}<div><button class="vbtn ${passed?'secondary':'primary'}" id="resultAction">${passed?'Choose another lesson':'Review lesson'}</button></div>`;
   $('resultAction').onclick=()=>passed?backToLessons():setMode('learn');
 }
@@ -111,4 +117,5 @@ function backToLessons(){$('lessonWorkspace').hidden=true;$('lessonList').hidden
 renderFilters();renderCards();
 document.querySelectorAll('.mode-tabs button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setMode(b.dataset.go));
 $('checkPractice').onclick=()=>check('practice');$('nextPractice').onclick=()=>next('practice');$('checkTest').onclick=()=>check('test');$('nextTest').onclick=()=>next('test');$('backLessons').onclick=backToLessons;
+window.SKILLUP_Y4_READING_LESSONS=lessons;
 })();

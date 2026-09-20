@@ -1,5 +1,5 @@
 // Selective Topic 10: Probability & Statistics Reasoning.
-// Newly written SkillUP questions inspired by the uploaded Grade 5 probability/statistics chapter.
+// Newly written SkillUP questions covering Year 5 probability/statistics chapter.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

@@ -1,5 +1,5 @@
 // Topic 25: Year 5 Comparative Graphs & Data Displays.
-// Newly written SkillUP material based on the Grade 5 double line/double bar graph enrichment lesson.
+// Newly written SkillUP material covering the Year 5 double line/double bar graph enrichment lesson.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

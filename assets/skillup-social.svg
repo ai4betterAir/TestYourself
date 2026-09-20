@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">SkillUP Learning</title>
+  <desc id="desc">Learn, practise, test and improve across primary Maths, English, Vocabulary and Selective preparation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#edf6ff"/><stop offset=".55" stop-color="#fffaf0"/><stop offset="1" stop-color="#f1ebff"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a438f"/><stop offset="1" stop-color="#258fe6"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffd84d"/><stop offset="1" stop-color="#ff9418"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1080" cy="72" r="180" fill="#d8e9ff" opacity=".75"/>
+  <circle cx="92" cy="590" r="190" fill="#ffeac7" opacity=".65"/>
+  <rect x="70" y="62" width="1060" height="506" rx="46" fill="#fff" stroke="#dce7f4" stroke-width="4"/>
+  <g transform="translate(105 135)">
+    <rect width="280" height="280" rx="64" fill="url(#blue)"/>
+    <path d="M42 160c34-16 66-10 98 16 32-26 64-32 98-16v58c-36-10-69-4-98 20-29-24-62-30-98-20z" fill="#083c82" opacity=".75"/>
+    <path d="M52 141c31-13 61-6 88 21v56c-27-24-57-32-88-22z" fill="#fff"/>
+    <path d="M228 141c-31-13-61-6-88 21v56c27-24 57-32 88-22z" fill="#c7efff"/>
+    <path d="M140 160c-11-38-32-60-57-71 29 3 50 21 57 55 7-34 28-52 57-55-25 11-46 33-57 71z" fill="#58c9f2"/>
+    <circle cx="140" cy="77" r="13" fill="url(#gold)"/>
+    <path d="M140 43v14M113 53l9 10M167 53l-9 10" fill="none" stroke="#ffd84d" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <text x="445" y="242" font-size="102" font-weight="800" fill="#0a3f86">Skill<tspan fill="#188ddd">UP</tspan></text>
+    <text x="449" y="302" font-size="32" font-weight="700" fill="#3f506a">Primary learning for Years 1–6</text>
+    <text x="449" y="367" font-size="27" font-weight="600" fill="#526176">Maths  •  English  •  Vocabulary  •  Selective</text>
+    <g font-size="25" font-weight="700">
+      <rect x="445" y="420" width="142" height="52" rx="26" fill="#eaf4ff"/><text x="480" y="454" fill="#165f9f">Learn</text>
+      <rect x="601" y="420" width="160" height="52" rx="26" fill="#fff0dc"/><text x="630" y="454" fill="#a85815">Practise</text>
+      <rect x="775" y="420" width="126" height="52" rx="26" fill="#e6f7ed"/><text x="809" y="454" fill="#187348">Test</text>
+      <rect x="915" y="420" width="150" height="52" rx="26" fill="#f0eaff"/><text x="943" y="454" fill="#6843ae">Improve</text>
+    </g>
+  </g>
+</svg>

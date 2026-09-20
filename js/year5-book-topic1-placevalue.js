@@ -1,5 +1,5 @@
 // Topic 1 upgrade: Year 5 Place Value & Numeration.
-// Question styles are newly written for SkillUP, using the uploaded Grade 5 book only as a curriculum/style reference.
+// Question styles are newly written for SkillUP, covering Year 5 book only as a curriculum/style reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

@@ -1,5 +1,5 @@
 // Topic 14 upgrade: Year 5 Measurement, Units & Time.
-// Newly written SkillUP material using the uploaded Grade 5 measurement chapters as a curriculum and difficulty reference.
+// Newly written SkillUP material covering Year 5 measurement chapters as a curriculum and difficulty reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];
@@ -65,7 +65,7 @@
         steps:[
           'Metric measurement is decimal-based. Common units include mm, cm, m and km for length; mL and L for capacity; and mg, g and kg for mass. Multiply when changing a larger metric unit to a smaller one; divide when changing a smaller unit to a larger one.',
           'Choose a unit that fits the size of the object. Smaller units can give more precise measurements when measuring the same object.',
-          'The source book also practises customary relationships: 12 in = 1 ft, 3 ft = 1 yd, 4 qt = 1 gal, 16 oz = 1 lb and 2000 lb = 1 ton.',
+          'This course also practises customary relationships: 12 in = 1 ft, 3 ft = 1 yd, 4 qt = 1 gal, 16 oz = 1 lb and 2000 lb = 1 ton.',
           'Temperature can be above or below zero. A rise means add; a fall means subtract. Useful Celsius benchmarks include 0°C for freezing water and 100°C for boiling water.',
           'Time relationships include 60 s = 1 min, 60 min = 1 h, 24 h = 1 day, 7 days = 1 week and 12 months = 1 year.',
           'Elapsed time is the amount of time between a start and finish. Count forward to find duration, add duration to find a finish time, or work backwards to find a start time.',

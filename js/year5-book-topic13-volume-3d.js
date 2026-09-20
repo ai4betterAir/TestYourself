@@ -1,5 +1,5 @@
 // Topic 13 upgrade: Year 5 Volume & 3D Measurement.
-// Newly written SkillUP material using the uploaded Grade 5 solid-figures, surface-area and volume lessons as the curriculum reference.
+// Newly written SkillUP material covering Year 5 solid-figures, surface-area and volume lessons as the curriculum reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

@@ -1,5 +1,5 @@
-// Year 6 topics follow the broad structure of Progress in Mathematics Grade 6.
-// All questions are newly written for SkillUP and do not reproduce the textbook.
+// Year 6 topics cover the main number, algebra, measurement, geometry and data strands.
+// All questions are original SkillUP practice content.
 (function () {
   const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
   const pick = values => values[randomInt(0, values.length - 1)];

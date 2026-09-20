@@ -1,5 +1,5 @@
 // Topic 12 upgrade: Year 5 Perimeter & Area.
-// Newly written SkillUP material using the uploaded Grade 5 perimeter/area chapters as a curriculum and difficulty reference.
+// Newly written SkillUP material covering Year 5 perimeter/area chapters as a curriculum and difficulty reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

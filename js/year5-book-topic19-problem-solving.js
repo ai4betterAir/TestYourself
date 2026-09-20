@@ -1,5 +1,5 @@
 // Topic 19: Year 5 Multi-Step Problem Solving & Reasoning.
-// Newly written SkillUP material using the uploaded Grade 5 problem-solving model and strategy lessons as the curriculum reference.
+// Newly written SkillUP material covering Year 5 problem-solving model and strategy lessons as the curriculum reference.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

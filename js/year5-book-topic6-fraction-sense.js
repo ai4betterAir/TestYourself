@@ -1,5 +1,5 @@
 // Topic 6 upgrade: Year 5 Fraction Sense & Comparison.
-// Newly written SkillUP material based on the uploaded Grade 5 book's structure and difficulty.
+// Newly written SkillUP material covering the Year 5 book's structure and difficulty.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

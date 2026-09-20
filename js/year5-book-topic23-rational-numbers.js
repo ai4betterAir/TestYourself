@@ -1,5 +1,5 @@
 // Topic 23: Year 5 Rational Numbers & Number Lines.
-// Newly written SkillUP material based on the uploaded Grade 5 Rational Numbers enrichment page.
+// Newly written SkillUP material covering the Year 5 Rational Numbers enrichment page.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
@@ -16,7 +16,7 @@
   function question(){
     const m=R(0,19);let a,b,c,ans;
     if(m===0){a=pick([4,-7,0,12,-3]);return Q(`Which statement about ${a} is true?`,'It is a rational number',['It is a rational number','It is not a number','It cannot be placed on a number line','It has no opposite'],'Whole numbers and integers are included among rational numbers.',`${a} is an integer, and integers are rational numbers.`);}
-    if(m===1){a=pick([0.5,-1.25,2.75,-0.4,3.2]);return Q(`Which statement about ${a} is true?`,'It is a rational number',['It is a rational number','It is not rational','It cannot have an opposite','It cannot appear on a number line'],'The book includes terminating decimals among rational numbers.',`${a} is a terminating decimal, so it is rational.`);}
+    if(m===1){a=pick([0.5,-1.25,2.75,-0.4,3.2]);return Q(`Which statement about ${a} is true?`,'It is a rational number',['It is a rational number','It is not rational','It cannot have an opposite','It cannot appear on a number line'],'Terminating decimals are included among rational numbers.',`${a} is a terminating decimal, so it is rational.`);}
     if(m===2){a=pick([[1,2],[-3,4],[5,8],[-7,3],[9,5]]);ans=`${a[0]}/${a[1]}`;return Q(`Which statement about ${ans} is true?`,'It is a rational number',['It is a rational number','It is never rational','It cannot be negative','It cannot be shown on a number line'],'Fractions are part of the rational-number family.',`${ans} is a fraction, so it is rational.`);}
     if(m===3){a=pick([1.1,-2.5,0.75,-4,6.2]);ans=fmt(-a);return Q(`What is the opposite of ${fmt(a)}?`,ans,[ans,fmt(a),fmt(Math.abs(a)),fmt(a+1)],'Opposites are the same distance from 0 on opposite sides.',`The opposite of ${fmt(a)} is ${ans}.`);}
     if(m===4){return Q('What is the opposite of 0?',0,[0,1,-1,'0.5'],'Zero is at the centre of the number line.',`0 is its own opposite.`);}
@@ -47,11 +47,11 @@
   window.SKILLUP_MATH.learn=function(g,t,fallback){
     if(String(g)==='5'&&t==='rational_numbers')return{
       title:'Rational Numbers & Number Lines',
-      concept:'The book extends integer ideas to rational numbers. Whole numbers, integers and fractions are rational numbers, and terminating or repeating decimals can also be rational. Rational numbers have opposites and can be placed on a number line.',
+      concept:'This lesson extends integer ideas to rational numbers. Whole numbers, integers and fractions are rational numbers, and terminating or repeating decimals can also be rational. Rational numbers have opposites and can be placed on a number line.',
       steps:[
         'Use positive numbers for gains, deposits, upward movement and positions above a reference level.',
         'Use negative numbers for losses, downward movement and positions below a reference level.',
-        'Whole numbers, integers and fractions are rational numbers. The book also includes terminating and repeating decimals.',
+        'Whole numbers, integers and fractions are rational numbers. The lesson also includes terminating and repeating decimals.',
         'The opposite of a number is the same distance from 0 but on the other side of the number line.',
         'Zero is its own opposite.',
         'On a number line, numbers increase as you move to the right and decrease as you move to the left.',

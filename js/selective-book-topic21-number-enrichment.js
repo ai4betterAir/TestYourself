@@ -22,7 +22,7 @@
     if(m===11){const vals=[36,45,49,55,64,66,81];n=pick(vals);const sq=Number.isInteger(Math.sqrt(n)),tr=[1,3,6,10,15,21,28,36,45,55,66,78].includes(n);ans=sq&&tr?'both square and triangular':sq?'square only':tr?'triangular only':'neither';return Q(`Classify ${n}.`,ans,[ans,'square only','triangular only','neither'],'Check the square-number and triangular-number patterns separately.');}
     if(m===12){const y=pick([1984,1999,2008,2024,2026]);ans=toRoman(y);return Q(`A monument is dated ${y}. Which Roman numeral is correct?`,ans,[ans,toRoman(y-1),toRoman(y+1),toRoman(y-10)],'Convert each place value using standard Roman numeral groups.');}
     if(m===13){const e1=R(4,7),e2=e1-1,c1=pick([2,3,4]),c2=pick([5,6,7,8,9]);const v1=c1*10**e1,v2=c2*10**e2;ans=v1>v2?'first':'second';return Q(`Which is greater: ${c1} × 10^${e1} or ${c2} × 10^${e2}?`,ans,[ans,ans==='first'?'second':'first','equal','cannot tell'],'Compare place value by rewriting both with the same power of ten or in standard form.');}
-    n=R(3,7);r=row(n);const firstTwo=r[0]+r[1];ans=firstTwo;return Q(`In row ${n} of Pascal's Triangle, what is the sum of the first two entries?`,ans,[ans,n,n+2,2*n],'The book highlights the pattern formed by the first two entries in each row.');
+    n=R(3,7);r=row(n);const firstTwo=r[0]+r[1];ans=firstTwo;return Q(`In row ${n} of Pascal's Triangle, what is the sum of the first two entries?`,ans,[ans,n,n+2,2*n],'This question uses the pattern formed by the first two entries in each row.');
   }
   mr.topics=mr.topics.filter(x=>x[0]!=='sel_number_enrichment');
   const i=mr.topics.findIndex(x=>x[0]==='sel_exponents_order');

@@ -1,5 +1,5 @@
 // Topic 21: Year 5 Number Systems & Enrichment.
-// Newly written SkillUP material based on the uploaded Grade 5 Roman numerals and enrichment sections.
+// Newly written SkillUP material covering the Year 5 Roman numerals and enrichment sections.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

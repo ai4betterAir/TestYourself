@@ -1,5 +1,5 @@
 // Topic 11 upgrade: Year 5 Geometry & Angles.
-// Newly written SkillUP material using the uploaded Grade 5 geometry chapter as a curriculum/style reference.
+// Newly written SkillUP material covering Year 5 geometry chapter as a curriculum/style reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

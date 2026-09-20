@@ -1,5 +1,5 @@
 // Topic 17 upgrade: Year 5 Integers & Negative Numbers.
-// Newly written SkillUP material using the uploaded Grade 5 integer lessons as the curriculum reference.
+// Newly written SkillUP material covering Year 5 integer lessons as the curriculum reference.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

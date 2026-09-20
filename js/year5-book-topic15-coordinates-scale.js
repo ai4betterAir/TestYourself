@@ -1,5 +1,5 @@
 // Topic 15 upgrade: Year 5 Coordinates, Scale & Maps.
-// Newly written SkillUP material using the uploaded Grade 5 coordinate-plane and scale-map lessons as curriculum references.
+// Newly written SkillUP material covering Year 5 coordinate-plane and scale-map lessons as curriculum references.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

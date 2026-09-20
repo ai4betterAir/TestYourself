@@ -1,0 +1,23 @@
+{
+  "name": "SkillUP Learning",
+  "short_name": "SkillUP",
+  "description": "Learn, practise, test and improve across primary Maths, English, Vocabulary and Selective preparation.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#3767f0",
+  "icons": [
+    {
+      "src": "assets/skillup-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/skillup-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

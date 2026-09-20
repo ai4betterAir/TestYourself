@@ -1,5 +1,5 @@
 // Topic 20: Year 5 Exponents & Order of Operations.
-// Newly written SkillUP material using the uploaded Grade 5 exponent enrichment and order-of-operations lessons as the curriculum reference.
+// Newly written SkillUP material covering Year 5 exponent enrichment and order-of-operations lessons as the curriculum reference.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

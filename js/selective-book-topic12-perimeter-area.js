@@ -1,5 +1,5 @@
 // Selective Topic 12: Perimeter & Area Reasoning.
-// Newly written SkillUP questions based on the uploaded Grade 5 perimeter/area concepts, with harder multi-step reasoning.
+// Newly written SkillUP questions covering the Year 5 perimeter/area concepts, with harder multi-step reasoning.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
