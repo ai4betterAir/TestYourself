@@ -32,6 +32,14 @@
     if (!nav.id) nav.id = 'site-navigation';
     nav.setAttribute('aria-label', nav.getAttribute('aria-label') || 'Main navigation');
 
+    if (!nav.querySelector('a[href*="sign-in.html"], a[href*="dashboard.html"]')) {
+      const accountLink = document.createElement('a');
+      accountLink.href = `${root}sign-in.html`;
+      accountLink.textContent = 'Sign in';
+      accountLink.className = 'account-nav-link';
+      nav.appendChild(accountLink);
+    }
+
     let menu = header.querySelector('.site-menu-button, .home-menu-btn, .menu-toggle, .course-menu');
     if (!menu) {
       menu = document.createElement('button');
@@ -107,6 +115,7 @@
       <nav aria-label="Information and support">
         <a href="${root}about.html">About</a>
         <a href="${root}parents.html">For parents</a>
+        <a href="${root}sign-in.html">Sign in</a>
         <a href="${root}privacy.html">Privacy</a>
         <a href="${root}terms.html">Terms</a>
         <a href="${root}support.html">Report an issue</a>
@@ -149,5 +158,8 @@
   }
   if (pageName === 'english-practice.html') {
     loadEnhancement('js/english-six-question.js', 'css/english-six.css');
+  }
+  if (new URLSearchParams(location.search).has('assignment')) {
+    loadEnhancement('js/assignment-bridge.js', 'css/assignment-bridge.css');
   }
 })();

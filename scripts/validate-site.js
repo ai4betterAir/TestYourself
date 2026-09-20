@@ -63,7 +63,11 @@ for (const size of ['192x192', '512x512']) {
 }
 
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-for (const file of fs.readdirSync(root).filter(file => file.endsWith('.html') && file !== '404.html')) {
+for (const file of fs.readdirSync(root).filter(file => {
+  if (!file.endsWith('.html') || file === '404.html') return false;
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  return !/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html);
+})) {
   const url = file === 'index.html' ? 'https://ai4betterair.github.io/TestYourself/' : `https://ai4betterair.github.io/TestYourself/${file}`;
   if (!sitemap.includes(`<loc>${url}</loc>`)) errors.push(`sitemap.xml: missing ${file}`);
 }
