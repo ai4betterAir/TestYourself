@@ -1,0 +1,6 @@
+.batch-help{margin:-6px 0 16px;color:#66748d;font-weight:800}
+.batch-question-list{display:grid;gap:14px}
+.batch-question-list .question-card{margin-top:0}
+.batch-question-list .question-card h3{overflow-wrap:anywhere}
+.batch-question-list .answers button:disabled{cursor:default;opacity:1}
+.batch-summary{min-height:26px;margin-top:16px;font-weight:900;color:#405371}

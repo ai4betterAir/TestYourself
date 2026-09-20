@@ -170,6 +170,17 @@ for (const [relative, scripts] of Object.entries(ordering)) {
   }
 }
 
+{
+  const shell = fs.readFileSync(path.join(root, 'js/site-shell.js'), 'utf8');
+  for (const page of ['vocabulary-year3.html', 'vocabulary-year4.html', 'vocabulary-year5.html', 'vocabulary-year6.html']) {
+    if (!shell.includes(page)) failures.push(`Consistency: ${page} is not connected to the six-question Vocabulary layout`);
+  }
+  for (const asset of ['css/vocabulary-six.css', 'js/vocabulary-six-question.js', 'css/english-six.css', 'js/english-six-question.js']) {
+    if (!fs.existsSync(path.join(root, asset))) failures.push(`Consistency: missing ${asset}`);
+  }
+  if (!shell.includes("pageName === 'english-practice.html'")) failures.push('Consistency: English practice is not connected to the all-questions layout');
+}
+
 if (failures.length) {
   console.error(`Course test validation failed with ${failures.length} issue(s):`);
   failures.forEach(failure => console.error(` - ${failure}`));

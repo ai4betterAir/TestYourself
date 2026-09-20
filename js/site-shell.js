@@ -127,4 +127,27 @@
     window.addEventListener('scroll', syncBackToTop, {passive: true});
     syncBackToTop();
   }
+
+  const loadEnhancement = (scriptPath, stylePath) => {
+    if (stylePath && !document.querySelector(`link[data-enhancement="${stylePath}"]`)) {
+      const style = document.createElement('link');
+      style.rel = 'stylesheet';
+      style.href = `${root}${stylePath}`;
+      style.dataset.enhancement = stylePath;
+      document.head.appendChild(style);
+    }
+    if (!document.querySelector(`script[data-enhancement="${scriptPath}"]`)) {
+      const script = document.createElement('script');
+      script.src = `${root}${scriptPath}`;
+      script.dataset.enhancement = scriptPath;
+      document.body.appendChild(script);
+    }
+  };
+
+  if (['vocabulary-year3.html', 'vocabulary-year4.html', 'vocabulary-year5.html', 'vocabulary-year6.html'].includes(pageName)) {
+    loadEnhancement('js/vocabulary-six-question.js', 'css/vocabulary-six.css');
+  }
+  if (pageName === 'english-practice.html') {
+    loadEnhancement('js/english-six-question.js', 'css/english-six.css');
+  }
 })();
