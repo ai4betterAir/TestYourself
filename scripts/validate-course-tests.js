@@ -97,6 +97,16 @@ for (const [relative, fragment] of [
   run('js/vocabulary-y1-stories.js', context);
   run('js/vocabulary-y1-stories-31-40.js', context);
   run('js/vocabulary-y1-stories-11-20.js', context);
+  run('js/vocabulary-y1-six-question.js', context);
+  const practiceQuestions = context.document.getElementById('sixQuestionSet').children;
+  if (practiceQuestions.length !== 6) failures.push(`Year 1 Vocabulary: expected 6 visible practice questions, found ${practiceQuestions.length}`);
+}
+
+{
+  const context = domContext();
+  run('js/vocabulary-y1-stories.js', context);
+  run('js/vocabulary-y1-stories-31-40.js', context);
+  run('js/vocabulary-y1-stories-11-20.js', context);
   vm.runInContext('window.__COURSE=L', context);
   const words = context.__COURSE.flatMap(lesson => lesson.w);
   if (context.__COURSE.length < 20 || words.length < 160) failures.push(`Year 1 Vocabulary: insufficient course material for a 20-question test`);

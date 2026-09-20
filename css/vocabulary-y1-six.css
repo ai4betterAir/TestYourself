@@ -1,0 +1,13 @@
+.six-question-help{margin:8px 0 18px;color:#68758d;font-weight:700}
+.lesson-question-set{display:grid;gap:16px}
+.lesson-question{border:1px solid #e1e7f1;border-radius:17px;padding:18px;background:#fcfdff}
+.lesson-question h3{margin:0 0 14px;font:700 1.25rem/1.35 Fredoka;color:#243653}
+.lesson-question-number{display:inline-block;margin-bottom:7px;color:#5d52c6;font-size:.75rem;font-weight:900;letter-spacing:.08em}
+.lesson-question .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
+.lesson-question .choices button{min-width:0;text-align:left;overflow-wrap:anywhere}
+.lesson-question .choices button.correct{background:#e8f8ee;border-color:#47ae73;color:#267449}
+.lesson-question .choices button.wrong{background:#fff0f0;border-color:#dd6a6a;color:#a33f3f}
+.lesson-question .choices button:disabled{cursor:default;opacity:1}
+.lesson-question-feedback{min-height:26px;margin:12px 0 0;font-weight:900;overflow-wrap:anywhere}
+.six-question-summary{min-height:26px;margin-top:16px;font-weight:900;color:#405371}
+@media(max-width:620px){.lesson-question .choices{grid-template-columns:1fr}}
