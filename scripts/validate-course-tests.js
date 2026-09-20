@@ -88,6 +88,8 @@ for (const [relative, fragment] of [
   vm.runInContext('window.__COURSE=LESSONS', context);
   const words = context.__COURSE.flatMap(lesson => lesson.words);
   if (context.__COURSE.length !== 12 || words.length !== 120) failures.push(`Year 2 Vocabulary: expected 12 lessons and 120 words, found ${context.__COURSE.length} and ${words.length}`);
+  const practiceQuestions = context.document.getElementById('questionList').children;
+  if (practiceQuestions.length !== 6) failures.push(`Year 2 Vocabulary: expected 6 visible practice questions, found ${practiceQuestions.length}`);
 }
 
 {
