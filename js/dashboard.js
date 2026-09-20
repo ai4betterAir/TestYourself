@@ -3,12 +3,65 @@ import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfil
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 let user, profile, classes = [], classMembers = [], assignments = [], submissions = [], children = [];
+const requestedDemo = new URLSearchParams(location.search).get('demo');
+const demoRole = ['student','teacher','parent'].includes(requestedDemo) ? requestedDemo : null;
 
-if (!isSupabaseConfigured) {
-  showSetupNotice($('setupNotice'));
-  $('setupNotice').hidden = false;
+if (demoRole || !isSupabaseConfigured) {
+  renderDemo(demoRole || 'student');
 } else {
   init().catch(showFatal);
+}
+
+function renderDemo(role) {
+  const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
+  user = {id: role === 'student' ? 'demo-student' : 'demo-user'};
+  profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',created_at:iso(-60)};
+  classes = [{id:'class-4b',teacher_id:'demo-user',name:'4B Maths',subject:'Maths',year_level:'4',join_code:'UP4B26'},{id:'class-eng',teacher_id:'demo-user',name:'Year 4 English',subject:'English',year_level:'4',join_code:'READ42'}];
+  classMembers = [
+    {class_id:'class-4b',student_id:'demo-student'},{class_id:'class-4b',student_id:'student-2'},{class_id:'class-4b',student_id:'student-3'},
+    {class_id:'class-4b',student_id:'student-4'},{class_id:'class-eng',student_id:'demo-student'},{class_id:'class-eng',student_id:'student-5'}
+  ];
+  assignments = [
+    {id:'fractions-review',teacher_id:'demo-user',class_id:'class-4b',title:'Fractions review',subject:'Maths',resource_url:'practice.html?grade=4',opens_at:iso(-2),due_at:iso(1),allow_late:true,status:'published'},
+    {id:'reading-main-idea',teacher_id:'demo-user',class_id:'class-eng',title:'Finding the main idea',subject:'English',resource_url:'english-practice.html?grade=4&skill=reading',opens_at:iso(-1),due_at:iso(4),allow_late:false,status:'published'},
+    {id:'vocabulary-context',teacher_id:'demo-user',class_id:'class-eng',title:'Vocabulary in context',subject:'Vocabulary',resource_url:'vocabulary-year4.html',opens_at:iso(-8),due_at:iso(-3),allow_late:true,status:'published'}
+  ];
+  submissions = role === 'teacher' ? [
+    {assignment_id:'fractions-review',student_id:'demo-student',status:'submitted',submitted_at:iso(-.2),score:17,max_score:20},
+    {assignment_id:'fractions-review',student_id:'student-2',status:'submitted',submitted_at:iso(-.1),score:14,max_score:20},
+    {assignment_id:'fractions-review',student_id:'student-3',status:'graded',submitted_at:iso(-1),score:19,max_score:20},
+    {assignment_id:'vocabulary-context',student_id:'student-4',status:'submitted',submitted_at:iso(-3),score:5,max_score:6},
+    {assignment_id:'vocabulary-context',student_id:'student-5',status:'submitted',submitted_at:iso(-4),score:4,max_score:6}
+  ] : [
+    {assignment_id:'vocabulary-context',student_id:'demo-student',status:'graded',submitted_at:iso(-4),score:5,max_score:6},
+    {assignment_id:'reading-main-idea',student_id:'demo-student',status:'submitted',submitted_at:iso(-.4),score:4,max_score:6}
+  ];
+  children = role === 'parent' ? [{id:'demo-student',full_name:'Jordan Lee',year_level:'4'}] : [];
+  $('userName').textContent = profile.full_name;
+  $('userRole').textContent = role === 'parent' ? 'Parent / guardian preview' : `${role} preview`;
+  $('profileName').value = profile.full_name;
+  $('profileYear').value = '4';
+  $('profileYearField').hidden = role !== 'student';
+  configureRole();
+  render();
+  $('mainAction').hidden = true;
+  $('workAction').hidden = true;
+  $('peopleAction').hidden = true;
+  $('setupNotice').hidden = true;
+  $('statusBanner').hidden = false;
+  $('statusBanner').className = 'status-banner preview';
+  $('statusBanner').innerHTML = `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
+  document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
+  document.querySelectorAll('#profileForm input,#profileForm select,#profileForm button').forEach(control => { control.disabled = true; });
+  $('profileMessage').textContent = 'Profile editing is disabled in preview mode.';
+  $('signOut').textContent = 'Exit preview';
+  bindDemoEvents();
+}
+
+function bindDemoEvents() {
+  document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
+  $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
+  $('signOut').onclick=()=>location.href='accounts.html';
 }
 
 async function init() {

@@ -1,7 +1,13 @@
 import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js';
 
 const setup = document.getElementById('setupNotice');
-if (!isSupabaseConfigured) showSetupNotice(setup);
+if (!isSupabaseConfigured) {
+  showSetupNotice(setup);
+  document.querySelectorAll('form button[type="submit"]').forEach(button => {
+    button.disabled = true;
+    button.title = 'Account access is not open yet';
+  });
+}
 
 const message = (text, success = false) => {
   const node = document.getElementById('formMessage');

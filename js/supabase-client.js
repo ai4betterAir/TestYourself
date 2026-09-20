@@ -24,7 +24,7 @@ export function showSetupNotice(target) {
   const node = typeof target === 'string' ? document.querySelector(target) : target;
   if (node) {
     node.hidden = false;
-    node.innerHTML = '<strong>Account setup is not connected yet.</strong> Add the Supabase project URL and public anon key in <code>js/supabase-config.js</code>.';
+    node.innerHTML = '<strong>Account access is being prepared.</strong> You can explore realistic student, teacher and parent dashboard previews now. <a href="accounts.html">View the account experience →</a>';
   }
   return true;
 }

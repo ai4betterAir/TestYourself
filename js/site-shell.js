@@ -32,6 +32,14 @@
     if (!nav.id) nav.id = 'site-navigation';
     nav.setAttribute('aria-label', nav.getAttribute('aria-label') || 'Main navigation');
 
+    if (!nav.querySelector('a[href*="accounts.html"]')) {
+      const accountsLink = document.createElement('a');
+      accountsLink.href = `${root}accounts.html`;
+      accountsLink.textContent = 'Accounts';
+      accountsLink.className = 'accounts-nav-link';
+      nav.insertBefore(accountsLink, nav.querySelector('a[href*="sign-in.html"]') || null);
+    }
+
     if (!nav.querySelector('a[href*="sign-in.html"], a[href*="dashboard.html"]')) {
       const accountLink = document.createElement('a');
       accountLink.href = `${root}sign-in.html`;
@@ -114,6 +122,7 @@
     footer.innerHTML = `
       <nav aria-label="Information and support">
         <a href="${root}about.html">About</a>
+        <a href="${root}accounts.html">Accounts</a>
         <a href="${root}parents.html">For parents</a>
         <a href="${root}sign-in.html">Sign in</a>
         <a href="${root}privacy.html">Privacy</a>
@@ -135,6 +144,27 @@
     const syncBackToTop = () => backToTop.classList.toggle('show', window.scrollY > 700);
     window.addEventListener('scroll', syncBackToTop, {passive: true});
     syncBackToTop();
+  }
+
+  if (pageName === 'index.html' && !document.querySelector('.home-account-preview')) {
+    const anchor = document.querySelector('.selective-box, .year-strip');
+    if (anchor) {
+      const section = document.createElement('section');
+      section.className = 'home-account-preview';
+      section.innerHTML = `
+        <div class="home-account-copy">
+          <span>CONNECTED LEARNING</span>
+          <h2>One clear view for every learner team</h2>
+          <p>Teachers assign SkillUP practice, students see what is due next, and parents follow progress through a calm read-only view.</p>
+          <a href="accounts.html">Explore student, teacher and parent accounts →</a>
+        </div>
+        <div class="home-role-grid">
+          <a href="dashboard.html?demo=student"><b>S</b><strong>Student</strong><span>Tasks, due dates and progress</span></a>
+          <a href="dashboard.html?demo=teacher"><b>T</b><strong>Teacher</strong><span>Classes, assignments and insights</span></a>
+          <a href="dashboard.html?demo=parent"><b>P</b><strong>Parent</strong><span>Linked children and support</span></a>
+        </div>`;
+      anchor.before(section);
+    }
   }
 
   const loadEnhancement = (scriptPath, stylePath) => {
