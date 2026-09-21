@@ -44,9 +44,10 @@ function renderDemo(role) {
   $('profileYearField').hidden = role !== 'student';
   configureRole();
   render();
-  $('mainAction').hidden = true;
-  $('workAction').hidden = true;
-  $('peopleAction').hidden = true;
+  ['mainAction','workAction','peopleAction'].forEach(id => {
+    $(id).hidden = true;
+    $(id).style.display = 'none';
+  });
   $('setupNotice').hidden = true;
   $('statusBanner').hidden = false;
   $('statusBanner').className = 'status-banner preview';
