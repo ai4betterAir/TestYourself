@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js';
+import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=20260921';
 
 const setup = document.getElementById('setupNotice');
 if (!isSupabaseConfigured) {

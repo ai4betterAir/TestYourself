@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfile, formatDate, friendlyError } from './supabase-client.js';
+import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfile, formatDate, friendlyError } from './supabase-client.js?v=20260921';
 
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
