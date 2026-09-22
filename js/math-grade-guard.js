@@ -1,1 +1,33 @@
 (function(){if(!window.SKILLUP_MATH)return;const old=window.SKILLUP_MATH.enhanced,R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,S=a=>[...a].sort(()=>Math.random()-.5);function choices(ans,max=20){const s=new Set([String(ans)]);while(s.size<4)s.add(String(Math.max(0,Number(ans)+R(-3,3))));return S([...s])}function Q(text,answer,tip,explanation,opts){return{text,answer:String(answer),choices:S((opts||choices(answer)).map(String)),tip,explanation}}window.SKILLUP_MATH.enhanced=function(grade,t){const g=String(grade);if(g==='1'){if(['missing','equations'].includes(t)){const x=R(1,10),b=R(1,9),total=x+b;return Q(`□ + ${b} = ${total}. What is □?`,x,'Use subtraction to find the missing part.',`${total} − ${b} = ${x}.`)}if(t==='division'||t==='sharing'){const groups=R(2,4),each=R(1,5),total=groups*each;return Q(`${total} counters are shared equally among ${groups} children. How many does each child get?`,each,'Share one at a time until each group is equal.',`${total} ÷ ${groups} = ${each}.`)}if(t==='money'){const a=[10,20,50][R(0,2)],b=[5,10,20][R(0,2)],ans=a+b;return Q(`You have ${a}c and ${b}c. How many cents altogether?`,ans,'Add the coin values.',`${a}c + ${b}c = ${ans}c.`)}if(t==='wordproblems'){const a=R(4,12),b=R(1,Math.min(6,a));return Q(`There are ${a} birds. ${b} fly away. How many are left?`,a-b,'Some leave, so subtract.',`${a} − ${b} = ${a-b}.`)}}if(g==='2'){if(['missing','equations'].includes(t)){const x=R(5,30),b=R(2,20),total=x+b;return Q(`□ + ${b} = ${total}. What is □?`,x,'Use the inverse operation.',`${total} − ${b} = ${x}.`)}if(t==='division'){const d=[2,3,5,10][R(0,3)],q=R(2,8),total=d*q;return Q(`${total} ÷ ${d} = ?`,q,'Use the related multiplication fact.',`${d} × ${q} = ${total}, so ${total} ÷ ${d} = ${q}.`)}if(t==='money'){const a=R(5,20),b=R(1,a-1);return Q(`You have $${a} and spend $${b}. How much is left?`,`$${a-b}`,'Subtract the amount spent.',`$${a} − $${b} = $${a-b}.`,[`$${a-b}`,`$${a+b}`,`$${a}`,`$${b}`])}if(t==='wordproblems'){const groups=R(2,5),each=R(2,6),total=groups*each;return Q(`${groups} bags have ${each} marbles in each bag. How many marbles altogether?`,total,'Use equal groups.',`${groups} × ${each} = ${total}.`)}}return old(grade,t)};})();
+// Load expanded Year 5 topics synchronously before math-learning-v2.js runs.
+document.write('<script src="js/year5-book-topic1-placevalue.js"><\/script>');
+document.write('<script src="js/year5-book-topic2-addsub.js"><\/script>');
+document.write('<script src="js/year5-book-topic3-multiplication.js"><\/script>');
+document.write('<script src="js/year5-book-topic4-division.js"><\/script>');
+document.write('<script src="js/year5-book-topic5-factors.js"><\/script>');
+document.write('<script src="js/year5-book-topic6-fraction-sense.js"><\/script>');
+document.write('<script src="js/year5-book-topic7-fraction-addsub.js"><\/script>');
+document.write('<script src="js/year5-book-topic8-fraction-multdiv.js"><\/script>');
+document.write('<script src="js/year5-book-topic9-decimals.js"><\/script>');
+document.write('<script src="js/year5-book-topic10-probability-statistics.js"><\/script>');
+document.write('<script src="js/year5-book-topic11-geometry-angles.js"><\/script>');
+document.write('<script src="js/year5-book-topic12-perimeter-area.js"><\/script>');
+document.write('<script src="js/year5-book-topic13-volume-3d.js"><\/script>');
+document.write('<script src="js/year5-book-topic14-measurement-time.js"><\/script>');
+document.write('<script src="js/year5-book-topic15-coordinates-scale.js"><\/script>');
+document.write('<script src="js/year5-book-topic16-algebra-patterns.js"><\/script>');
+document.write('<script src="js/year5-book-topic17-integers.js"><\/script>');
+document.write('<script src="js/year5-book-topic18-ratio-percent.js"><\/script>');
+document.write('<script src="js/year5-book-topic19-problem-solving.js"><\/script>');
+document.write('<script src="js/year5-book-topic20-exponents-order.js"><\/script>');
+document.write('<script src="js/year5-book-topic21-number-enrichment.js"><\/script>');
+document.write('<script src="js/year5-book-topic22-logic-venn.js"><\/script>');
+document.write('<script src="js/year5-book-topic23-rational-numbers.js"><\/script>');
+document.write('<script src="js/year5-book-topic24-solid-views.js"><\/script>');
+document.write('<script src="js/year5-book-topic25-comparative-graphs.js"><\/script>');
+document.write('<script src="js/year5-book-topic26-density-fractions.js"><\/script>');
+document.write('<script src="js/year5-book-topic27-unit-fractions.js"><\/script>');
+document.write('<script src="js/year5-book-topic28-fractions-decimals.js"><\/script>');
+document.write('<script src="js/year5-book-topic29-percent-patterns.js"><\/script>');
+// Cleaner Learn presentation: no small 1,2,3 badges or numbered formula lines.
+(function(){const s=document.createElement('style');s.textContent='.steps-card li b{display:none!important}.steps-card li{padding-left:0!important}.worked-example ol{list-style:none!important;padding-left:0!important}.worked-example ol li{margin:.45rem 0}.worked-example ol li:before{content:"→ ";color:#7658c7;font-weight:900}';document.head.appendChild(s)})();

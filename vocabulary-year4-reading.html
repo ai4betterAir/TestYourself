@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="SkillUP Year 4 reading vocabulary: 26 interactive Learn, Practice and Test lessons covering context, word parts, content words and word histories.">
+  <title>Year 4 Reading Vocabulary | SkillUP</title>
+  <link rel="icon" type="image/svg+xml" href="assets/skillup-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/vocabulary.css">
+  <link rel="stylesheet" href="css/vocabulary-reading.css">
+<link rel="manifest" href="site.webmanifest"><meta name="theme-color" content="#3767f0"><link rel="canonical" href="https://ai4betterair.github.io/TestYourself/vocabulary-year4-reading.html"><meta property="og:title" content="Year 4 Reading Vocabulary | SkillUP"><meta property="og:description" content="SkillUP Year 4 reading vocabulary: 26 interactive Learn, Practice and Test lessons covering context, word parts, content words and word histories."><meta property="og:type" content="website"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><meta property="og:url" content="https://ai4betterair.github.io/TestYourself/vocabulary-year4-reading.html"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="SkillUP primary learning for Years 1–6"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Year 4 Reading Vocabulary | SkillUP"><meta name="twitter:description" content="SkillUP Year 4 reading vocabulary: 26 interactive Learn, Practice and Test lessons covering context, word parts, content words and word histories."><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"></head>
+<body>
+  <header class="vocab-header">
+    <a class="brand" href="index.html"><span class="brand-mark">★</span><span>Skill<span>UP</span></span></a>
+    <nav><a href="index.html">Home</a><a href="practice.html">Maths</a><a class="active" href="vocabulary.html">Vocabulary</a><a href="english.html">English</a></nav>
+    <div class="year-chip">YEAR 4</div>
+  </header>
+
+  <main>
+    <section class="reading-hero">
+      <div>
+        <span class="eyebrow">YEAR 4 · READING VOCABULARY</span>
+        <h1>26 lessons.<br><em>Stronger reading.</em></h1>
+        <p>Learn useful words and word-solving strategies, practise with feedback, then test your understanding.</p>
+        <div class="hero-actions">
+          <a class="vbtn primary" href="#lessonList">Choose a lesson →</a>
+          <a class="vbtn secondary" href="vocabulary-year4.html">← Year 4 Word Power</a>
+        </div>
+      </div>
+      <div class="course-map" aria-label="Four course chapters">
+        <div><b>1</b><span>Context<br>Clues</span></div>
+        <div><b>2</b><span>Word<br>Parts</span></div>
+        <div><b>3</b><span>Content<br>Words</span></div>
+        <div><b>4</b><span>Word<br>Histories</span></div>
+      </div>
+    </section>
+
+    <section class="lesson-browser" id="lessonList">
+      <div class="browser-heading">
+        <div><span class="kicker">CHOOSE YOUR LESSON</span><h2>Build skills step by step</h2></div>
+        <div class="course-progress"><b id="completedCount">0 / 26</b><span>tests completed</span></div>
+      </div>
+      <div class="chapter-filters" id="chapterFilters" aria-label="Filter lessons by chapter"></div>
+      <div class="lesson-grid" id="lessonGrid"></div>
+    </section>
+
+    <section class="lesson-workspace" id="lessonWorkspace" hidden>
+      <div class="lesson-heading">
+        <button class="back-lessons" id="backLessons">← All lessons</button>
+        <span id="lessonChapter">CHAPTER 1</span>
+        <h2 id="lessonTitle">Lesson title</h2>
+        <p id="lessonObjective"></p>
+      </div>
+      <div class="mode-tabs" role="tablist" aria-label="Lesson modes">
+        <button class="active" data-mode="learn" role="tab">1. Learn</button>
+        <button data-mode="practice" role="tab">2. Practice</button>
+        <button data-mode="test" role="tab">3. Test</button>
+      </div>
+
+      <div class="mode-panel" id="learnPanel">
+        <div class="strategy-box"><b>🔎 Word-solving strategy</b><p id="lessonStrategy"></p></div>
+        <div class="word-teach-grid" id="wordTeachGrid"></div>
+        <button class="vbtn primary mode-next" data-go="practice">Start practice →</button>
+      </div>
+
+      <div class="mode-panel quiz-mode" id="practicePanel" hidden>
+        <div class="quiz-top"><span>PRACTICE · FEEDBACK ON</span><b id="practiceProgress">1 / 5</b></div>
+        <div class="mini-progress"><i id="practiceBar"></i></div>
+        <h3 id="practiceQuestion"></h3>
+        <div class="reading-answers" id="practiceAnswers"></div>
+        <div class="reading-feedback" id="practiceFeedback" aria-live="polite"></div>
+        <div class="quiz-actions"><button class="vbtn primary" id="checkPractice">Check answer</button><button class="vbtn secondary" id="nextPractice">Next →</button></div>
+      </div>
+
+      <div class="mode-panel quiz-mode" id="testPanel" hidden>
+        <div class="quiz-top"><span>LESSON TEST · 10 QUESTIONS · RESULTS AT THE END</span><b id="testProgress">1 / 10</b></div>
+        <div class="mini-progress"><i id="testBar"></i></div>
+        <h3 id="testQuestion"></h3>
+        <div class="reading-answers" id="testAnswers"></div>
+        <div class="reading-feedback" id="testFeedback" aria-live="polite"></div>
+        <div class="quiz-actions"><button class="vbtn primary" id="checkTest">Check answer</button><button class="vbtn secondary" id="nextTest">Next →</button></div>
+        <div class="test-result" id="testResult" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="footer-bottom"><span>© 2026 SkillUP</span><span>Vocabulary · Year 4 Reading</span></div></footer>
+  <script src="js/vocabulary-y4-reading.js"></script>
+<script src="js/vocabulary-test.js"></script><script src="js/site-shell.js"></script></body>
+</html>

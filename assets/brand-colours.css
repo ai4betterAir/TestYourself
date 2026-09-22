@@ -1,1 +1,15 @@
-:root{--ty-navy:#173b78;--ty-blue:#278fe8;--ty-sky:#36b9ee;--ty-green:#27b86a;--ty-orange:#ff9c1a;--ty-yellow:#ffd633;--ty-ink:#24364f;--ty-paper:#f4f9ff}
+:root{
+  --ty-navy:#173B78;
+  --ty-blue:#278FE8;
+  --ty-sky:#36B9EE;
+  --ty-green:#27B86A;
+  --ty-orange:#FF9C1A;
+  --ty-yellow:#FFD633;
+  --ty-purple:#7B4DE4;
+  --ty-ink:#24364F;
+  --ty-paper:#F4F9FF;
+  --ty-maths:#3767F0;
+  --ty-vocab:#7B4DE4;
+  --ty-english:#E87824;
+  --ty-selective:#7047C8;
+}

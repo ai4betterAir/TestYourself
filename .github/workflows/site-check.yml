@@ -14,3 +14,19 @@ jobs:
           node-version: '20'
       - name: Validate links, IDs and JavaScript syntax
         run: node scripts/validate-site.js
+      - name: Validate generated questions
+        run: node scripts/validate-questions.js
+      - name: Validate English and Vocabulary courses
+        run: node scripts/validate-course-tests.js
+      - name: Install browser for responsive checks
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Run desktop, mobile and tablet checks
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-http.log 2>&1 &
+          for attempt in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/index.html >/dev/null && break
+            sleep 1
+          done
+          node scripts/browser-smoke.js
