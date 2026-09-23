@@ -1,0 +1,7 @@
+.streambar{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.streambar button[data-stream="writing"]{background:#BB0E3D!important}
+.vocab-learn{background:#fff;border-left:6px solid #FFBF17;border-radius:16px;padding:16px 18px;margin:0 0 14px;box-shadow:0 10px 24px rgba(28,94,134,.08)}
+.vocab-learn .kicker{color:#1C5E86;font-weight:800;letter-spacing:.04em;font-size:.75rem}
+.vocab-learn h3{font:700 1.6rem Fredoka,sans-serif;margin:6px 0 8px;color:#1C5E86;text-transform:capitalize}
+.vocab-learn p{margin:6px 0;color:#16344A}
+@media(max-width:900px){.streambar{grid-template-columns:1fr 1fr!important}}
