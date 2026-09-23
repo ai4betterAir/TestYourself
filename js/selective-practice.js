@@ -72,7 +72,7 @@ function buildTopics(){
  list.filter(x=>x[0]!=='mixed').forEach(x=>{const b=document.createElement('button');b.className='topic '+(topic===x[0]?'active':'');b.innerHTML=`<b>${x[1]} ${x[2]}</b><span>${x[3]}</span>`;b.onclick=()=>choose(x[0]);$('topics').appendChild(b)});
  $('qnum').textContent=`${qnum} / ${target}`;
 }
-function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();$('practiceView').scrollIntoView({behavior:'smooth'})}
+function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();window.scrollTo({top:document.querySelector('.quiz').offsetTop-80,behavior:'smooth'})}
 function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';shuffle(q.choices).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
 function nextQ(){
  current=make();selected=null;
