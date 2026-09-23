@@ -1,66 +1,79 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SkillUP</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Nunito,sans-serif;background:linear-gradient(180deg,#1C5E86,#0D95A1 55%,#173B78);min-height:100vh;color:#fff}
-header{display:flex;align-items:center;gap:16px;padding:14px 22px}
-header img{height:48px}header nav a{color:#fff;text-decoration:none;font-weight:800;margin-left:14px}
-.wrap{width:min(980px,calc(100% - 28px));margin:0 auto 40px;text-align:center}
-.badge{display:inline-block;background:#FFBF17;color:#173B78;border-radius:999px;padding:6px 14px;font:700 .8rem Fredoka,sans-serif}
-h1{font:700 clamp(2rem,5vw,3.2rem)/1.08 Fredoka,sans-serif;margin:12px 0 8px}h1 span{color:#FFBF17}
-.years,.subjects,.streams{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 22px}
-.years button{border:0;min-width:92px;min-height:48px;border-radius:14px;background:#2A72A5;color:#fff;font:700 1rem Fredoka,sans-serif;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.18)}
-.years button.on{outline:3px solid #FFBF17}
-.subjects a,.streams a{display:flex;align-items:center;justify-content:center;min-height:64px;min-width:200px;padding:12px 18px;border-radius:16px;color:#fff;text-decoration:none;font:700 1.05rem Fredoka,sans-serif;box-shadow:0 10px 22px rgba(0,0,0,.16)}
-.subjects a.maths,.streams a.math{background:#2A72A5}
-.subjects a.vocabulary,.streams a.purple{background:#6254A3}
-.subjects a.english,.streams a.teal{background:#0D95A1}
-.subjects a.selective,.streams a.navy{background:#173B78;color:#FFD633}
-.subjects a.off{opacity:.35;pointer-events:none}
-h2{font:700 1.2rem Fredoka,sans-serif;margin:8px 0}
-#sectionBox{display:none}
-</style></head>
+:root{--navy:#1C5E86;--blue:#2A72A5;--teal:#0D95A1;--purple:#6254A3;--gold:#FFBF17;--ink:#16344A;--paper:#F3F8FB}
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,sans-serif;background:var(--paper);color:var(--ink)}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:#fff;border-bottom:3px solid var(--navy)}
+header img{height:52px}header nav a{color:var(--navy);text-decoration:none;font-weight:800;margin-left:16px}
+.hero{background:linear-gradient(120deg,#1C5E86,#2A72A5 55%,#0D95A1);color:#fff;text-align:center;padding:36px 18px 28px}
+.badge{display:inline-block;background:var(--gold);color:var(--ink);border-radius:999px;padding:6px 14px;font:700 .78rem Fredoka,sans-serif}
+.hero h1{font:700 clamp(2rem,5vw,3.1rem)/1.08 Fredoka,sans-serif;margin:12px 0 8px}
+.hero h1 span{color:var(--gold)}.hero p{max-width:640px;margin:0 auto;opacity:.95}
+.panel{width:min(920px,calc(100% - 28px));margin:-18px auto 48px;background:#fff;border-radius:24px;padding:22px 18px 28px;box-shadow:0 16px 40px rgba(28,94,134,.14)}
+.panel h2{margin:0 0 12px;text-align:center;font:700 1.15rem Fredoka,sans-serif;color:var(--navy)}
+.years{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px}
+.years button{border:0;min-width:86px;min-height:46px;border-radius:14px;background:#e7f3f8;color:var(--navy);font:700 .95rem Fredoka,sans-serif;cursor:pointer}
+.years button.on{background:var(--navy);color:#fff;outline:3px solid var(--gold)}
+.subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.subjects button{border:0;min-height:88px;border-radius:18px;color:#fff;font:700 1.15rem Fredoka,sans-serif;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.12);text-align:left;padding:18px 20px}
+.subjects button small{display:block;font:700 .78rem Nunito,sans-serif;opacity:.9;margin-top:4px}
+.subjects .maths{background:var(--blue)}.subjects .vocabulary{background:var(--purple)}
+.subjects .english{background:var(--teal)}.subjects .selective{background:#173B78;color:var(--gold)}
+.subjects button.off{opacity:.38;cursor:not-allowed}
+.subjects button.picked{outline:3px solid var(--gold);transform:translateY(-2px)}
+.streams{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.streams.show{display:grid}.streams a{display:flex;align-items:center;justify-content:center;min-height:62px;border-radius:16px;color:#fff;text-decoration:none;font:700 1rem Fredoka,sans-serif;padding:10px}
+.streams a.math{background:var(--blue)}.streams a.purple{background:var(--purple)}
+.streams a.teal{background:var(--teal)}.streams a.navy{background:#173B78;color:var(--gold)}
+@media(max-width:700px){header nav{display:none}.subjects,.streams{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
-<header><a href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
-<nav><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a href="english.html">English</a><a href="selective-practice.html">Selective</a></nav></header>
-<div class="wrap">
-<div class="badge">NSW PRIMARY · SKILLUP</div>
-<h1>Pick a year. <span>Then a subject.</span></h1>
-<p>Subjects appear for that year. Open one to see its sections, in the same style as Selective.</p>
-<h2>1. Year</h2>
-<div class="years" id="years"></div>
-<h2>2. Subjects</h2>
-<div class="subjects" id="subjects"></div>
-<div id="sectionBox">
-<h2 id="sectionTitle">3. Sections</h2>
-<div class="streams" id="streams"></div>
-</div>
-</div>
+<header>
+  <a href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
+  <nav><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a href="english.html">English</a><a href="selective-practice.html">Selective</a></nav>
+</header>
+<section class="hero">
+  <div class="badge">NSW PRIMARY · YEARS K–6</div>
+  <h1>Choose a year.<br><span>Then a subject.</span></h1>
+  <p>Same layout as Selective: year, then subject cards, then the sections for that subject.</p>
+</section>
+<section class="panel">
+  <h2>1. Year</h2>
+  <div class="years" id="years"></div>
+  <h2>2. Subjects for <span id="yearLabel">Year 5</span></h2>
+  <div class="subjects" id="subjects"></div>
+  <h2 id="secHead" hidden>3. Sections</h2>
+  <div class="streams" id="streams"></div>
+</section>
 <script>
 const vocab = {K:'vocabulary-year1-stories.html',1:'vocabulary-year1-stories.html',2:'vocabulary-year2.html',3:'vocabulary-year3.html',4:'vocabulary-year4.html',5:'vocabulary-year5.html',6:'vocabulary-year6.html'};
-const sections = {
-  maths: [
-    ['Number & Algebra','practice.html?topic=number','math'],
-    ['Measurement & Space','practice.html?topic=length','teal'],
-    ['Statistics & Probability','practice.html?topic=data','purple'],
-    ['Problem Solving','practice.html?topic=wordproblems','navy']
+const tracks = {
+  maths:[
+    ['Number & Algebra','practice.html?topic=number&focus=1','math'],
+    ['Measurement & Space','practice.html?topic=length&focus=1','teal'],
+    ['Statistics & Probability','practice.html?topic=data&focus=1','purple'],
+    ['Problem Solving','practice.html?topic=wordproblems&focus=1','navy']
   ],
-  vocabulary: [
-    ['Word meaning','#','purple'],
-    ['Words in context','#','teal'],
-    ['Synonyms & antonyms','#','math'],
-    ['Spelling','#','navy']
+  vocabulary:[
+    ['Word meaning','','purple'],
+    ['Words in context','','teal'],
+    ['Synonyms & antonyms','','math'],
+    ['Spelling','','navy']
   ],
-  english: [
+  english:[
     ['Reading','english-practice.html?skill=reading','teal'],
     ['Grammar','english-practice.html?skill=grammar','purple'],
     ['Spelling','english-practice.html?skill=spelling','math'],
     ['Writing','english-practice.html?skill=writing','navy']
   ],
-  selective: [
+  selective:[
     ['Mathematical Reasoning','selective-practice.html?stream=math','math'],
     ['Thinking Skills','selective-practice.html?stream=thinking','purple'],
     ['Reading','selective-practice.html?stream=reading','teal'],
@@ -68,45 +81,51 @@ const sections = {
     ['Writing','selective-practice.html?stream=essay','teal']
   ]
 };
-const names = {maths:'Maths',vocabulary:'Vocabulary',english:'English',selective:'Selective'};
+const blurb = {maths:'Number, measurement and problem solving',vocabulary:'Meaning, context and spelling',english:'Reading, grammar and writing',selective:'Year 5–6 NSW Selective streams'};
 let year = localStorage.getItem('skillup-year') || '5';
-const yearBox = document.getElementById('years');
+const years = document.getElementById('years');
 ['K','1','2','3','4','5','6'].forEach(y => {
   const b = document.createElement('button');
   b.textContent = y === 'K' ? 'Kindy' : 'Year ' + y;
-  b.dataset.year = y;
-  b.onclick = () => { year = y; localStorage.setItem('skillup-year', y); paint(); };
-  yearBox.appendChild(b);
+  b.onclick = () => { year = y; localStorage.setItem('skillup-year', y); paint(true); };
+  years.appendChild(b);
 });
-function hrefFor(subject, path){
-  if (subject === 'maths') return path + (path.includes('?') ? '&' : '?') + 'grade=' + year + '&focus=1';
-  if (subject === 'english') return path + (path.includes('?') ? '&' : '?') + 'grade=' + year;
-  if (subject === 'vocabulary') return (vocab[year] || 'vocabulary.html');
-  return path + (path.includes('?') ? '&' : '?') + 'grade=' + year;
+function withYear(url, subject){
+  if (!url) return vocab[year] || 'vocabulary.html';
+  const join = url.includes('?') ? '&' : '?';
+  if (subject === 'vocabulary') return vocab[year] || 'vocabulary.html';
+  return url + join + 'grade=' + year;
 }
-function paint(){
-  [...yearBox.children].forEach(b => b.classList.toggle('on', b.dataset.year === year));
+function paint(reset){
+  [...years.children].forEach((b,i) => b.classList.toggle('on', ['K','1','2','3','4','5','6'][i] === year));
+  document.getElementById('yearLabel').textContent = year === 'K' ? 'Kindy' : 'Year ' + year;
   const canSel = year === '5' || year === '6';
-  document.getElementById('subjects').innerHTML =
-    `<a class="maths" data-s="maths" href="practice.html?grade=${year}&focus=1">Maths</a>` +
-    `<a class="vocabulary" data-s="vocabulary" href="${vocab[year]}">Vocabulary</a>` +
-    `<a class="english" data-s="english" href="english-practice.html?grade=${year}">English</a>` +
-    `<a class="selective ${canSel?'':'off'}" data-s="selective" href="selective-practice.html?grade=${year}">Selective</a>`;
-  document.getElementById('sectionBox').style.display = 'none';
-  document.querySelectorAll('#subjects a').forEach(a => {
-    a.addEventListener('click', ev => {
-      ev.preventDefault();
-      const s = a.dataset.s;
-      const box = document.getElementById('sectionBox');
-      box.style.display = 'block';
-      document.getElementById('sectionTitle').textContent = '3. ' + names[s] + ' sections';
-      document.getElementById('streams').innerHTML = sections[s].map(([label, url, cls]) =>
-        `<a class="${cls}" href="${hrefFor(s, url)}">${label}</a>`
-      ).join('');
-      box.scrollIntoView({behavior:'smooth', block:'start'});
-    });
+  document.getElementById('subjects').innerHTML = ['maths','vocabulary','english','selective'].map(s =>
+    `<button type="button" class="${s}${s==='selective'&&!canSel?' off':''}" data-s="${s}">${s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)}<small>${s==='selective'&&!canSel?'Opens in Year 5–6':blurb[s]}</small></button>`
+  ).join('');
+  if (reset) hideSec();
+  document.querySelectorAll('#subjects button').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.classList.contains('off')) return;
+      document.querySelectorAll('#subjects button').forEach(x => x.classList.toggle('picked', x === btn));
+      showSec(btn.dataset.s);
+    };
   });
 }
-paint();
+function hideSec(){
+  document.getElementById('secHead').hidden = true;
+  document.getElementById('streams').classList.remove('show');
+}
+function showSec(s){
+  document.getElementById('secHead').hidden = false;
+  document.getElementById('secHead').textContent = '3. ' + (s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)) + ' sections';
+  document.getElementById('streams').className = 'streams show';
+  document.getElementById('streams').innerHTML = tracks[s].map(([label,url,cls]) =>
+    `<a class="${cls}" href="${withYear(url,s)}">${label}</a>`
+  ).join('');
+  document.getElementById('streams').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+paint(true);
 </script>
-</body></html>
+</body>
+</html>
