@@ -66,7 +66,7 @@ header img{height:52px}header nav a{color:inherit;text-decoration:none;font-weig
 .home-v2 .subjects .selective{background:var(--brand-navy)!important;color:var(--brand-gold)!important}
 .home-v2 .role-links .student{background:var(--brand-blue)!important}.home-v2 .role-links .teacher{background:var(--brand-purple)!important}.home-v2 .role-links .parent{background:var(--brand-teal)!important}.home-v2 .role-links .account{background:var(--brand-gold)!important;color:var(--brand-ink)!important}
 .home-v2 .streams a.math{background:var(--brand-blue)!important}.home-v2 .streams a.purple{background:var(--brand-purple)!important}.home-v2 .streams a.teal{background:var(--brand-teal)!important}.home-v2 .streams a.navy{background:var(--brand-navy)!important;color:#fff!important}
-</style>
+.home-v2 .hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}.home-v2 .hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:12px;text-decoration:none;font:800 .95rem Nunito,sans-serif}.home-v2 .hero-primary{background:var(--brand-navy,#1C5E86);color:#fff}.home-v2 .hero-secondary{background:#fff;color:var(--brand-navy,#1C5E86);border:1px solid #c9dce8}.home-v2 .flow-strip{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:-4px 0 24px;padding:12px 14px;background:#f6fafc;border:1px solid #e1edf3;border-radius:14px;color:#557087;font:800 .86rem Nunito,sans-serif}.home-v2 .flow-strip span{display:inline-flex;align-items:center;gap:6px}.home-v2 .flow-strip b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#d7eef6;color:#1C5E86}.home-v2 .flow-strip i{font-style:normal;color:#9db2c1}.home-v2 .subjects button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left}.home-v2 .subject-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.2);font:800 1.25rem Fredoka,sans-serif;margin-bottom:8px}.home-v2 .subjects button strong{font:700 1.2rem Fredoka,sans-serif}.home-v2 .subjects button em{margin-top:auto;font:800 .75rem Nunito,sans-serif;opacity:.92;font-style:normal}.home-v2 .subjects .selective .subject-icon{background:rgba(255,191,23,.2)}@media(max-width:520px){.home-v2 .flow-strip{gap:7px}.home-v2 .flow-strip i{display:none}.home-v2 .flow-strip span{width:calc(50% - 7px)}}</style>
 </head>
 <body class="home-v2 year-5">
 <header>
@@ -76,7 +76,7 @@ header img{height:52px}header nav a{color:inherit;text-decoration:none;font-weig
 <section class="hero">
   <div class="badge" id="badge">Year theme</div>
   <h1 id="heroTitle">Pick your year</h1>
-  <p id="heroLine">Each year has its own look. Tap a subject to see its sections.</p>
+  <p id="heroLine">Choose a year, open a subject and follow a clear Learn → Practise → Test pathway.</p><div class="hero-actions"><a class="hero-primary" href="#panel">Explore learning</a><a class="hero-secondary" href="selective.html">Selective preparation</a></div>
 </section>
 <section class="quick-links" aria-labelledby="quickLinksTitle">
   <h2 id="quickLinksTitle">Start with the path that fits you</h2>
@@ -89,7 +89,7 @@ header img{height:52px}header nav a{color:inherit;text-decoration:none;font-weig
   </div>
 </section>
 <section class="panel" id="panel">
-  <div class="panel-heading"><span>LEARNING LIBRARY</span><h2>Choose your year and subject</h2><p>Start with a subject, then choose a focused practice pathway.</p></div>
+  <div class="panel-heading"><span>LEARNING LIBRARY</span><h2>Choose your year and subject</h2><p>Start with a subject, then choose a focused practice pathway.</p></div><div class="flow-strip" aria-label="SkillUP learning pathway"><span><b>1</b> Learn</span><i>→</i><span><b>2</b> Practise</span><i>→</i><span><b>3</b> Test</span><i>→</i><span><b>4</b> Improve</span></div>
   <div class="years" id="years"></div>
   <div class="subjects" id="subjects"></div>
   <div class="streams" id="streams"></div>
@@ -141,8 +141,9 @@ function paint(reset){
   const canSel = year === '5' || year === '6';
   document.getElementById('navSelective').style.display = '';
   const list = canSel ? ['maths','vocabulary','english','selective'] : ['maths','vocabulary','english'];
+  const icons = {maths:'＋',vocabulary:'Aa',english:'文',selective:'★'};
   document.getElementById('subjects').innerHTML = list.map(s =>
-    `<button type="button" class="${s}" data-s="${s}">${s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)}<small>${blurb[s]}</small></button>`
+    `<button type="button" class="${s}" data-s="${s}"><span class="subject-icon" aria-hidden="true">${icons[s]}</span><strong>${s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)}</strong><small>${blurb[s]}</small><em>Open pathway →</em></button>`
   ).join('');
   if (reset) document.getElementById('streams').classList.remove('show');
   document.querySelectorAll('#subjects button').forEach(btn => {
