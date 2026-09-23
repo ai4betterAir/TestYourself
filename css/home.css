@@ -9,3 +9,12 @@
 footer{border-top:1px solid #e6eef3;padding:25px 0}.footer-row{display:flex;align-items:center;gap:35px}.footer-logo img{width:155px}.footer-row nav{display:flex;gap:20px;flex:1;justify-content:center}.footer-row nav a{text-decoration:none;font-size:.72rem;font-weight:800}.footer-row small{font-size:.68rem;color:#55718b}
 @media(max-width:1000px){.site-header nav a:nth-last-child(-n+4){display:none}.hero-inner{grid-template-columns:1fr 1fr}.year-grid{grid-template-columns:repeat(4,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}.benefit-grid{grid-template-columns:repeat(2,1fr)}.motto{display:none}}
 @media(max-width:700px){.wrap,.header-inner,.hero-inner{width:min(100% - 28px,1200px)}.site-header nav{display:none}.auth{margin-left:auto}.auth .sign-in{display:none}.hero-inner{grid-template-columns:1fr;min-height:auto;padding:45px 0 25px}.hero h1{font-size:3.15rem}.hero-art{height:330px}.book{width:310px;height:57px}.trust-row{gap:12px}.section-title{display:block}.section-title p{margin-top:6px}.year-grid{grid-template-columns:repeat(2,1fr)}.subject-grid,.assessment-grid,.benefit-grid{grid-template-columns:1fr}.final-cta{height:230px;padding:25px}.final-cta>a{left:25px;top:95px}.cta-note{display:none}.footer-row{display:block}.footer-row nav{display:flex;flex-wrap:wrap;justify-content:flex-start;margin:20px 0}.pencils{display:none}}
+
+/* Exact card treatment from approved mockup: clean clickable cards, no repeated arrows */
+.year-grid a{height:145px;box-shadow:0 7px 18px rgba(25,65,90,.09);border-radius:16px}
+.year-grid i{font-size:2.15rem}.year-grid b{font-size:1.22rem;margin-top:8px}.year-grid span{font-size:.78rem}.year-grid em{display:none!important}
+.subject-grid>a{min-height:102px;border-radius:16px;padding:15px 20px;box-shadow:0 5px 14px rgba(25,65,90,.07)}
+.subject-grid i{width:62px;height:62px;font-size:1.6rem}.subject-grid b{font-size:1.12rem}.subject-grid em{display:none!important}
+.assessment-grid>a{min-height:100px;border-radius:16px;padding:15px 22px;box-shadow:0 5px 14px rgba(25,65,90,.06)}
+.assessment-grid i{width:58px;height:58px;font-size:1.55rem}.assessment-grid em{display:none!important}
+.year-grid a:hover,.subject-grid>a:hover,.assessment-grid>a:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(25,65,90,.13)}
