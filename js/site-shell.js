@@ -111,7 +111,7 @@
     group.setAttribute('role', 'tablist');
     buttons.forEach(button => {
       button.setAttribute('role', 'tab');
-      button.setAttribute('aria-selected', String(button.classList.contains('active'));
+      button.setAttribute('aria-selected', String(button.classList.contains('active')));
       const mode = button.dataset.mode;
       if (mode && document.getElementById(`${mode}Panel`)) button.setAttribute('aria-controls', `${mode}Panel`);
     });
