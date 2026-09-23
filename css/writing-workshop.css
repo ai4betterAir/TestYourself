@@ -8,7 +8,7 @@
 .write-secs button.active{background:#1C5E86;color:#fff}
 .write-count{font-weight:800;color:#0D95A1;margin:8px 0}
 #writeBox{width:100%;border:2px solid #c5e3ee;border-radius:14px;padding:14px;font:700 1rem Nunito,sans-serif;line-height:1.55}
-.write-actions{display:flex;gap:10px;margin:12px 0}
+.write-actions{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
 .write-feedback{background:#e7f6fa;border-left:6px solid #FFBF17;border-radius:14px;padding:14px 16px}
 .write-feedback article{background:#fff;border-radius:12px;padding:10px 12px;margin:8px 0}
 .write-legend{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
@@ -19,5 +19,15 @@
 .mark-weak,.lg-weak{background:#d8f8ef;color:#0D6B4A}
 .write-marked{background:#fff;border-radius:12px;padding:12px 14px;line-height:1.7;white-space:pre-wrap}
 .write-marked mark{border-radius:4px;padding:0 2px}
+#writePunctHelp{margin:10px 0 14px;background:#e7f6fa;border-radius:12px;padding:10px 14px}
+#writePunctHelp summary{cursor:pointer;font-weight:800;color:#1C5E86}
+#writeSave{margin-top:16px;padding-top:14px;border-top:2px solid #c5e3ee}
+#writeSave h3{margin:0 0 6px;color:#1C5E86;font:700 1.2rem Fredoka,sans-serif}
+.save-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.save-grid label{font-weight:800;color:#1C5E86;font-size:.85rem}
+.save-grid input{width:100%;margin-top:4px;padding:8px 10px;border:2px solid #c5e3ee;border-radius:10px}
+#writeSaveList{padding-left:18px}
+#writeSaveList button{margin-left:8px;border:0;background:#FFBF17;border-radius:999px;padding:2px 10px;font-weight:800;cursor:pointer}
+@media(max-width:800px){.save-grid{grid-template-columns:1fr}}
 .streambar button[data-stream="essay"]{background:#0D95A1!important}
 .streambar button[data-stream="writing"]{color:#FFD633!important}
