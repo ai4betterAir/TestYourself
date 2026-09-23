@@ -34,6 +34,4 @@
   }
   add();
   setTimeout(add, 200);
-  setTimeout(add, 800);
-  setTimeout(add, 2000);
 })();
