@@ -1,85 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SkillUP</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
 <style>
-:root{--navy:#1C5E86;--blue:#2A72A5;--teal:#0D95A1;--purple:#6254A3;--gold:#FFBF17;--ink:#16344A;--paper:#F3F8FB}
-*{box-sizing:border-box}body{margin:0;font-family:Nunito,sans-serif;background:var(--paper);color:var(--ink)}
-header{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:#fff;border-bottom:3px solid var(--navy)}
-header img{height:52px}header nav a{color:var(--navy);text-decoration:none;font-weight:800;margin-left:16px}
-.hero{background:linear-gradient(120deg,#1C5E86,#2A72A5 55%,#0D95A1);color:#fff;text-align:center;padding:36px 18px 28px}
-.badge{display:inline-block;background:var(--gold);color:var(--ink);border-radius:999px;padding:6px 14px;font:700 .78rem Fredoka,sans-serif}
-.hero h1{font:700 clamp(2rem,5vw,3.1rem)/1.08 Fredoka,sans-serif;margin:12px 0 8px}
-.hero h1 span{color:var(--gold)}.hero p{max-width:640px;margin:0 auto;opacity:.95}
-.panel{width:min(920px,calc(100% - 28px));margin:-18px auto 48px;background:#fff;border-radius:24px;padding:22px 18px 28px;box-shadow:0 16px 40px rgba(28,94,134,.14)}
-.panel h2{margin:0 0 12px;text-align:center;font:700 1.15rem Fredoka,sans-serif;color:var(--navy)}
-.years{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px}
-.years button{border:0;min-width:86px;min-height:46px;border-radius:14px;background:#e7f3f8;color:var(--navy);font:700 .95rem Fredoka,sans-serif;cursor:pointer}
-.years button.on{background:var(--navy);color:#fff;outline:3px solid var(--gold)}
-.subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:8px}
-.subjects button{border:0;min-height:88px;border-radius:18px;color:#fff;font:700 1.15rem Fredoka,sans-serif;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.12);text-align:left;padding:18px 20px}
-.subjects button small{display:block;font:700 .78rem Nunito,sans-serif;opacity:.9;margin-top:4px}
-.subjects .maths{background:var(--blue)}.subjects .vocabulary{background:var(--purple)}
-.subjects .english{background:var(--teal)}.subjects .selective{background:#173B78;color:var(--gold)}
-.subjects button.off{opacity:.38;cursor:not-allowed}
-.subjects button.picked{outline:3px solid var(--gold);transform:translateY(-2px)}
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,sans-serif;color:#16344A;transition:background .35s}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:#fff}
+header img{height:52px}header nav a{color:inherit;text-decoration:none;font-weight:800;margin-left:16px}
+.hero{text-align:center;padding:34px 16px 26px;color:#fff;transition:background .35s}
+.badge{display:inline-block;border-radius:999px;padding:6px 14px;font:700 .78rem Fredoka,sans-serif;animation:pop .45s ease}
+.hero h1{font:700 clamp(2rem,5.2vw,3.2rem)/1.06 Fredoka,sans-serif;margin:12px 0 8px}
+.hero p{max-width:620px;margin:0 auto;font-weight:800}
+.panel{width:min(940px,calc(100% - 28px));margin:-20px auto 48px;background:#fff;padding:22px 18px 28px;box-shadow:0 18px 42px rgba(0,0,0,.12);transition:border-radius .3s,transform .35s}
+.flash{animation:flash .55s ease}
+@keyframes flash{0%{transform:scale(.97);filter:saturate(1.4)}60%{transform:scale(1.02)}100%{transform:none;filter:none}}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+.years{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 20px}
+.years button{border:0;min-width:86px;min-height:46px;font:700 .95rem Fredoka,sans-serif;cursor:pointer}
+.subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.subjects button{border:0;min-height:92px;color:#fff;font:700 1.15rem Fredoka,sans-serif;cursor:pointer;text-align:left;padding:18px 20px}
+.subjects button small{display:block;font:700 .78rem Nunito,sans-serif;opacity:.92;margin-top:4px}
+.subjects .maths{background:#2A72A5}.subjects .vocabulary{background:#6254A3}
+.subjects .english{background:#0D95A1}.subjects .selective{background:#173B78;color:#FFD633}
+.subjects button.off{opacity:.35;cursor:not-allowed}.subjects button.picked{outline:3px solid #FFBF17}
 .streams{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
-.streams.show{display:grid}.streams a{display:flex;align-items:center;justify-content:center;min-height:62px;border-radius:16px;color:#fff;text-decoration:none;font:700 1rem Fredoka,sans-serif;padding:10px}
-.streams a.math{background:var(--blue)}.streams a.purple{background:var(--purple)}
-.streams a.teal{background:var(--teal)}.streams a.navy{background:#173B78;color:var(--gold)}
+.streams.show{display:grid}.streams a{display:flex;align-items:center;justify-content:center;min-height:62px;color:#fff;text-decoration:none;font:700 1rem Fredoka,sans-serif;padding:10px}
+.streams a.math{background:#2A72A5}.streams a.purple{background:#6254A3}.streams a.teal{background:#0D95A1}.streams a.navy{background:#173B78;color:#FFD633}
+.year-K{background:#fff4e5}.year-K .hero{background:radial-gradient(circle at 20% 20%,#ffe08a,transparent 28%),linear-gradient(120deg,#ff7a59,#ffbf17 55%,#ff8ab3)}
+.year-K .panel{border-radius:40px}.year-K .years button{border-radius:999px;background:#ffe7c2;color:#8a3b00}.year-K .years button.on{background:#ff7a59;color:#fff}
+.year-K .subjects button,.year-K .streams a{border-radius:28px}
+.year-1{background:#e8f6ff}.year-1 .hero{background:linear-gradient(160deg,#49c0ff,#2A72A5)}
+.year-1 .panel{border-radius:16px}.year-1 .years button{border-radius:10px;background:#d7eef6;color:#1C5E86}.year-1 .years button.on{background:#2A72A5;color:#fff}
+.year-1 .subjects button,.year-1 .streams a{border-radius:12px}
+.year-2{background:#e9ffe8}.year-2 .hero{background:linear-gradient(135deg,#2DC799,#0D95A1 60%,#147a4a)}
+.year-2 .panel{border-radius:8px 32px}.year-2 .years button{border-radius:8px 18px;background:#d8f8ef;color:#0a5}.year-2 .years button.on{background:#147a4a;color:#fff}
+.year-2 .subjects button,.year-2 .streams a{border-radius:8px 22px}
+.year-3{background:#fff1e6}.year-3 .hero{background:linear-gradient(120deg,#ff8a3d,#BB0E3D)}
+.year-3 .panel{border-radius:22px;border:4px solid #ff8a3d}.year-3 .years button{border-radius:14px;background:#ffe0cc;color:#8a2a00}.year-3 .years button.on{background:#BB0E3D;color:#fff}
+.year-3 .subjects button,.year-3 .streams a{border-radius:16px}
+.year-4{background:#e7fbf7}.year-4 .hero{background:linear-gradient(120deg,#0D95A1,#1C5E86)}
+.year-4 .panel{border-radius:20px}.year-4 .years button{border-radius:14px;background:#d8f4f2;color:#0D95A1}.year-4 .years button.on{background:#0D95A1;color:#fff}
+.year-4 .subjects button,.year-4 .streams a{border-radius:18px}
+.year-5{background:#eef2ff}.year-5 .hero{background:linear-gradient(120deg,#1C5E86,#2A72A5 55%,#0D95A1)}
+.year-5 .panel{border-radius:24px}.year-5 .years button{border-radius:14px;background:#e7f3f8;color:#1C5E86}.year-5 .years button.on{background:#1C5E86;color:#fff;outline:3px solid #FFBF17}
+.year-5 .subjects button,.year-5 .streams a{border-radius:16px}
+.year-6{background:#1a1430;color:#f6f0ff}.year-6 header{background:#221a3d;color:#f6f0ff}.year-6 .hero{background:linear-gradient(120deg,#2a1850,#6254A3 50%,#1C5E86)}
+.year-6 .panel{background:#2b2150;color:#f6f0ff;border-radius:18px;border:2px solid #FFBF17}
+.year-6 .years button{border-radius:12px;background:#3b2d68;color:#f6f0ff}.year-6 .years button.on{background:#FFBF17;color:#1a1430}
+.year-6 .subjects button,.year-6 .streams a{border-radius:14px}
 @media(max-width:700px){header nav{display:none}.subjects,.streams{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body class="year-5">
 <header>
   <a href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
   <nav><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a href="english.html">English</a><a href="selective-practice.html">Selective</a></nav>
 </header>
 <section class="hero">
-  <div class="badge">NSW PRIMARY · YEARS K–6</div>
-  <h1>Choose a year.<br><span>Then a subject.</span></h1>
-  <p>Same layout as Selective: year, then subject cards, then the sections for that subject.</p>
+  <div class="badge" id="badge">Year theme</div>
+  <h1 id="heroTitle">Pick your year</h1>
+  <p id="heroLine">Each year has its own look. Tap a subject to see its sections.</p>
 </section>
-<section class="panel">
-  <h2>1. Year</h2>
+<section class="panel" id="panel">
   <div class="years" id="years"></div>
-  <h2>2. Subjects for <span id="yearLabel">Year 5</span></h2>
   <div class="subjects" id="subjects"></div>
-  <h2 id="secHead" hidden>3. Sections</h2>
   <div class="streams" id="streams"></div>
 </section>
 <script>
+const lines = {
+  K:['Kindy play space','Soft shapes, stories and first numbers.'],
+  1:['Year 1 building blocks','Clear cards for first independent work.'],
+  2:['Year 2 adventure','A sharper green track as skills grow.'],
+  3:['Year 3 heat','Bolder colour for longer reasoning.'],
+  4:['Year 4 focus','Teal and calm before Selective years.'],
+  5:['Year 5 Selective path','The familiar navy and gold stream board.'],
+  6:['Year 6 night garden','Darker, tighter, exam-ready.']
+};
 const vocab = {K:'vocabulary-year1-stories.html',1:'vocabulary-year1-stories.html',2:'vocabulary-year2.html',3:'vocabulary-year3.html',4:'vocabulary-year4.html',5:'vocabulary-year5.html',6:'vocabulary-year6.html'};
 const tracks = {
-  maths:[
-    ['Number & Algebra','practice.html?topic=number&focus=1','math'],
-    ['Measurement & Space','practice.html?topic=length&focus=1','teal'],
-    ['Statistics & Probability','practice.html?topic=data&focus=1','purple'],
-    ['Problem Solving','practice.html?topic=wordproblems&focus=1','navy']
-  ],
-  vocabulary:[
-    ['Word meaning','','purple'],
-    ['Words in context','','teal'],
-    ['Synonyms & antonyms','','math'],
-    ['Spelling','','navy']
-  ],
-  english:[
-    ['Reading','english-practice.html?skill=reading','teal'],
-    ['Grammar','english-practice.html?skill=grammar','purple'],
-    ['Spelling','english-practice.html?skill=spelling','math'],
-    ['Writing','english-practice.html?skill=writing','navy']
-  ],
-  selective:[
-    ['Mathematical Reasoning','selective-practice.html?stream=math','math'],
-    ['Thinking Skills','selective-practice.html?stream=thinking','purple'],
-    ['Reading','selective-practice.html?stream=reading','teal'],
-    ['Writing Vocabulary','selective-practice.html?stream=writing','navy'],
-    ['Writing','selective-practice.html?stream=essay','teal']
-  ]
+  maths:[['Number & Algebra','practice.html?topic=number&focus=1','math'],['Measurement & Space','practice.html?topic=length&focus=1','teal'],['Statistics & Probability','practice.html?topic=data&focus=1','purple'],['Problem Solving','practice.html?topic=wordproblems&focus=1','navy']],
+  vocabulary:[['Word meaning','','purple'],['Words in context','','teal'],['Synonyms & antonyms','','math'],['Spelling','','navy']],
+  english:[['Reading','english-practice.html?skill=reading','teal'],['Grammar','english-practice.html?skill=grammar','purple'],['Spelling','english-practice.html?skill=spelling','math'],['Writing','english-practice.html?skill=writing','navy']],
+  selective:[['Mathematical Reasoning','selective-practice.html?stream=math','math'],['Thinking Skills','selective-practice.html?stream=thinking','purple'],['Reading','selective-practice.html?stream=reading','teal'],['Writing Vocabulary','selective-practice.html?stream=writing','navy'],['Writing','selective-practice.html?stream=essay','teal']]
 };
 const blurb = {maths:'Number, measurement and problem solving',vocabulary:'Meaning, context and spelling',english:'Reading, grammar and writing',selective:'Year 5–6 NSW Selective streams'};
 let year = localStorage.getItem('skillup-year') || '5';
@@ -87,45 +91,43 @@ const years = document.getElementById('years');
 ['K','1','2','3','4','5','6'].forEach(y => {
   const b = document.createElement('button');
   b.textContent = y === 'K' ? 'Kindy' : 'Year ' + y;
-  b.onclick = () => { year = y; localStorage.setItem('skillup-year', y); paint(true); };
+  b.onclick = () => { year = y; localStorage.setItem('skillup-year', y); paint(true); flash(); };
   years.appendChild(b);
 });
 function withYear(url, subject){
-  if (!url) return vocab[year] || 'vocabulary.html';
-  const join = url.includes('?') ? '&' : '?';
-  if (subject === 'vocabulary') return vocab[year] || 'vocabulary.html';
-  return url + join + 'grade=' + year;
+  if (!url || subject === 'vocabulary') return vocab[year] || 'vocabulary.html';
+  return url + (url.includes('?') ? '&' : '?') + 'grade=' + year;
+}
+function flash(){
+  document.querySelector('.hero').classList.remove('flash');
+  document.getElementById('panel').classList.remove('flash');
+  void document.getElementById('panel').offsetWidth;
+  document.querySelector('.hero').classList.add('flash');
+  document.getElementById('panel').classList.add('flash');
 }
 function paint(reset){
+  document.body.className = 'year-' + year;
+  const L = lines[year];
+  document.getElementById('badge').textContent = L[0];
+  document.getElementById('heroTitle').innerHTML = year === 'K' ? 'Kindy <span>play space</span>' : 'Year ' + year + ' <span>is ready</span>';
+  document.getElementById('heroLine').textContent = L[1];
   [...years.children].forEach((b,i) => b.classList.toggle('on', ['K','1','2','3','4','5','6'][i] === year));
-  document.getElementById('yearLabel').textContent = year === 'K' ? 'Kindy' : 'Year ' + year;
   const canSel = year === '5' || year === '6';
   document.getElementById('subjects').innerHTML = ['maths','vocabulary','english','selective'].map(s =>
     `<button type="button" class="${s}${s==='selective'&&!canSel?' off':''}" data-s="${s}">${s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)}<small>${s==='selective'&&!canSel?'Opens in Year 5–6':blurb[s]}</small></button>`
   ).join('');
-  if (reset) hideSec();
+  if (reset) document.getElementById('streams').classList.remove('show');
   document.querySelectorAll('#subjects button').forEach(btn => {
     btn.onclick = () => {
       if (btn.classList.contains('off')) return;
       document.querySelectorAll('#subjects button').forEach(x => x.classList.toggle('picked', x === btn));
-      showSec(btn.dataset.s);
+      const s = btn.dataset.s;
+      const box = document.getElementById('streams');
+      box.className = 'streams show flash';
+      box.innerHTML = tracks[s].map(([label,url,cls]) => `<a class="${cls}" href="${withYear(url,s)}">${label}</a>`).join('');
     };
   });
 }
-function hideSec(){
-  document.getElementById('secHead').hidden = true;
-  document.getElementById('streams').classList.remove('show');
-}
-function showSec(s){
-  document.getElementById('secHead').hidden = false;
-  document.getElementById('secHead').textContent = '3. ' + (s==='maths'?'Maths':s[0].toUpperCase()+s.slice(1)) + ' sections';
-  document.getElementById('streams').className = 'streams show';
-  document.getElementById('streams').innerHTML = tracks[s].map(([label,url,cls]) =>
-    `<a class="${cls}" href="${withYear(url,s)}">${label}</a>`
-  ).join('');
-  document.getElementById('streams').scrollIntoView({behavior:'smooth',block:'nearest'});
-}
 paint(true);
 </script>
-</body>
-</html>
+</body></html>
