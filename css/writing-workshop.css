@@ -1,0 +1,14 @@
+#writeWorkshop{background:#fff;border-radius:20px;padding:22px;margin:0 0 22px;box-shadow:0 16px 40px rgba(28,94,134,.12)}
+.write-head h2{font:700 1.6rem Fredoka,sans-serif;color:#1C5E86;margin:0 0 6px}
+.write-head p,.write-prompt,.write-hint{color:#16344A;line-height:1.5}
+.write-label{font-weight:800;color:#1C5E86;display:block;margin:10px 0 6px}
+#writeTopic{width:100%;padding:10px 12px;border:2px solid #c5e3ee;border-radius:12px;font-weight:700}
+.write-secs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.write-secs button{border:0;background:#e7f3f8;color:#1C5E86;border-radius:999px;padding:8px 14px;font-weight:800;cursor:pointer}
+.write-secs button.active{background:#1C5E86;color:#fff}
+.write-count{font-weight:800;color:#0D95A1;margin:8px 0}
+#writeBox{width:100%;border:2px solid #c5e3ee;border-radius:14px;padding:14px;font:700 1rem Nunito,sans-serif;line-height:1.55}
+.write-actions{display:flex;gap:10px;margin:12px 0}
+.write-feedback{background:#e7f6fa;border-left:6px solid #FFBF17;border-radius:14px;padding:14px 16px}
+.write-feedback article{background:#fff;border-radius:12px;padding:10px 12px;margin:8px 0}
+.streambar button[data-stream="essay"]{background:#1C5E86!important}
