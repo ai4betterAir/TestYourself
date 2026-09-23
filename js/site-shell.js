@@ -11,7 +11,7 @@
       link.href = `${root}${href}`;
       document.head.appendChild(link);
     });
-    ['js/selective-writing-vocab-bank.js', 'js/selective-writing-workshop.js', 'js/selective-writing-boot.js'].forEach((src) => {
+    ['js/selective-writing-vocab-bank.js', 'js/selective-writing-workshop.js', 'js/selective-writing-boot.js', 'js/selective-writing-punct-help.js'].forEach((src) => {
       if (document.querySelector(`script[src*="${src.split('/').pop()}"]`)) return;
       const s = document.createElement('script');
       s.src = `${root}${src}`;
