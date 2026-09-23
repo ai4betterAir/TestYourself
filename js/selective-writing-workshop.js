@@ -1,86 +1,88 @@
 (function () {
   const TOPICS = [
-    { id: "screens", type: "persuasive", title: "Screens before bed", prompt: "Should children be allowed screens in the hour before bedtime? Write to persuade a parent audience.", form: "Persuasive essay" },
-    { id: "homework", type: "persuasive", title: "Weekend homework", prompt: "Homework should not be set on weekends. Write to persuade your school principal.", form: "Persuasive letter" },
-    { id: "park", type: "persuasive", title: "A new park", prompt: "Your council will either build a new playground or extra car parks. Write to persuade the council.", form: "Persuasive letter" },
-    { id: "uniform", type: "discursive", title: "School uniform", prompt: "Some people say uniforms build belonging. Others say they hide individuality. Explore both sides, then give a reasoned view.", form: "Discursive essay" },
-    { id: "wrong", type: "discursive", title: "When things go wrong", prompt: "The greatest discoveries happen when things go wrong. Explore this idea.", form: "Discursive / reflective" },
-    { id: "door", type: "narrative", title: "The doorway", prompt: "Write a story inspired by a glowing doorway at the edge of a quiet street at dusk.", form: "Narrative" },
-    { id: "change", type: "narrative", title: "A changed view", prompt: "Write about a moment that changed how you saw someone.", form: "Narrative" },
-    { id: "speech", type: "speech", title: "One small change", prompt: "Write a short speech to Year 6: one small school change that would help students learn better.", form: "Speech" }
+    { id: "screens", type: "persuasive", title: "Screens before bed", prompt: "Should children be allowed screens in the hour before bedtime? Write to persuade a parent audience.", form: "Persuasive essay", keys: ["screen", "phone", "bed", "sleep", "night", "parent"] },
+    { id: "homework", type: "persuasive", title: "Weekend homework", prompt: "Homework should not be set on weekends. Write to persuade your school principal.", form: "Persuasive letter", keys: ["homework", "weekend", "principal", "rest", "family"] },
+    { id: "park", type: "persuasive", title: "A new park", prompt: "Your council will either build a new playground or extra car parks. Write to persuade the council.", form: "Persuasive letter", keys: ["park", "playground", "council", "car", "children"] },
+    { id: "uniform", type: "discursive", title: "School uniform", prompt: "Some people say uniforms build belonging. Others say they hide individuality. Explore both sides, then give a reasoned view.", form: "Discursive essay", keys: ["uniform", "belong", "individual", "school"] },
+    { id: "wrong", type: "discursive", title: "When things go wrong", prompt: "The greatest discoveries happen when things go wrong. Explore this idea.", form: "Discursive / reflective", keys: ["wrong", "discover", "mistake", "fail", "learn"] },
+    { id: "door", type: "narrative", title: "The doorway", prompt: "Write a story inspired by a glowing doorway at the edge of a quiet street at dusk.", form: "Narrative", keys: ["door", "street", "glow", "dusk", "light"] },
+    { id: "change", type: "narrative", title: "A changed view", prompt: "Write about a moment that changed how you saw someone.", form: "Narrative", keys: ["saw", "changed", "moment", "noticed"] },
+    { id: "speech", type: "speech", title: "One small change", prompt: "Write a short speech to Year 6: one small school change that would help students learn better.", form: "Speech", keys: ["year", "school", "change", "learn", "class"] }
   ];
   const SECTIONS = [
-    { id: "intro", label: "Introduction", min: 60, max: 90, hint: "Hook + position + preview of reasons." },
-    { id: "body", label: "Body", min: 120, max: 180, hint: "One or two PEEL paragraphs. Point, evidence, explain, link." },
-    { id: "end", label: "Conclusion", min: 50, max: 80, hint: "Restate the position in new words. Why it matters. No new big idea." },
-    { id: "full", label: "Full piece", min: 300, max: 450, hint: "Aim for 300-450 words in 30 minutes. Quality beats padding." }
+    { id: "intro", label: "Introduction", min: 60, max: 90, hint: "Hook + position + preview of two reasons." },
+    { id: "body", label: "Body", min: 120, max: 180, hint: "PEEL: point, evidence, explain, link." },
+    { id: "end", label: "Conclusion", min: 50, max: 80, hint: "Restate. Why it matters. No new idea." },
+    { id: "full", label: "Full piece", min: 300, max: 450, hint: "300–450 words. Beginning, middle, end." }
   ];
+  let currentSectionId = "intro";
   const JOINERS = ["eventually","finally","initially","meanwhile","consequently","therefore","thus","however","although","whereas","nevertheless","furthermore","moreover","in addition","for example","for instance","fortunately","unfortunately","obviously","clearly","importantly"];
-  const WEAK = /^(very|really|good|bad|nice|stuff|things|sad|happy|said)$/i;
-  const TYPOS = {
-    teh:"the", recieve:"receive", recieved:"received", definately:"definitely", seperate:"separate", seperately:"separately",
-    occured:"occurred", occurence:"occurrence", grammer:"grammar", untill:"until", begining:"beginning", adress:"address",
-    tommorrow:"tomorrow", truely:"truly", whitch:"which", wich:"which", becuase:"because", becaus:"because",
-    freind:"friend", thier:"their", accomodate:"accommodate", enviroment:"environment", goverment:"government",
-    independant:"independent", neccessary:"necessary", succesful:"successful", sucessful:"successful",
-    writting:"writing", writen:"written", arguement:"argument", beleive:"believe", belive:"believe",
-    alot:"a lot", aswell:"as well", eachother:"each other", infront:"in front", atleast:"at least",
-    occassion:"occasion", publically:"publicly", realy:"really", finaly:"finally", usualy:"usually",
-    imporant:"important", diferent:"different", proberly:"probably", probly:"probably", wether:"whether",
-    wheather:"weather", kidz:"kids", doesnt:"doesn't", cant:"can't", wont:"won't", isnt:"isn't", didnt:"didn't",
-    dont:"don't", theyre:"they're", youre:"you're", its:"it's"
-  };
+  const WEAK = /^(very|really|good|bad|nice|stuff|things|sad|happy|said|try|understand)$/i;
+  const TYPOS = { teh:"the", recieve:"receive", definately:"definitely", seperate:"separate", grammer:"grammar", becuase:"because", thier:"their", beleive:"believe", writting:"writing", alot:"a lot", dont:"don't", cant:"can't", wont:"won't", doesnt:"doesn't", didnt:"didn't", isnt:"isn't", theyre:"they're", youre:"you're" };
+  const FRAG_START = /^(so that|so we|because|although|which|who|when|if|and then|and we)\b/i;
   const words = (t) => (t.trim().match(/\b[\w'-]+\b/g) || []).length;
-  function esc(s) { return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
-  function analyse(text) {
+  function analyse(text, topic) {
     const issues = [];
-    const parts = text.split(/(\s+|[^\w']+)/);
+    const low = text.toLowerCase();
+    const n = words(text);
     let html = "";
-    let prevWord = "";
-    let atSentenceStart = true;
-    parts.forEach((part) => {
+    let prev = "";
+    let start = true;
+    text.split(/(\s+|[^\w']+)/).forEach((part) => {
       if (!part) return;
       if (/^\s+$/.test(part)) { html += part; return; }
       if (/^[^\w']+$/.test(part)) {
-        if (/[,]{2,}|[.]{3,}|[!]{3,}|[?]{3,}/.test(part) || /[,.!?][,.!?]/.test(part) && part !== "...") {
-          html += "<mark class=\"mark-punct\" title=\"Check punctuation\">" + esc(part) + "</mark>";
-          issues.push({ type: "punct", tip: "Repeated or mixed punctuation: " + part });
-        } else html += esc(part);
-        if (/[.!?]/.test(part)) atSentenceStart = true;
+        html += esc(part);
+        if (/[.!?]/.test(part)) start = true;
         return;
       }
-      const raw = part;
-      const key = raw.toLowerCase();
+      const key = part.toLowerCase();
       let cls = "", title = "";
-      if (TYPOS[key] && !(key === "its" && !/^(a|the|own|place|effect|impact)$/i.test(prevWord))) {
-        if (key === "its") {
-          /* skip generic its */
-        } else {
-          cls = "mark-spell"; title = "Spelling: try \u201c" + TYPOS[key] + "\u201d";
-          issues.push({ type: "spell", tip: raw + " → " + TYPOS[key] });
-        }
-      }
-      if (!cls && WEAK.test(key)) { cls = "mark-weak"; title = "Thin word — choose a more precise one"; issues.push({ type: "weak", tip: raw }); }
-      if (!cls && prevWord && prevWord.toLowerCase() === key) { cls = "mark-gram"; title = "Repeated word"; issues.push({ type: "gram", tip: "Repeated \u201c" + raw + "\u201d" }); }
-      if (!cls && atSentenceStart && /^[a-z]/.test(raw)) { cls = "mark-punct"; title = "Start the sentence with a capital"; issues.push({ type: "punct", tip: "Capitalise \u201c" + raw + "\u201d" }); }
-      if (!cls && key === "i") { cls = "mark-gram"; title = "The pronoun I is always capital"; issues.push({ type: "gram", tip: "i → I" }); }
-      if (cls) html += "<mark class=\"" + cls + "\" title=\"" + esc(title) + "\">" + esc(raw) + "</mark>";
-      else html += esc(raw);
-      prevWord = raw;
-      atSentenceStart = false;
+      if (TYPOS[key]) { cls = "mark-spell"; title = "Spelling: " + TYPOS[key]; issues.push({ type: "spell", tip: part + " → " + TYPOS[key], word: part }); }
+      if (!cls && /^(she|he|they|it|her|him)$/i.test(part) && n < 25) { cls = "mark-gram"; title = "This pronoun has no person named yet"; issues.push({ type: "gram", tip: "“" + part + "” has no clear person. Name who you mean." }); }
+      if (!cls && WEAK.test(key)) { cls = "mark-weak"; title = "Vague word"; issues.push({ type: "weak", tip: "“" + part + "” is vague." }); }
+      if (!cls && start && /^[a-z]/.test(part)) { cls = "mark-punct"; title = "Capital letter needed"; issues.push({ type: "punct", tip: "Capitalise “" + part + "”." }); }
+      if (cls) html += "<mark class=\"" + cls + "\" title=\"" + esc(title) + "\">" + esc(part) + "</mark>";
+      else html += esc(part);
+      prev = part; start = false;
     });
-    const trimmed = text.trim();
-    if (trimmed && !/[.!?]$/.test(trimmed)) {
-      issues.push({ type: "punct", tip: "The last sentence needs end punctuation (. ? !)" });
+    if (FRAG_START.test(text.trim())) {
+      issues.push({ type: "gram", tip: "This opening is a fragment. “" + text.trim().slice(0, 40) + "…” cannot stand as a full sentence. Add a main clause: who does what." });
+      html = "<mark class=\"mark-gram\" title=\"Sentence fragment\">" + html + "</mark>";
     }
-    if (/[a-zA-Z]\s+[,.]/.test(text) === false && /\s[,.]/.test(text)) {
-      issues.push({ type: "punct", tip: "Remove the space before a comma or full stop." });
+    if (text.trim() && !/[.!?]$/.test(text.trim())) issues.push({ type: "punct", tip: "Add a full stop, question mark or exclamation mark at the end." });
+    const hits = (topic.keys || []).filter((k) => low.includes(k));
+    if (text.trim() && hits.length === 0) issues.push({ type: "task", tip: "This text does not mention the topic (“" + topic.title + "”). Markers score task first. Use words from the prompt." });
+    if (n > 0 && n < 12) issues.push({ type: "task", tip: "Only " + n + " words — there is no position, reason or example yet." });
+    return { html, issues, hits, n };
+  }
+
+  function specificFixes(text, topic, sec) {
+    const t = text.trim() || "(empty)";
+    const rewrite = stance(topic);
+    const out = [];
+    if (FRAG_START.test(t)) {
+      out.push("Your line starts with a joining tag and never finishes the thought. Rewrite as a full sentence, e.g. “Parents should switch screens off before bed so children can sleep well.”");
     }
-    if (/[a-zA-Z][,.;:][a-zA-Z]/.test(text)) {
-      issues.push({ type: "punct", tip: "Add a space after a comma or full stop." });
+    if (/\b(she|he|they)\b/i.test(t) && words(t) < 25) {
+      out.push("“She/he/they” is unclear. Name the person: a Year 6 student, a parent, or you.");
     }
-    return { html, issues };
+    if ((topic.keys || []).every((k) => !t.toLowerCase().includes(k))) {
+      out.push("Stay on this prompt: “" + topic.prompt + "” Your sentence never names that issue.");
+    }
+    if (sec.id === "intro" || sec.id === "full") {
+      out.push("A tighter opening for this topic: “" + hook(topic) + " " + rewrite + "”");
+    }
+    if (sec.id === "body") {
+      out.push("Turn your idea into PEEL for this topic. Point: " + rewrite + " Example: one specific evening at home. Explain how that example supports the point. Link back with Therefore.");
+    }
+    if (sec.id === "end") {
+      out.push("Close on this topic only: “In short, " + rewrite + " Consequently, families can protect tomorrow’s learning tonight.”");
+    }
+    if (!out.length) out.push("Keep the meaning, but name the topic and finish the sentence.");
+    return out.slice(0, 3);
   }
 
   function build() {
@@ -90,56 +92,69 @@
     const box = document.createElement("section");
     box.id = "writeWorkshop";
     box.hidden = true;
-    box.innerHTML = `<div class="write-head"><h2>Selective Writing workshop</h2><p>Check marks spelling in pink, punctuation in gold, grammar in purple, and thin words in green.</p></div><label class="write-label">Topic</label><select id="writeTopic"></select><p class="write-prompt" id="writePrompt"></p><div class="write-secs" id="writeSecs"></div><p class="write-hint" id="writeHint"></p><div class="write-count"><b id="writeWords">0</b> words · target <span id="writeTarget">60–90</span></div><textarea id="writeBox" rows="12" placeholder="Type here…"></textarea><div class="write-actions"><button type="button" class="check" id="writeCheck">Check this section</button><button type="button" class="next" id="writeClear">Clear</button></div><div id="writeFeedback" class="write-feedback" hidden></div>`;
+    box.innerHTML = `<div class="write-head"><h2>Selective Writing workshop</h2><p>Check now comments on <em>your</em> sentences: task, fragment, vague pronoun, spelling and punctuation.</p></div><label class="write-label">Topic</label><select id="writeTopic"></select><p class="write-prompt" id="writePrompt"></p><div class="write-secs" id="writeSecs"></div><p class="write-hint" id="writeHint"></p><div class="write-count"><b id="writeWords">0</b> words · target <span id="writeTarget">60–90</span></div><textarea id="writeBox" rows="12" placeholder="Type here…"></textarea><div class="write-actions"><button type="button" class="check" id="writeCheck">Check this section</button><button type="button" class="next" id="writeClear">Clear</button></div><div id="writeFeedback" class="write-feedback" hidden></div>`;
     host.insertBefore(box, host.querySelector("#practiceView") || host.firstChild);
     const sel = box.querySelector("#writeTopic");
     TOPICS.forEach((t) => { const o = document.createElement("option"); o.value = t.id; o.textContent = t.form + " · " + t.title; sel.appendChild(o); });
-    SECTIONS.forEach((s, i) => { const b = document.createElement("button"); b.type = "button"; b.dataset.sec = s.id; b.textContent = s.label; if (!i) b.className = "active"; box.querySelector("#writeSecs").appendChild(b); });
+    SECTIONS.forEach((s, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.dataset.sec = s.id; b.textContent = s.label;
+      if (!i) b.className = "active";
+      box.querySelector("#writeSecs").appendChild(b);
+    });
     sel.onchange = refresh;
-    box.querySelector("#writeSecs").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; box.querySelectorAll("#writeSecs button").forEach((x) => x.classList.toggle("active", x === b)); refresh(); };
+    box.querySelector("#writeSecs").onclick = (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      currentSectionId = b.dataset.sec;
+      box.querySelectorAll("#writeSecs button").forEach((x) => x.classList.toggle("active", x === b));
+      refresh();
+    };
     box.querySelector("#writeBox").oninput = () => { box.querySelector("#writeWords").textContent = words(box.querySelector("#writeBox").value); };
     box.querySelector("#writeCheck").onclick = check;
     box.querySelector("#writeClear").onclick = () => { box.querySelector("#writeBox").value = ""; box.querySelector("#writeWords").textContent = "0"; box.querySelector("#writeFeedback").hidden = true; };
     refresh();
   }
   function currentTopic() { return TOPICS.find((t) => t.id === document.getElementById("writeTopic").value) || TOPICS[0]; }
-  function currentSec() { const id = document.querySelector("#writeSecs button.active")?.dataset.sec || "intro"; return SECTIONS.find((s) => s.id === id); }
-  function refresh() { const t = currentTopic(), s = currentSec(); document.getElementById("writePrompt").textContent = t.prompt + "  Form: " + t.form + "."; document.getElementById("writeHint").textContent = s.hint; document.getElementById("writeTarget").textContent = s.min + "–" + s.max; document.getElementById("writeWords").textContent = words(document.getElementById("writeBox").value); }
+  function currentSec() { return SECTIONS.find((s) => s.id === currentSectionId) || SECTIONS[0]; }
+  function refresh() {
+    const t = currentTopic(), s = currentSec();
+    document.getElementById("writePrompt").textContent = t.prompt + "  Form: " + t.form + ".";
+    document.getElementById("writeHint").textContent = s.hint;
+    document.getElementById("writeTarget").textContent = s.min + "–" + s.max;
+    document.getElementById("writeWords").textContent = words(document.getElementById("writeBox").value);
+  }
   function check() {
     const text = document.getElementById("writeBox").value;
     const s = currentSec(), t = currentTopic();
-    const n = words(text);
-    const found = JOINERS.filter((w) => new RegExp("\\b" + w.replace(" ", "\\s+") + "\\b", "i").test(text));
-    const marked = analyse(text);
+    const marked = analyse(text, t);
     const notes = [];
-    if (!text.trim()) notes.push("Write something first.");
-    else {
-      if (n < s.min) notes.push("Too short (" + n + " words). Target " + s.min + "–" + s.max + ".");
-      else if (n > s.max + 40) notes.push("A little long (" + n + "). Cut repeats.");
-      else notes.push("Word count is in a useful band (" + n + ").");
-      if (found.length) notes.push("Joining words used: " + found.join(", ") + ".");
-      else notes.push("Add a joining word: however, therefore, for example, consequently.");
-      const spell = marked.issues.filter((i) => i.type === "spell");
-      const punct = marked.issues.filter((i) => i.type === "punct");
-      const gram = marked.issues.filter((i) => i.type === "gram");
-      if (spell.length) notes.push("Spelling: " + spell.map((i) => i.tip).join("; ") + ".");
-      if (punct.length) notes.push("Punctuation: " + punct.map((i) => i.tip).join("; ") + ".");
-      if (gram.length) notes.push("Grammar: " + gram.map((i) => i.tip).join("; ") + ".");
-      if (!spell.length && !punct.length && !gram.length) notes.push("No common spelling, punctuation or grammar flags in this checker.");
-    }
-    const options = suggest(t, s);
+    notes.push("Section: " + s.label + ". Target " + s.min + "–" + s.max + " words. You wrote " + marked.n + ".");
+    if (!text.trim()) notes.push("The box is empty.");
+    marked.issues.forEach((i) => notes.push(i.tip));
+    const join = JOINERS.filter((w) => new RegExp("\\b" + w.replace(" ", "\\s+") + "\\b", "i").test(text));
+    if (text.trim() && !join.length) notes.push("No joining word yet. After a full sentence, try however or therefore.");
     const host = document.getElementById("writeFeedback");
     host.hidden = false;
-    host.innerHTML = "<h3>Check</h3><div class=\"write-legend\"><span class=\"lg-spell\">Spelling</span><span class=\"lg-punct\">Punctuation</span><span class=\"lg-gram\">Grammar</span><span class=\"lg-weak\">Thin word</span></div><div class=\"write-marked\">" + (marked.html || "—") + "</div><ul>" + notes.map((x) => "<li>" + x + "</li>").join("") + "</ul><h3>Ways to lift this</h3>" + options.map((x, i) => "<article><b>Option " + (i + 1) + "</b><p>" + x + "</p></article>").join("");
+    host.innerHTML = "<h3>On your writing</h3><div class=\"write-legend\"><span class=\"lg-spell\">Spelling</span><span class=\"lg-punct\">Punctuation</span><span class=\"lg-gram\">Grammar / fragment</span><span class=\"lg-weak\">Vague word</span></div><div class=\"write-marked\">" + (marked.html || "—") + "</div><ul>" + notes.map((x) => "<li>" + x + "</li>").join("") + "</ul><h3>Fix this piece</h3>" + specificFixes(text, t, s).map((x, i) => "<article><b>Fix " + (i + 1) + "</b><p>" + x + "</p></article>").join("");
   }
-  function suggest(topic, sec) {
-    if (sec.id === "intro") return [hook(topic) + " " + stance(topic), "Start with a small scene, then state your view in one sentence.", "Preview two reasons without arguing them yet."];
-    if (sec.id === "body") return ["Use PEEL: point, example, explain, link.", "However, this only works if the example is specific.", "Therefore, end the paragraph by tying the example back to the prompt."];
-    if (sec.id === "end") return ["In short, " + stance(topic) + " This matters because daily habits shape learning.", "Do not add a new reason.", "Close with consequently or finally."];
-    return ["Plan 5 minutes, write 20, edit 5.", "300–450 words is enough if every paragraph earns its place.", "Check form: story, letter or speech must match the prompt."];
+  function hook(t) {
+    if (t.type === "narrative") return "The street was almost dark when the doorway lit up.";
+    if (t.type === "speech") return "Year 6, one small change would make tomorrow’s lessons easier.";
+    if (t.id === "screens") return "An hour of screen light at night steals the next morning’s focus.";
+    return "This choice will shape how students learn this year.";
   }
-  function hook(t) { if (t.type === "narrative") return "The street was almost dark when the doorway lit up."; if (t.type === "speech") return "Year 6, one small change would make tomorrow's lessons easier."; return "Every evening choice either protects learning or quietly steals it."; }
-  function stance(t) { if (t.id === "screens") return "Screens should stay off in the last hour before bed."; if (t.id === "homework") return "Weekend homework should be rare, not routine."; if (t.id === "park") return "A playground would serve more families than extra car parks."; if (t.id === "uniform") return "Uniforms can support belonging if students still have some choice."; if (t.id === "speech") return "Ten quiet minutes at the start of class would help everyone settle."; return "The idea is worth exploring from more than one side."; }
-  window.SKILLUP_WRITING_WORKSHOP = { show() { build(); const el = document.getElementById("writeWorkshop"); if (el) el.hidden = false; }, hide() { const el = document.getElementById("writeWorkshop"); if (el) el.hidden = true; } };
+  function stance(t) {
+    if (t.id === "screens") return "Screens should stay off in the last hour before bed.";
+    if (t.id === "homework") return "Weekend homework should be rare, not routine.";
+    if (t.id === "park") return "A playground would serve more families than extra car parks.";
+    if (t.id === "uniform") return "Uniforms can support belonging if students still have some choice.";
+    if (t.id === "speech") return "Ten quiet minutes at the start of class would help everyone settle.";
+    if (t.id === "door") return "I had to decide whether to step through.";
+    return "The idea is worth exploring from more than one side.";
+  }
+  window.SKILLUP_WRITING_WORKSHOP = {
+    show() { build(); const el = document.getElementById("writeWorkshop"); if (el) el.hidden = false; },
+    hide() { const el = document.getElementById("writeWorkshop"); if (el) el.hidden = true; }
+  };
   build();
 })();
