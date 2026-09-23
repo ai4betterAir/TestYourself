@@ -65,8 +65,7 @@
  };
  document.getElementById('hub-year').textContent=label;document.getElementById('crumb-year').textContent=label;document.getElementById('hub-tagline').textContent=text[y][0];document.getElementById('hub-copy').textContent=text[y][1];
  document.body.dataset.year=y;
- const routes={maths:'maths.html',english:'year1-english.html',reading:'year1-reading.html',vocabulary:'year1-vocabulary.html',science:'science.html','general-knowledge':'general-knowledge.html'};
- document.querySelectorAll('[data-subject]').forEach(a=>a.href=routes[a.dataset.subject]+'?year='+encodeURIComponent(y));
+ document.querySelectorAll('[data-subject]').forEach(a=>a.href='subject.html?year='+encodeURIComponent(y)+'&subject='+encodeURIComponent(a.dataset.subject));
 })();
 </script>
 </body></html>
