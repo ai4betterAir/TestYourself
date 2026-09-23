@@ -9,6 +9,15 @@
   ]);
   if (legacyPages.has(pageName)) document.body.classList.add('legacy-learning-page');
 
+  if (['selective-practice.html', 'selective.html'].includes(pageName)) {
+    if (!document.querySelector('link[href*="selective-color.css"]')) {
+      const sel = document.createElement('link');
+      sel.rel = 'stylesheet';
+      sel.href = `${root}css/selective-color.css`;
+      document.head.appendChild(sel);
+    }
+  }
+
   if (main && !main.id) main.id = 'main-content';
   if (main && !document.querySelector('.skip-link')) {
     const skip = document.createElement('a');
@@ -102,7 +111,7 @@
     group.setAttribute('role', 'tablist');
     buttons.forEach(button => {
       button.setAttribute('role', 'tab');
-      button.setAttribute('aria-selected', String(button.classList.contains('active')));
+      button.setAttribute('aria-selected', String(button.classList.contains('active'));
       const mode = button.dataset.mode;
       if (mode && document.getElementById(`${mode}Panel`)) button.setAttribute('aria-controls', `${mode}Panel`);
     });
