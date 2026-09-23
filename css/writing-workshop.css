@@ -11,4 +11,13 @@
 .write-actions{display:flex;gap:10px;margin:12px 0}
 .write-feedback{background:#e7f6fa;border-left:6px solid #FFBF17;border-radius:14px;padding:14px 16px}
 .write-feedback article{background:#fff;border-radius:12px;padding:10px 12px;margin:8px 0}
-.streambar button[data-stream="essay"]{background:#1C5E86!important}
+.write-legend{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.write-legend span{border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:800}
+.mark-spell,.lg-spell{background:#fde8ee;color:#BB0E3D}
+.mark-punct,.lg-punct{background:#fff2d1;color:#8a4b00}
+.mark-gram,.lg-gram{background:#e8e3f6;color:#6254A3}
+.mark-weak,.lg-weak{background:#d8f8ef;color:#0D6B4A}
+.write-marked{background:#fff;border-radius:12px;padding:12px 14px;line-height:1.7;white-space:pre-wrap}
+.write-marked mark{border-radius:4px;padding:0 2px}
+.streambar button[data-stream="essay"]{background:#0D95A1!important}
+.streambar button[data-stream="writing"]{color:#FFD633!important}

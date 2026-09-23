@@ -16,8 +16,73 @@
     { id: "full", label: "Full piece", min: 300, max: 450, hint: "Aim for 300-450 words in 30 minutes. Quality beats padding." }
   ];
   const JOINERS = ["eventually","finally","initially","meanwhile","consequently","therefore","thus","however","although","whereas","nevertheless","furthermore","moreover","in addition","for example","for instance","fortunately","unfortunately","obviously","clearly","importantly"];
-  const WEAK = /\b(very|really|good|bad|nice|stuff|things|a lot|got|get|sad|happy|said)\b/gi;
+  const WEAK = /^(very|really|good|bad|nice|stuff|things|sad|happy|said)$/i;
+  const TYPOS = {
+    teh:"the", recieve:"receive", recieved:"received", definately:"definitely", seperate:"separate", seperately:"separately",
+    occured:"occurred", occurence:"occurrence", grammer:"grammar", untill:"until", begining:"beginning", adress:"address",
+    tommorrow:"tomorrow", truely:"truly", whitch:"which", wich:"which", becuase:"because", becaus:"because",
+    freind:"friend", thier:"their", accomodate:"accommodate", enviroment:"environment", goverment:"government",
+    independant:"independent", neccessary:"necessary", succesful:"successful", sucessful:"successful",
+    writting:"writing", writen:"written", arguement:"argument", beleive:"believe", belive:"believe",
+    alot:"a lot", aswell:"as well", eachother:"each other", infront:"in front", atleast:"at least",
+    occassion:"occasion", publically:"publicly", realy:"really", finaly:"finally", usualy:"usually",
+    imporant:"important", diferent:"different", proberly:"probably", probly:"probably", wether:"whether",
+    wheather:"weather", kidz:"kids", doesnt:"doesn't", cant:"can't", wont:"won't", isnt:"isn't", didnt:"didn't",
+    dont:"don't", theyre:"they're", youre:"you're", its:"it's"
+  };
   const words = (t) => (t.trim().match(/\b[\w'-]+\b/g) || []).length;
+  function esc(s) { return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+  function analyse(text) {
+    const issues = [];
+    const parts = text.split(/(\s+|[^\w']+)/);
+    let html = "";
+    let prevWord = "";
+    let atSentenceStart = true;
+    parts.forEach((part) => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { html += part; return; }
+      if (/^[^\w']+$/.test(part)) {
+        if (/[,]{2,}|[.]{3,}|[!]{3,}|[?]{3,}/.test(part) || /[,.!?][,.!?]/.test(part) && part !== "...") {
+          html += "<mark class=\"mark-punct\" title=\"Check punctuation\">" + esc(part) + "</mark>";
+          issues.push({ type: "punct", tip: "Repeated or mixed punctuation: " + part });
+        } else html += esc(part);
+        if (/[.!?]/.test(part)) atSentenceStart = true;
+        return;
+      }
+      const raw = part;
+      const key = raw.toLowerCase();
+      let cls = "", title = "";
+      if (TYPOS[key] && !(key === "its" && !/^(a|the|own|place|effect|impact)$/i.test(prevWord))) {
+        if (key === "its") {
+          /* skip generic its */
+        } else {
+          cls = "mark-spell"; title = "Spelling: try \u201c" + TYPOS[key] + "\u201d";
+          issues.push({ type: "spell", tip: raw + " → " + TYPOS[key] });
+        }
+      }
+      if (!cls && WEAK.test(key)) { cls = "mark-weak"; title = "Thin word — choose a more precise one"; issues.push({ type: "weak", tip: raw }); }
+      if (!cls && prevWord && prevWord.toLowerCase() === key) { cls = "mark-gram"; title = "Repeated word"; issues.push({ type: "gram", tip: "Repeated \u201c" + raw + "\u201d" }); }
+      if (!cls && atSentenceStart && /^[a-z]/.test(raw)) { cls = "mark-punct"; title = "Start the sentence with a capital"; issues.push({ type: "punct", tip: "Capitalise \u201c" + raw + "\u201d" }); }
+      if (!cls && key === "i") { cls = "mark-gram"; title = "The pronoun I is always capital"; issues.push({ type: "gram", tip: "i → I" }); }
+      if (cls) html += "<mark class=\"" + cls + "\" title=\"" + esc(title) + "\">" + esc(raw) + "</mark>";
+      else html += esc(raw);
+      prevWord = raw;
+      atSentenceStart = false;
+    });
+    const trimmed = text.trim();
+    if (trimmed && !/[.!?]$/.test(trimmed)) {
+      issues.push({ type: "punct", tip: "The last sentence needs end punctuation (. ? !)" });
+    }
+    if (/[a-zA-Z]\s+[,.]/.test(text) === false && /\s[,.]/.test(text)) {
+      issues.push({ type: "punct", tip: "Remove the space before a comma or full stop." });
+    }
+    if (/[a-zA-Z][,.;:][a-zA-Z]/.test(text)) {
+      issues.push({ type: "punct", tip: "Add a space after a comma or full stop." });
+    }
+    return { html, issues };
+  }
+
   function build() {
     if (document.getElementById("writeWorkshop")) return;
     const host = document.querySelector(".wrap") || document.querySelector("main");
@@ -25,7 +90,7 @@
     const box = document.createElement("section");
     box.id = "writeWorkshop";
     box.hidden = true;
-    box.innerHTML = `<div class="write-head"><h2>Selective Writing workshop</h2><p>Real test: 30 minutes, typed, 25% of the score. Practise intro, body or conclusion, or a full piece. Check gives word-count advice and better joining words.</p></div><label class="write-label">Topic</label><select id="writeTopic"></select><p class="write-prompt" id="writePrompt"></p><div class="write-secs" id="writeSecs"></div><p class="write-hint" id="writeHint"></p><div class="write-count"><b id="writeWords">0</b> words · target <span id="writeTarget">60–90</span></div><textarea id="writeBox" rows="12" placeholder="Type here…"></textarea><div class="write-actions"><button type="button" class="check" id="writeCheck">Check this section</button><button type="button" class="next" id="writeClear">Clear</button></div><div id="writeFeedback" class="write-feedback" hidden></div>`;
+    box.innerHTML = `<div class="write-head"><h2>Selective Writing workshop</h2><p>Check marks spelling in pink, punctuation in gold, grammar in purple, and thin words in green.</p></div><label class="write-label">Topic</label><select id="writeTopic"></select><p class="write-prompt" id="writePrompt"></p><div class="write-secs" id="writeSecs"></div><p class="write-hint" id="writeHint"></p><div class="write-count"><b id="writeWords">0</b> words · target <span id="writeTarget">60–90</span></div><textarea id="writeBox" rows="12" placeholder="Type here…"></textarea><div class="write-actions"><button type="button" class="check" id="writeCheck">Check this section</button><button type="button" class="next" id="writeClear">Clear</button></div><div id="writeFeedback" class="write-feedback" hidden></div>`;
     host.insertBefore(box, host.querySelector("#practiceView") || host.firstChild);
     const sel = box.querySelector("#writeTopic");
     TOPICS.forEach((t) => { const o = document.createElement("option"); o.value = t.id; o.textContent = t.form + " · " + t.title; sel.appendChild(o); });
@@ -41,33 +106,36 @@
   function currentSec() { const id = document.querySelector("#writeSecs button.active")?.dataset.sec || "intro"; return SECTIONS.find((s) => s.id === id); }
   function refresh() { const t = currentTopic(), s = currentSec(); document.getElementById("writePrompt").textContent = t.prompt + "  Form: " + t.form + "."; document.getElementById("writeHint").textContent = s.hint; document.getElementById("writeTarget").textContent = s.min + "–" + s.max; document.getElementById("writeWords").textContent = words(document.getElementById("writeBox").value); }
   function check() {
-    const text = document.getElementById("writeBox").value.trim();
+    const text = document.getElementById("writeBox").value;
     const s = currentSec(), t = currentTopic();
     const n = words(text);
     const found = JOINERS.filter((w) => new RegExp("\\b" + w.replace(" ", "\\s+") + "\\b", "i").test(text));
-    const weakHits = [...new Set((text.match(WEAK) || []).map((x) => x.toLowerCase()))];
+    const marked = analyse(text);
     const notes = [];
-    if (!text) notes.push("Write something first.");
+    if (!text.trim()) notes.push("Write something first.");
     else {
-      if (n < s.min) notes.push("Too short (" + n + " words). Target " + s.min + "–" + s.max + " so markers can see developed ideas.");
-      else if (n > s.max + 40) notes.push("A little long (" + n + "). Cut repeats rather than padding.");
+      if (n < s.min) notes.push("Too short (" + n + " words). Target " + s.min + "–" + s.max + ".");
+      else if (n > s.max + 40) notes.push("A little long (" + n + "). Cut repeats.");
       else notes.push("Word count is in a useful band (" + n + ").");
-      if (s.id === "intro" && !/[.!?].+[.!?]/s.test(text)) notes.push("Introduction: add a hook, a clear position, and a preview of two reasons.");
-      if (s.id === "body" && !/(for example|for instance|because|therefore|this shows)/i.test(text)) notes.push("Body: add one concrete example and a Therefore or This shows sentence.");
-      if (s.id === "end" && /firstly|another reason/i.test(text)) notes.push("Conclusion: do not start a new argument. Restate and say why it matters.");
       if (found.length) notes.push("Joining words used: " + found.join(", ") + ".");
-      else notes.push("Add a joining word: however, therefore, for example, consequently, or finally.");
-      if (weakHits.length) notes.push("Swap thin words: " + weakHits.slice(0, 5).join(", ") + ".");
+      else notes.push("Add a joining word: however, therefore, for example, consequently.");
+      const spell = marked.issues.filter((i) => i.type === "spell");
+      const punct = marked.issues.filter((i) => i.type === "punct");
+      const gram = marked.issues.filter((i) => i.type === "gram");
+      if (spell.length) notes.push("Spelling: " + spell.map((i) => i.tip).join("; ") + ".");
+      if (punct.length) notes.push("Punctuation: " + punct.map((i) => i.tip).join("; ") + ".");
+      if (gram.length) notes.push("Grammar: " + gram.map((i) => i.tip).join("; ") + ".");
+      if (!spell.length && !punct.length && !gram.length) notes.push("No common spelling, punctuation or grammar flags in this checker.");
     }
     const options = suggest(t, s);
     const host = document.getElementById("writeFeedback");
     host.hidden = false;
-    host.innerHTML = "<h3>Check</h3><ul>" + notes.map((x) => "<li>" + x + "</li>").join("") + "</ul><h3>Ways to lift this</h3>" + options.map((x, i) => "<article><b>Option " + (i + 1) + "</b><p>" + x + "</p></article>").join("");
+    host.innerHTML = "<h3>Check</h3><div class=\"write-legend\"><span class=\"lg-spell\">Spelling</span><span class=\"lg-punct\">Punctuation</span><span class=\"lg-gram\">Grammar</span><span class=\"lg-weak\">Thin word</span></div><div class=\"write-marked\">" + (marked.html || "—") + "</div><ul>" + notes.map((x) => "<li>" + x + "</li>").join("") + "</ul><h3>Ways to lift this</h3>" + options.map((x, i) => "<article><b>Option " + (i + 1) + "</b><p>" + x + "</p></article>").join("");
   }
   function suggest(topic, sec) {
     if (sec.id === "intro") return [hook(topic) + " " + stance(topic), "Start with a small scene, then state your view in one sentence.", "Preview two reasons without arguing them yet."];
-    if (sec.id === "body") return ["Use PEEL: point, example, explain, link.", "However, this only works if the example is specific, not 'everyone knows'.", "Therefore, end the paragraph by tying the example back to the prompt."];
-    if (sec.id === "end") return ["In short, " + stance(topic) + " This matters because daily habits shape learning.", "Do not add a new reason. Lift the best one.", "Close with one precise joining word: consequently or finally."];
+    if (sec.id === "body") return ["Use PEEL: point, example, explain, link.", "However, this only works if the example is specific.", "Therefore, end the paragraph by tying the example back to the prompt."];
+    if (sec.id === "end") return ["In short, " + stance(topic) + " This matters because daily habits shape learning.", "Do not add a new reason.", "Close with consequently or finally."];
     return ["Plan 5 minutes, write 20, edit 5.", "300–450 words is enough if every paragraph earns its place.", "Check form: story, letter or speech must match the prompt."];
   }
   function hook(t) { if (t.type === "narrative") return "The street was almost dark when the doorway lit up."; if (t.type === "speech") return "Year 6, one small change would make tomorrow's lessons easier."; return "Every evening choice either protects learning or quietly steals it."; }
