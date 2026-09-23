@@ -2,33 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Library | SkillUP</title>
+<meta name="description" content="Choose a school year and explore SkillUP learning pathways.">
+<title>Learning Hub | SkillUP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-<link rel="icon" href="assets/skillup-logo.svg"><link rel="stylesheet" href="css/learning-library.css?v=20260923all">
-<script>document.documentElement.dataset.year=new URLSearchParams(location.search).get("year")||localStorage.getItem("skillupYear")||"5";</script></head>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/skillup-logo.svg"><link rel="stylesheet" href="css/learning-library.css?v=20260923-pro">
+</head>
 <body>
-<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a href="index.html">Home</a><a class="active" href="learning.html">Learn</a><a href="selective.html">Selective</a><a href="accounts.html">Accounts</a><span class="auth"><a class="sign-in" href="sign-in.html">Sign in</a><a class="sign-up" href="sign-up.html">Sign up</a></span></nav></div></header>
-<div id="year-hub"><main class="y1-page">
-<section class="y1-hero"><div class="y1-hero-inner"><div class="y1-copy"><div class="crumb"><a href="index.html">Home</a> · <a href="learning.html">Learn</a> · <span id="hub-crumb">Year 1</span></div><h1><span id="hub-year">Year 1</span><br><em>Learning Hub</em></h1><h2>Explore. Practise. Grow.</h2><p>Fun and engaging activities to build strong foundations for a brighter future.</p><a class="y1-start" href="#year1-subjects">Start Learning</a></div><div class="y1-art"><div class="sun">☀</div><div class="sign">Small<br>Steps<br>Big<br>Possibilities</div><div class="y1-book read">READ</div><div class="y1-book practise">PRACTISE</div><div class="y1-book learn">LEARN</div><div class="y1-book grow">GROW</div><div class="y1-note">Brighter Learners<br>Brighter Futures</div></div></div></section>
-<section class="y1-values wrap"><div><i>🌱</i><b>Curriculum<br>aligned</b></div><div><i>▥</i><b>Step-by-step<br>practice</b></div><div><i>★</i><b>Fun and<br>engaging</b></div><div><i>♥</i><b>Build confidence<br>one step at a time</b></div></section>
-<section class="wrap y1-subjects" id="year1-subjects"><div class="y1-heading"><h2>Choose a subject</h2><p>Explore all subjects and start your learning journey!</p></div><div class="y1-subject-grid">
-<a class="ymaths" href="maths.html?year=1" data-subject="maths"><i>1 2 3</i><h3>Maths</h3><p>Numbers, addition, subtraction,<br>shapes, measurement and more</p></a>
-<a class="yenglish" href="year1-english.html" data-subject="english"><i>ABC</i><h3>English</h3><p>Writing, spelling, grammar<br>and language skills</p></a>
-<a class="yreading" href="year1-reading.html" data-subject="reading"><i>▤</i><h3>Reading</h3><p>Build reading skills and<br>comprehension</p></a>
-<a class="yvocab" href="year1-vocabulary.html" data-subject="vocabulary"><i>Aa</i><h3>Vocabulary</h3><p>Learn new words and<br>use them with confidence</p></a>
-<a class="yscience" href="science.html?year=1" data-subject="science"><i>⚗</i><h3>Science</h3><p>Explore our amazing world<br>with fun facts and activities</p></a>
-<a class="ygk" href="general-knowledge.html?year=1" data-subject="general-knowledge"><i>◎</i><h3>General Knowledge</h3><p>Discover people, places,<br>nature and more</p></a></div></section>
-<section class="wrap y1-explore"><div class="y1-heading"><h2>More to explore</h2><p>Practice, play and track your progress!</p></div><div class="explore-grid"><a href="maths.html?year=1"><i>☷</i><div><b>Practice Questions</b><span>Try questions at your own pace</span></div></a><a href="learning.html?year=1"><i>✦</i><div><b>Fun Learning Games</b><span>Learn through play</span></div></a><a href="learning.html?year=1"><i>🏆</i><div><b>Topic Tests</b><span>Check what you know</span></div></a><a href="accounts.html"><i>▥</i><div><b>Track Your Progress</b><span>See how you are improving</span></div></a></div></section>
-<section class="wrap y1-banner"><div><h2>Great Learners<br>Start Here!</h2><p>Small Steps Today · A Brighter Tomorrow</p></div><div class="path"></div><div class="wood-sign">Learn<br>Practise<br>Achieve</div></section>
-</main></div><main class="library-wrap" id="standard-library">
-<div class="library-intro"><span class="kicker">LEARNING LIBRARY</span><h1>Choose your year and subject</h1><p>Start with a year, then choose a focused practice pathway.</p></div>
-<div class="steps" aria-label="Learning pathway"><span class="step done"><b>1</b>Learn</span><i>→</i><span class="step"><b>2</b>Practise</span><i>→</i><span class="step"><b>3</b>Test</span><i>→</i><span class="step"><b>4</b>Improve</span></div>
-<div class="library-layout"><aside class="year-panel"><div><small>YEAR LEVEL</small><h2 id="selected-year">Year 5</h2></div><nav aria-label="Choose a year"><a data-year="K" href="learning.html?year=K">Kindy</a><a data-year="1" href="learning.html?year=1">Year 1</a><a data-year="2" href="learning.html?year=2">Year 2</a><a data-year="3" href="learning.html?year=3">Year 3</a><a data-year="4" href="learning.html?year=4">Year 4</a><a data-year="5" href="learning.html?year=5">Year 5</a><a data-year="6" href="learning.html?year=6">Year 6</a></nav><a class="back-link" href="index.html">← Back to Home</a></aside>
-<section class="pathways"><div class="pathway-heading"><div><span class="kicker">YOUR PATHWAYS</span><h2 id="pathway-title">Year 5 learning</h2><p id="pathway-subtitle">Build core skills and keep your progress moving.</p></div><a class="small-link" href="accounts.html">View progress →</a></div><div class="subject-grid"><a class="subject maths" href="maths.html"><span class="icon">＋</span><div><h3>Maths</h3><p>Number, measurement and problem solving.</p><strong>Open pathway →</strong></div></a><a class="subject vocabulary" href="vocabulary.html"><span class="icon">Aa</span><div><h3>Vocabulary</h3><p>Meaning, context and spelling.</p><strong>Open pathway →</strong></div></a><a class="subject english" href="english.html"><span class="icon">文</span><div><h3>English</h3><p>Reading, grammar and writing.</p><strong>Open pathway →</strong></div></a><a class="subject selective" href="selective.html"><span class="icon">★</span><div><h3>Selective</h3><p>Reasoning, thinking skills and reading.</p><strong>Open preparation →</strong></div></a></div><div class="help-card"><div><b>Not sure where to begin?</b><p>Start with Maths, English or Vocabulary, then use Test and Improve to see what to practise next.</p></div><a href="accounts.html">See account options →</a></div></section></div>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a href="index.html">Home</a><a class="active" href="learning.html">Learn</a><a href="selective.html">Selective</a><a href="learning.html#assessments">NAPLAN</a><a href="teachers.html">For Teachers</a><a href="parents.html">For Parents</a><a href="about.html">About</a></nav><div class="auth"><a class="sign-in" href="sign-in.html">Sign in</a><a class="sign-up" href="sign-up.html">Sign up</a></div></div></header>
+
+<main>
+<section id="year-selector" class="selector-page">
+<div class="wrap selector-intro"><span class="eyebrow">LEARNING HUB</span><h1>Choose your year</h1><p>Start at the right level, then choose a subject and topic.</p></div>
+<div class="wrap year-selector-grid">
+<a class="k" href="learning.html?year=K"><span>K</span><b>Kindy</b><small>Explore, play and learn</small></a>
+<a class="y1" href="learning.html?year=1"><span>1</span><b>Year 1</b><small>Build strong foundations</small></a>
+<a class="y2" href="learning.html?year=2"><span>2</span><b>Year 2</b><small>Grow core skills</small></a>
+<a class="y3" href="learning.html?year=3"><span>3</span><b>Year 3</b><small>Take on new challenges</small></a>
+<a class="y4" href="learning.html?year=4"><span>4</span><b>Year 4</b><small>Build independence</small></a>
+<a class="y5" href="learning.html?year=5"><span>5</span><b>Year 5</b><small>Aim higher</small></a>
+<a class="y6" href="learning.html?year=6"><span>6</span><b>Year 6</b><small>Prepare for what comes next</small></a>
+</div></section>
+
+<section id="year-hub" class="year-hub" hidden>
+<div class="year-hero"><div class="wrap year-hero-grid"><div class="year-copy"><div class="breadcrumb"><a href="index.html">Home</a><span>•</span><a href="learning.html">Learn</a><span>•</span><b id="crumb-year">Year 1</b></div><span class="eyebrow">YOUR LEARNING SPACE</span><h1><span id="hub-year">Year 1</span><br><em>Learning Hub</em></h1><h2 id="hub-tagline">Explore. Practise. Grow.</h2><p id="hub-copy">Build strong foundations with clear, age-appropriate learning pathways.</p><div class="hero-actions"><a class="btn primary" href="#subjects">Choose a subject</a><a class="btn secondary" href="index.html">Back to home</a></div></div><div class="year-graphic"><img src="assets/year-hub-hero.svg" alt="Learning books on a bright landscape"></div></div></div>
+
+<div class="wrap value-strip"><div><span>✓</span><b>Curriculum aligned</b></div><div><span>1·2·3</span><b>Step-by-step practice</b></div><div><span>★</span><b>Fun and engaging</b></div><div><span>↗</span><b>Build confidence</b></div></div>
+
+<section class="wrap hub-section" id="subjects"><div class="section-head"><div><span class="eyebrow">SUBJECTS</span><h2>Choose a subject</h2></div><p>Pick one area and continue at your own pace.</p></div>
+<div class="hub-subject-grid">
+<a class="maths" data-subject="maths" href="#"><svg><use href="assets/skillup-icons.svg#maths"/></svg><h3>Maths</h3><p>Number, operations, measurement and problem solving.</p></a>
+<a class="english" data-subject="english" href="#"><svg><use href="assets/skillup-icons.svg#english"/></svg><h3>English</h3><p>Writing, grammar, spelling and language skills.</p></a>
+<a class="reading" data-subject="reading" href="#"><svg><use href="assets/skillup-icons.svg#reading"/></svg><h3>Reading</h3><p>Fluency, comprehension and understanding texts.</p></a>
+<a class="vocab" data-subject="vocabulary" href="#"><svg><use href="assets/skillup-icons.svg#vocab"/></svg><h3>Vocabulary</h3><p>Word meaning, spelling and confident use.</p></a>
+<a class="science" data-subject="science" href="#"><svg><use href="assets/skillup-icons.svg#science"/></svg><h3>Science</h3><p>Living things, Earth, materials and everyday science.</p></a>
+<a class="gk" data-subject="general-knowledge" href="#"><svg><use href="assets/skillup-icons.svg#gk"/></svg><h3>General Knowledge</h3><p>Australia, places, nature and the wider world.</p></a>
+</div></section>
+
+<section class="wrap hub-section tools"><div class="section-head"><div><span class="eyebrow">MORE TO EXPLORE</span><h2>Practise, test and improve</h2></div><p>Useful tools to support steady progress.</p></div><div class="tool-grid"><article><svg><use href="assets/skillup-icons.svg#naplan"/></svg><div><b>Practice questions</b><p>Try focused questions at your own pace.</p></div></article><article><svg><use href="assets/skillup-icons.svg#progress"/></svg><div><b>Track progress</b><p>See improvement and revisit weaker areas.</p></div></article><article><svg><use href="assets/skillup-icons.svg#selective"/></svg><div><b>Topic tests</b><p>Check what you know after practice.</p></div></article><article><svg><use href="assets/skillup-icons.svg#shield"/></svg><div><b>Focused learning</b><p>Simple navigation without unnecessary distractions.</p></div></article></div></section>
+
+<section class="wrap motivation"><div><span class="eyebrow">SMALL STEPS, BRIGHTER FUTURES</span><h2>Great learners grow one step at a time.</h2><p>Choose a subject, practise a little, and keep moving forward.</p></div><a class="btn" href="#subjects">Choose a subject</a></section>
+</section>
 </main>
-<footer><div class="footer-inner"><span>SkillUP · Learn · Practise · Test · Improve</span><span><a href="index.html">Home</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></span></div></footer>
+
+<footer><div class="wrap footer-grid"><div><img src="assets/skillup-logo.svg" alt="SkillUP"><p>Small Steps · Brighter Futures</p></div><nav><a href="index.html">Home</a><a href="learning.html">Learn</a><a href="selective.html">Selective</a><a href="teachers.html">For Teachers</a><a href="parents.html">For Parents</a></nav><nav><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav></div></footer>
+
 <script>
-(function(){const labels={K:'Kindy',1:'Year 1',2:'Year 2',3:'Year 3',4:'Year 4',5:'Year 5',6:'Year 6'};const q=new URLSearchParams(location.search);const year=q.get('year')||localStorage.getItem('skillupYear')||'5';const y=labels[year]?year:'5';localStorage.setItem('skillupYear',y);document.querySelectorAll('[data-year]').forEach(a=>a.classList.toggle('selected',a.dataset.year===y));document.getElementById('selected-year').textContent=labels[y];document.getElementById('pathway-title').textContent=labels[y]+' learning';document.getElementById('pathway-subtitle').textContent=y==='5'||y==='6'?'Build core skills and prepare for your next challenge.':'Build core skills with short, focused practice.';})();
+(function(){
+ const q=new URLSearchParams(location.search);const y=q.get('year');const valid=['K','1','2','3','4','5','6'];
+ const selector=document.getElementById('year-selector'),hub=document.getElementById('year-hub');
+ if(!valid.includes(y)){selector.hidden=false;hub.hidden=true;return}
+ selector.hidden=true;hub.hidden=false;localStorage.setItem('skillupYear',y);
+ const label=y==='K'?'Kindy':'Year '+y;
+ const text={
+ K:['Explore. Play. Discover.','Build early confidence with simple, playful learning experiences.'],
+ '1':['Explore. Practise. Grow.','Build strong foundations with clear, age-appropriate learning pathways.'],
+ '2':['Build. Practise. Strengthen.','Grow core skills with structured practice and clear explanations.'],
+ '3':['Understand. Apply. Progress.','Take on new challenges and build confidence across every subject.'],
+ '4':['Learn. Think. Become independent.','Develop stronger skills, reasoning and independent learning habits.'],
+ '5':['Challenge. Practise. Aim higher.','Strengthen core knowledge and prepare for more advanced learning.'],
+ '6':['Consolidate. Extend. Prepare.','Build confidence for the transition to secondary school and key assessments.']
+ };
+ document.getElementById('hub-year').textContent=label;document.getElementById('crumb-year').textContent=label;document.getElementById('hub-tagline').textContent=text[y][0];document.getElementById('hub-copy').textContent=text[y][1];
+ document.body.dataset.year=y;
+ const routes={maths:'maths.html',english:'year1-english.html',reading:'year1-reading.html',vocabulary:'year1-vocabulary.html',science:'science.html','general-knowledge':'general-knowledge.html'};
+ document.querySelectorAll('[data-subject]').forEach(a=>a.href=routes[a.dataset.subject]+'?year='+encodeURIComponent(y));
+})();
 </script>
-<script>(function(){const y=document.documentElement.dataset.year;const labels={K:"Kindy",1:"Year 1",2:"Year 2",3:"Year 3",4:"Year 4",5:"Year 5",6:"Year 6"};if(labels[y]){document.getElementById("standard-library").style.display="none";document.getElementById("year-hub").style.display="block";document.getElementById("hub-year").textContent=labels[y];document.getElementById("hub-crumb").textContent=labels[y];document.querySelectorAll("[data-subject]").forEach(a=>{const s=a.dataset.subject;a.href=(s==="maths"?"maths.html":s==="english"?"year1-english.html":s==="reading"?"year1-reading.html":s==="vocabulary"?"year1-vocabulary.html":s+".html")+"?year="+encodeURIComponent(y)})}else document.getElementById("year-hub").style.display="none"})()</script></body></html>
+</body></html>
