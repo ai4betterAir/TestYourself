@@ -1,70 +1,112 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SkillUP | Learn · Practice · Test · Improve</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/theme.css"><link rel="stylesheet" href="css/learn-flow.css"><style>
-.skillup-brand{display:flex;align-items:center;width:255px;height:68px}
-.skillup-brand img{width:100%;height:100%;object-fit:contain}
-.subject-hero{padding:36px 20px 18px;text-align:center;background:linear-gradient(135deg,#e8f4ff 0%,#fff4d6 42%,#f3e8ff 72%,#e7fff3 100%)}
-.subject-hero h1{font-family:Fredoka;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:10px auto 10px;color:#173B78}
-.subject-hero h1 span{color:#278FE8}
-.chooser{width:min(1120px,calc(100% - 32px));margin:auto;padding:10px 0 40px}
-.chooser h2{font-family:Fredoka;text-align:center;color:#173B78}
-#yearPicker,#subjectPicker{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0 22px}
-#yearPicker a,#yearPicker button,#subjectPicker a{display:inline-flex;align-items:center;justify-content:center;min-width:120px;min-height:52px;padding:10px 16px;border-radius:16px;font:700 1rem Fredoka,sans-serif;text-decoration:none;color:#fff}
-#yearPicker a,#yearPicker button{background:#2A72A5;border:0;color:#fff;cursor:pointer}
-#yearPicker a.on,#yearPicker button.on{outline:3px solid #FFBF17}
-#subjectPicker a.maths{background:#2A72A5}
-#subjectPicker a.vocabulary{background:#6254A3}
-#subjectPicker a.english{background:#0D95A1}
-#subjectPicker a.selective{background:#1C5E86}
-.home-menu-btn{display:none;margin-left:auto;border:0;background:#eef4ff;width:44px;height:44px;border-radius:12px}
-@media(max-width:800px){.home-menu-btn{display:block}.nav-wrap .main-nav{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:#fff;padding:15px;z-index:100}}
-</style><link rel="icon" type="image/svg+xml" href="assets/skillup-logo.svg"></head>
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkillUP</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/skillup-logo.svg">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Nunito,sans-serif;background:linear-gradient(180deg,#1C5E86,#0D95A1 55%,#173B78);min-height:100vh;color:#fff}
+header{display:flex;align-items:center;gap:16px;padding:14px 22px}
+header img{height:48px}header nav a{color:#fff;text-decoration:none;font-weight:800;margin-left:14px}
+.wrap{width:min(980px,calc(100% - 28px));margin:0 auto 40px;text-align:center}
+.badge{display:inline-block;background:#FFBF17;color:#173B78;border-radius:999px;padding:6px 14px;font:700 .8rem Fredoka,sans-serif}
+h1{font:700 clamp(2rem,5vw,3.2rem)/1.08 Fredoka,sans-serif;margin:12px 0 8px}h1 span{color:#FFBF17}
+.years,.subjects,.streams{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 22px}
+.years button{border:0;min-width:92px;min-height:48px;border-radius:14px;background:#2A72A5;color:#fff;font:700 1rem Fredoka,sans-serif;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.years button.on{outline:3px solid #FFBF17}
+.subjects a,.streams a{display:flex;align-items:center;justify-content:center;min-height:64px;min-width:200px;padding:12px 18px;border-radius:16px;color:#fff;text-decoration:none;font:700 1.05rem Fredoka,sans-serif;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+.subjects a.maths,.streams a.math{background:#2A72A5}
+.subjects a.vocabulary,.streams a.purple{background:#6254A3}
+.subjects a.english,.streams a.teal{background:#0D95A1}
+.subjects a.selective,.streams a.navy{background:#173B78;color:#FFD633}
+.subjects a.off{opacity:.35;pointer-events:none}
+h2{font:700 1.2rem Fredoka,sans-serif;margin:8px 0}
+#sectionBox{display:none}
+</style></head>
 <body>
-<header class="site-header"><div class="nav-wrap"><a class="skillup-brand" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
-<button class="home-menu-btn" id="homeMenuBtn" aria-label="Open menu">☰</button>
-<nav class="main-nav" id="homeNav"><a href="index.html">Home</a><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a href="english.html">English</a><a href="selective-practice.html">Selective</a></nav>
-</div></header>
-<main>
-<section class="subject-hero">
-<h1>Choose your <span>year and subject</span></h1>
-<p>Year first, then tap a subject. Each subject opens its main page.</p>
-</section>
-<section class="chooser" id="chooser">
-<h2>1. School year</h2>
-<div id="yearPicker">
-<a href="#" data-year="K">Kindy</a><a href="#" data-year="1">Year 1</a><a href="#" data-year="2">Year 2</a><a href="#" data-year="3">Year 3</a><a href="#" data-year="4">Year 4</a><a href="#" data-year="5" class="on">Year 5</a><a href="#" data-year="6">Year 6</a>
+<header><a href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
+<nav><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a href="english.html">English</a><a href="selective-practice.html">Selective</a></nav></header>
+<div class="wrap">
+<div class="badge">NSW PRIMARY · SKILLUP</div>
+<h1>Pick a year. <span>Then a subject.</span></h1>
+<p>Subjects appear for that year. Open one to see its sections, in the same style as Selective.</p>
+<h2>1. Year</h2>
+<div class="years" id="years"></div>
+<h2>2. Subjects</h2>
+<div class="subjects" id="subjects"></div>
+<div id="sectionBox">
+<h2 id="sectionTitle">3. Sections</h2>
+<div class="streams" id="streams"></div>
 </div>
-<h2>2. Subject</h2>
-<div id="subjectPicker">
-<a class="maths" id="goMaths" href="practice.html?grade=5&focus=1">Maths</a>
-<a class="vocabulary" id="goVocab" href="vocabulary-year5.html">Vocabulary</a>
-<a class="english" id="goEnglish" href="english-practice.html?grade=5">English</a>
-<a class="selective" id="goSelective" href="selective-practice.html?grade=5">Selective</a>
 </div>
-<div id="sectionPanel"></div>
-</section>
-</main>
 <script>
-(function(){
-  const vocab = {K:'vocabulary-year1-stories.html',1:'vocabulary-year1-stories.html',2:'vocabulary-year2.html',3:'vocabulary-year3.html',4:'vocabulary-year4.html',5:'vocabulary-year5.html',6:'vocabulary-year6.html'};
-  let year = localStorage.getItem('skillup-year') || '5';
-  function sync(){
-    document.querySelectorAll('#yearPicker [data-year]').forEach(a => a.classList.toggle('on', a.dataset.year === year));
-    document.getElementById('goMaths').href = 'practice.html?grade=' + year + '&focus=1';
-    document.getElementById('goVocab').href = vocab[year] || 'vocabulary.html';
-    document.getElementById('goEnglish').href = 'english-practice.html?grade=' + year;
-    document.getElementById('goSelective').href = 'selective-practice.html?grade=' + year;
-    document.getElementById('goSelective').style.opacity = (year==='5'||year==='6') ? '1' : '.45';
-  }
-  document.getElementById('yearPicker').onclick = function(e){
-    const a = e.target.closest('[data-year]'); if(!a) return;
-    e.preventDefault();
-    year = a.dataset.year;
-    localStorage.setItem('skillup-year', year);
-    sync();
-  };
-  const btn = document.getElementById('homeMenuBtn');
-  if (btn) btn.onclick = () => document.getElementById('homeNav').classList.toggle('open');
-  sync();
-})();
+const vocab = {K:'vocabulary-year1-stories.html',1:'vocabulary-year1-stories.html',2:'vocabulary-year2.html',3:'vocabulary-year3.html',4:'vocabulary-year4.html',5:'vocabulary-year5.html',6:'vocabulary-year6.html'};
+const sections = {
+  maths: [
+    ['Number & Algebra','practice.html?topic=number','math'],
+    ['Measurement & Space','practice.html?topic=length','teal'],
+    ['Statistics & Probability','practice.html?topic=data','purple'],
+    ['Problem Solving','practice.html?topic=wordproblems','navy']
+  ],
+  vocabulary: [
+    ['Word meaning','#','purple'],
+    ['Words in context','#','teal'],
+    ['Synonyms & antonyms','#','math'],
+    ['Spelling','#','navy']
+  ],
+  english: [
+    ['Reading','english-practice.html?skill=reading','teal'],
+    ['Grammar','english-practice.html?skill=grammar','purple'],
+    ['Spelling','english-practice.html?skill=spelling','math'],
+    ['Writing','english-practice.html?skill=writing','navy']
+  ],
+  selective: [
+    ['Mathematical Reasoning','selective-practice.html?stream=math','math'],
+    ['Thinking Skills','selective-practice.html?stream=thinking','purple'],
+    ['Reading','selective-practice.html?stream=reading','teal'],
+    ['Writing Vocabulary','selective-practice.html?stream=writing','navy'],
+    ['Writing','selective-practice.html?stream=essay','teal']
+  ]
+};
+const names = {maths:'Maths',vocabulary:'Vocabulary',english:'English',selective:'Selective'};
+let year = localStorage.getItem('skillup-year') || '5';
+const yearBox = document.getElementById('years');
+['K','1','2','3','4','5','6'].forEach(y => {
+  const b = document.createElement('button');
+  b.textContent = y === 'K' ? 'Kindy' : 'Year ' + y;
+  b.dataset.year = y;
+  b.onclick = () => { year = y; localStorage.setItem('skillup-year', y); paint(); };
+  yearBox.appendChild(b);
+});
+function hrefFor(subject, path){
+  if (subject === 'maths') return path + (path.includes('?') ? '&' : '?') + 'grade=' + year + '&focus=1';
+  if (subject === 'english') return path + (path.includes('?') ? '&' : '?') + 'grade=' + year;
+  if (subject === 'vocabulary') return (vocab[year] || 'vocabulary.html');
+  return path + (path.includes('?') ? '&' : '?') + 'grade=' + year;
+}
+function paint(){
+  [...yearBox.children].forEach(b => b.classList.toggle('on', b.dataset.year === year));
+  const canSel = year === '5' || year === '6';
+  document.getElementById('subjects').innerHTML =
+    `<a class="maths" data-s="maths" href="practice.html?grade=${year}&focus=1">Maths</a>` +
+    `<a class="vocabulary" data-s="vocabulary" href="${vocab[year]}">Vocabulary</a>` +
+    `<a class="english" data-s="english" href="english-practice.html?grade=${year}">English</a>` +
+    `<a class="selective ${canSel?'':'off'}" data-s="selective" href="selective-practice.html?grade=${year}">Selective</a>`;
+  document.getElementById('sectionBox').style.display = 'none';
+  document.querySelectorAll('#subjects a').forEach(a => {
+    a.addEventListener('click', ev => {
+      ev.preventDefault();
+      const s = a.dataset.s;
+      const box = document.getElementById('sectionBox');
+      box.style.display = 'block';
+      document.getElementById('sectionTitle').textContent = '3. ' + names[s] + ' sections';
+      document.getElementById('streams').innerHTML = sections[s].map(([label, url, cls]) =>
+        `<a class="${cls}" href="${hrefFor(s, url)}">${label}</a>`
+      ).join('');
+      box.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+}
+paint();
 </script>
-<script src="js/site-shell.js"></script>
 </body></html>
