@@ -112,7 +112,7 @@ const tracks = {
   selective:[['Mathematical Reasoning','selective-practice.html?stream=math','math'],['Thinking Skills','selective-practice.html?stream=thinking','purple'],['Reading','selective-practice.html?stream=reading','teal'],['Writing Vocabulary','selective-practice.html?stream=writing','navy'],['Writing','selective-practice.html?stream=essay','teal']]
 };
 const blurb = {maths:'Number, measurement and problem solving',vocabulary:'Meaning, context and spelling',english:'Reading, grammar and writing',selective:'Year 5–6 NSW Selective streams'};
-let year = localStorage.getItem('skillup-year') || '5';
+const requestedYear = new URLSearchParams(location.search).get('year'); const allowedYears = ['K','1','2','3','4','5','6']; let year = allowedYears.includes(requestedYear) ? requestedYear : (localStorage.getItem('skillup-year') || '5'); if (allowedYears.includes(requestedYear)) localStorage.setItem('skillup-year', requestedYear);
 const years = document.getElementById('years');
 ['K','1','2','3','4','5','6'].forEach(y => {
   const b = document.createElement('button');
