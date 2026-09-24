@@ -1183,3 +1183,103 @@ body{font-size:19px!important}
   .year-copy span{font-size:.86rem!important}
   .panel-copy h3{font-size:1.15rem!important}
 }
+
+/* 2026-09-24 richer homepage typography and accents */
+.text-accent{
+  display:inline-block;
+  font-weight:800;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.accent-green{
+  background-image:linear-gradient(90deg,#16a873 0%,#2bbd92 52%,#5ecf9f 100%);
+}
+.accent-blue{
+  background-image:linear-gradient(90deg,#2f6cf0 0%,#2aa4d8 55%,#20b77d 100%);
+}
+.accent-warm{
+  background-image:linear-gradient(90deg,#ffb332 0%,#ff7b54 48%,#f05d8e 100%);
+}
+.accent-violet{
+  background-image:linear-gradient(90deg,#5f6eea 0%,#8068df 48%,#b45ed0 100%);
+}
+
+.level-header h2,
+.section-intro h2,
+.assessment-intro h2,
+.story-copy h2,
+.final-cta h2{
+  color:#10264a;
+}
+.assessment-intro h2{color:#fff}
+
+.eyebrow{
+  padding:.22em .55em;
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(32,191,132,.10),rgba(52,109,241,.08));
+}
+.assessment-intro .eyebrow.light{
+  background:rgba(255,255,255,.10);
+  color:#b9d8ff;
+}
+
+.maths-panel .panel-copy>span{color:#2e6be6!important}
+.english-panel .panel-copy>span{color:#e36d45!important}
+.vocab-panel .panel-copy>span{color:#8c63d8!important}
+.thinking-panel .panel-copy>span{color:#1a9b74!important}
+
+.maths-panel .panel-copy h3{
+  background:linear-gradient(90deg,#163f8f,#2e6be6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.english-panel .panel-copy h3{
+  background:linear-gradient(90deg,#91452e,#e36d45);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.vocab-panel .panel-copy h3{
+  background:linear-gradient(90deg,#5b3e9f,#8c63d8);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.thinking-panel .panel-copy h3{
+  background:linear-gradient(90deg,#0e7458,#1a9b74);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.assessment-list a:nth-child(1) .assessment-index{color:#68c8ff!important}
+.assessment-list a:nth-child(2) .assessment-index{color:#7ce0b6!important}
+.assessment-list a:nth-child(3) .assessment-index{color:#ffbd72!important}
+.assessment-list a:nth-child(1) small{color:#87d5ff!important}
+.assessment-list a:nth-child(2) small{color:#8ee7c3!important}
+.assessment-list a:nth-child(3) small{color:#ffd090!important}
+
+.story-steps div:nth-child(1) span{color:#2f6cf0!important}
+.story-steps div:nth-child(2) span{color:#16a873!important}
+.story-steps div:nth-child(3) span{color:#f29b2f!important}
+.story-steps div:nth-child(4) span{color:#8c63d8!important}
+.story-steps div:nth-child(1){background:linear-gradient(145deg,#f8fbff,#edf4ff)!important}
+.story-steps div:nth-child(2){background:linear-gradient(145deg,#fbfffd,#eaf8f1)!important}
+.story-steps div:nth-child(3){background:linear-gradient(145deg,#fffdf8,#fff3dc)!important}
+.story-steps div:nth-child(4){background:linear-gradient(145deg,#fcfaff,#f1edff)!important}
+
+.main-nav a:nth-child(2):hover{color:#2f6cf0!important}
+.main-nav a:nth-child(3):hover{color:#8c63d8!important}
+.main-nav a:nth-child(4):hover{color:#e67d32!important}
+.main-nav a:nth-child(5):hover{color:#16a873!important}
+.main-nav a:nth-child(6):hover{color:#d65b8a!important}
+
+.year-tile:hover .year-copy b{color:var(--accent)!important}
+.year-tile:hover .year-copy span{color:#40566f!important}
+
+.button-dark{
+  background:linear-gradient(135deg,#163e78 0%,#10264a 58%,#153866 100%)!important;
+}
+.button-dark:hover{
+  filter:saturate(1.12) brightness(1.05);
+}
+.final-cta{
+  background:
+    radial-gradient(circle at 8% 20%,rgba(32,191,132,.12),transparent 24%),
+    radial-gradient(circle at 90% 18%,rgba(52,109,241,.12),transparent 22%),
+    linear-gradient(135deg,#f5fbff,#f1fbf6)!important;
+}
