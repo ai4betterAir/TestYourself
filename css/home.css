@@ -892,3 +892,223 @@ body{font-size:17px}
   .year-copy span{font-size:.75rem!important}
   .panel-copy h3{font-size:1.05rem!important}
 }
+
+/* 2026-09-24 display-scale + high-resolution pass */
+html{font-size:18px}
+body{
+  font-size:18px!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg{shape-rendering:geometricPrecision}
+.brand img{
+  width:190px!important;
+  height:auto!important;
+}
+.nav-shell{height:82px!important}
+.main-nav a{font-size:1rem!important}
+.nav-actions a{font-size:.95rem!important;padding:12px 19px!important}
+
+.hero{
+  padding-top:60px!important;
+  padding-bottom:44px!important;
+}
+.hero-grid{
+  min-height:590px;
+  grid-template-columns:minmax(520px,.92fr) minmax(680px,1.08fr)!important;
+  gap:clamp(48px,5vw,100px)!important;
+}
+.hero-copy h1{
+  font-size:clamp(4.7rem,6vw,7.1rem)!important;
+  line-height:.92!important;
+}
+.hero-copy p{
+  font-size:1.2rem!important;
+  max-width:700px!important;
+}
+.button{
+  min-height:56px!important;
+  padding:0 26px!important;
+  font-size:1rem!important;
+}
+.hero-proof{
+  gap:38px!important;
+  margin-top:32px!important;
+}
+.hero-proof b{font-size:1.3rem!important}
+.hero-proof span{font-size:.86rem!important}
+
+.hero-visual{min-height:580px!important}
+.learning-orbit{
+  width:min(100%,780px)!important;
+  padding:30px!important;
+  border-radius:34px!important;
+}
+.orbit-head h2{font-size:1.7rem!important}
+.orbit-head span{font-size:.8rem!important}
+.streak{font-size:.84rem!important;padding:10px 13px!important}
+.path{gap:13px!important;margin:24px 0 22px!important}
+.path-step{
+  grid-template-columns:62px 1fr!important;
+  gap:16px!important;
+  padding:13px 15px!important;
+  border-radius:19px!important;
+}
+.step-icon{
+  width:60px!important;
+  height:60px!important;
+  border-radius:18px!important;
+}
+.step-icon svg{width:47px!important;height:47px!important}
+.path-step span{font-size:.8rem!important}
+.path-step b{font-size:1.12rem!important}
+.path-step small{font-size:.8rem!important}
+.progress-meta{font-size:.84rem!important}
+.progress-track{height:10px!important}
+
+.level-header h2,
+.section-intro h2{
+  font-size:clamp(2.4rem,3.1vw,3.4rem)!important;
+}
+.level-header p,
+.section-intro p{
+  font-size:1rem!important;
+}
+.level-note{font-size:.9rem!important}
+
+.year-tile{
+  flex-basis:clamp(300px,19vw,350px)!important;
+  min-height:250px!important;
+  padding:22px!important;
+  border-radius:28px!important;
+}
+.year-icon{
+  width:82px!important;
+  height:82px!important;
+  border-radius:24px!important;
+}
+.year-icon svg{
+  width:66px!important;
+  height:66px!important;
+}
+.year-copy small{font-size:.74rem!important}
+.year-copy b{font-size:1.46rem!important}
+.year-copy span{
+  font-size:.94rem!important;
+  line-height:1.45!important;
+  min-height:52px!important;
+}
+.year-meter{
+  height:8px!important;
+  margin-top:16px!important;
+}
+
+.subject-layout{
+  grid-template-rows:300px!important;
+  gap:18px!important;
+}
+.subject-panel{
+  padding:24px!important;
+  border-radius:30px!important;
+}
+.subject-mark{
+  width:74px!important;
+  height:74px!important;
+  border-radius:22px!important;
+}
+.subject-mark svg{width:58px!important;height:58px!important}
+.mini-chip{font-size:.76rem!important;padding:8px 11px!important}
+.panel-copy{left:24px!important;right:24px!important;bottom:22px!important}
+.panel-copy>span{font-size:.82rem!important}
+.panel-copy h3{font-size:1.35rem!important;line-height:1.38!important}
+.panel-copy p{font-size:.88rem!important}
+
+.assessment-shell{padding:68px 0!important}
+.assessment-intro p{font-size:1.08rem!important}
+.assessment-list{gap:12px!important}
+.assessment-list a{
+  grid-template-columns:62px 1fr 70px!important;
+  padding:18px 20px!important;
+  border-radius:22px!important;
+}
+.assessment-index{font-size:1rem!important}
+.assessment-list small{font-size:.76rem!important}
+.assessment-list b{font-size:1.22rem!important}
+.assessment-list svg{width:62px!important;height:62px!important}
+
+.progress-story{
+  padding:44px!important;
+  border-radius:34px!important;
+}
+.story-copy h2{font-size:2.8rem!important}
+.story-copy p{font-size:1.08rem!important}
+.story-steps div{padding:22px!important}
+.story-steps span{font-size:.9rem!important}
+.story-steps b{font-size:1.14rem!important}
+.story-steps p{font-size:.86rem!important}
+
+.final-cta{
+  padding:34px 38px!important;
+}
+.final-cta h2{font-size:2.25rem!important}
+.final-cta p{font-size:1rem!important}
+
+.footer-grid img{width:180px!important}
+.footer-grid p{font-size:.9rem!important}
+.footer-grid nav a{font-size:.94rem!important}
+
+/* Scale with actual screen size so 1440p/4K displays do not look tiny */
+@media(min-width:1700px){
+  html{font-size:19px}
+  .shell,.nav-shell,.final-cta{
+    width:calc(100% - 88px)!important;
+  }
+  .hero-grid{min-height:650px}
+  .learning-orbit{width:min(100%,840px)!important}
+  .year-tile{flex-basis:360px!important;min-height:265px!important}
+  .subject-layout{grid-template-rows:320px!important}
+}
+@media(min-width:2200px){
+  html{font-size:20px}
+  .shell,.nav-shell,.final-cta{
+    max-width:2100px!important;
+  }
+  .hero-copy h1{font-size:7.6rem!important}
+  .learning-orbit{width:min(100%,920px)!important}
+  .year-tile{flex-basis:390px!important;min-height:285px!important}
+}
+@media(max-width:1350px){
+  html{font-size:16.5px}
+  .hero-grid{
+    grid-template-columns:minmax(430px,.9fr) minmax(540px,1.1fr)!important;
+    gap:34px!important;
+  }
+  .hero-copy h1{font-size:4.5rem!important}
+  .learning-orbit{width:min(100%,650px)!important;padding:24px!important}
+  .year-tile{flex-basis:270px!important;min-height:225px!important}
+  .subject-layout{grid-template-rows:260px!important}
+}
+@media(max-width:1050px){
+  html{font-size:16px}
+  .hero-grid{grid-template-columns:1fr 1fr!important}
+  .hero-copy h1{font-size:4rem!important}
+  .year-tile{flex-basis:250px!important;min-height:210px!important}
+}
+@media(max-width:760px){
+  html{font-size:16px}
+  .brand img{width:150px!important}
+  .nav-shell{height:68px!important}
+  .hero{padding-top:32px!important}
+  .hero-grid{grid-template-columns:1fr!important;min-height:0}
+  .hero-copy h1{font-size:3.4rem!important}
+  .hero-copy p{font-size:1rem!important}
+  .hero-visual{min-height:420px!important}
+  .learning-orbit{padding:18px!important}
+  .year-tile{flex-basis:min(82vw,320px)!important;min-height:215px!important}
+  .year-icon{width:66px!important;height:66px!important}
+  .year-icon svg{width:52px!important;height:52px!important}
+  .year-copy b{font-size:1.22rem!important}
+  .year-copy span{font-size:.8rem!important}
+  .subject-layout{grid-template-rows:auto!important}
+  .subject-panel{min-height:215px!important}
+}
