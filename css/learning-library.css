@@ -1143,3 +1143,226 @@ body[data-year="5"] .year-copy h1,
 body[data-year="6"] .year-copy h1{
   font-weight:800;
 }
+
+
+/* =========================
+   SUBJECT CARDS — LARGER, DENSER, MORE DYNAMIC
+   ========================= */
+body[data-year] .hub-subject-grid{
+  gap:18px!important;
+}
+body[data-year] .hub-subject-grid a{
+  min-height:300px!important;
+  padding:26px 28px 24px!important;
+  justify-content:flex-end!important;
+  overflow:hidden!important;
+  isolation:isolate;
+  transition:
+    transform .28s cubic-bezier(.2,.75,.25,1),
+    box-shadow .28s ease,
+    border-color .28s ease,
+    background .35s ease!important;
+}
+body[data-year] .hub-subject-grid a::before{
+  width:220px!important;
+  height:220px!important;
+  right:-54px!important;
+  top:-72px!important;
+  background:
+    radial-gradient(circle at 35% 35%,rgba(255,255,255,.82),rgba(255,255,255,.28) 52%,transparent 53%)!important;
+  opacity:.9;
+  transition:transform .5s ease,opacity .35s ease;
+}
+body[data-year] .hub-subject-grid a::after{
+  content:"START  →";
+  position:absolute;
+  right:24px;
+  bottom:24px;
+  z-index:2;
+  font-family:Sora,Manrope,sans-serif;
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  color:color-mix(in srgb,currentColor 62%,#60738d);
+  opacity:.68;
+  transform:translateX(0);
+  transition:transform .25s ease,opacity .25s ease;
+}
+body[data-year] .hub-subject-grid svg{
+  width:116px!important;
+  height:116px!important;
+  top:24px!important;
+  left:26px!important;
+  z-index:2;
+  filter:drop-shadow(0 10px 16px rgba(29,68,104,.12));
+  transition:transform .32s cubic-bezier(.2,.75,.25,1),filter .32s ease;
+}
+body[data-year] .hub-subject-grid h3{
+  margin-bottom:10px!important;
+  font-family:Sora,Manrope,sans-serif!important;
+  font-size:clamp(2rem,2vw,2.65rem)!important;
+  line-height:1.02!important;
+  letter-spacing:-.045em!important;
+  max-width:78%;
+}
+body[data-year] .hub-subject-grid p{
+  max-width:68%!important;
+  padding-right:8px;
+  font-size:clamp(1.18rem,1.15vw,1.42rem)!important;
+  line-height:1.48!important;
+  font-weight:700!important;
+  color:#5b718c!important;
+}
+body[data-year] .subject-status{
+  top:22px!important;
+  right:22px!important;
+  padding:9px 12px!important;
+  font-size:.78rem!important;
+  letter-spacing:.09em!important;
+  box-shadow:0 7px 18px rgba(28,60,97,.06);
+}
+
+/* subject identity bars */
+body[data-year] .hub-subject-grid a{
+  --card-accent:var(--year-primary);
+}
+body[data-year] .hub-subject-grid .maths{--card-accent:#2b8fe8}
+body[data-year] .hub-subject-grid .english{--card-accent:#e87543}
+body[data-year] .hub-subject-grid .reading{--card-accent:#e05284}
+body[data-year] .hub-subject-grid .vocab{--card-accent:#20a578}
+body[data-year] .hub-subject-grid .science{--card-accent:#755fe1}
+body[data-year] .hub-subject-grid .gk{--card-accent:#c28416}
+
+body[data-year] .hub-subject-grid a{
+  border-color:color-mix(in srgb,var(--card-accent) 12%,rgba(16,38,74,.05))!important;
+}
+body[data-year] .hub-subject-grid a .subject-status{
+  color:var(--card-accent)!important;
+}
+body[data-year] .hub-subject-grid a>h3{
+  color:var(--card-accent)!important;
+}
+body[data-year] .hub-subject-grid a span.subject-status::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;
+  margin-right:6px;
+  border-radius:50%;
+  background:var(--card-accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--card-accent) 12%,transparent);
+  vertical-align:middle;
+}
+
+/* animated feature state */
+body[data-year] .hub-subject-grid a.auto-featured{
+  transform:translateY(-7px) scale(1.012)!important;
+  border-color:color-mix(in srgb,var(--card-accent) 30%,transparent)!important;
+  box-shadow:
+    0 24px 46px color-mix(in srgb,var(--card-accent) 13%,rgba(24,67,116,.09)),
+    0 0 0 1px color-mix(in srgb,var(--card-accent) 9%,transparent)!important;
+}
+body[data-year] .hub-subject-grid a.auto-featured::before{
+  transform:scale(1.12) translate(-8px,8px);
+  opacity:1;
+}
+body[data-year] .hub-subject-grid a.auto-featured svg{
+  transform:translateY(-3px) scale(1.08) rotate(-2deg);
+  filter:drop-shadow(0 14px 20px color-mix(in srgb,var(--card-accent) 20%,rgba(29,68,104,.08)));
+}
+body[data-year] .hub-subject-grid a.auto-featured::after{
+  opacity:1;
+  transform:translateX(5px);
+  color:var(--card-accent);
+}
+body[data-year] .hub-subject-grid a:hover{
+  transform:translateY(-8px) scale(1.015)!important;
+  border-color:color-mix(in srgb,var(--card-accent) 34%,transparent)!important;
+}
+body[data-year] .hub-subject-grid a:hover::before{
+  transform:scale(1.15) translate(-10px,10px);
+}
+body[data-year] .hub-subject-grid a:hover svg{
+  transform:translateY(-4px) scale(1.1) rotate(-3deg);
+}
+body[data-year] .hub-subject-grid a:hover::after{
+  transform:translateX(6px);
+  opacity:1;
+  color:var(--card-accent);
+}
+
+/* decorative micro pattern to use the upper empty area */
+body[data-year] .hub-subject-grid a .subject-status{
+  backdrop-filter:blur(8px);
+}
+body[data-year] .hub-subject-grid a:nth-child(odd){
+  background-image:
+    radial-gradient(circle at 82% 20%,rgba(255,255,255,.74),transparent 22%),
+    linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,0))!important;
+}
+body[data-year] .hub-subject-grid a:nth-child(even){
+  background-image:
+    radial-gradient(circle at 86% 18%,rgba(255,255,255,.72),transparent 24%),
+    linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,0))!important;
+}
+
+/* restore subject base colours under the richer overlays */
+body[data-year] .hub-subject-grid .maths{background-color:#e8f4ff!important}
+body[data-year] .hub-subject-grid .english{background-color:#fff0e7!important}
+body[data-year] .hub-subject-grid .reading{background-color:#ffe9f1!important}
+body[data-year] .hub-subject-grid .vocab{background-color:#e7f8ef!important}
+body[data-year] .hub-subject-grid .science{background-color:#efecff!important}
+body[data-year] .hub-subject-grid .gk{background-color:#fff2dc!important}
+
+/* make headings around cards larger too */
+body[data-year] #subjects .section-head h2{
+  font-size:clamp(3rem,3.6vw,4rem)!important;
+}
+body[data-year] #subjects .section-head>p{
+  font-size:1.18rem!important;
+  line-height:1.5!important;
+}
+
+/* responsive tuning */
+@media(max-width:1200px){
+  body[data-year] .hub-subject-grid a{min-height:270px!important}
+  body[data-year] .hub-subject-grid h3{font-size:2rem!important}
+  body[data-year] .hub-subject-grid p{font-size:1.08rem!important;max-width:76%!important}
+  body[data-year] .hub-subject-grid svg{width:100px!important;height:100px!important}
+}
+@media(max-width:900px){
+  body[data-year] .hub-subject-grid a{min-height:250px!important}
+  body[data-year] .hub-subject-grid h3{font-size:1.8rem!important}
+  body[data-year] .hub-subject-grid p{font-size:1rem!important;max-width:80%!important}
+}
+@media(max-width:620px){
+  body[data-year] .hub-subject-grid a{
+    min-height:235px!important;
+    padding:22px!important;
+  }
+  body[data-year] .hub-subject-grid svg{
+    width:86px!important;height:86px!important;
+    top:20px!important;left:20px!important;
+  }
+  body[data-year] .hub-subject-grid h3{
+    font-size:1.65rem!important;
+    max-width:84%;
+  }
+  body[data-year] .hub-subject-grid p{
+    font-size:.94rem!important;
+    max-width:82%!important;
+  }
+  body[data-year] .subject-status{
+    top:18px!important;right:18px!important;font-size:.68rem!important;
+  }
+  body[data-year] .hub-subject-grid a::after{
+    right:20px;bottom:20px;font-size:.68rem;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-year] .hub-subject-grid a,
+  body[data-year] .hub-subject-grid a::before,
+  body[data-year] .hub-subject-grid a::after,
+  body[data-year] .hub-subject-grid svg{
+    transition:none!important;
+  }
+}
