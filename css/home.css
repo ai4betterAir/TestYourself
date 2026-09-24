@@ -497,3 +497,29 @@ footer{padding:32px 0 36px;border-top:1px solid rgba(13,33,68,.06);background:#f
 .level-note span{
   background:linear-gradient(135deg,#20bf84,#45d4a2);
 }
+
+/* 2026-09-24 compact section spacing */
+.compact-section{
+  padding-top:36px!important;
+  padding-bottom:14px!important;
+}
+.compact-section .year-showcase{
+  margin-bottom:0!important;
+}
+.subjects{
+  padding-top:14px!important;
+  padding-bottom:44px!important;
+}
+.subjects .section-intro{
+  margin-bottom:14px!important;
+}
+@media(max-width:760px){
+  .compact-section{
+    padding-top:30px!important;
+    padding-bottom:10px!important;
+  }
+  .subjects{
+    padding-top:10px!important;
+    padding-bottom:36px!important;
+  }
+}
