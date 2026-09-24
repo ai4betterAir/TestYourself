@@ -1112,3 +1112,74 @@ img,svg{shape-rendering:geometricPrecision}
   .subject-layout{grid-template-rows:auto!important}
   .subject-panel{min-height:215px!important}
 }
+
+/* 2026-09-24 larger typography + clickable year cards */
+body{font-size:19px!important}
+.main-nav a{font-size:1.04rem!important}
+.nav-actions a{font-size:1rem!important}
+
+.hero-copy p{font-size:1.28rem!important}
+.hero-proof b{font-size:1.38rem!important}
+.hero-proof span{font-size:.92rem!important}
+
+.orbit-head span{font-size:.86rem!important}
+.orbit-head h2{font-size:1.82rem!important}
+.streak{font-size:.9rem!important}
+.path-step span{font-size:.86rem!important}
+.path-step b{font-size:1.2rem!important}
+.path-step small{font-size:.86rem!important}
+.progress-meta{font-size:.9rem!important}
+.float-pill{font-size:.84rem!important}
+
+.level-header p,
+.section-intro p{font-size:1.08rem!important}
+.level-note{font-size:.96rem!important}
+.year-copy small{font-size:.8rem!important}
+.year-copy b{font-size:1.58rem!important}
+.year-copy span{font-size:1rem!important;line-height:1.5!important}
+
+.mini-chip{font-size:.82rem!important}
+.panel-copy>span{font-size:.88rem!important}
+.panel-copy h3{font-size:1.46rem!important}
+.panel-copy p{font-size:.94rem!important}
+
+.assessment-intro p{font-size:1.14rem!important}
+.assessment-list small{font-size:.82rem!important}
+.assessment-list b{font-size:1.3rem!important}
+.assessment-index{font-size:1.06rem!important}
+
+.story-copy p{font-size:1.14rem!important}
+.story-steps span{font-size:.96rem!important}
+.story-steps b{font-size:1.22rem!important}
+.story-steps p{font-size:.92rem!important}
+
+.final-cta p{font-size:1.08rem!important}
+.footer-grid p{font-size:.96rem!important}
+.footer-grid nav a{font-size:1rem!important}
+
+.year-tile{
+  cursor:pointer!important;
+  pointer-events:auto!important;
+}
+.year-tile *{
+  pointer-events:none;
+}
+.year-arrow{
+  pointer-events:auto!important;
+}
+
+@media(min-width:1700px){
+  body{font-size:20px!important}
+  .main-nav a{font-size:1.08rem!important}
+  .hero-copy p{font-size:1.34rem!important}
+  .year-copy b{font-size:1.7rem!important}
+  .year-copy span{font-size:1.05rem!important}
+  .panel-copy h3{font-size:1.54rem!important}
+}
+@media(max-width:760px){
+  body{font-size:16px!important}
+  .hero-copy p{font-size:1.05rem!important}
+  .year-copy b{font-size:1.3rem!important}
+  .year-copy span{font-size:.86rem!important}
+  .panel-copy h3{font-size:1.15rem!important}
+}
