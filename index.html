@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
-<link rel="stylesheet" href="css/home.css?v=20260924-carousel2">
+<link rel="stylesheet" href="css/home.css?v=20260924-carousel3">
 </head>
 <body>
 <header class="site-header">
@@ -114,7 +114,14 @@
       <div class="level-note"><span></span>Built for K–6 progression</div>
     </div>
 
-    <div class="year-carousel-shell"><div class="year-showcase" id="yearCarousel" aria-label="Choose year level">
+    <div class="year-carousel-shell">
+      <button class="year-arrow year-arrow-prev" id="yearPrev" type="button" aria-label="Previous year levels">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="year-arrow year-arrow-next" id="yearNext" type="button" aria-label="Next year levels">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div class="year-showcase" id="yearCarousel" aria-label="Choose year level">
       <a class="year-tile kindy" href="learning.html?year=K">
         <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-k"/></svg></div>
         <div class="year-copy"><small>START HERE</small><b>Kindy</b><span>Explore, play and discover</span></div>
@@ -329,13 +336,31 @@
 
   const carousel=document.getElementById('yearCarousel');
   const scrollBar=document.getElementById('yearScrollBar');
+  const prevBtn=document.getElementById('yearPrev');
+  const nextBtn=document.getElementById('yearNext');
   if(carousel){
     const updateYearProgress=()=>{
-      const max=carousel.scrollWidth-carousel.clientWidth;
+      const max=Math.max(0,carousel.scrollWidth-carousel.clientWidth);
       const ratio=max>0?carousel.scrollLeft/max:0;
-      if(scrollBar) scrollBar.style.transform='scaleX('+Math.max(.16,ratio)+')';
+      if(scrollBar) scrollBar.style.transform='scaleX('+(0.16+(ratio*0.84))+')';
+      if(prevBtn) prevBtn.disabled=carousel.scrollLeft<=4;
+      if(nextBtn) nextBtn.disabled=carousel.scrollLeft>=max-4;
     };
+
+    const scrollYearCards=(direction)=>{
+      const first=carousel.querySelector('.year-tile');
+      if(!first) return;
+      const styles=getComputedStyle(carousel);
+      const gap=parseFloat(styles.columnGap||styles.gap||'14')||14;
+      const step=first.getBoundingClientRect().width+gap;
+      carousel.scrollBy({left:direction*step,behavior:'smooth'});
+    };
+
+    if(prevBtn) prevBtn.addEventListener('click',()=>scrollYearCards(-1));
+    if(nextBtn) nextBtn.addEventListener('click',()=>scrollYearCards(1));
+
     carousel.addEventListener('scroll',updateYearProgress,{passive:true});
+    window.addEventListener('resize',updateYearProgress,{passive:true});
     updateYearProgress();
 
     if(matchMedia('(pointer:fine)').matches){
