@@ -268,3 +268,31 @@ footer{border-top:1px solid #E6EEF4;background:#fff;padding:23px 0 27px}
   .journey-image-cta{aspect-ratio:1500/643;height:auto!important;min-height:0;padding:0!important}
   .journey-image-cta .journey-hotspot{left:7%;top:43%;width:34%;height:21%}
 }
+
+/* 2026-09-24 crop asset hotfix */
+.year-art{
+  width:76px!important;
+  height:76px!important;
+  margin:0 auto 5px!important;
+  object-fit:contain!important;
+  display:block!important;
+  background:none!important;
+  filter:drop-shadow(0 5px 6px rgba(26,66,104,.12));
+}
+.journey-image-cta{
+  aspect-ratio:972/165!important;
+  height:auto!important;
+}
+.journey-image-cta .journey-hotspot{
+  left:53.4%!important;
+  top:22%!important;
+  width:22.5%!important;
+  height:34%!important;
+}
+@media(max-width:760px){
+  .year-art{width:66px!important;height:66px!important}
+  .journey-image-cta{aspect-ratio:972/165!important}
+  .journey-image-cta .journey-hotspot{
+    left:52%!important;top:20%!important;width:25%!important;height:38%!important;
+  }
+}
