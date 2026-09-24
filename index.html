@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
-<link rel="stylesheet" href="css/home.css?v=20260924-color1">
+<link rel="stylesheet" href="css/home.css?v=20260924-dynamic1">
 </head>
 <body>
 <header class="site-header">
@@ -37,7 +37,7 @@
   <div class="shell hero-grid">
     <div class="hero-copy reveal">
       <div class="eyebrow">FOR K–6 LEARNERS</div>
-      <h1>Learning that feels<br><span>made for now.</span></h1>
+      <h1>Learning that feels<br><span class="dynamic-hero-word tone-blue" id="dynamicHeroWord">made for now.</span></h1>
       <p>One focused platform for lessons, practice and assessment prep — designed to keep students moving, not scrolling.</p>
 
       <div class="hero-actions">
@@ -63,7 +63,7 @@
             <span>LEARNING FLOW</span>
             <h2>Your next 20 minutes</h2>
           </div>
-          <div class="streak">7 day streak</div>
+          <div class="streak"><i></i>7 day streak</div>
         </div>
 
         <div class="path">
@@ -96,7 +96,7 @@
         </div>
       </div>
 
-      <div class="float-pill pill-xp">+12 XP</div>
+      <div class="float-pill pill-xp"><span>+</span>12 XP</div>
       <div class="float-pill pill-level">Level 4</div>
       <div class="float-pill pill-badge">New badge</div>
     </div>
@@ -314,6 +314,29 @@
   },{threshold:.12,rootMargin:'0px 0px -50px'});
   els.forEach(el=>io.observe(el));
 
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const heroWord=document.getElementById('dynamicHeroWord');
+  if(heroWord&&!reducedMotion){
+    const words=[
+      ['made for now.','tone-blue'],
+      ['built to grow.','tone-green'],
+      ['ready to explore.','tone-warm'],
+      ['made for now.','tone-blue']
+    ];
+    let wordIndex=0;
+    setInterval(()=>{
+      heroWord.classList.add('is-changing');
+      setTimeout(()=>{
+        wordIndex=(wordIndex+1)%words.length;
+        heroWord.textContent=words[wordIndex][0];
+        heroWord.classList.remove('tone-blue','tone-green','tone-warm');
+        heroWord.classList.add(words[wordIndex][1]);
+        requestAnimationFrame(()=>heroWord.classList.remove('is-changing'));
+      },220);
+    },2800);
+  }
+
   const visual=document.getElementById('heroVisual');
   const orbit=document.getElementById('learningOrbit');
   if(visual&&orbit&&matchMedia('(pointer:fine)').matches){
@@ -324,6 +347,35 @@
       orbit.style.transform=`perspective(1200px) rotateY(${x*5}deg) rotateX(${-y*4}deg) translateY(-3px)`;
     });
     visual.addEventListener('pointerleave',()=>orbit.style.transform='perspective(1200px) rotateY(0) rotateX(0)');
+  }
+
+  const learningSteps=[...document.querySelectorAll('.path-step')];
+  if(learningSteps.length&&!reducedMotion){
+    let activeStep=1;
+    learningSteps[activeStep].classList.add('auto-active');
+    setInterval(()=>{
+      learningSteps.forEach(step=>step.classList.remove('auto-active'));
+      activeStep=(activeStep+1)%learningSteps.length;
+      learningSteps[activeStep].classList.add('auto-active');
+    },2400);
+  }
+
+  document.querySelectorAll('.year-tile,.subject-panel,.assessment-list a,.story-steps>div').forEach((item,index)=>{
+    item.style.setProperty('--reveal-delay',Math.min(index%7,6)*55+'ms');
+    item.classList.add('micro-reveal');
+  });
+
+  const microItems=document.querySelectorAll('.micro-reveal');
+  if(microItems.length){
+    const microIO=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('micro-visible');
+          microIO.unobserve(entry.target);
+        }
+      });
+    },{threshold:.12});
+    microItems.forEach(item=>microIO.observe(item));
   }
 
   document.querySelectorAll('.subject-panel,.year-tile,.assessment-list a').forEach(card=>{
