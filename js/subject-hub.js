@@ -86,6 +86,12 @@ const gkCommon={
 };
 const banks={maths,english,reading,vocabulary:vocab,science:scienceCommon,'general-knowledge':gkCommon};
 const topics=banks[subject][year]||banks[subject]['1'];
+const topicTotal=document.getElementById('topic-total');
+if(topicTotal) topicTotal.textContent=topics.length;
+const dashboardTitle=document.getElementById('dashboard-title');
+const dashboardKicker=document.getElementById('dashboard-kicker');
+if(dashboardTitle) dashboardTitle.textContent='Start your '+meta.label+' journey.';
+if(dashboardKicker) dashboardKicker.textContent=label.toUpperCase()+' · '+meta.label.toUpperCase()+' FLOW';
 
 function hrefFor(title,index){
  const slug=title.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -106,6 +112,25 @@ function hrefFor(title,index){
  }
  return '#';
 }
+const previewIds=['preview-1','preview-2','preview-3'];
+previewIds.forEach((id,i)=>{
+ const a=document.getElementById(id);
+ const t=topics[i];
+ if(!a||!t)return;
+ a.href=hrefFor(t[0],i);
+ a.querySelector('b').textContent=t[0];
+ if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
+});
+const previewCards=previewIds.map(id=>document.getElementById(id)).filter(Boolean);
+if(previewCards.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+ let pi=0;
+ setInterval(()=>{
+   previewCards.forEach(c=>c.classList.remove('is-active'));
+   pi=(pi+1)%previewCards.length;
+   previewCards[pi].classList.add('is-active');
+ },2400);
+}
+
 const grid=document.getElementById('topic-grid');
 topics.forEach((t,i)=>{
  const a=document.createElement('a');a.className='topic-card';a.href=hrefFor(t[0],i);
@@ -114,4 +139,14 @@ topics.forEach((t,i)=>{
  if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
  grid.appendChild(a);
 });
+const topicCards=[...document.querySelectorAll('.topic-card:not(.coming)')];
+if(topicCards.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+ let activeTopic=0;
+ topicCards[activeTopic].classList.add('auto-featured');
+ setInterval(()=>{
+   topicCards.forEach(card=>card.classList.remove('auto-featured'));
+   activeTopic=(activeTopic+1)%topicCards.length;
+   topicCards[activeTopic].classList.add('auto-featured');
+ },2600);
+}
 })();
