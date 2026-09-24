@@ -1,13 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230" role="img" aria-labelledby="t d">
-<title id="t">SkillUP learning journey landscape</title><desc id="d">Green hills, a winding path, clouds and a goal flag.</desc>
-<defs><linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#BFEAFF"/><stop offset="1" stop-color="#EAF8FF"/></linearGradient></defs>
+<title id="t">SkillUP learning journey landscape</title><desc id="d">Layered green hills with clouds, trees, a winding golden path and a red goal flag.</desc>
+<defs>
+  <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#A9E3FF"/><stop offset="1" stop-color="#EAF9FF"/></linearGradient>
+  <linearGradient id="hill1" x1="0" x2="1"><stop stop-color="#55CA74"/><stop offset="1" stop-color="#26A95D"/></linearGradient>
+  <linearGradient id="hill2" x1="0" x2="1"><stop stop-color="#95DE50"/><stop offset="1" stop-color="#54C63F"/></linearGradient>
+  <linearGradient id="hill3" x1="0" x2="1"><stop stop-color="#39B764"/><stop offset="1" stop-color="#178E5A"/></linearGradient>
+  <linearGradient id="path" x1="0" x2="1"><stop stop-color="#FFE69E"/><stop offset=".5" stop-color="#FFD269"/><stop offset="1" stop-color="#FFEDB0"/></linearGradient>
+</defs>
 <rect width="1200" height="230" rx="26" fill="url(#sky)"/>
-<g fill="#fff" opacity=".9"><ellipse cx="155" cy="65" rx="75" ry="22"/><ellipse cx="215" cy="60" rx="42" ry="15"/><ellipse cx="910" cy="55" rx="72" ry="23"/><ellipse cx="970" cy="60" rx="45" ry="16"/></g>
-<path d="M0 165c115-54 225-58 329-12 119-80 264-76 425 3 138-66 286-63 446 4v70H0Z" fill="#64C67C"/>
-<path d="M0 191c132-42 255-38 369 14 124-61 263-56 416 7 122-41 260-38 415 6v12H0Z" fill="#3EB366"/>
-<path d="M720 230c45-41 69-71 70-89 1-18-12-32-38-43" fill="none" stroke="#FFE09A" stroke-width="30" stroke-linecap="round"/>
-<path d="M790 100V38" stroke="#173B78" stroke-width="5"/><path d="M795 40h62l-16 17 16 17h-62Z" fill="#EF5D64"/>
-<g fill="#258F57"><path d="M65 200c4-44 20-71 48-83 5 33-4 61-27 84Z"/><path d="M101 205c4-51 24-82 56-94 4 36-7 67-34 95Z"/><path d="M1090 208c4-44 21-71 49-83 5 33-4 61-27 84Z"/></g>
-<g fill="#fff"><circle cx="94" cy="198" r="6"/><circle cx="111" cy="186" r="5"/><circle cx="1048" cy="197" r="6"/><circle cx="1071" cy="184" r="5"/><circle cx="1032" cy="181" r="4"/></g>
-<g fill="#FFD85A"><circle cx="94" cy="198" r="2.5"/><circle cx="111" cy="186" r="2"/><circle cx="1048" cy="197" r="2.5"/><circle cx="1071" cy="184" r="2"/><circle cx="1032" cy="181" r="2"/></g>
+<g fill="#fff" opacity=".88">
+  <ellipse cx="130" cy="48" rx="72" ry="26"/><ellipse cx="190" cy="52" rx="49" ry="19"/>
+  <ellipse cx="945" cy="44" rx="76" ry="27"/><ellipse cx="1008" cy="49" rx="48" ry="18"/>
+  <ellipse cx="590" cy="58" rx="55" ry="20"/>
+</g>
+<path d="M0 174c98-46 194-51 290-16 79-55 170-62 273-23 108 41 190 47 260 12 102-51 227-54 377 10v73H0Z" fill="#61CDE4" opacity=".55"/>
+<path d="M0 181c125-63 236-64 334-5 92-71 210-73 353-8 113-71 279-65 513 21v41H0Z" fill="url(#hill1)"/>
+<path d="M0 204c120-44 235-42 345 7 132-72 264-71 396 3 118-50 271-43 459 7v9H0Z" fill="url(#hill2)"/>
+<path d="M0 220c125-23 258-21 399 7 147-31 288-31 425 0 139-25 264-23 376 0v3H0Z" fill="url(#hill3)"/>
+<path d="M737 230c41-37 65-67 72-89 7-22-5-41-36-59" fill="none" stroke="url(#path)" stroke-width="34" stroke-linecap="round"/>
+<path d="M808 84V24" stroke="#173B78" stroke-width="5"/><path d="M813 26h64l-17 17 17 17h-64Z" fill="#EF4F5C"/>
+<g fill="#128D5A">
+  <path d="M54 221c5-48 21-80 50-97 7 35 0 68-23 98Z"/><path d="M91 222c4-57 25-94 62-111 8 42-2 79-31 112Z"/>
+  <path d="M1080 221c4-47 21-79 50-95 6 35 0 67-23 96Z"/><path d="M1115 221c4-56 25-91 61-108 7 40-3 77-30 109Z"/>
+</g>
+<g fill="#fff"><circle cx="101" cy="200" r="6"/><circle cx="122" cy="186" r="5"/><circle cx="1076" cy="198" r="6"/><circle cx="1101" cy="184" r="5"/></g>
+<g fill="#FFD34D"><circle cx="101" cy="200" r="2.5"/><circle cx="122" cy="186" r="2"/><circle cx="1076" cy="198" r="2.5"/><circle cx="1101" cy="184" r="2"/></g>
 </svg>
