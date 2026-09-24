@@ -1,77 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" role="img" aria-labelledby="t d">
-<title id="t">SkillUP learning illustration</title><desc id="d">Four learning books, a light bulb, pencils, leaves and a note.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" role="img" aria-labelledby="t d">
+<title id="t">SkillUP learning books</title><desc id="d">Highly illustrated learning books with a glowing light bulb, leaves, pencils and a mug.</desc>
 <defs>
-<filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#173B78" flood-opacity=".16"/></filter>
-<linearGradient id="blue" x1="0" x2="1"><stop stop-color="#2079D3"/><stop offset="1" stop-color="#45A5F2"/></linearGradient>
-<linearGradient id="green" x1="0" x2="1"><stop stop-color="#1C9E6A"/><stop offset="1" stop-color="#39C282"/></linearGradient>
-<linearGradient id="orange" x1="0" x2="1"><stop stop-color="#F7A719"/><stop offset="1" stop-color="#FFBE38"/></linearGradient>
-<linearGradient id="coral" x1="0" x2="1"><stop stop-color="#E95E52"/><stop offset="1" stop-color="#F17B69"/></linearGradient>
+  <linearGradient id="b1" x1="0" x2="1"><stop stop-color="#0F63C8"/><stop offset=".48" stop-color="#148DE8"/><stop offset="1" stop-color="#0B5FC1"/></linearGradient>
+  <linearGradient id="b2" x1="0" x2="1"><stop stop-color="#0C8E59"/><stop offset=".52" stop-color="#18B66F"/><stop offset="1" stop-color="#088C54"/></linearGradient>
+  <linearGradient id="b3" x1="0" x2="1"><stop stop-color="#F28D05"/><stop offset=".52" stop-color="#FFB51D"/><stop offset="1" stop-color="#F08C00"/></linearGradient>
+  <linearGradient id="b4" x1="0" x2="1"><stop stop-color="#DF374A"/><stop offset=".52" stop-color="#F25A62"/><stop offset="1" stop-color="#D93345"/></linearGradient>
+  <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#68D78E"/><stop offset="1" stop-color="#008E6A"/></linearGradient>
+  <radialGradient id="bulb"><stop offset="0" stop-color="#FFF7A9"/><stop offset=".55" stop-color="#FFE05B"/><stop offset="1" stop-color="#FFB900"/></radialGradient>
+  <linearGradient id="paper" x1="0" x2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDE9EF"/></linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="170%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="13" flood-color="#123D73" flood-opacity=".18"/></filter>
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
 
-<g opacity=".95">
-<path d="M70 380c12-89 42-148 94-177 8 65-8 123-50 176Z" fill="#8BD5AB"/>
-<path d="M98 363c16-57 38-99 73-129" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
-<path d="M127 373c5-63 23-111 55-148" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
-<path d="M574 394c6-93 39-154 96-184 9 65-6 125-48 183Z" fill="#92DAB0"/>
-<path d="M606 376c17-59 39-102 76-133" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
+<g opacity=".9">
+  <ellipse cx="165" cy="118" rx="90" ry="33" fill="#fff" opacity=".6"/>
+  <ellipse cx="660" cy="95" rx="100" ry="36" fill="#fff" opacity=".55"/>
 </g>
 
-<g transform="translate(185 145)" filter="url(#shadow)">
-<rect x="30" y="0" width="380" height="69" rx="18" fill="url(#blue)"/>
-<rect x="17" y="62" width="405" height="69" rx="18" fill="url(#green)"/>
-<rect x="31" y="124" width="394" height="69" rx="18" fill="url(#orange)"/>
-<rect x="10" y="186" width="422" height="69" rx="18" fill="url(#coral)"/>
-
-<g fill="#FBFDFF">
-<path d="M352 10h38c12 0 22 9 22 21v18c0 12-10 21-22 21h-38Z"/>
-<path d="M365 72h36c12 0 21 10 21 21v17c0 12-9 21-21 21h-36Z"/>
-<path d="M363 134h39c12 0 22 9 22 21v17c0 12-10 21-22 21h-39Z" fill="#FFF8E9"/>
-<path d="M367 196h42c12 0 22 10 22 21v17c0 12-10 21-22 21h-42Z" fill="#FFF6F2"/>
+<g transform="translate(60 255)">
+  <path d="M15 177c8-110 46-177 114-203 13 77-8 145-63 204Z" fill="url(#leaf)"/>
+  <path d="M55 160c19-72 46-122 91-159" fill="none" stroke="#0B7D68" stroke-width="6" stroke-linecap="round"/>
+  <path d="M109 176c2-90 25-151 71-193 12 72-3 138-44 194Z" fill="#3EC78B"/>
+  <path d="M134 158c11-58 27-100 55-132" fill="none" stroke="#0A8870" stroke-width="5" stroke-linecap="round"/>
 </g>
-<g stroke="#D6E3EA" stroke-width="2">
-<path d="M360 24h42M360 34h42M360 44h42M373 86h39M373 96h39M373 106h39M372 148h41M372 158h41M372 168h41M377 210h43M377 220h43M377 230h43"/>
-</g>
-<g font-family="Arial,sans-serif" font-size="29" font-weight="800" fill="#fff">
-<text x="145" y="45">LEARN</text>
-<text x="123" y="107">PRACTISE</text>
-<text x="153" y="169">TEST</text>
-<text x="123" y="231">IMPROVE</text>
-</g>
-<g transform="translate(65 15)">
-<path d="M0 8h20a7 7 0 0 1 7 7v20H8a8 8 0 0 0-8 5Z" fill="#fff" opacity=".95"/>
-<path d="M54 8H34a7 7 0 0 0-7 7v20h19a8 8 0 0 1 8 5Z" fill="#fff" opacity=".95"/>
-</g>
-<g transform="translate(72 75)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-<path d="M2 15l10 10L31 3"/><rect x="-5" y="-5" width="43" height="43" rx="8" stroke-width="4"/>
-</g>
-<g transform="translate(74 142)" fill="#fff"><rect x="0" y="20" width="8" height="20" rx="2"/><rect x="15" y="11" width="8" height="29" rx="2"/><rect x="30" y="0" width="8" height="40" rx="2"/></g>
-<g transform="translate(68 205)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M0 28 13 16l10 8L43 2"/><path d="M35 2h8v8"/></g>
+<g transform="translate(590 265)">
+  <path d="M0 165c15-103 51-163 109-184 10 70-7 133-53 185Z" fill="url(#leaf)"/>
+  <path d="M34 147c16-59 39-101 78-133" fill="none" stroke="#0A826A" stroke-width="6" stroke-linecap="round"/>
+  <path d="M73 166c5-69 26-117 61-148 7 54-5 104-37 149Z" fill="#64D497"/>
 </g>
 
-<g transform="translate(365 22)">
-<circle cx="58" cy="58" r="39" fill="#FFD64A"/>
-<circle cx="58" cy="58" r="27" fill="#FFE587"/>
-<path d="M46 59c7-13 17-13 24 0M50 59l4 20M66 59l-4 20" fill="none" stroke="#E59B00" stroke-width="4" stroke-linecap="round"/>
-<rect x="47" y="79" width="22" height="18" rx="6" fill="#173B78"/>
-<g stroke="#FFB719" stroke-width="5" stroke-linecap="round">
-<path d="M58 5v-18"/><path d="M20 20 8 8"/><path d="M96 20l12-12"/><path d="M5 58h-18"/><path d="M111 58h18"/>
-</g>
+<g transform="translate(210 154)" filter="url(#shadow)">
+  <g>
+    <rect x="32" y="0" width="390" height="72" rx="20" fill="url(#b1)"/>
+    <path d="M42 8h335c-38 19-217 21-335 7Z" fill="#fff" opacity=".16"/>
+    <path d="M363 9h43c13 0 22 10 22 22v18c0 13-9 22-22 22h-43Z" fill="url(#paper)"/>
+    <g stroke="#BED0DA" stroke-width="2"><path d="M372 23h44M372 33h44M372 43h44M372 53h44"/></g>
+    <g transform="translate(66 17)"><path d="M0 5h17a7 7 0 0 1 7 7v26H8a8 8 0 0 0-8 5Z" fill="#fff"/><path d="M48 5H31a7 7 0 0 0-7 7v26h16a8 8 0 0 1 8 5Z" fill="#fff"/></g>
+    <text x="173" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">LEARN</text>
+  </g>
+  <g transform="translate(-12 64)">
+    <rect x="32" y="0" width="414" height="72" rx="20" fill="url(#b2)"/>
+    <path d="M42 8h354c-41 19-228 21-354 7Z" fill="#fff" opacity=".14"/>
+    <path d="M384 9h43c13 0 22 10 22 22v18c0 13-9 22-22 22h-43Z" fill="url(#paper)"/>
+    <g stroke="#BED0DA" stroke-width="2"><path d="M393 23h44M393 33h44M393 43h44M393 53h44"/></g>
+    <g transform="translate(70 18)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="0" y="0" width="42" height="42" rx="7" stroke-width="4"/><path d="M6 22l9 9L36 7"/></g>
+    <text x="173" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">PRACTISE</text>
+  </g>
+  <g transform="translate(2 128)">
+    <rect x="32" y="0" width="416" height="72" rx="20" fill="url(#b3)"/>
+    <path d="M42 8h355c-40 20-228 21-355 7Z" fill="#fff" opacity=".15"/>
+    <path d="M386 9h43c13 0 22 10 22 22v18c0 13-9 22-22 22h-43Z" fill="url(#paper)"/>
+    <g stroke="#D8C9A8" stroke-width="2"><path d="M395 23h44M395 33h44M395 43h44M395 53h44"/></g>
+    <g transform="translate(72 18)" fill="#fff"><rect x="0" y="24" width="10" height="18" rx="2"/><rect x="17" y="14" width="10" height="28" rx="2"/><rect x="34" y="2" width="10" height="40" rx="2"/></g>
+    <text x="190" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">TEST</text>
+  </g>
+  <g transform="translate(-8 192)">
+    <rect x="32" y="0" width="432" height="72" rx="20" fill="url(#b4)"/>
+    <path d="M42 8h370c-43 19-240 21-370 7Z" fill="#fff" opacity=".14"/>
+    <path d="M400 9h45c13 0 22 10 22 22v18c0 13-9 22-22 22h-45Z" fill="url(#paper)"/>
+    <g stroke="#D6C5C5" stroke-width="2"><path d="M409 23h45M409 33h45M409 43h45M409 53h45"/></g>
+    <g transform="translate(72 18)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 38l13-13 10 9L43 8"/><path d="M35 8h8v8"/><path d="M4 42h8v-9M20 42h8V31M36 42h8V20"/></g>
+    <text x="174" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">IMPROVE</text>
+  </g>
 </g>
 
-<g transform="translate(535 260)">
-<rect x="0" y="55" width="104" height="118" rx="18" fill="#E0F5FF" stroke="#8FD6F6" stroke-width="3"/>
-<g transform="rotate(5 50 40)">
-<rect x="18" y="0" width="13" height="102" rx="5" fill="#278FE8"/><rect x="39" y="-8" width="13" height="110" rx="5" fill="#FF9C1A"/><rect x="60" y="6" width="13" height="96" rx="5" fill="#27B86A"/>
-<path d="M18 0l6.5-15L31 0M39-8l6.5-15L52-8M60 6l6.5-15L73 6" fill="#F3C087"/>
-</g>
-<text x="52" y="91" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="800" fill="#173B78"><tspan x="52">Better</tspan><tspan x="52" dy="19">Learners</tspan><tspan x="52" dy="19">Brighter</tspan><tspan x="52" dy="19">Futures</tspan></text>
+<g transform="translate(365 23)" filter="url(#glow)">
+  <circle cx="62" cy="62" r="41" fill="url(#bulb)"/>
+  <ellipse cx="48" cy="45" rx="10" ry="20" fill="#fff" opacity=".48" transform="rotate(28 48 45)"/>
+  <path d="M48 65c8-15 19-15 28 0M53 66l4 22M71 66l-4 22" fill="none" stroke="#E88F00" stroke-width="4" stroke-linecap="round"/>
+  <rect x="50" y="87" width="24" height="18" rx="6" fill="#0B4BA2"/>
+  <rect x="53" y="104" width="18" height="8" rx="4" fill="#123A78"/>
+  <g stroke="#FFB719" stroke-width="5" stroke-linecap="round"><path d="M62 7v-20"/><path d="M22 22 9 9"/><path d="M102 22l13-13"/><path d="M7 62h-20"/><path d="M117 62h20"/></g>
 </g>
 
-<g transform="translate(565 55) rotate(-5)">
-<rect width="160" height="124" rx="11" fill="#FFF2C7" stroke="#EBD17C" stroke-width="2"/>
-<text x="22" y="35" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="#173B78">
-<tspan x="22">Small Steps</tspan><tspan x="22" dy="25">Big Possibilities</tspan>
-</text>
-<path d="M22 97h99" stroke="#FFB719" stroke-width="5" stroke-linecap="round"/>
+<g transform="translate(610 285)" filter="url(#shadow)">
+  <rect x="0" y="52" width="112" height="132" rx="20" fill="#F5FCFF" stroke="#67BEEB" stroke-width="4"/>
+  <path d="M110 82h18c22 0 25 61 0 61h-18" fill="none" stroke="#67BEEB" stroke-width="6"/>
+  <g transform="rotate(5 52 40)">
+    <rect x="17" y="-4" width="14" height="105" rx="6" fill="#138F4F"/><rect x="39" y="-14" width="14" height="115" rx="6" fill="#FFB31A"/><rect x="61" y="0" width="14" height="101" rx="6" fill="#0A63C6"/><rect x="83" y="-8" width="14" height="109" rx="6" fill="#F36A28"/>
+    <path d="M17-4l7-16 7 16M39-14l7-16 7 16M61 0l7-16 7 16M83-8l7-16 7 16" fill="#EEC18E"/>
+  </g>
+  <text x="56" y="102" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="800" fill="#173B78">
+    <tspan x="56">Better</tspan><tspan x="56" dy="19">Learners</tspan><tspan x="56" dy="21">Brighter</tspan><tspan x="56" dy="19">Futures</tspan>
+  </text>
+</g>
+
+<g transform="translate(626 54) rotate(-5)">
+  <text x="0" y="0" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="800" fill="#173B78">
+    <tspan x="0" dy="0">Small</tspan><tspan x="0" dy="29">Steps</tspan><tspan x="0" dy="29">Big</tspan><tspan x="0" dy="29">Possibilities</tspan>
+  </text>
+  <path d="M0 120h142" stroke="#FFB719" stroke-width="6" stroke-linecap="round"/>
 </g>
 </svg>
