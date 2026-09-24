@@ -830,3 +830,65 @@ footer{padding:32px 0 36px;border-top:1px solid rgba(13,33,68,.06);background:#f
     width:min(100% - 28px,1180px)!important;
   }
 }
+
+/* 2026-09-24 readability pass — larger type across wide desktop layout */
+body{font-size:17px}
+.main-nav a{font-size:.95rem!important}
+.nav-actions a{font-size:.9rem!important}
+
+.eyebrow{font-size:.78rem!important}
+.hero-copy p{font-size:1.12rem!important;line-height:1.65!important}
+.hero-proof b{font-size:1.18rem!important}
+.hero-proof span{font-size:.78rem!important}
+
+.orbit-head span{font-size:.72rem!important}
+.orbit-head h2{font-size:1.55rem!important}
+.streak{font-size:.76rem!important}
+.path-step span{font-size:.72rem!important}
+.path-step b{font-size:1rem!important}
+.path-step small{font-size:.74rem!important}
+.progress-meta{font-size:.76rem!important}
+.float-pill{font-size:.76rem!important}
+
+.level-header p,
+.section-intro p{font-size:.94rem!important}
+.level-note{font-size:.8rem!important}
+.year-copy small{font-size:.68rem!important}
+.year-copy b{font-size:1.28rem!important}
+.year-copy span{font-size:.82rem!important;line-height:1.45!important}
+
+.mini-chip{font-size:.68rem!important}
+.panel-copy>span{font-size:.72rem!important}
+.panel-copy h3{font-size:1.16rem!important;line-height:1.42!important}
+.panel-copy p{font-size:.78rem!important}
+
+.assessment-intro p{font-size:1rem!important}
+.assessment-list small{font-size:.68rem!important}
+.assessment-list b{font-size:1.08rem!important}
+.assessment-index{font-size:.9rem!important}
+
+.story-copy p{font-size:1rem!important}
+.story-steps span{font-size:.82rem!important}
+.story-steps b{font-size:1rem!important}
+.story-steps p{font-size:.78rem!important}
+
+.final-cta p{font-size:.94rem!important}
+.footer-grid p{font-size:.82rem!important}
+.footer-grid nav a{font-size:.86rem!important}
+
+@media(min-width:1500px){
+  body{font-size:18px}
+  .main-nav a{font-size:1rem!important}
+  .hero-copy p{font-size:1.18rem!important}
+  .year-copy b{font-size:1.34rem!important}
+  .year-copy span{font-size:.86rem!important}
+  .panel-copy h3{font-size:1.2rem!important}
+  .assessment-list b{font-size:1.12rem!important}
+}
+@media(max-width:760px){
+  body{font-size:16px}
+  .hero-copy p{font-size:1rem!important}
+  .year-copy b{font-size:1.12rem!important}
+  .year-copy span{font-size:.75rem!important}
+  .panel-copy h3{font-size:1.05rem!important}
+}
