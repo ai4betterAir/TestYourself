@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
-<link rel="stylesheet" href="css/home.css?v=20260924-scale1">
+<link rel="stylesheet" href="css/home.css?v=20260924-scale2">
 </head>
 <body>
 <header class="site-header">
@@ -362,25 +362,8 @@
     carousel.addEventListener('scroll',updateYearProgress,{passive:true});
     window.addEventListener('resize',updateYearProgress,{passive:true});
     updateYearProgress();
-
-    if(matchMedia('(pointer:fine)').matches){
-      let down=false,startX=0,startScroll=0,moved=false;
-      carousel.addEventListener('pointerdown',e=>{
-        down=true;moved=false;startX=e.clientX;startScroll=carousel.scrollLeft;
-        carousel.setPointerCapture(e.pointerId);
-        carousel.classList.add('is-dragging');
-      });
-      carousel.addEventListener('pointermove',e=>{
-        if(!down) return;
-        const delta=e.clientX-startX;
-        if(Math.abs(delta)>4) moved=true;
-        carousel.scrollLeft=startScroll-delta;
-      });
-      const stop=e=>{if(!down)return;down=false;carousel.classList.remove('is-dragging');};
-      carousel.addEventListener('pointerup',stop);
-      carousel.addEventListener('pointercancel',stop);
-      carousel.addEventListener('click',e=>{if(moved)e.preventDefault();},true);
-    }
+    // Native horizontal scrolling keeps the year cards fully clickable.
+    // Arrow buttons above handle desktop navigation; touch users can swipe naturally.
   }
 })();
 </script>
