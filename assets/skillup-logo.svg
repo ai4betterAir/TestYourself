@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-labelledby="t d"><title id="t">SkillUP</title><desc id="d">SkillUP open book and rising learner logo. Learn, Practice, Test, Improve.</desc><defs><linearGradient id="b" x1="0" x2="1"><stop stop-color="#0d4ca8"/><stop offset="1" stop-color="#18b6ea"/></linearGradient><linearGradient id="u" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#18b6f2"/><stop offset="1" stop-color="#0879e5"/></linearGradient><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffc928"/><stop offset="1" stop-color="#ff8a00"/></linearGradient></defs><g transform="translate(8 10)"><path d="M8 103Q68 73 133 116v34Q70 112 8 139z" fill="#0c4ba3"/><path d="M258 103q-60-30-125 13v34q63-38 125-11z" fill="#1267cf"/><path d="M24 79q54-18 109 31v22Q78 92 24 102z" fill="#1bb8e9"/><path d="M242 79q-54-18-109 31v22q55-40 109-30z" fill="#1aaee4"/><path d="M132 114Q104 57 72 49q39 36 61 82z" fill="url(#b)"/><path d="M134 114q27-57 60-65-40 36-61 82z" fill="#13aee7"/><circle cx="133" cy="42" r="12" fill="url(#g)"/><path d="m184 10 5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#ffb51b"/><path d="M184 0v7M207 10l-6 5M211 34l-8-1" stroke="#ffb51b" stroke-width="4" stroke-linecap="round"/></g><g font-family="Arial,Helvetica,sans-serif" font-weight="800"><text x="285" y="115" font-size="86" fill="#0a3f86">Skill</text><text x="467" y="115" font-size="86" fill="url(#u)">UP</text></g><g font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#31384a"><line x1="290" y1="151" x2="326" y2="151" stroke="#8dc5f4" stroke-width="3"/><text x="338" y="158">Learn</text><circle cx="403" cy="151" r="5" fill="#ff9418"/><text x="416" y="158">Practice</text><circle cx="499" cy="151" r="5" fill="#18a85d"/><text x="512" y="158">Test</text><circle cx="557" cy="151" r="5" fill="#7c4bc6"/><text x="570" y="158">Improve</text><line x1="650" y1="151" x2="686" y2="151" stroke="#8dc5f4" stroke-width="3"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-labelledby="title desc">
+<title id="title">SkillUP</title><desc id="desc">SkillUP open book logo with sunrise and the tagline Small Steps Brighter Futures.</desc>
+<defs>
+  <linearGradient id="bookL" x1="0" x2="1"><stop stop-color="#0872D7"/><stop offset="1" stop-color="#0A49A6"/></linearGradient>
+  <linearGradient id="bookR" x1="0" x2="1"><stop stop-color="#0A4AA5"/><stop offset="1" stop-color="#18A7EA"/></linearGradient>
+  <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFD84A"/><stop offset="1" stop-color="#FF9C1A"/></linearGradient>
+  <linearGradient id="up" x1="0" x2="1"><stop stop-color="#11A96E"/><stop offset="1" stop-color="#18BC7D"/></linearGradient>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#123E73" flood-opacity=".15"/></filter>
+</defs>
+<g transform="translate(8 11)" filter="url(#soft)">
+  <path d="M24 98Q72 73 132 111v41Q76 117 24 140Z" fill="#0B4AA2"/>
+  <path d="M242 98q-49-25-110 13v41q58-35 110-12Z" fill="#1269D2"/>
+  <path d="M39 76q42-14 93 28v24Q86 95 39 101Z" fill="#21B4E8"/>
+  <path d="M227 76q-42-14-95 28v24q47-33 95-27Z" fill="#23AEE5"/>
+  <path d="M132 111Q108 60 80 50q35 31 52 71Z" fill="url(#bookL)"/>
+  <path d="M133 111q24-51 54-61-36 31-55 71Z" fill="url(#bookR)"/>
+  <path d="M45 144q43 15 87-4" fill="none" stroke="#18A760" stroke-width="8" stroke-linecap="round"/>
+  <path d="M221 144q-44 15-89-4" fill="none" stroke="#18A760" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="133" cy="38" r="13" fill="url(#sun)"/>
+  <g stroke="#FFB719" stroke-width="4" stroke-linecap="round">
+    <path d="M133 4v10"/><path d="M99 14l8 8"/><path d="M167 14l-8 8"/><path d="M89 39h12"/><path d="M165 39h12"/>
+  </g>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="800">
+  <text x="285" y="112" font-size="86" fill="#0A3F86">Skill</text>
+  <text x="469" y="112" font-size="86" fill="url(#up)">UP</text>
+</g>
+<text x="290" y="151" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#173B78">Small Steps</text>
+<circle cx="420" cy="145" r="4" fill="#FFB719"/>
+<text x="437" y="151" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#173B78">Brighter Futures</text>
+</svg>
