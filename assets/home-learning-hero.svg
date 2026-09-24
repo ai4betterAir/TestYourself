@@ -1,16 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-labelledby="t d">
-<title id="t">SkillUP learning illustration</title><desc id="d">A stack of learning books with a light bulb, pencils and leaves.</desc>
-<defs><linearGradient id="sky" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#EAF8FF"/><stop offset="1" stop-color="#F5FBFF"/></linearGradient><filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#173B78" flood-opacity=".12"/></filter></defs>
-<rect width="760" height="520" rx="36" fill="url(#sky)"/>
-<g fill="#fff" opacity=".72"><ellipse cx="110" cy="100" rx="85" ry="30"/><ellipse cx="640" cy="118" rx="92" ry="32"/></g>
-<g transform="translate(62 275)"><path d="M0 115c30-75 70-126 128-152-4 55-17 104-41 147z" fill="#C8EFD9"/><path d="M28 102c12-48 36-86 72-115" fill="none" stroke="#60C58A" stroke-width="5" stroke-linecap="round"/><path d="M64 95c9-38 28-68 58-91" fill="none" stroke="#60C58A" stroke-width="5" stroke-linecap="round"/></g>
-<g transform="translate(552 292)"><path d="M0 100c18-74 56-118 111-142 0 55-14 103-43 144z" fill="#D8F4E4"/><path d="M28 89c16-44 40-76 76-99" fill="none" stroke="#6BCB93" stroke-width="5" stroke-linecap="round"/></g>
-<g filter="url(#sh)" transform="translate(245 168)">
-<rect x="22" y="0" width="310" height="72" rx="18" fill="#278FE8"/><rect x="35" y="58" width="310" height="72" rx="18" fill="#27B86A"/><rect x="15" y="116" width="330" height="72" rx="18" fill="#FFAA1A"/><rect x="0" y="174" width="345" height="72" rx="18" fill="#EF6A5B"/>
-<path d="M291 12h27c11 0 19 9 19 19v17c0 11-8 20-19 20h-27" fill="#F7FCFF"/><path d="M303 70h28c11 0 20 9 20 20v16c0 11-9 20-20 20h-28" fill="#F7FCFF"/><path d="M298 128h32c11 0 20 9 20 20v17c0 11-9 20-20 20h-32" fill="#FFF9ED"/><path d="M299 186h30c11 0 20 9 20 20v16c0 11-9 20-20 20h-30" fill="#FFF7F4"/>
-<g font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#fff"><text x="115" y="45">LEARN</text><text x="105" y="103">PRACTISE</text><text x="132" y="161">TEST</text><text x="103" y="219">IMPROVE</text></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" role="img" aria-labelledby="t d">
+<title id="t">SkillUP learning illustration</title><desc id="d">Four learning books, a light bulb, pencils, leaves and a note.</desc>
+<defs>
+<filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#173B78" flood-opacity=".16"/></filter>
+<linearGradient id="blue" x1="0" x2="1"><stop stop-color="#2079D3"/><stop offset="1" stop-color="#45A5F2"/></linearGradient>
+<linearGradient id="green" x1="0" x2="1"><stop stop-color="#1C9E6A"/><stop offset="1" stop-color="#39C282"/></linearGradient>
+<linearGradient id="orange" x1="0" x2="1"><stop stop-color="#F7A719"/><stop offset="1" stop-color="#FFBE38"/></linearGradient>
+<linearGradient id="coral" x1="0" x2="1"><stop stop-color="#E95E52"/><stop offset="1" stop-color="#F17B69"/></linearGradient>
+</defs>
+
+<g opacity=".95">
+<path d="M70 380c12-89 42-148 94-177 8 65-8 123-50 176Z" fill="#8BD5AB"/>
+<path d="M98 363c16-57 38-99 73-129" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
+<path d="M127 373c5-63 23-111 55-148" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
+<path d="M574 394c6-93 39-154 96-184 9 65-6 125-48 183Z" fill="#92DAB0"/>
+<path d="M606 376c17-59 39-102 76-133" fill="none" stroke="#4FB77D" stroke-width="6" stroke-linecap="round"/>
 </g>
-<g transform="translate(366 38)"><circle cx="48" cy="48" r="35" fill="#FFD85B"/><circle cx="48" cy="48" r="23" fill="#FFE78C"/><path d="M37 49c7-11 16-11 23 0M42 49l4 18M56 49l-4 18" fill="none" stroke="#E69B00" stroke-width="4" stroke-linecap="round"/><rect x="38" y="67" width="20" height="17" rx="6" fill="#173B78"/><g stroke="#FFB719" stroke-width="5" stroke-linecap="round"><path d="M48 0v-15"/><path d="M14 13L4 2"/><path d="M82 13L92 2"/><path d="M0 48h-15"/><path d="M96 48h15"/></g></g>
-<g transform="translate(596 305)"><rect x="0" y="55" width="98" height="112" rx="18" fill="#DFF4FF" stroke="#8FD4F5" stroke-width="3"/><g transform="rotate(5 45 40)"><rect x="20" y="0" width="12" height="92" rx="5" fill="#278FE8"/><rect x="39" y="-7" width="12" height="100" rx="5" fill="#FF9C1A"/><rect x="58" y="6" width="12" height="86" rx="5" fill="#27B86A"/><path d="M20 0l6-14 6 14M39-7l6-14 6 14M58 6l6-14 6 14" fill="#F5C18A"/></g></g>
-<g transform="translate(525 72) rotate(-4)"><rect width="170" height="120" rx="12" fill="#FFF2C7" stroke="#F0D889" stroke-width="2"/><text x="24" y="36" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173B78"><tspan x="24" dy="0">Small Steps.</tspan><tspan x="24" dy="27">Big Possibilities.</tspan></text><path d="M24 96h90" stroke="#FFB719" stroke-width="5" stroke-linecap="round"/></g>
+
+<g transform="translate(185 145)" filter="url(#shadow)">
+<rect x="30" y="0" width="380" height="69" rx="18" fill="url(#blue)"/>
+<rect x="17" y="62" width="405" height="69" rx="18" fill="url(#green)"/>
+<rect x="31" y="124" width="394" height="69" rx="18" fill="url(#orange)"/>
+<rect x="10" y="186" width="422" height="69" rx="18" fill="url(#coral)"/>
+
+<g fill="#FBFDFF">
+<path d="M352 10h38c12 0 22 9 22 21v18c0 12-10 21-22 21h-38Z"/>
+<path d="M365 72h36c12 0 21 10 21 21v17c0 12-9 21-21 21h-36Z"/>
+<path d="M363 134h39c12 0 22 9 22 21v17c0 12-10 21-22 21h-39Z" fill="#FFF8E9"/>
+<path d="M367 196h42c12 0 22 10 22 21v17c0 12-10 21-22 21h-42Z" fill="#FFF6F2"/>
+</g>
+<g stroke="#D6E3EA" stroke-width="2">
+<path d="M360 24h42M360 34h42M360 44h42M373 86h39M373 96h39M373 106h39M372 148h41M372 158h41M372 168h41M377 210h43M377 220h43M377 230h43"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="29" font-weight="800" fill="#fff">
+<text x="145" y="45">LEARN</text>
+<text x="123" y="107">PRACTISE</text>
+<text x="153" y="169">TEST</text>
+<text x="123" y="231">IMPROVE</text>
+</g>
+<g transform="translate(65 15)">
+<path d="M0 8h20a7 7 0 0 1 7 7v20H8a8 8 0 0 0-8 5Z" fill="#fff" opacity=".95"/>
+<path d="M54 8H34a7 7 0 0 0-7 7v20h19a8 8 0 0 1 8 5Z" fill="#fff" opacity=".95"/>
+</g>
+<g transform="translate(72 75)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M2 15l10 10L31 3"/><rect x="-5" y="-5" width="43" height="43" rx="8" stroke-width="4"/>
+</g>
+<g transform="translate(74 142)" fill="#fff"><rect x="0" y="20" width="8" height="20" rx="2"/><rect x="15" y="11" width="8" height="29" rx="2"/><rect x="30" y="0" width="8" height="40" rx="2"/></g>
+<g transform="translate(68 205)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M0 28 13 16l10 8L43 2"/><path d="M35 2h8v8"/></g>
+</g>
+
+<g transform="translate(365 22)">
+<circle cx="58" cy="58" r="39" fill="#FFD64A"/>
+<circle cx="58" cy="58" r="27" fill="#FFE587"/>
+<path d="M46 59c7-13 17-13 24 0M50 59l4 20M66 59l-4 20" fill="none" stroke="#E59B00" stroke-width="4" stroke-linecap="round"/>
+<rect x="47" y="79" width="22" height="18" rx="6" fill="#173B78"/>
+<g stroke="#FFB719" stroke-width="5" stroke-linecap="round">
+<path d="M58 5v-18"/><path d="M20 20 8 8"/><path d="M96 20l12-12"/><path d="M5 58h-18"/><path d="M111 58h18"/>
+</g>
+</g>
+
+<g transform="translate(535 260)">
+<rect x="0" y="55" width="104" height="118" rx="18" fill="#E0F5FF" stroke="#8FD6F6" stroke-width="3"/>
+<g transform="rotate(5 50 40)">
+<rect x="18" y="0" width="13" height="102" rx="5" fill="#278FE8"/><rect x="39" y="-8" width="13" height="110" rx="5" fill="#FF9C1A"/><rect x="60" y="6" width="13" height="96" rx="5" fill="#27B86A"/>
+<path d="M18 0l6.5-15L31 0M39-8l6.5-15L52-8M60 6l6.5-15L73 6" fill="#F3C087"/>
+</g>
+<text x="52" y="91" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="800" fill="#173B78"><tspan x="52">Better</tspan><tspan x="52" dy="19">Learners</tspan><tspan x="52" dy="19">Brighter</tspan><tspan x="52" dy="19">Futures</tspan></text>
+</g>
+
+<g transform="translate(565 55) rotate(-5)">
+<rect width="160" height="124" rx="11" fill="#FFF2C7" stroke="#EBD17C" stroke-width="2"/>
+<text x="22" y="35" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="#173B78">
+<tspan x="22">Small Steps</tspan><tspan x="22" dy="25">Big Possibilities</tspan>
+</text>
+<path d="M22 97h99" stroke="#FFB719" stroke-width="5" stroke-linecap="round"/>
+</g>
 </svg>
