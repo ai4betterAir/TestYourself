@@ -174,3 +174,97 @@ footer{border-top:1px solid #E6EEF4;background:#fff;padding:23px 0 27px}
 .journey-copy h2{font-size:1.85rem}
 .journey-cta>a{top:45px;padding:14px 27px}
 .footer-brand img{width:178px}
+
+/* Hybrid image-fidelity implementation */
+.hero-graphic{overflow:visible}
+.hero-graphic img{
+  width:100%;
+  max-width:610px;
+  height:auto;
+  transform:none;
+  filter:none;
+  display:block;
+  object-fit:contain;
+}
+.year-art{
+  display:block;
+  width:76px;
+  height:76px;
+  margin:0 auto 5px;
+  background-image:url("../assets/year-icons-approved.webp?v=20260924crop1");
+  background-repeat:no-repeat;
+  background-size:700% 100%;
+  filter:drop-shadow(0 5px 6px rgba(26,66,104,.12));
+}
+.year-k{background-position:0% 0}
+.year-1{background-position:16.6667% 0}
+.year-2{background-position:33.3333% 0}
+.year-3{background-position:50% 0}
+.year-4{background-position:66.6667% 0}
+.year-5{background-position:83.3333% 0}
+.year-6{background-position:100% 0}
+.year-card svg{display:none!important}
+
+.journey-image-cta{
+  height:auto!important;
+  aspect-ratio:1500/643;
+  min-height:0;
+  padding:0!important;
+  display:block;
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  margin:20px auto 32px;
+  box-shadow:0 9px 24px rgba(31,83,123,.10);
+}
+.journey-image-cta>img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  z-index:0;
+}
+.journey-image-cta .journey-hotspot{
+  position:absolute;
+  z-index:3;
+  left:7.2%;
+  top:43%;
+  width:31%;
+  height:20%;
+  background:transparent;
+  box-shadow:none;
+  padding:0;
+  border-radius:12px;
+}
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+@media(min-width:1081px){
+  .hero-grid{min-height:500px;grid-template-columns:1fr 1.04fr;gap:22px}
+  .hero-copy{padding:34px 0 30px}
+  .hero h1{font-size:5.05rem}
+  .hero-graphic{justify-content:flex-end}
+  .hero-graphic img{width:100%;max-width:610px}
+  .year-card{min-height:178px}
+}
+@media(max-width:1080px){
+  .hero-graphic img{width:100%;max-width:560px;transform:none}
+  .year-art{width:70px;height:70px}
+}
+@media(max-width:760px){
+  .hero-graphic{order:-1;justify-content:center}
+  .hero-graphic img{width:100%;max-width:500px;max-height:none}
+  .year-art{width:66px;height:66px}
+  .journey-image-cta{aspect-ratio:1500/643;height:auto!important;min-height:0;padding:0!important}
+  .journey-image-cta .journey-hotspot{left:7%;top:43%;width:34%;height:21%}
+}
