@@ -94,13 +94,13 @@
  document.getElementById('hub-year').textContent=label;document.getElementById('crumb-year').textContent=label;document.getElementById('hub-tagline').textContent=text[y][0];document.getElementById('hub-copy').textContent=text[y][1];
  document.body.dataset.year=y;
  const yearPlans={
-   K:{hero:'discover & grow.',words:['discover & grow.','play with ideas.','build confidence.','keep exploring.'],maths:'Counting & numbers',english:'Letters & sounds',challenge:'Story skills',challengeSubject:'reading',score:'64',goal:'3 of 5 sessions',focus:['Early maths','First words','Reading together','Explore all subjects']},
-   '1':{hero:'learn with confidence.',words:['learn with confidence.','build foundations.','try new ideas.','keep growing.'],maths:'Addition basics',english:'Strong sentences',challenge:'Reading practice',challengeSubject:'reading',score:'68',goal:'3 of 5 sessions',focus:['Maths foundations','Sentence skills','Reading practice','Explore all subjects']},
-   '2':{hero:'build strong skills.',words:['build strong skills.','practise smarter.','grow confidence.','keep moving.'],maths:'Multiplication ideas',english:'Spelling patterns',challenge:'Reading fluency',challengeSubject:'reading',score:'70',goal:'4 of 5 sessions',focus:['Maths fluency','Better spelling','Reading fluency','Explore all subjects']},
-   '3':{hero:'think and progress.',words:['think and progress.','solve with confidence.','write with purpose.','keep improving.'],maths:'Fractions',english:'Paragraph writing',challenge:'Reading comprehension',challengeSubject:'reading',score:'71',goal:'4 of 5 sessions',focus:['Maths reasoning','Better paragraphs','Reading comprehension','Explore all subjects']},
-   '4':{hero:'learn independently.',words:['learn independently.','think more deeply.','build accuracy.','keep progressing.'],maths:'Fractions & decimals',english:'Grammar & writing',challenge:'Logic challenge',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions',focus:['Maths mastery','Stronger writing','Thinking challenge','Explore all subjects']},
-   '5':{hero:'learn smarter.',words:['learn smarter.','build confidence.','think bigger.','keep growing.'],maths:'Fractions & decimals',english:'Persuasive writing',challenge:'Patterns & logic',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions',focus:['Maths mastery','Stronger writing','Thinking challenge','Explore all subjects']},
-   '6':{hero:'get ready for next.',words:['get ready for next.','extend your thinking.','master key skills.','finish strong.'],maths:'Percentages & algebra',english:'Writing & grammar',challenge:'Selective thinking',challengeSubject:'selective',score:'76',goal:'4 of 5 sessions',focus:['Advanced maths','Powerful writing','Thinking challenge','Explore all subjects']}
+   K:{hero:'discover & grow.',words:['discover & grow.','play with ideas.','build confidence.','keep exploring.'],maths:'Counting & numbers',english:'Letters & sounds',challenge:'Story skills',challengeSubject:'reading',score:'64',goal:'3 of 5 sessions'},
+   '1':{hero:'learn with confidence.',words:['learn with confidence.','build foundations.','try new ideas.','keep growing.'],maths:'Addition basics',english:'Strong sentences',challenge:'Reading practice',challengeSubject:'reading',score:'68',goal:'3 of 5 sessions'},
+   '2':{hero:'build strong skills.',words:['build strong skills.','practise smarter.','grow confidence.','keep moving.'],maths:'Multiplication ideas',english:'Spelling patterns',challenge:'Reading fluency',challengeSubject:'reading',score:'70',goal:'4 of 5 sessions'},
+   '3':{hero:'think and progress.',words:['think and progress.','solve with confidence.','write with purpose.','keep improving.'],maths:'Fractions',english:'Paragraph writing',challenge:'Reading comprehension',challengeSubject:'reading',score:'71',goal:'4 of 5 sessions'},
+   '4':{hero:'learn independently.',words:['learn independently.','think more deeply.','build accuracy.','keep progressing.'],maths:'Fractions & decimals',english:'Grammar & writing',challenge:'Logic challenge',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions'},
+   '5':{hero:'learn smarter.',words:['learn smarter.','build confidence.','think bigger.','keep growing.'],maths:'Fractions & decimals',english:'Persuasive writing',challenge:'Patterns & logic',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions'},
+   '6':{hero:'get ready for next.',words:['get ready for next.','extend your thinking.','master key skills.','finish strong.'],maths:'Percentages & algebra',english:'Writing & grammar',challenge:'Selective thinking',challengeSubject:'selective',score:'76',goal:'4 of 5 sessions'}
  };
  const plan=yearPlans[y];
  document.title=label+' Learning Hub | SkillUP';
@@ -144,14 +144,6 @@
    if(use) use.setAttribute('href','assets/skillup-icons.svg#'+(plan.challengeSubject==='selective'?'thinking':'reading'));
  }
 
- const focusLinks=[...document.querySelectorAll('[data-focus]')];
- focusLinks.forEach((a,i)=>{
-   const type=a.dataset.focus;
-   if(type==='maths') a.href='subject.html?year='+encodeURIComponent(y)+'&subject=maths';
-   if(type==='english') a.href='subject.html?year='+encodeURIComponent(y)+'&subject=english';
-   if(type==='challenge') a.href=plan.challengeSubject==='selective'?'selective.html':'subject.html?year='+encodeURIComponent(y)+'&subject='+plan.challengeSubject;
-   if(i<plan.focus.length) a.querySelector('span').textContent=plan.focus[i];
- });
 
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let wordIndex=0;
