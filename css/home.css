@@ -435,3 +435,65 @@ footer{padding:32px 0 36px;border-top:1px solid rgba(13,33,68,.06);background:#f
   .year-showcase{grid-template-columns:repeat(2,1fr)}
   .year-tile{min-height:165px}
 }
+
+/* 2026-09-24 richer colour pass — vibrant but still premium */
+.year-tile{
+  border-color:color-mix(in srgb,var(--accent) 18%,rgba(13,33,68,.05));
+  box-shadow:
+    0 14px 34px color-mix(in srgb,var(--accent) 10%,rgba(24,67,116,.06)),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+.year-tile:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 86% 12%,color-mix(in srgb,var(--accent) 26%,transparent),transparent 26%),
+    linear-gradient(155deg,rgba(255,255,255,.96),var(--soft));
+  opacity:1;
+  pointer-events:none;
+}
+.year-tile:after{
+  width:122px;height:122px;
+  right:-36px;top:-42px;
+  background:color-mix(in srgb,var(--accent) 70%,white);
+  opacity:.12;
+}
+.year-tile:hover{
+  border-color:color-mix(in srgb,var(--accent) 38%,transparent);
+  box-shadow:
+    0 22px 46px color-mix(in srgb,var(--accent) 16%,rgba(24,67,116,.08)),
+    0 0 0 1px color-mix(in srgb,var(--accent) 10%,transparent);
+}
+.year-icon{
+  background:rgba(255,255,255,.92);
+  box-shadow:
+    0 8px 18px color-mix(in srgb,var(--accent) 14%,rgba(24,67,116,.08)),
+    0 0 0 5px color-mix(in srgb,var(--accent) 8%,transparent);
+}
+.year-meter{
+  height:6px;
+  background:color-mix(in srgb,var(--accent) 10%,#edf1f5);
+}
+.year-meter i{
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 62%,white));
+  box-shadow:0 0 10px color-mix(in srgb,var(--accent) 32%,transparent);
+}
+
+/* richer, controlled palette */
+.year-tile.kindy{--accent:#16a873;--soft:#dff7eb}
+.year-tile.y1{--accent:#ff8a3d;--soft:#ffeadb}
+.year-tile.y2{--accent:#2ca6d9;--soft:#dff4ff}
+.year-tile.y3{--accent:#f0b429;--soft:#fff1c9}
+.year-tile.y4{--accent:#4e6ee8;--soft:#e5eaff}
+.year-tile.y5{--accent:#e8608b;--soft:#ffe2ec}
+.year-tile.y6{--accent:#17a47a;--soft:#dcf5ea}
+
+.year-copy small{color:var(--accent)}
+.year-copy b{color:#10264a}
+.level-note{
+  background:linear-gradient(135deg,#ffffff,#f7fbff);
+}
+.level-note span{
+  background:linear-gradient(135deg,#20bf84,#45d4a2);
+}
