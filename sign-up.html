@@ -6,20 +6,20 @@
   <title>Create account | SkillUP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Nunito:wght@500;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/account.css?v=20260925-signup2"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/account.css?v=20260925-signup3"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="account-body signup-page">
+<body class="account-body signup-page" data-signup-role="student">
   <header class="account-topbar"><a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a class="primary-link" href="sign-in.html">Sign in</a></nav></header>
   <main class="auth-shell">
     <section class="auth-copy"><span class="eyebrow">FREE SKILLUP ACCOUNT</span><h1>Learning works better when <span>everyone connects.</span></h1><p>Teachers can assign existing SkillUP activities, students get one focused task list, and parents see a simple read-only picture of progress.</p>
       <div class="signup-figure" aria-hidden="true">
         <div class="signup-orbit orbit-a"></div><div class="signup-orbit orbit-b"></div>
         <div class="figure-card figure-main">
-          <div class="figure-badge">YOUR LEARNING SPACE</div>
+          <div class="figure-badge" id="figureBadge">YOUR LEARNING SPACE</div>
           <div class="figure-row">
             <span class="figure-icon blue"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span>
-            <div><small>MATHS</small><b>Fractions practice</b><em>12 min</em></div>
-            <strong>72%</strong>
+            <div><small id="figureSubject">MATHS</small><b id="figureTitle">Fractions practice</b><em id="figureMeta">12 min</em></div>
+            <strong id="figureScore">72%</strong>
           </div>
           <div class="figure-progress"><i></i></div>
         </div>
@@ -31,11 +31,11 @@
           <span class="figure-icon pink"><svg><use href="assets/skillup-icons.svg#reading"/></svg></span>
           <div><small>READING</small><b>Comprehension</b></div>
         </div>
-        <div class="figure-xp">+12 XP</div>
+        <div class="figure-xp" id="figureXp">+12 XP</div><div class="figure-spark spark-a">✦</div><div class="figure-spark spark-b">✦</div><div class="figure-spark spark-c">•</div>
       </div><div class="trust-list"><div class="trust-item">For students<span>Tasks, due dates, feedback and progress</span></div><div class="trust-item">For teachers<span>Classes, assignments and actionable insights</span></div><div class="trust-item">For parents<span>Linked children, upcoming work and weekly progress</span></div><div class="trust-item">Privacy by design<span>Verified email and restricted data access</span></div></div></section>
-    <section class="auth-card" aria-labelledby="signUpTitle"><span class="eyebrow">CREATE ACCOUNT</span><h2 id="signUpTitle">Choose how you use SkillUP</h2><p class="subcopy">Every account uses a verified email address.</p><div id="setupNotice" class="setup-notice" hidden></div>
+    <section class="auth-card" aria-labelledby="signUpTitle"><div class="signup-card-head"><div><span class="eyebrow">CREATE ACCOUNT</span><h2 id="signUpTitle">Choose how you use SkillUP</h2><p class="subcopy">Every account uses a verified email address.</p></div><div class="role-live-pill" id="roleLivePill"><i></i><span>Student mode</span></div></div><div id="setupNotice" class="setup-notice" hidden></div>
       <form id="signUpForm" class="auth-form">
-        <div class="role-picker" role="radiogroup" aria-label="Account role"><label class="role-option"><input type="radio" name="role" value="student" checked><span>Student <small>Learn & submit</small></span></label><label class="role-option"><input type="radio" name="role" value="teacher"><span>Teacher <small>Assign & review</small></span></label><label class="role-option"><input type="radio" name="role" value="parent"><span>Parent <small>View progress</small></span></label></div>
+        <div class="role-picker" role="radiogroup" aria-label="Account role"><label class="role-option role-student"><input type="radio" name="role" value="student" checked><span><i>S</i>Student <small>Learn & submit</small></span></label><label class="role-option role-teacher"><input type="radio" name="role" value="teacher"><span><i>T</i>Teacher <small>Assign & review</small></span></label><label class="role-option role-parent"><input type="radio" name="role" value="parent"><span><i>P</i>Parent <small>View progress</small></span></label></div>
         <label>Full name<input id="fullName" autocomplete="name" required maxlength="80" placeholder="Your name"></label>
         <label id="yearField">School year<select id="yearLevel"><option value="K">Kindergarten</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select></label>
         <label>Email address<input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
@@ -46,5 +46,36 @@
       </form><p class="auth-switch">Already registered? <a href="sign-in.html">Sign in</a></p>
     </section>
   </main>
-  <script src="js/site-shell.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20260921"></script>
+  <script>
+(function(){
+  const body=document.body;
+  const pill=document.getElementById('roleLivePill');
+  const badge=document.getElementById('figureBadge');
+  const subject=document.getElementById('figureSubject');
+  const title=document.getElementById('figureTitle');
+  const meta=document.getElementById('figureMeta');
+  const score=document.getElementById('figureScore');
+  const xp=document.getElementById('figureXp');
+  const roles={
+    student:{pill:'Student mode',badge:'YOUR LEARNING SPACE',subject:'MATHS',title:'Fractions practice',meta:'12 min',score:'72%',xp:'+12 XP'},
+    teacher:{pill:'Teacher mode',badge:'YOUR CLASS SPACE',subject:'ASSIGNMENT',title:'Year 5 fractions',meta:'18 students',score:'14/18',xp:'3 ready'},
+    parent:{pill:'Parent mode',badge:'FAMILY PROGRESS',subject:'THIS WEEK',title:'Learning progress',meta:'4 sessions',score:'84%',xp:'+9%'}
+  };
+  function applyRole(role){
+    const d=roles[role]||roles.student;
+    body.dataset.signupRole=role;
+    if(pill) pill.querySelector('span').textContent=d.pill;
+    if(badge) badge.textContent=d.badge;
+    if(subject) subject.textContent=d.subject;
+    if(title) title.textContent=d.title;
+    if(meta) meta.textContent=d.meta;
+    if(score) score.textContent=d.score;
+    if(xp) xp.textContent=d.xp;
+  }
+  document.querySelectorAll('input[name="role"]').forEach(input=>{
+    input.addEventListener('change',()=>applyRole(input.value));
+  });
+  applyRole(document.querySelector('input[name="role"]:checked')?.value||'student');
+})();
+</script><script src="js/site-shell.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20260921"></script>
 </body></html>
