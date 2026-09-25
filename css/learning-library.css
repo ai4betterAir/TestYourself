@@ -1366,3 +1366,208 @@ body[data-year] #subjects .section-head>p{
     transition:none!important;
   }
 }
+
+
+/* =========================
+   2026-09-25 LARGE-TYPE PASS
+   Value strip + learning dashboard + assessment section
+   Applied to every year hub
+   ========================= */
+
+/* VALUE STRIP */
+body[data-year] .value-strip{
+  align-items:stretch!important;
+}
+body[data-year] .value-strip div{
+  min-height:96px!important;
+  padding:24px 22px!important;
+}
+body[data-year] .value-strip span{
+  width:44px!important;
+  height:44px!important;
+  border-radius:14px!important;
+  font-size:1rem!important;
+}
+body[data-year] .value-strip b{
+  font-size:1rem!important;
+  line-height:1.35!important;
+  font-weight:800!important;
+}
+
+/* LEARNING DASHBOARD */
+body[data-year] .year5-dashboard{
+  padding:34px!important;
+  border-radius:34px!important;
+}
+body[data-year] .y5-dashboard-head h3{
+  font-size:2rem!important;
+  line-height:1.1!important;
+}
+body[data-year] .y5-dashboard-head span{
+  font-size:.82rem!important;
+  letter-spacing:.12em!important;
+}
+body[data-year] .y5-score{
+  width:94px!important;
+  height:94px!important;
+}
+body[data-year] .y5-score b{
+  font-size:1.8rem!important;
+}
+body[data-year] .y5-score small{
+  font-size:.62rem!important;
+}
+body[data-year] .y5-task{
+  min-height:104px!important;
+  padding:16px 18px!important;
+  border-radius:22px!important;
+  grid-template-columns:72px 1fr 38px!important;
+}
+body[data-year] .y5-task-icon{
+  width:72px!important;
+  height:72px!important;
+  border-radius:20px!important;
+}
+body[data-year] .y5-task-icon svg{
+  width:58px!important;
+  height:58px!important;
+}
+body[data-year] .y5-task div small{
+  font-size:.7rem!important;
+  letter-spacing:.08em!important;
+}
+body[data-year] .y5-task div b{
+  font-size:1.18rem!important;
+  line-height:1.2!important;
+}
+body[data-year] .y5-task div em{
+  font-size:.86rem!important;
+}
+body[data-year] .y5-task>i{
+  width:34px!important;
+  height:34px!important;
+  font-size:.78rem!important;
+}
+body[data-year] .y5-dashboard-foot>div:first-child{
+  font-size:.88rem!important;
+}
+body[data-year] .y5-goal{
+  height:10px!important;
+}
+
+/* ASSESSMENT & PROGRESS */
+body[data-year] .tools .section-head h2{
+  font-size:clamp(3rem,3.8vw,4.4rem)!important;
+  line-height:1!important;
+  letter-spacing:-.05em!important;
+}
+body[data-year] .tools .section-head>p{
+  max-width:560px!important;
+  font-size:1.08rem!important;
+  line-height:1.6!important;
+}
+body[data-year] .tool-grid article{
+  min-height:172px!important;
+  padding:26px!important;
+  border-radius:24px!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+body[data-year] .tool-grid svg{
+  width:68px!important;
+  height:68px!important;
+}
+body[data-year] .tool-grid b{
+  display:block!important;
+  margin-top:10px!important;
+  font-size:1.18rem!important;
+  line-height:1.25!important;
+}
+body[data-year] .tool-grid p{
+  margin-top:6px!important;
+  font-size:.92rem!important;
+  line-height:1.55!important;
+}
+
+/* subtle interaction across repeated cards */
+body[data-year] .tool-grid article:hover,
+body[data-year] .value-strip div:hover,
+body[data-year] .y5-task:hover{
+  transform:translateY(-3px);
+}
+body[data-year] .tool-grid article:hover{
+  border-color:rgba(255,255,255,.16)!important;
+  box-shadow:0 16px 34px rgba(5,18,42,.14)!important;
+}
+body[data-year] .value-strip div{
+  transition:background .2s ease,transform .2s ease!important;
+}
+body[data-year] .value-strip div:hover{
+  background:color-mix(in srgb,var(--year-soft) 24%,#fff)!important;
+}
+body[data-year] .y5-task:hover{
+  border-color:color-mix(in srgb,var(--year-primary) 20%,transparent)!important;
+  box-shadow:0 14px 30px color-mix(in srgb,var(--year-primary) 10%,rgba(30,76,132,.06))!important;
+}
+
+@media(max-width:900px){
+  body[data-year] .value-strip b{
+    font-size:.94rem!important;
+  }
+  body[data-year] .tools .section-head h2{
+    font-size:2.7rem!important;
+  }
+}
+@media(max-width:620px){
+  body[data-year] .value-strip div{
+    min-height:84px!important;
+    padding:18px 16px!important;
+  }
+  body[data-year] .value-strip b{
+    font-size:.92rem!important;
+  }
+  body[data-year] .y5-dashboard{
+    padding:20px!important;
+  }
+  body[data-year] .y5-dashboard-head h3{
+    font-size:1.45rem!important;
+  }
+  body[data-year] .y5-score{
+    width:76px!important;
+    height:76px!important;
+  }
+  body[data-year] .y5-score b{
+    font-size:1.45rem!important;
+  }
+  body[data-year] .y5-task{
+    min-height:88px!important;
+    padding:11px!important;
+    grid-template-columns:56px 1fr 30px!important;
+  }
+  body[data-year] .y5-task-icon{
+    width:56px!important;
+    height:56px!important;
+  }
+  body[data-year] .y5-task-icon svg{
+    width:46px!important;
+    height:46px!important;
+  }
+  body[data-year] .y5-task div b{
+    font-size:1rem!important;
+  }
+  body[data-year] .y5-task div em{
+    font-size:.8rem!important;
+  }
+  body[data-year] .tools .section-head h2{
+    font-size:2.2rem!important;
+  }
+  body[data-year] .tool-grid article{
+    min-height:150px!important;
+    padding:22px!important;
+  }
+  body[data-year] .tool-grid b{
+    font-size:1.05rem!important;
+  }
+  body[data-year] .tool-grid p{
+    font-size:.88rem!important;
+  }
+}
