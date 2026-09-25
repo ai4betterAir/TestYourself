@@ -13,6 +13,7 @@ if (demoRole || !isSupabaseConfigured) {
 }
 
 function renderDemo(role) {
+  document.body.dataset.dashboardRole = role;
   const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
   user = {id: role === 'student' ? 'demo-student' : 'demo-user'};
   profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',created_at:iso(-60)};
@@ -69,6 +70,7 @@ async function init() {
   user = await requireUser();
   if (!user) return;
   profile = await getProfile(user.id);
+  document.body.dataset.dashboardRole = profile.role || 'student';
   $('userName').textContent = profile.full_name;
   $('userRole').textContent = profile.role === 'parent' ? 'Parent / guardian' : profile.role;
   $('profileName').value = profile.full_name || '';
