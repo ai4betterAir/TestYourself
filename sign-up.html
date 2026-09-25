@@ -6,12 +6,25 @@
   <title>Create account | SkillUP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Nunito:wght@500;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/account.css?v=20260925-signup5"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/account.css?v=20260925-approved1"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="account-body signup-page" data-signup-role="student">
-  <header class="account-topbar"><a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a class="primary-link" href="sign-in.html">Sign in</a></nav></header>
+  <header class="account-topbar">
+    <a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
+    <nav class="signup-role-nav" aria-label="Account types">
+      <a href="#signUpForm" data-role-link="student">For Students</a>
+      <a href="#signUpForm" data-role-link="teacher">For Teachers</a>
+      <a href="#signUpForm" data-role-link="parent">For Parents</a>
+    </nav>
+    <a class="top-signin" href="sign-in.html">Sign in</a>
+  </header>
   <main class="auth-shell">
-    <section class="auth-copy"><span class="eyebrow">FREE SKILLUP ACCOUNT</span><h1>Learning works better when <span>everyone connects.</span></h1><p>Teachers can assign existing SkillUP activities, students get one focused task list, and parents see a simple read-only picture of progress.</p><div class="signup-benefits"><span>✓ Free to start</span><span>✓ K–6 learning</span><span>✓ No card needed</span></div>
+    <section class="auth-copy"><span class="eyebrow">FREE SKILLUP ACCOUNT</span><h1>Learning works better when <span id="dynamicConnect">everyone connects.</span></h1><p>Teachers can assign existing SkillUP activities, students get one focused task list, and parents see a simple read-only picture of progress.</p><div class="signup-feature-row">
+    <div><i class="feature-icon student"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></i><p><b>For students</b><span>Tasks, due dates, feedback and progress</span></p></div>
+    <div><i class="feature-icon teacher"><svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2 21v-2a6 6 0 0 1 12 0v2m1-6a5 5 0 0 1 7 4.5V21"/></svg></i><p><b>For teachers</b><span>Classes, assignments and actionable insights</span></p></div>
+    <div><i class="feature-icon parent"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg></i><p><b>For parents</b><span>Linked children, upcoming work and weekly progress</span></p></div>
+    <div><i class="feature-icon privacy"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.4 8.5-7 10-3.6-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></i><p><b>Privacy by design</b><span>Verified email and restricted data access</span></p></div>
+  </div>
       <div class="signup-figure" aria-hidden="true">
         <div class="signup-orbit orbit-a"></div><div class="signup-orbit orbit-b"></div>
         <div class="figure-card figure-main">
@@ -32,15 +45,12 @@
           <div><small>READING</small><b>Comprehension</b></div>
         </div>
         <div class="figure-xp" id="figureXp">+12 XP</div><div class="figure-spark spark-a">✦</div><div class="figure-spark spark-b">✦</div><div class="figure-spark spark-c">•</div>
-      </div><div class="trust-list"><div class="trust-item">For students<span>Tasks, due dates, feedback and progress</span></div><div class="trust-item">For teachers<span>Classes, assignments and actionable insights</span></div><div class="trust-item">For parents<span>Linked children, upcoming work and weekly progress</span></div><div class="trust-item">Privacy by design<span>Verified email and restricted data access</span></div></div></section>
-    <section class="auth-card" aria-labelledby="signUpTitle"><div class="auth-card-glow"></div><div class="signup-steps" aria-hidden="true"><span class="active"><i>1</i>Account</span><b></b><span><i>2</i>Details</span><b></b><span><i>3</i>Ready</span></div><div class="signup-card-head"><div><span class="eyebrow">CREATE ACCOUNT</span><h2 id="signUpTitle">Choose how you use SkillUP</h2><p class="subcopy">Every account uses a verified email address.</p></div><div class="role-live-pill" id="roleLivePill"><i></i><span>Student mode</span></div></div><div id="setupNotice" class="setup-notice" hidden></div>
+      </div></section>
+    <section class="auth-card" aria-labelledby="signUpTitle"><div class="auth-card-glow"></div><div class="signup-steps" aria-hidden="true"><span class="active"><i>1</i>Account details</span><b></b><span><i>2</i>Set up</span><b></b><span><i>3</i>Explore</span></div><div class="signup-card-head"><div><span class="eyebrow">CREATE ACCOUNT</span><h2 id="signUpTitle">Choose how you use SkillUP</h2><p class="subcopy">Every account uses a verified email address.</p></div><div class="role-live-pill" id="roleLivePill"><i></i><span>Student mode</span></div></div><div id="setupNotice" class="setup-notice" hidden></div>
       <form id="signUpForm" class="auth-form">
-        <div class="form-section-label"><span>01</span><b>Choose your role</b></div>
-        <div class="role-picker" role="radiogroup" aria-label="Account role"><label class="role-option role-student"><input type="radio" name="role" value="student" checked><span><i>S</i>Student <small>Learn & submit</small></span></label><label class="role-option role-teacher"><input type="radio" name="role" value="teacher"><span><i>T</i>Teacher <small>Assign & review</small></span></label><label class="role-option role-parent"><input type="radio" name="role" value="parent"><span><i>P</i>Parent <small>View progress</small></span></label></div>
-        <div class="form-section-label"><span>02</span><b>Your details</b></div>
+        <div class="role-picker" role="radiogroup" aria-label="Account role"><label class="role-option role-student"><input type="radio" name="role" value="student" checked><span><i><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></i>Student <small>Learn & submit</small></span></label><label class="role-option role-teacher"><input type="radio" name="role" value="teacher"><span><i><svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2 21v-2a6 6 0 0 1 12 0v2m1-6a5 5 0 0 1 7 4.5V21"/></svg></i>Teacher <small>Assign & review</small></span></label><label class="role-option role-parent"><input type="radio" name="role" value="parent"><span><i><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg></i>Parent <small>View progress</small></span></label></div>
         <label>Full name<input id="fullName" autocomplete="name" required maxlength="80" placeholder="Your name"></label>
-        <label id="yearField">School year<select id="yearLevel"><option value="K">Kindergarten</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select></label>
-        <div class="form-section-label security-label"><span>03</span><b>Secure your account</b></div><label>Email address<input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
+        <label id="yearField">School year<select id="yearLevel"><option value="K">Kindergarten</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select></label><label>Email address<input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
         <label>Password<input id="password" type="password" autocomplete="new-password" minlength="10" required><span class="password-hint">Use at least 10 characters. A short phrase is easiest to remember.</span></label>
         <label>Confirm password<input id="confirmPassword" type="password" autocomplete="new-password" minlength="10" required></label>
         <label class="checkbox-row"><input id="terms" type="checkbox" required><span>I agree to the <a href="terms.html">Terms</a> and have read the <a href="privacy.html">Privacy notice</a>.</span></label>
@@ -58,11 +68,35 @@
   const meta=document.getElementById('figureMeta');
   const score=document.getElementById('figureScore');
   const xp=document.getElementById('figureXp');
+  const dynamicConnect=document.getElementById('dynamicConnect');
   const roles={
     student:{pill:'Student mode',badge:'YOUR LEARNING SPACE',subject:'MATHS',title:'Fractions practice',meta:'12 min',score:'72%',xp:'+12 XP'},
     teacher:{pill:'Teacher mode',badge:'YOUR CLASS SPACE',subject:'ASSIGNMENT',title:'Year 5 fractions',meta:'18 students',score:'14/18',xp:'3 ready'},
     parent:{pill:'Parent mode',badge:'FAMILY PROGRESS',subject:'THIS WEEK',title:'Learning progress',meta:'4 sessions',score:'84%',xp:'+9%'}
   };
+  let phraseTimer;
+  const phrases={
+    student:['everyone connects.','every learner grows.','every small step counts.'],
+    teacher:['every class connects.','progress becomes clearer.','every learner can grow.'],
+    parent:['families stay connected.','every step is visible.','progress feels clearer.']
+  };
+  function startPhrases(role){
+    if(!dynamicConnect)return;
+    clearInterval(phraseTimer);
+    const list=phrases[role]||phrases.student;
+    let i=0;
+    dynamicConnect.textContent=list[0];
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    phraseTimer=setInterval(()=>{
+      dynamicConnect.classList.add('is-changing');
+      setTimeout(()=>{
+        i=(i+1)%list.length;
+        dynamicConnect.textContent=list[i];
+        dynamicConnect.classList.remove('is-changing');
+      },220);
+    },2800);
+  }
+
   function applyRole(role){
     const d=roles[role]||roles.student;
     body.dataset.signupRole=role;
@@ -73,11 +107,18 @@
     if(meta) meta.textContent=d.meta;
     if(score) score.textContent=d.score;
     if(xp) xp.textContent=d.xp;
+    startPhrases(role);
     const button=document.getElementById('createAccountButton');
     if(button){const label=role==='teacher'?'teacher':role==='parent'?'parent':'student';button.querySelector('span').textContent='Create '+label+' account';}
   }
   document.querySelectorAll('input[name="role"]').forEach(input=>{
     input.addEventListener('change',()=>applyRole(input.value));
+  });
+  document.querySelectorAll('[data-role-link]').forEach(link=>{
+    link.addEventListener('click',()=>{
+      const input=document.querySelector('input[name="role"][value="'+link.dataset.roleLink+'"]');
+      if(input){input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));}
+    });
   });
   applyRole(document.querySelector('input[name="role"]:checked')?.value||'student');
 })();
