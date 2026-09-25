@@ -1665,3 +1665,229 @@
     display:none!important;
   }
 }
+
+
+/* =========================================================
+   APPROVED-CONCEPT BACKGROUND — LARGE DYNAMIC RIBBONS
+   ========================================================= */
+.signup-page:before,
+.signup-page:after{
+  display:none!important;
+}
+.signup-page{
+  background:
+    linear-gradient(180deg,#fbfdff 0%,#f6f9ff 58%,#f4f8ff 100%)!important;
+}
+.signup-bg-art{
+  position:fixed;
+  inset:88px 0 0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.signup-bg-art:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 15% 14%,rgba(52,109,241,.10),transparent 28%),
+    radial-gradient(circle at 78% 14%,rgba(42,164,216,.10),transparent 25%),
+    radial-gradient(circle at 70% 72%,rgba(32,184,135,.07),transparent 24%);
+  animation:bgAuraShift 12s ease-in-out infinite alternate;
+}
+.bg-ribbon{
+  position:absolute;
+  display:block;
+  border-radius:50%;
+  will-change:transform;
+  filter:saturate(115%);
+}
+.ribbon-one{
+  width:980px;
+  height:330px;
+  right:-110px;
+  top:-95px;
+  transform:rotate(-18deg);
+  background:
+    linear-gradient(115deg,
+      rgba(98,170,255,.02) 0%,
+      rgba(74,146,255,.24) 28%,
+      rgba(123,104,238,.18) 55%,
+      rgba(45,201,217,.12) 78%,
+      rgba(255,255,255,0) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.48),
+    0 26px 70px rgba(69,121,222,.08);
+  animation:ribbonOneMove 14s ease-in-out infinite alternate;
+}
+.ribbon-two{
+  width:860px;
+  height:250px;
+  right:120px;
+  top:35px;
+  transform:rotate(-12deg);
+  background:
+    linear-gradient(115deg,
+      rgba(255,255,255,0) 0%,
+      rgba(111,194,255,.10) 20%,
+      rgba(86,136,241,.17) 47%,
+      rgba(136,104,235,.12) 68%,
+      rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,.48);
+  animation:ribbonTwoMove 17s ease-in-out infinite alternate;
+}
+.ribbon-three{
+  width:950px;
+  height:300px;
+  left:-230px;
+  bottom:-95px;
+  transform:rotate(11deg);
+  background:
+    linear-gradient(100deg,
+      rgba(36,157,245,.18) 0%,
+      rgba(72,118,235,.14) 35%,
+      rgba(70,208,196,.14) 68%,
+      rgba(255,255,255,0) 100%);
+  box-shadow:0 -24px 70px rgba(37,120,205,.06);
+  animation:ribbonThreeMove 16s ease-in-out infinite alternate;
+}
+.bg-ribbon:after{
+  content:"";
+  position:absolute;
+  inset:15% 5%;
+  border-radius:inherit;
+  border:1px solid rgba(255,255,255,.44);
+  opacity:.8;
+}
+
+.bg-glow{
+  position:absolute;
+  display:block;
+  border-radius:50%;
+  filter:blur(10px);
+}
+.bg-glow-one{
+  width:440px;
+  height:440px;
+  right:11%;
+  top:16%;
+  background:radial-gradient(circle,rgba(112,126,244,.13),transparent 68%);
+  animation:glowDriftA 10s ease-in-out infinite alternate;
+}
+.bg-glow-two{
+  width:380px;
+  height:380px;
+  left:18%;
+  bottom:2%;
+  background:radial-gradient(circle,rgba(41,198,190,.10),transparent 68%);
+  animation:glowDriftB 12s ease-in-out infinite alternate;
+}
+
+.bg-star{
+  position:absolute;
+  z-index:2;
+  font-style:normal;
+  color:#2f72ef;
+  text-shadow:0 8px 20px rgba(47,114,239,.20);
+  animation:bgStarFloat 4.6s ease-in-out infinite;
+}
+.star-one{left:11%;top:42%;font-size:1.1rem}
+.star-two{left:59%;top:34%;font-size:1.45rem;animation-delay:-1.7s}
+.star-three{left:66%;top:60%;font-size:1.8rem;color:#52b5e0;animation-delay:-2.4s}
+
+@keyframes ribbonOneMove{
+  0%{transform:translate3d(0,0,0) rotate(-18deg) scale(1)}
+  100%{transform:translate3d(-46px,30px,0) rotate(-14deg) scale(1.06)}
+}
+@keyframes ribbonTwoMove{
+  0%{transform:translate3d(0,0,0) rotate(-12deg) scale(1)}
+  100%{transform:translate3d(40px,-22px,0) rotate(-16deg) scale(1.04)}
+}
+@keyframes ribbonThreeMove{
+  0%{transform:translate3d(0,0,0) rotate(11deg) scale(1)}
+  100%{transform:translate3d(48px,-28px,0) rotate(7deg) scale(1.055)}
+}
+@keyframes glowDriftA{
+  to{transform:translate(-42px,30px) scale(1.12)}
+}
+@keyframes glowDriftB{
+  to{transform:translate(36px,-26px) scale(1.1)}
+}
+@keyframes bgAuraShift{
+  to{transform:scale(1.025) translateY(8px)}
+}
+@keyframes bgStarFloat{
+  0%,100%{transform:translateY(0) rotate(0deg);opacity:.55}
+  50%{transform:translateY(-10px) rotate(12deg);opacity:1}
+}
+
+/* let the background show through like the approved concept */
+.signup-page .auth-card{
+  background:rgba(255,255,255,.88)!important;
+  backdrop-filter:blur(24px) saturate(138%)!important;
+}
+.signup-page .figure-card{
+  backdrop-filter:blur(20px) saturate(140%)!important;
+}
+.signup-page .auth-shell{
+  position:relative;
+  z-index:2;
+}
+
+/* role selection subtly changes the background ribbon colour */
+.signup-page[data-signup-role="teacher"] .ribbon-one{
+  background:linear-gradient(115deg,rgba(255,255,255,0),rgba(49,174,160,.18),rgba(69,142,234,.16),rgba(255,255,255,0));
+}
+.signup-page[data-signup-role="teacher"] .ribbon-three{
+  background:linear-gradient(100deg,rgba(32,184,135,.18),rgba(69,153,228,.11),rgba(255,255,255,0));
+}
+.signup-page[data-signup-role="parent"] .ribbon-one{
+  background:linear-gradient(115deg,rgba(255,255,255,0),rgba(112,82,216,.20),rgba(71,134,241,.16),rgba(255,255,255,0));
+}
+.signup-page[data-signup-role="parent"] .ribbon-three{
+  background:linear-gradient(100deg,rgba(123,91,214,.17),rgba(42,164,216,.10),rgba(255,255,255,0));
+}
+
+@media(max-width:960px){
+  .signup-bg-art{inset:78px 0 0}
+  .ribbon-one{
+    width:760px;
+    right:-260px;
+    top:-70px;
+  }
+  .ribbon-two{
+    width:660px;
+    right:-180px;
+    top:20px;
+  }
+  .ribbon-three{
+    width:780px;
+    left:-360px;
+    bottom:-80px;
+  }
+}
+@media(max-width:620px){
+  .signup-bg-art{inset:78px 0 0}
+  .ribbon-one{
+    width:620px;
+    height:220px;
+    right:-360px;
+    top:-40px;
+  }
+  .ribbon-two{display:none}
+  .ribbon-three{
+    width:650px;
+    height:220px;
+    left:-380px;
+    bottom:-55px;
+  }
+  .bg-star{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .signup-bg-art:before,
+  .bg-ribbon,
+  .bg-glow,
+  .bg-star{
+    animation:none!important;
+  }
+}
