@@ -16,7 +16,7 @@ function renderDemo(role) {
   document.body.dataset.dashboardRole = role;
   const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
   user = {id: role === 'student' ? 'demo-student' : 'demo-user'};
-  profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',created_at:iso(-60)};
+  profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',skillup_id:role==='student'?'SU-48291735':null,created_at:iso(-60)};
   classes = [{id:'class-4b',teacher_id:'demo-user',name:'4B Maths',subject:'Maths',year_level:'4',join_code:'UP4B26'},{id:'class-eng',teacher_id:'demo-user',name:'Year 4 English',subject:'English',year_level:'4',join_code:'READ42'}];
   classMembers = [
     {class_id:'class-4b',student_id:'demo-student'},{class_id:'class-4b',student_id:'student-2'},{class_id:'class-4b',student_id:'student-3'},
@@ -43,6 +43,7 @@ function renderDemo(role) {
   $('profileName').value = profile.full_name;
   $('profileYear').value = '4';
   $('profileYearField').hidden = role !== 'student';
+  renderStudentIdentity();
   configureRole();
   render();
   ['mainAction','workAction','peopleAction'].forEach(id => {
@@ -76,6 +77,7 @@ async function init() {
   $('profileName').value = profile.full_name || '';
   $('profileYear').value = profile.year_level || '1';
   $('profileYearField').hidden = profile.role !== 'student';
+  renderStudentIdentity();
   if (profile.role === 'teacher' && profile.status !== 'active') {
     $('statusBanner').className = 'status-banner pending';
     $('statusBanner').hidden = false;
@@ -129,6 +131,9 @@ function configureRole() {
   $('peopleAction').hidden = false;
   $('peopleAction').textContent = teacher ? '＋ Create class' : student ? 'Join a class' : 'Link a child';
   $('peopleAction').dataset.open = teacher ? 'classModal' : student ? 'joinModal' : 'familyModal';
+  $('addStudentAction').hidden = !teacher || profile.status !== 'active';
+  $('addStudentAction').textContent = '＋ Add student';
+  $('addStudentAction').dataset.open = 'addStudentModal';
   $('workTitle').textContent = teacher ? 'Assignments' : 'My work';
   $('peopleTitle').textContent = teacher ? 'Classes and students' : student ? 'My classes' : 'My children';
   $('peopleSubtitle').textContent = teacher ? 'Manage class codes and enrolments' : student ? 'Classes you have joined' : 'Read-only progress for linked children';
@@ -160,7 +165,7 @@ function renderTeacher() {
   $('primaryPanelTitle').textContent = 'Assignment activity';
   $('primaryPanel').innerHTML = assignmentTable(assignments.slice(0,6), true);
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = `<button class="quick-action" data-open="assignmentModal"><strong>Create an assignment</strong><span>Choose content, students and a due date</span></button><button class="quick-action" data-open="classModal"><strong>Create a class</strong><span>Generate a private student join code</span></button>`;
+  $('quickActions').innerHTML = `<button class="quick-action" data-open="assignmentModal"><strong>Create an assignment</strong><span>Choose content, students and a due date</span></button><button class="quick-action" data-open="addStudentModal"><strong>Add student by SkillUP ID</strong><span>Enter a student’s permanent ID and choose a class</span></button><button class="quick-action" data-open="classModal"><strong>Create a class</strong><span>Generate a private student join code</span></button>`;
   $('insightPanel').innerHTML = submitted ? `<strong>${submitted} submitted attempt${submitted === 1 ? '' : 's'}</strong>Open Assignments to see who has finished and who may need a reminder.` : '<strong>No submissions yet</strong>Publish an assignment to start building class insights.';
 }
 
@@ -174,7 +179,7 @@ function renderStudent() {
   $('primaryPanelTitle').textContent = 'What to do next';
   $('primaryPanel').innerHTML = taskCards(open.slice(0,5), byAssignment);
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practise independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Connect a parent</strong><span>Create a private one-time family code</span></button>`;
+  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practise independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
   $('insightPanel').innerHTML = scored.length ? `<strong>${average}% recent accuracy</strong>${average >= 80 ? 'Strong work. Keep practising the skills behind any missed questions.' : 'Review feedback and try a short practice set before the next assignment.'}` : '<strong>Your first result will appear here</strong>Complete an assigned test to build a useful progress picture.';
 }
 
@@ -188,7 +193,7 @@ function renderParent() {
   $('primaryPanelTitle').textContent = 'Family learning overview';
   $('primaryPanel').innerHTML = children.length ? taskCards(assignments.slice(0,6), new Map(childSubs.map(x=>[x.assignment_id,x])), true) : empty('No child linked yet','Use a private family code from your child’s dashboard.');
   $('progressPanel').innerHTML = scoreSummary(childSubs);
-  $('quickActions').innerHTML = `<button class="quick-action" data-open="familyModal"><strong>Link a child</strong><span>Enter their private one-time code</span></button><a class="quick-action" href="parents.html"><strong>Parent guide</strong><span>Help with learning without adding pressure</span></a>`;
+  $('quickActions').innerHTML = `<button class="quick-action" data-open="familyModal"><strong>Link a child by SkillUP ID</strong><span>Enter the permanent ID shown in your child’s dashboard</span></button><a class="quick-action" href="parents.html"><strong>Parent guide</strong><span>Help with learning without adding pressure</span></a>`;
   $('insightPanel').innerHTML = children.length ? `<strong>${children.length === 1 ? esc(children[0].full_name) : 'Family summary'}</strong>Focus first on overdue work, then celebrate consistent completion and effort.` : '<strong>Connect securely</strong>A family code links only the child who generated it and expires automatically.';
 }
 
@@ -216,7 +221,7 @@ function renderPeople() {
   } else if (profile.role === 'student') {
     $('peopleContent').innerHTML = classes.length ? `<div class="task-list">${classes.map(c=>`<article class="task-card"><div><h3>${esc(c.name)}</h3><p>${esc(c.subject)} · Year ${esc(c.year_level)}</p></div><span class="status-pill active">Joined</span></article>`).join('')}</div>` : empty('You have not joined a class','Ask your teacher for a six-character class code.');
   } else {
-    $('peopleContent').innerHTML = children.length ? `<div class="task-list">${children.map(c=>`<article class="task-card"><div><h3>${esc(c.full_name)}</h3><p>Year ${esc(c.year_level)}</p></div><span class="status-pill active">Linked</span></article>`).join('')}</div>` : empty('No child linked','Ask your child to generate a private family code.');
+    $('peopleContent').innerHTML = children.length ? `<div class="task-list">${children.map(c=>`<article class="task-card"><div><h3>${esc(c.full_name)}</h3><p>Year ${esc(c.year_level)}</p></div><span class="status-pill active">Linked</span></article>`).join('')}</div>` : empty('No child linked','Enter your child’s SkillUP ID to send a connection request.');
   }
 }
 
@@ -243,11 +248,55 @@ function bindEvents() {
   $('assignmentClass').addEventListener('change', renderRecipients);
   $('recipientMode').addEventListener('change', renderRecipients);
   $('joinForm').addEventListener('submit', joinClass);
+  $('addStudentForm').addEventListener('submit', addStudentBySkillupId);
+  $('copySkillupId').addEventListener('click', copyStudentSkillupId);
 }
 
 function showSection(name,title){document.querySelectorAll('.dashboard-section').forEach(x=>x.classList.toggle('active',x.id===`${name}Section`));document.querySelectorAll('.dashboard-nav button').forEach(x=>x.classList.toggle('active',x.dataset.section===name));$('pageTitle').textContent=title;$('sidebar').classList.remove('open')}
-function openModal(id){$(id).hidden=false;if(id==='assignmentModal')prepareAssignment();if(id==='familyModal')renderFamilyModal()}
+function openModal(id){$(id).hidden=false;if(id==='assignmentModal')prepareAssignment();if(id==='addStudentModal')prepareAddStudent();if(id==='familyModal')renderFamilyModal()}
 function closeModal(id){$(id).hidden=true}
+
+function renderStudentIdentity(){
+  const card=$('studentIdentityCard');
+  if(!card)return;
+  const isStudent=profile?.role==='student';
+  card.hidden=!isStudent;
+  if(!isStudent)return;
+  $('studentSkillupId').textContent=profile.skillup_id || 'ID pending';
+}
+
+async function copyStudentSkillupId(){
+  const value=profile?.skillup_id;
+  if(!value)return;
+  try{
+    await navigator.clipboard.writeText(value);
+    $('copySkillupId').textContent='Copied';
+    setTimeout(()=>$('copySkillupId').textContent='Copy ID',1200);
+  }catch{
+    window.prompt('Copy your SkillUP ID:',value);
+  }
+}
+
+function prepareAddStudent(){
+  $('addStudentClass').innerHTML='<option value="">Choose a class</option>'+classes.map(c=>`<option value="${c.id}">${esc(c.name)} · Year ${esc(c.year_level)}</option>`).join('');
+  $('addStudentSkillupId').value='';
+  $('addStudentMessage').textContent='';
+}
+
+async function addStudentBySkillupId(event){
+  event.preventDefault();
+  const out=$('addStudentMessage');
+  out.classList.remove('success');
+  out.textContent='';
+  const {error}=await supabase.rpc('add_student_to_class_by_skillup_id',{
+    class_uuid:$('addStudentClass').value,
+    skillup_id_input:$('addStudentSkillupId').value.trim().toUpperCase()
+  });
+  if(error)return out.textContent=friendlyError(error);
+  out.classList.add('success');
+  out.textContent='Student added to the class.';
+  setTimeout(()=>location.reload(),650);
+}
 
 function prepareAssignment(){ $('assignmentClass').innerHTML='<option value="">Choose a class</option>'+classes.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');const due=new Date(Date.now()+7*864e5);due.setMinutes(due.getMinutes()-due.getTimezoneOffset());$('assignmentDue').value=due.toISOString().slice(0,16);renderRecipients() }
 
@@ -260,7 +309,57 @@ async function createAssignment(event){event.preventDefault();const out=$('assig
 
 async function joinClass(event){event.preventDefault();const out=$('joinMessage');const {error}=await supabase.rpc('join_class_by_code',{code_input:$('joinCode').value.trim().toUpperCase()});if(error)return out.textContent=friendlyError(error);out.classList.add('success');out.textContent='Class joined.';setTimeout(()=>location.reload(),500)}
 
-async function renderFamilyModal(){const box=$('familyContent');if(profile.role==='student'){box.innerHTML='<p>Generate a one-time code for your parent or guardian. It expires in 48 hours.</p><button class="primary-button" id="generateFamily">Generate family code</button><p id="familyMessage" class="form-message"></p>';$('generateFamily').onclick=async()=>{const {data,error}=await supabase.rpc('create_guardian_invite');$('familyMessage').textContent=error?friendlyError(error):`Your private code is ${data}. It expires in 48 hours.`;$('familyMessage').classList.toggle('success',!error)}}else{box.innerHTML='<form id="claimFamilyForm" class="dashboard-form"><label>Family code<input id="familyCode" required maxlength="8" style="text-transform:uppercase" placeholder="AB12CD34"></label><button class="primary-button" type="submit">Link child</button><p id="familyMessage" class="form-message"></p></form>';$('claimFamilyForm').onsubmit=async event=>{event.preventDefault();const {error}=await supabase.rpc('claim_guardian_invite',{code_input:$('familyCode').value.trim().toUpperCase()});$('familyMessage').textContent=error?friendlyError(error):'Child linked successfully.';$('familyMessage').classList.toggle('success',!error);if(!error)setTimeout(()=>location.reload(),500)}}}
+async function renderFamilyModal(){
+  const box=$('familyContent');
+  if(profile.role==='student'){
+    const id=profile.skillup_id || 'ID pending';
+    const {data:requests=[],error}=await supabase.rpc('list_pending_guardian_requests');
+    box.innerHTML=`
+      <div class="skillup-share-card">
+        <span>YOUR PERMANENT SKILLUP ID</span>
+        <strong>${esc(id)}</strong>
+        <p>Share this with a teacher or parent only when you want them to connect to your account.</p>
+        <button class="secondary-button" id="copyFamilySkillupId" type="button">Copy SkillUP ID</button>
+      </div>
+      <div class="connection-requests">
+        <h3>Parent connection requests</h3>
+        ${error?'<p class="form-message">'+esc(friendlyError(error))+'</p>':requests.length?requests.map(r=>`<article class="connection-request"><div><b>${esc(r.full_name||'Parent account')}</b><span>Wants to connect to your learning progress</span></div><div><button class="secondary-button approve-parent" data-parent="${r.parent_id}" type="button">Approve</button><button class="danger-button decline-parent" data-parent="${r.parent_id}" type="button">Decline</button></div></article>`).join(''):'<p class="panel-subtitle">No pending requests.</p>'}
+      </div>`;
+    const copy=$('copyFamilySkillupId');
+    if(copy)copy.onclick=copyStudentSkillupId;
+    box.querySelectorAll('.approve-parent,.decline-parent').forEach(button=>{
+      button.onclick=async()=>{
+        button.disabled=true;
+        const {error:respondError}=await supabase.rpc('respond_guardian_link',{
+          parent_uuid_input:button.dataset.parent,
+          approve_input:button.classList.contains('approve-parent')
+        });
+        if(respondError){button.disabled=false;return alert(friendlyError(respondError));}
+        renderFamilyModal();
+      };
+    });
+  }else if(profile.role==='parent'){
+    box.innerHTML=`
+      <form id="claimFamilyForm" class="dashboard-form">
+        <div class="skillup-id-help"><span>SKILLUP ID</span><strong>Ask your child for the ID shown on their dashboard.</strong><p>Example: SU-48291735. Your child must approve the connection before you can see their progress.</p></div>
+        <label>Child’s SkillUP ID<input id="familySkillupId" required maxlength="11" autocomplete="off" style="text-transform:uppercase" placeholder="SU-48291735"></label>
+        <button class="primary-button" type="submit">Send connection request</button>
+        <p id="familyMessage" class="form-message"></p>
+      </form>`;
+    $('claimFamilyForm').onsubmit=async event=>{
+      event.preventDefault();
+      const out=$('familyMessage');
+      out.classList.remove('success');
+      const {error}=await supabase.rpc('request_guardian_link_by_skillup_id',{
+        skillup_id_input:$('familySkillupId').value.trim().toUpperCase()
+      });
+      out.textContent=error?friendlyError(error):'Request sent. Your child needs to approve it from their dashboard.';
+      out.classList.toggle('success',!error);
+    };
+  }else{
+    box.innerHTML='<p>Family connections are available from student and parent accounts.</p>';
+  }
+}
 
 async function saveProfile(event){event.preventDefault();const updates={full_name:$('profileName').value.trim(),updated_at:new Date().toISOString()};if(profile.role==='student')updates.year_level=$('profileYear').value;const {error}=await supabase.from('profiles').update(updates).eq('id',user.id);$('profileMessage').textContent=error?friendlyError(error):'Profile updated.';$('profileMessage').classList.toggle('success',!error)}
 function showFatal(error){$('setupNotice').hidden=false;$('setupNotice').textContent=friendlyError(error)}
