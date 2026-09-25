@@ -62,7 +62,7 @@ function renderDemo(role) {
 }
 
 function bindDemoEvents() {
-  document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.dataset.title || button.textContent.trim())));
+  document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
   $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
   $('signOut').onclick=()=>location.href='accounts.html';
   if($('copySkillupId')) $('copySkillupId').onclick=copyStudentSkillupId;
@@ -156,17 +156,7 @@ function assignmentState(item, submission) {
   return 'open';
 }
 
-function metrics(items) {
-  const iconFor=label=>{
-    const key=String(label||'').toLowerCase();
-    if(key.includes('due')||key.includes('upcoming')) return '<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>';
-    if(key.includes('complete')||key.includes('submission')) return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>';
-    if(key.includes('average')||key.includes('accuracy')) return '<svg viewBox="0 0 24 24"><path d="M5 20v-5M10 20V9M15 20V5M20 20v-9"/></svg>';
-    if(key.includes('class')||key.includes('student')||key.includes('child')) return '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M14 20v-1.5a4.5 4.5 0 0 1 7 0V20"/></svg>';
-    return '<svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="m8.5 12 2 2 5-5"/></svg>';
-  };
-  $('metricGrid').innerHTML = items.map((item,i)=>`<article class="metric metric-${i+1}"><div class="metric-icon">${iconFor(item.label)}</div><div class="metric-copy"><span>${esc(item.label)}</span><strong>${esc(item.value)}</strong><small>${esc(item.note || '')} <i>›</i></small></div></article>`).join('');
-}
+function metrics(items) { $('metricGrid').innerHTML = items.map(item => `<article class="metric"><span>${esc(item.label)}</span><strong>${esc(item.value)}</strong><small>${esc(item.note || '')}</small></article>`).join(''); }
 
 function renderTeacher() {
   const studentIds = new Set(classMembers.map(item => item.student_id));
@@ -190,7 +180,7 @@ function renderStudent() {
   $('primaryPanelTitle').textContent = 'What to do next';
   $('primaryPanel').innerHTML = taskCards(open.slice(0,5), byAssignment);
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = `<a class="quick-action qa-library" href="index.html"><i><svg viewBox="0 0 24 24"><path d="M4 5c4-1 6 0 8 2v13c-2-2-4-3-8-2zM20 5c-4-1-6 0-8 2v13c2-2 4-3 8-2z"/></svg></i><span><strong>Practise independently</strong><small>Explore the SkillUP learning library</small></span><b>›</b></a><button class="quick-action qa-class" data-open="joinModal"><i><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M14 20v-1.5a4.5 4.5 0 0 1 7 0V20"/></svg></i><span><strong>Join a class</strong><small>Use the code from your teacher</small></span><b>›</b></button><button class="quick-action qa-parent" data-open="familyModal"><i><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg></i><span><strong>Parent connections</strong><small>Share your SkillUP ID and approve parent requests</small></span><b>›</b></button>`;
+  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practise independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
   $('insightPanel').innerHTML = scored.length ? `<strong>${average}% recent accuracy</strong>${average >= 80 ? 'Strong work. Keep practising the skills behind any missed questions.' : 'Review feedback and try a short practice set before the next assignment.'}` : '<strong>Your first result will appear here</strong>Complete an assigned test to build a useful progress picture.';
 }
 
@@ -215,7 +205,7 @@ function assignmentTable(list, teacher = false) {
 
 function taskCards(list, byAssignment, parentView = false) {
   if (!list.length) return empty('You are all caught up','There is no current work needing attention.');
-  return `<div class="task-list">${list.map(item => { const sub=byAssignment.get(item.id), state=assignmentState(item,sub); const href=parentView?'#':`${item.resource_url}${item.resource_url.includes('?')?'&':'?'}assignment=${item.id}`; return `<article class="task-card"><div class="task-leading"><span class="task-icon"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H5V3z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span><div><h3>${esc(item.title)}</h3><p>${formatDate(item.due_at,true)} · <span class="status-pill ${state}">${state}</span></p></div></div>${parentView?'':`<a class="primary-link task-start" href="${esc(href)}"><span>▶</span>${sub?.submitted_at?'Review':'Start'}</a>`}</article>`}).join('')}</div>`;
+  return `<div class="task-list">${list.map(item => { const sub=byAssignment.get(item.id), state=assignmentState(item,sub); const href=parentView?'#':`${item.resource_url}${item.resource_url.includes('?')?'&':'?'}assignment=${item.id}`; return `<article class="task-card"><div><h3>${esc(item.title)}</h3><p>${formatDate(item.due_at,true)} · <span class="status-pill ${state}">${state}</span></p></div>${parentView?'':`<a class="primary-link" href="${esc(href)}">${sub?.submitted_at?'Review':'Start'}</a>`}</article>`}).join('')}</div>`;
 }
 
 function scoreSummary(list) {
@@ -246,7 +236,7 @@ function empty(title,text){return `<div class="empty-state"><strong>${esc(title)
 
 function bindEvents() {
   document.querySelector('#assignmentModal .secondary-button').textContent = 'Cancel';
-  document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.dataset.title || button.textContent.trim())));
+  document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
   document.addEventListener('click', event => {
     const opener=event.target.closest('[data-open]'); if(opener) openModal(opener.dataset.open);
     const closer=event.target.closest('[data-close]'); if(closer) closeModal(closer.dataset.close);
@@ -281,9 +271,8 @@ async function copyStudentSkillupId(){
   if(!value)return;
   try{
     await navigator.clipboard.writeText(value);
-    const label=$('copySkillupId').querySelector('span');
-    if(label) label.textContent='Copied';
-    setTimeout(()=>{const x=$('copySkillupId').querySelector('span');if(x)x.textContent='Copy ID';},1200);
+    $('copySkillupId').textContent='Copied';
+    setTimeout(()=>$('copySkillupId').textContent='Copy ID',1200);
   }catch{
     window.prompt('Copy your SkillUP ID:',value);
   }
