@@ -164,7 +164,8 @@ begin
   do update set status = case
     when public.guardian_links.status='approved' then 'approved'::public.guardian_status
     else 'pending'::public.guardian_status
-  end;
+  end,
+  created_at = now();
 
   return student_uuid;
 end
