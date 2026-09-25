@@ -46,7 +46,7 @@ function renderDemo(role) {
   renderStudentIdentity();
   configureRole();
   render();
-  ['mainAction','workAction','peopleAction'].forEach(id => {
+  ['mainAction','workAction','peopleAction','addStudentAction'].forEach(id => {
     $(id).hidden = true;
     $(id).style.display = 'none';
   });
@@ -65,6 +65,7 @@ function bindDemoEvents() {
   document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
   $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
   $('signOut').onclick=()=>location.href='accounts.html';
+  if($('copySkillupId')) $('copySkillupId').onclick=copyStudentSkillupId;
 }
 
 async function init() {
