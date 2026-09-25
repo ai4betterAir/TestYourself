@@ -5,17 +5,57 @@
   <meta name="description" content="Sign in to your SkillUP student, teacher or parent account.">
   <title>Sign in | SkillUP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/account.css"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Nunito:wght@500;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/account.css?v=20260925-signin1"><link rel="icon" href="assets/skillup-logo.svg"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="account-body">
-  <header class="account-topbar"><a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a class="text-link" href="index.html">Explore learning</a><a class="primary-link" href="sign-up.html">Create account</a></nav></header>
+<body class="account-body signin-page">
+  <div class="signin-bg-art" aria-hidden="true"><span class="signin-ribbon ribbon-a"></span><span class="signin-ribbon ribbon-b"></span><span class="signin-ribbon ribbon-c"></span><i class="signin-star s1">✦</i><i class="signin-star s2">✦</i><i class="signin-star s3">•</i></div>
+  <header class="account-topbar signin-topbar"><a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><div class="signin-top-spacer"></div><a class="signin-create" href="sign-up.html">Create account</a></header>
   <main class="auth-shell">
-    <section class="auth-copy"><span class="eyebrow">YOUR LEARNING, IN ONE PLACE</span><h1>Welcome back to <span>SkillUP.</span></h1><p>See what is due, continue learning and keep every result connected—at school and at home.</p><div class="trust-list"><div class="trust-item">One clear task list<span>Upcoming, submitted and completed work</span></div><div class="trust-item">Progress that makes sense<span>Accuracy, strengths and next steps</span></div><div class="trust-item">Safe role-based access<span>Students, teachers and families see only what they should</span></div><div class="trust-item">Works on any device<span>Your account replaces browser-only progress</span></div></div></section>
-    <section class="auth-card" aria-labelledby="signInTitle"><span class="eyebrow">SIGN IN</span><h2 id="signInTitle">Continue to your dashboard</h2><p class="subcopy">Use the email address connected to your SkillUP account.</p><div id="setupNotice" class="setup-notice" hidden></div>
-      <form id="signInForm" class="auth-form"><label>Email address<input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><div class="form-meta"><a class="forgot-link" href="forgot-password.html">Forgot password?</a></div><button class="primary-button" type="submit">Sign in</button><p id="formMessage" class="form-message" role="status" aria-live="polite"></p></form>
+    <section class="auth-copy signin-copy">
+      <span class="eyebrow">WELCOME BACK</span>
+      <h1>Pick up where<br><span id="signinDynamic">you left off.</span></h1>
+      <p>Continue learning, see what needs attention and keep your progress connected across school and home.</p>
+      <div class="signin-benefits">
+        <div><i class="benefit-dot blue"></i><span><b>Continue learning</b><small>Your next task is ready when you are.</small></span></div>
+        <div><i class="benefit-dot green"></i><span><b>See your progress</b><small>Keep track of strengths and next steps.</small></span></div>
+        <div><i class="benefit-dot purple"></i><span><b>Stay connected</b><small>Students, teachers and families in one place.</small></span></div>
+      </div>
+      <div class="signin-visual" aria-hidden="true">
+        <div class="signin-board">
+          <div class="signin-board-head"><span>YOUR LEARNING SPACE</span><b>Today</b></div>
+          <div class="signin-board-row"><span class="signin-icon maths"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span><div><small>MATHS</small><b>Fractions review</b><em>12 min</em></div><strong>82%</strong></div>
+          <div class="signin-board-row"><span class="signin-icon english"><svg><use href="assets/skillup-icons.svg#english"/></svg></span><div><small>ENGLISH</small><b>Paragraph writing</b><em>10 min</em></div><i>Next</i></div>
+          <div class="signin-board-progress"><span><b>Weekly goal</b><em>4 of 5</em></span><i><u></u></i></div>
+        </div>
+        <div class="signin-float-card float-progress"><b>+12 XP</b><span>Keep going</span></div>
+        <div class="signin-float-card float-streak"><b>7 day</b><span>streak</span></div>
+      </div>
+    </section>
+    <section class="auth-card signin-card" aria-labelledby="signInTitle"><div class="signin-card-glow"></div><span class="eyebrow">SIGN IN</span><h2 id="signInTitle">Continue to your dashboard</h2><p class="subcopy">Use the email address connected to your SkillUP account.</p><div id="setupNotice" class="setup-notice" hidden></div>
+      <form id="signInForm" class="auth-form">
+        <label>Email address<div class="signin-input-wrap"><span>✉</span><input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></div></label>
+        <label>Password<div class="signin-input-wrap"><span>⌑</span><input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></div></label>
+        <div class="form-meta"><label class="remember-row"><input type="checkbox" id="rememberMe"><span>Remember me</span></label><a class="forgot-link" href="forgot-password.html">Forgot password?</a></div>
+        <button class="primary-button signin-button" type="submit"><span>Sign in</span><i>→</i></button><p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+      </form>
       <p class="auth-switch">New to SkillUP? <a href="sign-up.html">Create an account</a></p>
     </section>
   </main>
-  <script src="js/site-shell.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20260921"></script>
+  <script>
+(function(){
+  const el=document.getElementById('signinDynamic');
+  if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const words=['you left off.','your momentum.','your progress.','your next step.'];
+  let i=0;
+  setInterval(()=>{
+    el.classList.add('is-changing');
+    setTimeout(()=>{
+      i=(i+1)%words.length;
+      el.textContent=words[i];
+      el.classList.remove('is-changing');
+    },220);
+  },2800);
+})();
+</script><script src="js/site-shell.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20260921"></script>
 </body></html>
