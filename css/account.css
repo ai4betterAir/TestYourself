@@ -2968,3 +2968,31 @@
     flex-direction:column;
   }
 }
+
+
+/* SkillUP ID note on sign-up */
+.signup-page .role-link-note{
+  margin:-2px 0 4px;
+  padding:13px 14px;
+  border-radius:14px;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--role-soft) 82%,#fff),#fff);
+  border:1px solid color-mix(in srgb,var(--role) 12%,#e2e8f0);
+  color:#5f7188;
+  font-size:.86rem;
+  line-height:1.5;
+  font-weight:700;
+  transition:background .3s ease,border-color .3s ease,color .3s ease;
+}
+.signup-page .role-link-note:before{
+  content:"ID";
+  display:inline-grid;
+  place-items:center;
+  width:28px;height:28px;
+  margin-right:9px;
+  border-radius:9px;
+  background:var(--role-soft);
+  color:var(--role-deep);
+  font-size:.64rem;
+  font-weight:900;
+  vertical-align:middle;
+}
