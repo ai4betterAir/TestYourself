@@ -1,125 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="SkillUP NAPLAN Year 3, NAPLAN Year 5 and OC Year 4 numeracy practice using the SkillUP question banks.">
-  <title>NAPLAN & OC Practice | SkillUP</title>
-  <link rel="icon" href="assets/skillup-logo.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/assessment-practice.css?v=20260926-v1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assessment Practice | SkillUP</title>
+<link rel="icon" href="assets/skillup-logo.svg">
+<script>
+(function(){
+  var p=new URLSearchParams(location.search);
+  var target=p.get('mode')==='oc4'?'oc-practice.html':'naplan-practice.html';
+  location.replace(target);
+})();
+</script>
 </head>
 <body>
-<header class="assessment-header">
-  <a class="assessment-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="learning.html">Years</a>
-    <a href="selective.html">Selective</a>
-  </nav>
-  <a class="back-home" href="index.html#assessments">Assessment home</a>
-</header>
-
-<main>
-  <section class="assessment-hero">
-    <div class="hero-orb orb-a"></div><div class="hero-orb orb-b"></div>
-    <div class="shell hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">ASSESSMENT PRACTICE</span>
-        <h1>Build the skills.<br><span id="heroAccent">Then test them.</span></h1>
-        <p id="heroIntro">Separate question pools for NAPLAN Year 3, NAPLAN Year 5 and OC Year 4, built from the SkillUP year-level banks.</p>
-        <div class="mode-cards" id="modeCards">
-          <button data-mode="naplan3">
-            <i class="mode-icon naplan"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></i>
-            <span><small>NAPLAN</small><b>Year 3</b><em>Year 3 + selected Year 4 challenge</em></span>
-          </button>
-          <button data-mode="naplan5">
-            <i class="mode-icon naplan5"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></i>
-            <span><small>NAPLAN</small><b>Year 5</b><em>Year 4 + Year 5 full pool</em></span>
-          </button>
-          <button data-mode="oc4">
-            <i class="mode-icon oc"><svg><use href="assets/skillup-icons.svg#oc"/></svg></i>
-            <span><small>OPPORTUNITY CLASS</small><b>Year 4 OC</b><em>Advanced Year 3 + Year 4</em></span>
-          </button>
-        </div>
-      </div>
-      <aside class="hero-summary">
-        <div class="summary-top"><span id="summaryTag">NAPLAN YEAR 3</span><b id="summaryCount">0 skill groups</b></div>
-        <h2 id="summaryTitle">Year 3 core + Year 4 challenge</h2>
-        <p id="summaryCopy">Every Year 3 maths topic is included, with selected Year 4 topics added as advanced preparation.</p>
-        <div class="source-bars" id="sourceBars"></div>
-        <div class="summary-actions"><button class="primary" id="startMixed">Start mixed practice</button><button class="secondary" id="jumpMock">Timed mock</button></div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="shell assessment-workspace">
-    <div class="workspace-head">
-      <div><span class="eyebrow">CHOOSE HOW TO PRACTISE</span><h2 id="workspaceTitle">NAPLAN Year 3 Numeracy</h2></div>
-      <div class="view-tabs"><button class="active" data-view="practice">Practice + feedback</button><button data-view="mock">Timed mock</button></div>
-    </div>
-
-    <section id="practiceView">
-      <div class="practice-layout">
-        <aside class="topic-panel">
-          <div class="topic-panel-head"><b>Question groups</b><span id="topicCount">0</span></div>
-          <button class="topic-choice active" data-topic="mixed"><strong>⚡ Mixed assessment</strong><small>Questions from the complete pool</small></button>
-          <div id="topicGroups"></div>
-        </aside>
-
-        <section class="question-card">
-          <div class="question-top">
-            <div><span id="questionSource">Year 3</span><b id="questionTopic">Mixed assessment</b></div>
-            <div class="practice-score"><small>SCORE</small><strong id="practiceScore">0 / 0</strong></div>
-          </div>
-          <div class="question-progress"><i id="practiceBar"></i></div>
-          <span class="question-number" id="questionNumber">QUESTION 1 OF 20</span>
-          <h2 id="questionText">Loading question…</h2>
-          <div class="answer-grid" id="answerGrid"></div>
-          <div class="question-actions"><button class="secondary" id="showHint">Show hint</button><button class="primary" id="checkAnswer">Check answer</button><button class="primary next" id="nextQuestion" hidden>Next question →</button></div>
-          <div class="feedback-box" id="feedbackBox" hidden></div>
-        </section>
-      </div>
-    </section>
-
-    <section id="mockView" hidden>
-      <div class="mock-intro" id="mockIntro">
-        <span class="eyebrow">TIMED ASSESSMENT</span>
-        <h2 id="mockTitle">NAPLAN Year 3 Numeracy Mock</h2>
-        <p id="mockDescription">30 mixed questions from the Year 3 and selected Year 4 pool.</p>
-        <div class="mock-facts"><div><strong id="mockQuestions">30</strong><span>questions</span></div><div><strong id="mockMinutes">35</strong><span>minutes</span></div><div><strong>0</strong><span>hints</span></div></div>
-        <button class="primary large" id="startMock">Start timed mock →</button>
-      </div>
-      <section class="question-card mock-card" id="mockCard" hidden>
-        <div class="question-top"><div><span id="mockSource">Assessment</span><b id="mockTopic">Mixed</b></div><div class="timer"><small>TIME LEFT</small><strong id="mockTimer">35:00</strong></div></div>
-        <div class="question-progress"><i id="mockBar"></i></div>
-        <span class="question-number" id="mockNumber">QUESTION 1 OF 30</span>
-        <h2 id="mockQuestionText"></h2>
-        <div class="answer-grid" id="mockAnswerGrid"></div>
-        <div class="mock-nav"><button class="secondary" id="mockPrev">← Previous</button><button class="primary" id="mockNext">Next →</button></div>
-      </section>
-      <section class="mock-result" id="mockResult" hidden>
-        <span class="eyebrow">YOUR RESULT</span><strong id="mockMark">0/30</strong><h2 id="mockResultTitle">Assessment complete</h2><p id="mockResultCopy"></p>
-        <div class="result-grid"><div><h3>Performance by level</h3><div id="levelBreakdown"></div></div><div><h3>Review mistakes</h3><div id="mistakeReview"></div></div></div>
-        <button class="primary" id="retryMock">Try another mock</button>
-      </section>
-    </section>
-  </section>
-
-  <section class="shell scope-note">
-    <div><svg><use href="assets/skillup-icons.svg#shield"/></svg></div>
-    <p><b>SkillUP practice only.</b> These are original SkillUP questions organised for assessment preparation. They do not reproduce official NAPLAN or NSW OC test questions.</p>
-  </section>
-</main>
-
-<footer><img src="assets/skillup-logo.svg" alt="SkillUP"><span>Small Steps · Brighter Futures</span></footer>
-
-<script src="js/year3to5-bank.js"></script>
-<script src="js/year4-bank.js"></script>
-<script src="js/year5-tests.js"></script>
-<script src="js/question-quality-fixes.js"></script>
-<script src="js/assessment-practice.js?v=20260926-v1"></script>
+<p>Opening SkillUP practice…</p>
 </body>
 </html>
