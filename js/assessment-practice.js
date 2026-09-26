@@ -9,38 +9,38 @@ const configs={
   naplan3:{
     title:'NAPLAN Year 3 Numeracy',
     tag:'NAPLAN YEAR 3',
-    summary:'Year 3 core + Year 4 challenge',
-    copy:'Every Year 3 maths topic is included, with selected Year 4 topics added as advanced preparation.',
+    summary:'Core skills + challenge practice',
+    copy:'A broad NAPLAN practice pool combining core skills with progressively harder challenge questions.',
     accent:'Then test them.',
     practiceTarget:20,mockTarget:30,minutes:35,
     sources:[
-      {key:'y3',label:'Year 3 core',tone:'blue'},
-      {key:'y4adv',label:'Year 4 advanced',tone:'violet'}
+      {key:'y3',label:'Core practice',tone:'blue'},
+      {key:'y4adv',label:'Challenge practice',tone:'violet'}
     ]
   },
   naplan5:{
     title:'NAPLAN Year 5 Numeracy',
     tag:'NAPLAN YEAR 5',
-    summary:'Year 4 + Year 5 complete pathway',
-    copy:'The full Year 4 bank is combined with Year 5 core and Year 5 extension questions for stronger Year 5 preparation.',
+    summary:'Core skills + mixed extension',
+    copy:'A broad NAPLAN practice pool combining core, mixed and extension questions.',
     accent:'Build. Stretch. Test.',
     practiceTarget:24,mockTarget:35,minutes:40,
     sources:[
-      {key:'y4',label:'Year 4 complete',tone:'violet'},
-      {key:'y5',label:'Year 5 core',tone:'blue'},
-      {key:'y5extra',label:'Year 5 extension',tone:'green'}
+      {key:'y4',label:'Core practice',tone:'violet'},
+      {key:'y5',label:'Mixed practice',tone:'blue'},
+      {key:'y5extra',label:'Extension practice',tone:'green'}
     ]
   },
   oc4:{
     title:'OC Year 4 Mathematical Reasoning',
     tag:'OC YEAR 4',
-    summary:'Advanced Year 3 + Year 4',
-    copy:'A separate OC pool using stronger Year 3 topics plus the complete Year 4 bank. It does not mix with the NAPLAN pools.',
+    summary:'Core reasoning + challenge practice',
+    copy:'A separate OC reasoning pool that builds from core skills into more challenging mixed questions.',
     accent:'Think deeper. Reason faster.',
     practiceTarget:24,mockTarget:35,minutes:35,
     sources:[
-      {key:'y3adv',label:'Year 3 advanced',tone:'gold'},
-      {key:'y4',label:'Year 4 complete',tone:'violet'}
+      {key:'y3adv',label:'Core reasoning',tone:'gold'},
+      {key:'y4',label:'Challenge reasoning',tone:'violet'}
     ]
   }
 };
@@ -57,20 +57,20 @@ function buildPool(mode){
   const {y3,y4,y5,y5extra}=allTopics();
   if(mode==='naplan3'){
     return [
-      ...y3.map(t=>entry('y3','Year 3 core',t)),
-      ...y4.filter(t=>ADV_Y4_FOR_N3.has(t[0])).map(t=>entry('y4adv','Year 4 advanced',t))
+      ...y3.map(t=>entry('y3','Core practice',t)),
+      ...y4.filter(t=>ADV_Y4_FOR_N3.has(t[0])).map(t=>entry('y4adv','Challenge practice',t))
     ];
   }
   if(mode==='naplan5'){
     return [
-      ...y4.map(t=>entry('y4','Year 4 complete',t)),
-      ...y5.map(t=>entry('y5','Year 5 core',t)),
-      ...y5extra.map(t=>entry('y5extra','Year 5 extension',t))
+      ...y4.map(t=>entry('y4','Core practice',t)),
+      ...y5.map(t=>entry('y5','Mixed practice',t)),
+      ...y5extra.map(t=>entry('y5extra','Extension practice',t))
     ];
   }
   return [
-    ...y3.filter(t=>ADV_Y3_FOR_OC.has(t[0])).map(t=>entry('y3adv','Year 3 advanced',t)),
-    ...y4.map(t=>entry('y4','Year 4 complete',t))
+    ...y3.filter(t=>ADV_Y3_FOR_OC.has(t[0])).map(t=>entry('y3adv','Core reasoning',t)),
+    ...y4.map(t=>entry('y4','Challenge reasoning',t))
   ];
 }
 
