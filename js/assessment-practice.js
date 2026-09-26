@@ -161,7 +161,7 @@ function setMode(next){
   qsa('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   $('heroAccent').textContent=cfg().accent;
   $('summaryTag').textContent=cfg().tag;
-  $('summaryCount').textContent=pool.length+' skill groups';
+  $('summaryCount').textContent=new Set(pool.map(key)).size+' skill groups';
   $('summaryTitle').textContent=cfg().summary;
   $('summaryCopy').textContent=cfg().copy;
   $('workspaceTitle').textContent=cfg().title;
@@ -188,14 +188,16 @@ function renderSources(){
 }
 
 function renderTopics(){
-  $('topicCount').textContent=pool.length;
+  $('topicCount').textContent=new Set(pool.map(key)).size;
   const groups={};
   pool.forEach(e=>(groups[e.sourceLabel]??=[]).push(e));
-  $('topicGroups').innerHTML=Object.entries(groups).map(([label,items])=>
-    '<section class="topic-group"><h3>'+label+'</h3>'+items.map(e=>
+  $('topicGroups').innerHTML=Object.entries(groups).map(([label,items])=>{
+    const seen=new Set();
+    const visible=items.filter(e=>{const k=key(e);if(seen.has(k))return false;seen.add(k);return true});
+    return '<section class="topic-group"><h3>'+label+'</h3>'+visible.map(e=>
       '<button class="topic-choice '+(topicKey===key(e)?'active':'')+'" data-topic="'+key(e)+'"><strong>'+e.icon+' '+e.name+'</strong><small>'+e.desc+'</small></button>'
-    ).join('')+'</section>'
-  ).join('');
+    ).join('')+'</section>';
+  }).join('');
   qsa('.topic-choice').forEach(b=>b.onclick=()=>{
     topicKey=b.dataset.topic;
     qnum=1;score=attempted=0;
