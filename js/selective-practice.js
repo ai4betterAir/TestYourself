@@ -86,7 +86,7 @@ function buildTopics(){
  list.filter(x=>x[0]!=='mixed').forEach(x=>{const b=document.createElement('button');b.className='topic '+(topic===x[0]?'active':'');b.innerHTML=`<b>${x[1]} ${x[2]}</b><span>${x[3]}</span>`;b.onclick=()=>choose(x[0]);$('topics').appendChild(b)});
  $('qnum').textContent=`${qnum} / ${target}`;
 }
-function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();const quiz=document.querySelector('.quiz');if(quiz)window.scrollTo({top:quiz.offsetTop-80,behavior:'smooth'})}
+function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();showQuiz()}
 function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';shuffle(q.choices).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
 function nextQ(){
  current=make();selected=null;paintLearn();
@@ -100,7 +100,9 @@ function nextQ(){
  renderAnswers('answers',current,(b)=>{const host=$('answers');host.querySelectorAll('button').forEach(z=>z.classList.remove('selected'));b.classList.add('selected');selected=b});
 }
 function setView(v){view=v;document.querySelectorAll('.top-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));$('practiceView').hidden=v!=='practice';$('mockView').hidden=v!=='mock';if(v==='mock')showMockIntro();else $('timerText').textContent='—'}
-function setStream(s){stream=s;topic='mixed';score=attempted=0;qnum=1;mode='mix';document.querySelectorAll('.modebar button').forEach(b=>b.classList.toggle('active',b.dataset.mode==='mix'));updateHeader();buildTopics();nextQ();showMockIntro();setView('practice')}
+function showTopics(){const pv=$('practiceView');if(pv)pv.classList.remove('answering');const bt=$('backToTopics');if(bt)bt.hidden=true;window.scrollTo({top:(pv?.offsetTop||0)-90,behavior:'smooth'})}
+function showQuiz(){const pv=$('practiceView');if(pv)pv.classList.add('answering');const bt=$('backToTopics');if(bt)bt.hidden=false;const quiz=document.querySelector('.quiz');if(quiz)window.scrollTo({top:quiz.offsetTop-90,behavior:'smooth'})}
+function setStream(s){stream=s;topic='mixed';score=attempted=0;qnum=1;mode='mix';document.querySelectorAll('.modebar button').forEach(b=>b.classList.toggle('active',b.dataset.mode==='mix'));updateHeader();buildTopics();nextQ();showMockIntro();setView('practice');showTopics()}
 function ensureWritingButton(){
  const bar=document.querySelector('.streambar');
  if(!bar||bar.querySelector('[data-stream="writing"]'))return;
@@ -108,8 +110,9 @@ function ensureWritingButton(){
  if(!$('vocabLearn')){const box=document.createElement('aside');box.id='vocabLearn';box.className='vocab-learn';box.hidden=true;const quiz=document.querySelector('#practiceView .quiz')||document.querySelector('.quiz');if(quiz)quiz.parentNode.insertBefore(box,quiz)}
 }
 document.querySelectorAll('.streambar button').forEach(b=>b.onclick=()=>setStream(b.dataset.stream));
+{const _bt=$('backToTopics');if(_bt)_bt.onclick=()=>showTopics();}
 document.querySelectorAll('.top-tabs button').forEach(b=>b.onclick=()=>setView(b.dataset.view));
-document.querySelectorAll('.modebar button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.modebar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;topic='mixed';score=attempted=0;qnum=1;updateHeader();buildTopics();nextQ();showMockIntro()});
+document.querySelectorAll('.modebar button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.modebar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;topic='mixed';score=attempted=0;qnum=1;updateHeader();buildTopics();nextQ();showMockIntro();showTopics()});
 $('check').onclick=()=>{if(!selected){$('feedback').textContent='Choose an answer first.';return}if(selected.dataset.checked)return;attempted++;const ok=String(selected.textContent)===String(current.answer);if(ok){score++;selected.classList.add('correct');$('feedback').textContent='✓ Correct!'}else{selected.classList.add('wrong');[...$('answers').children].find(b=>String(b.textContent)===String(current.answer))?.classList.add('correct');$('feedback').textContent=`Answer: ${current.answer}`}selected.dataset.checked='1';$('score').textContent=`${score} / ${attempted}`};
 $('next').onclick=()=>{const target=practiceTarget();qnum=qnum>=target?1:qnum+1;nextQ()};
 let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
