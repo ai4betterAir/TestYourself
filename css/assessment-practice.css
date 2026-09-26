@@ -64,3 +64,22 @@ body[data-locked-mode="oc4"] .back-home{
 @media(max-width:760px){
   .oc-subject-strip{grid-template-columns:1fr}
 }
+
+
+/* Shared assessment subject navigation */
+.assessment-subject-strip{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:24px;max-width:820px
+}
+.assessment-subject{
+  min-height:74px;display:grid;grid-template-columns:46px 1fr;align-items:center;gap:11px;
+  padding:11px 13px;border-radius:16px;background:rgba(255,255,255,.84);
+  border:1px solid rgba(74,86,160,.10);box-shadow:0 8px 20px rgba(31,63,105,.05);
+  color:#233b62;text-decoration:none;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease
+}
+.assessment-subject:hover{transform:translateY(-2px);border-color:rgba(47,107,255,.30);box-shadow:0 12px 24px rgba(64,68,145,.09)}
+.assessment-subject.active{border-color:#2f6bff;background:linear-gradient(145deg,#f7faff,#edf4ff)}
+.assessment-subject svg{width:42px;height:42px}
+.assessment-subject b{display:block;font-family:Sora,sans-serif;font-size:.82rem}
+.assessment-subject small{display:block;margin-top:3px;color:#74849a;font-size:.68rem;line-height:1.35;font-weight:700}
+@media(max-width:900px){.assessment-subject-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.assessment-subject-strip{grid-template-columns:1fr}}
