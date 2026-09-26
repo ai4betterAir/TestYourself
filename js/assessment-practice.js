@@ -70,10 +70,10 @@ function buildPool(mode){
   const {y3,y4,y5,y5extra}=allTopics();
   if(mode==='naplan'){
     return [
-      ...y3.map(t=>entry('ncore','Core practice',t)),
-      ...y4.map(t=>entry('nchallenge','Challenge practice',t)),
-      ...y5.map(t=>entry('nchallenge','Challenge practice',t)),
-      ...y5extra.map(t=>entry('nextension','Extension practice',t))
+      ...y3.map(t=>entry('ncore','Core practice',t,'3')),
+      ...y4.map(t=>entry('nchallenge','Challenge practice',t,'4')),
+      ...y5.map(t=>entry('nchallenge','Challenge practice',t,'5')),
+      ...y5extra.map(t=>entry('nextension','Extension practice',t,'5extra'))
     ];
   }
   if(mode==='naplan3'){
@@ -95,8 +95,8 @@ function buildPool(mode){
   ];
 }
 
-function entry(source,sourceLabel,t){
-  return {source,sourceLabel,id:t[0],icon:t[1],name:t[2],desc:t[3]};
+function entry(source,sourceLabel,t,bank){
+  return {source,sourceLabel,id:t[0],icon:t[1],name:t[2],desc:t[3],bank:bank||''};
 }
 
 function sourceQuestion(e){
@@ -105,10 +105,8 @@ function sourceQuestion(e){
   else if(e.source==='y4'||e.source==='y4adv') q=window.TY_YEAR4.question(e.id);
   else if(e.source==='y5') q=window.TY_YEARS345.question('5',e.id);
   else if(e.source==='ncore') q=window.TY_YEARS345.question('3',e.id);
-  else if(e.source==='nchallenge'){
-    const y4ids=new Set((window.TY_YEAR4?.topics||[]).map(x=>x[0]));
-    q=y4ids.has(e.id)?window.TY_YEAR4.question(e.id):window.TY_YEARS345.question('5',e.id);
-  }
+  else if(e.source==='nchallenge'&&e.bank==='4') q=window.TY_YEAR4.question(e.id);
+  else if(e.source==='nchallenge'&&e.bank==='5') q=window.TY_YEARS345.question('5',e.id);
   else if(e.source==='nextension') q=window.TY_YEAR5_TESTS.question(e.id);
   else q=window.TY_YEAR5_TESTS.question(e.id);
   return normalize(q,e);
