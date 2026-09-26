@@ -1,0 +1,66 @@
+/* Shared visual extensions for NAPLAN and OC landing pages.
+   Loads after selective-landing.css to keep the same SkillUP design language. */
+
+.assessment-landing .site-header{box-shadow:0 1px 0 rgba(22,48,122,.06)}
+.assessment-landing .sel-hero{padding-top:52px}
+.assessment-landing .sel-hero-art img{max-width:590px}
+.assessment-landing .sel-hero-script{right:-1%;top:8%}
+.assessment-landing .sel-lead{max-width:35ch}
+.assessment-landing .sel-trust{gap:18px}
+.assessment-landing .sel-trust li{min-width:150px}
+.assessment-landing .sel-chips{grid-template-columns:repeat(5,1fr)}
+.assessment-landing .sel-cta{background-image:linear-gradient(90deg,#eef8ff 0%,#eef8ff 42%,rgba(238,248,255,.18) 100%),url("../assets/selective-cta.png")}
+.assessment-landing .sel-cta{border-color:#d9e9fb}
+.assessment-landing .assessment-mini{
+  display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:9px 12px;border-radius:13px;
+  background:rgba(255,255,255,.7);border:1px solid rgba(47,107,255,.12);color:#496180;font-weight:800;font-size:.78rem
+}
+.assessment-landing .assessment-mini i{width:9px;height:9px;border-radius:50%;background:#2fa84f;box-shadow:0 0 0 5px rgba(47,168,79,.12)}
+.assessment-landing .pathc.level-path{min-height:235px}
+.assessment-landing .pathc.level-path .level-mark{
+  width:68px;height:68px;border-radius:20px;display:grid;place-items:center;font-family:'Sora',sans-serif;
+  font-size:1.7rem;font-weight:900;background:#fff;box-shadow:0 10px 22px -14px rgba(22,48,122,.55)
+}
+.assessment-landing .pathc.level-path small{font-weight:800;color:var(--sel-navy-soft)}
+.assessment-landing .pathc .mini-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.assessment-landing .pathc .mini-tags span{font-size:.66rem;font-weight:900;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.72);color:var(--sel-navy-soft)}
+.assessment-landing.naplan-page .sel-badge{background:#dceaff;color:#1e50c8}
+.assessment-landing.naplan-page .sel-hero h1 .green{color:#1f9a4c}
+.assessment-landing.naplan-page .main-nav a.active{color:#2f6bff}
+.assessment-landing.oc-page .sel-badge{background:#ece5ff;color:#6b45e6}
+.assessment-landing.oc-page .sel-hero{
+  background:radial-gradient(120% 90% at 85% 0%,#e5e9ff 0%,rgba(229,233,255,0) 55%),linear-gradient(180deg,#eef5ff 0%,#f8f8ff 62%,#fff 100%)
+}
+.assessment-landing.oc-page .sel-hero h1 .green{color:#2f6bff}
+.assessment-landing.oc-page .button-primary{background:linear-gradient(135deg,#2f6bff,#6848db)}
+.assessment-landing.oc-page .button-green{background:linear-gradient(135deg,#6848db,#2f6bff);box-shadow:0 12px 26px -12px rgba(104,72,219,.7)}
+.assessment-landing.oc-page .sel-cta{background-image:linear-gradient(90deg,#f3efff 0%,#eef5ff 48%,rgba(238,245,255,.15) 100%),url("../assets/selective-cta.png");border-color:#e3dcfb}
+.assessment-landing .year-split{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px
+}
+.assessment-landing .year-split .pathc{min-height:225px}
+.assessment-landing .year-split .pathc h3{font-size:1.45rem}
+.assessment-landing .year-split .pathc p{max-width:44ch}
+.assessment-landing .year-split .year-card{
+  display:grid;grid-template-columns:82px 1fr;align-items:center;column-gap:18px
+}
+.assessment-landing .year-split .year-card .level-mark{grid-row:1 / span 3}
+.assessment-landing .scope-note{
+  margin-top:28px;padding:16px 18px;border-radius:16px;background:#f8fbff;border:1px solid #e4ebf5;color:#65778e;font-size:.8rem;font-weight:700
+}
+.assessment-landing .scope-note b{color:var(--sel-navy)}
+@media(max-width:1050px){
+  .assessment-landing .sel-chips{grid-template-columns:repeat(2,1fr)}
+  .assessment-landing .sel-chips .chip:last-child{grid-column:1/-1}
+}
+@media(max-width:780px){
+  .assessment-landing .year-split{grid-template-columns:1fr}
+  .assessment-landing .year-split .year-card{grid-template-columns:70px 1fr}
+  .assessment-landing .sel-hero-art img{max-width:520px}
+}
+@media(max-width:560px){
+  .assessment-landing .sel-chips{grid-template-columns:1fr}
+  .assessment-landing .sel-chips .chip:last-child{grid-column:auto}
+  .assessment-landing .year-split .year-card{display:flex}
+  .assessment-landing .pathc.level-path .level-mark{width:58px;height:58px;font-size:1.4rem}
+}
