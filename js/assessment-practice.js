@@ -6,6 +6,19 @@ const ADV_Y4_FOR_N3=new Set(['placevalue','addsubconcepts','addition','multiplic
 const ADV_Y3_FOR_OC=new Set(['multiplication','division','fractions','time','measurement','perimeter','data','wordproblems']);
 
 const configs={
+  naplan:{
+    title:'NAPLAN Numeracy',
+    tag:'NAPLAN',
+    summary:'Core skills + challenge practice',
+    copy:'A single NAPLAN numeracy pool with core skills, mixed questions, challenge practice and extension work.',
+    accent:'Build. Practise. Test.',
+    practiceTarget:24,mockTarget:35,minutes:40,
+    sources:[
+      {key:'ncore',label:'Core practice',tone:'blue'},
+      {key:'nchallenge',label:'Challenge practice',tone:'violet'},
+      {key:'nextension',label:'Extension practice',tone:'green'}
+    ]
+  },
   naplan3:{
     title:'NAPLAN Year 3 Numeracy',
     tag:'NAPLAN YEAR 3',
@@ -55,6 +68,14 @@ function allTopics(){
 
 function buildPool(mode){
   const {y3,y4,y5,y5extra}=allTopics();
+  if(mode==='naplan'){
+    return [
+      ...y3.map(t=>entry('ncore','Core practice',t)),
+      ...y4.map(t=>entry('nchallenge','Challenge practice',t)),
+      ...y5.map(t=>entry('nchallenge','Challenge practice',t)),
+      ...y5extra.map(t=>entry('nextension','Extension practice',t))
+    ];
+  }
   if(mode==='naplan3'){
     return [
       ...y3.map(t=>entry('y3','Core practice',t)),
@@ -83,6 +104,12 @@ function sourceQuestion(e){
   if(e.source==='y3'||e.source==='y3adv') q=window.TY_YEARS345.question('3',e.id);
   else if(e.source==='y4'||e.source==='y4adv') q=window.TY_YEAR4.question(e.id);
   else if(e.source==='y5') q=window.TY_YEARS345.question('5',e.id);
+  else if(e.source==='ncore') q=window.TY_YEARS345.question('3',e.id);
+  else if(e.source==='nchallenge'){
+    const y4ids=new Set((window.TY_YEAR4?.topics||[]).map(x=>x[0]));
+    q=y4ids.has(e.id)?window.TY_YEAR4.question(e.id):window.TY_YEARS345.question('5',e.id);
+  }
+  else if(e.source==='nextension') q=window.TY_YEAR5_TESTS.question(e.id);
   else q=window.TY_YEAR5_TESTS.question(e.id);
   return normalize(q,e);
 }
@@ -111,7 +138,8 @@ function qs(sel){return document.querySelector(sel)}
 function qsa(sel){return [...document.querySelectorAll(sel)]}
 
 const lockedMode=document.body.dataset.lockedMode||'';
-let mode=lockedMode||new URLSearchParams(location.search).get('mode')||'naplan3';
+const requestedView=new URLSearchParams(location.search).get('view')==='mock'?'mock':'practice';
+let mode=lockedMode||new URLSearchParams(location.search).get('mode')||'naplan';
 if(!configs[mode])mode=lockedMode||'naplan3';
 let pool=[],topicKey='mixed',view='practice';
 let current=null,selected=null,checked=false,score=0,attempted=0,qnum=1;
@@ -320,4 +348,5 @@ $('mockPrev').onclick=()=>{if(mockIndex>0){mockIndex--;renderMock()}};
 $('mockNext').onclick=()=>{if(mockIndex===cfg().mockTarget-1)finishMock();else{mockIndex++;renderMock()}};
 
 setMode(mode);
+if(requestedView==='mock')setView('mock');
 })();
