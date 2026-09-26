@@ -75,6 +75,8 @@ function updateHeader(){
    document.title='OC Practice | SkillUP';
    document.body.dataset.exam='oc';
    const home=$('examHome');if(home){home.href='oc.html';home.textContent='OC';}
+   const sw=$('examSwitch');if(sw){sw.hidden=false;sw.querySelectorAll('[data-oc-stream]').forEach(a=>a.classList.toggle('active',a.dataset.ocStream===stream));}
+   const streambar=$('streambar');if(streambar)streambar.setAttribute('aria-hidden','true');
    $('heroTag').textContent=isThinking?'OC · THINKING SKILLS':isReading?'OC · READING':'OC · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
    $('heroDesc').textContent=isThinking?'Focused OC thinking-skills practice with logic, evidence, ordering and reasoning questions.':isReading?'Focused OC reading practice with original SkillUP passages, inference and vocabulary in context.':'Use the dedicated OC mathematical reasoning pool.';
@@ -89,6 +91,9 @@ function updateHeader(){
    $('mockIntroText').textContent='Mixed OC practice questions. No hints. Move between questions before finishing.';
    $('sourceNote').textContent='SkillUP OC practice is independent and does not reproduce official NSW Opportunity Class test questions.';
  }else{
+   document.body.dataset.exam='selective';
+   const sw=$('examSwitch');if(sw)sw.hidden=true;
+   const streambar=$('streambar');if(streambar)streambar.removeAttribute('aria-hidden');
    document.title='Selective Practice | SkillUP';
    const home=$('examHome');if(home){home.href='selective.html';home.textContent='Selective';}
    $('heroTag').textContent=isWriting?'SELECTIVE · WRITING VOCABULARY':isThinking?'SELECTIVE · THINKING SKILLS':isReading?'SELECTIVE · READING':'NSW SELECTIVE · MATHEMATICAL REASONING';
