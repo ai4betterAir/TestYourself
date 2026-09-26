@@ -1,0 +1,213 @@
+/* ==========================================================================
+   SkillUP — Learning Hub
+   Built on the shared homepage design system (home.css must load first).
+   Reuses the same tokens, fonts, buttons, header and footer.
+   ========================================================================== */
+
+/* ---------- Page intro / selector ---------- */
+.selector-page{padding:44px 0 20px}
+.selector-intro{max-width:640px;margin:0 auto 30px;text-align:center}
+.selector-intro h1{font-family:'Sora',sans-serif;font-size:clamp(2.2rem,4.4vw,3.4rem);margin:14px 0 12px}
+.selector-intro p{color:var(--muted);font-size:1.08rem}
+
+/* Year selector grid — colourful cards matching home grade cards */
+.year-selector-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:16px;
+}
+.year-selector-grid a{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;
+  padding:22px 18px 20px;border-radius:var(--r-lg);color:#fff;min-height:190px;
+  box-shadow:var(--shadow-md);
+  transition:transform var(--speed) var(--ease),box-shadow var(--speed) var(--ease);
+}
+.year-selector-grid a::after{
+  content:"";position:absolute;right:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;
+  background:rgba(255,255,255,.16);
+}
+.year-selector-grid a:hover{transform:translateY(-8px) scale(1.02);box-shadow:var(--shadow-lg)}
+.year-selector-grid a span{
+  position:relative;z-index:1;width:56px;height:56px;border-radius:16px;
+  background:rgba(255,255,255,.22);display:grid;place-items:center;
+  font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;
+}
+.year-selector-grid a b{position:relative;z-index:1;font-family:'Sora',sans-serif;font-size:1.4rem;margin-top:auto}
+.year-selector-grid a small{position:relative;z-index:1;font-size:.85rem;font-weight:700;opacity:.95}
+.year-selector-grid .k{background:linear-gradient(150deg,#ff6aa2,#ff8f6b)}
+.year-selector-grid .y1{background:linear-gradient(150deg,#ff9f1c,#ffca3a)}
+.year-selector-grid .y2{background:linear-gradient(150deg,#f6c445,#8ac926)}
+.year-selector-grid .y3{background:linear-gradient(150deg,#38c172,#17bd7c)}
+.year-selector-grid .y4{background:linear-gradient(150deg,#17bd7c,#28c0f0)}
+.year-selector-grid .y5{background:linear-gradient(150deg,#2f6bff,#28c0f0)}
+.year-selector-grid .y6{background:linear-gradient(150deg,#7c5cff,#a05cff)}
+
+/* ---------- Year hub ---------- */
+.year-hub{padding-bottom:10px}
+.year-hero{
+  position:relative;overflow:hidden;
+  padding:44px 0 40px;
+  background:
+    radial-gradient(700px 360px at 88% -10%,rgba(40,192,240,.16),transparent 60%),
+    radial-gradient(560px 320px at 4% 8%,rgba(124,92,255,.14),transparent 60%);
+}
+.year-hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--muted)}
+.breadcrumb a:hover{color:var(--blue-deep)}
+.breadcrumb b{color:var(--ink)}
+.year-copy h1{margin:14px 0 10px;font-family:'Sora',sans-serif;font-size:clamp(2.6rem,5vw,4rem);line-height:1.02}
+.year-copy h1 em{display:block;font-style:normal;background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .22s var(--ease),transform .22s var(--ease)}
+.year-copy h1 em.is-changing{opacity:0;transform:translateY(8px)}
+.year-copy h2{font-family:'Sora',sans-serif;font-size:1.3rem;color:var(--ink-soft);margin:6px 0 12px}
+.year-copy p{max-width:520px;color:var(--muted);font-size:1.1rem;font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.hero-actions .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:54px;padding:0 26px;border-radius:var(--r-md);
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
+  transition:transform var(--speed) var(--ease),box-shadow var(--speed) var(--ease);
+}
+.hero-actions .btn.primary{color:#fff;background:var(--grad-brand);box-shadow:var(--shadow-color)}
+.hero-actions .btn.primary:hover{transform:translateY(-3px);box-shadow:0 26px 54px rgba(47,107,255,.36)}
+.hero-actions .btn.secondary{color:var(--ink);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.hero-actions .btn.secondary:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+
+/* Hero graphic / dashboard card */
+.year-graphic{position:relative;display:grid;place-items:center;min-height:360px}
+.default-year-art{display:none}
+.year5-dashboard{
+  position:relative;width:min(100%,440px);padding:24px;border-radius:var(--r-xl);
+  background:linear-gradient(150deg,rgba(255,255,255,.98),rgba(240,247,255,.92));
+  border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow-lg);
+}
+.y5-dashboard-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.y5-dashboard-head span{font-family:'Sora',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.y5-dashboard-head h3{font-family:'Sora',sans-serif;font-size:1.3rem;margin-top:4px}
+.y5-score{text-align:center;background:#fff4dc;border-radius:16px;padding:8px 14px}
+.y5-score b{display:block;font-family:'Sora',sans-serif;font-size:1.5rem;color:#a56a00;line-height:1}
+.y5-score small{font-size:.66rem;font-weight:800;color:#b07d1f;text-transform:uppercase;letter-spacing:.05em}
+.y5-task-list{display:grid;gap:10px}
+.y5-task{
+  display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;
+  padding:12px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);
+  transition:transform var(--speed) var(--ease),box-shadow var(--speed) var(--ease),border-color var(--speed) var(--ease);
+}
+.y5-task:hover{transform:translateX(4px);box-shadow:var(--shadow-sm)}
+.y5-task-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.y5-task-icon svg{width:30px;height:30px}
+.y5-task-icon.maths{background:var(--grad-student)}
+.y5-task-icon.english{background:linear-gradient(140deg,var(--green),var(--sky))}
+.y5-task-icon.thinking{background:linear-gradient(140deg,var(--purple),var(--pink))}
+.y5-task div{display:flex;flex-direction:column}
+.y5-task small{font-size:.66rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.y5-task b{font-family:'Sora',sans-serif;font-size:.98rem}
+.y5-task em{font-style:normal;font-size:.74rem;color:var(--muted);font-weight:700}
+.y5-task i{font-family:'Sora',sans-serif;font-style:normal;font-size:.78rem;font-weight:800;color:var(--line);color:rgba(18,42,79,.28)}
+.y5-task.is-active{background:linear-gradient(90deg,#eef5ff,#eafcf4);border-color:rgba(47,107,255,.24)}
+.y5-task.is-active i{color:var(--blue)}
+.y5-dashboard-foot{margin-top:16px}
+.y5-dashboard-foot>div{display:flex;justify-content:space-between;font-size:.8rem;font-weight:800;color:var(--muted)}
+.y5-dashboard-foot b{color:var(--green-deep)}
+.y5-goal{height:10px;border-radius:999px;background:#e6edf7;margin-top:8px;overflow:hidden}
+.y5-goal i{display:block;height:100%;width:80%;border-radius:inherit;background:var(--grad-brand)}
+
+/* ---------- Value strip ---------- */
+.value-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px auto 0;
+}
+.value-strip>div{
+  display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:var(--r-md);
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);font-weight:700;color:var(--ink-soft);
+}
+.value-strip span{
+  flex:0 0 auto;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.85rem;background:var(--grad-brand);
+}
+.value-strip>div:nth-child(2) span{background:linear-gradient(140deg,var(--green),var(--sky))}
+.value-strip>div:nth-child(3) span{background:linear-gradient(140deg,var(--amber),var(--coral))}
+.value-strip>div:nth-child(4) span{background:linear-gradient(140deg,var(--purple),var(--pink))}
+
+/* ---------- Hub sections ---------- */
+.hub-section{padding:44px 0}
+.hub-section .section-head{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:20px;
+  max-width:none;margin:0 0 26px;text-align:left;
+}
+.hub-section .section-head h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,3.2vw,2.6rem);margin:10px 0 0}
+.hub-section .section-head .y5-accent{background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hub-section .section-head>p{color:var(--muted);max-width:360px;font-weight:600}
+
+/* Subject grid */
+.hub-subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hub-subject-grid a{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;
+  padding:26px;border-radius:var(--r-lg);background:#fff;border:1px solid var(--line);
+  box-shadow:var(--shadow-sm);transition:transform var(--speed) var(--ease),box-shadow var(--speed) var(--ease);
+}
+.hub-subject-grid a:hover,.hub-subject-grid a.auto-featured{transform:translateY(-8px);box-shadow:var(--shadow-md)}
+.hub-subject-grid a>svg{width:56px;height:56px;border-radius:16px;padding:10px;color:#fff}
+.hub-subject-grid a h3{font-family:'Sora',sans-serif;font-size:1.4rem}
+.hub-subject-grid a p{color:var(--muted);font-weight:600;font-size:.95rem}
+.subject-status{
+  position:absolute;top:18px;right:18px;padding:6px 12px;border-radius:999px;
+  font-family:'Sora',sans-serif;font-size:.64rem;font-weight:800;letter-spacing:.1em;
+  background:rgba(18,42,79,.06);color:var(--ink-soft);
+}
+.hub-subject-grid a.maths>svg{background:var(--grad-student)}
+.hub-subject-grid a.english>svg{background:linear-gradient(140deg,var(--purple),var(--pink))}
+.hub-subject-grid a.reading>svg{background:linear-gradient(140deg,var(--green),var(--sky))}
+.hub-subject-grid a.vocab>svg{background:linear-gradient(140deg,var(--amber),var(--coral))}
+.hub-subject-grid a.science>svg{background:linear-gradient(140deg,#17bd7c,#8ac926)}
+.hub-subject-grid a.gk>svg{background:linear-gradient(140deg,#2f6bff,#7c5cff)}
+.hub-subject-grid a.auto-featured{outline:2px solid rgba(47,107,255,.28);outline-offset:2px}
+
+/* Tools */
+.tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tool-grid article{
+  display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:var(--r-lg);
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);
+  transition:transform var(--speed) var(--ease),box-shadow var(--speed) var(--ease);
+}
+.tool-grid article:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.tool-grid svg{width:46px;height:46px;border-radius:14px;padding:9px;color:#fff;background:var(--grad-brand)}
+.tool-grid article:nth-child(2) svg{background:linear-gradient(140deg,var(--green),var(--sky))}
+.tool-grid article:nth-child(3) svg{background:linear-gradient(140deg,var(--amber),var(--coral))}
+.tool-grid article:nth-child(4) svg{background:linear-gradient(140deg,var(--purple),var(--pink))}
+.tool-grid b{font-family:'Sora',sans-serif;font-size:1.05rem}
+.tool-grid p{color:var(--muted);font-weight:600;font-size:.9rem;margin-top:4px}
+
+/* Motivation banner */
+.motivation{
+  position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:24px;
+  flex-wrap:wrap;border-radius:var(--r-xl);padding:40px 44px;margin:10px auto 44px;
+  background:linear-gradient(140deg,#0f1f45,#16336b);color:#fff;box-shadow:var(--shadow-lg);
+}
+.motivation::before{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(40,192,240,.4),transparent 65%)}
+.motivation>div{position:relative;z-index:1;max-width:620px}
+.motivation h2{font-family:'Sora',sans-serif;font-size:clamp(1.7rem,2.6vw,2.2rem);margin:10px 0}
+.motivation p{color:rgba(255,255,255,.82)}
+.motivation .btn{
+  position:relative;z-index:1;display:inline-flex;align-items:center;min-height:54px;padding:0 28px;
+  border-radius:var(--r-md);font-family:'Sora',sans-serif;font-weight:700;color:#5a2a00;
+  background:linear-gradient(120deg,#ffd166,var(--amber));box-shadow:0 18px 40px rgba(255,159,28,.34);
+  transition:transform var(--speed) var(--ease);
+}
+.motivation .btn:hover{transform:translateY(-3px)}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1080px){
+  .year-selector-grid{grid-template-columns:repeat(4,1fr)}
+  .year-hero-grid{grid-template-columns:1fr;gap:34px}
+  .hub-subject-grid{grid-template-columns:repeat(2,1fr)}
+  .tool-grid{grid-template-columns:repeat(2,1fr)}
+  .value-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .year-selector-grid{grid-template-columns:repeat(2,1fr)}
+  .hub-subject-grid{grid-template-columns:1fr}
+  .tool-grid{grid-template-columns:1fr}
+  .value-strip{grid-template-columns:1fr}
+  .hub-section .section-head{flex-direction:column;align-items:flex-start}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{width:100%}
+  .motivation{flex-direction:column;align-items:flex-start;padding:32px 24px}
+}

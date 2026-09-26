@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17233f">
+<meta name="description" content="SkillUP student leaderboard — see how you rank in your class, year level and across the school, and keep climbing.">
+<title>Leaderboard | SkillUP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/account.css?v=20260926-lb">
+<link rel="stylesheet" href="css/leaderboard.css?v=20260926-lb">
+<link rel="icon" href="assets/skillup-logo.svg">
+</head>
+<body class="account-body dashboard-page">
+<div class="dashboard-shell">
+  <!-- Sidebar -->
+  <aside class="dashboard-sidebar" id="sidebar">
+    <a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
+    <div class="dashboard-user">
+      <strong>Jordan Lee</strong>
+      <span>Student Preview</span>
+    </div>
+    <nav class="dashboard-nav" aria-label="Dashboard">
+      <a href="dashboard.html"><button type="button">Overview</button></a>
+      <a href="dashboard.html"><button type="button">My work</button></a>
+      <a href="dashboard.html"><button type="button">My classes</button></a>
+      <a href="dashboard.html"><button type="button">Progress</button></a>
+      <button type="button" class="active" aria-current="page">Leaderboard</button>
+      <a href="accounts.html"><button type="button">Account settings</button></a>
+    </nav>
+    <a class="sign-out" href="index.html" style="margin-top:auto;text-align:center">Exit preview</a>
+  </aside>
+
+  <!-- Main -->
+  <main class="dashboard-main" id="main">
+    <header class="dashboard-header">
+      <button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle menu" type="button">☰</button>
+      <div>
+        <h1>Leaderboard</h1>
+        <p>See how you rank — keep climbing.</p>
+      </div>
+      <div class="dashboard-header-actions">
+        <a class="primary-button" href="learning.html">
+          Earn more XP
+        </a>
+      </div>
+    </header>
+
+    <!-- Preview banner -->
+    <div class="status-banner preview">
+      <span>Preview mode — realistic sample rankings, with no account or personal data.</span>
+      <span class="preview-switch">
+        <a href="#" class="active">Student</a>
+        <a href="dashboard.html">Teacher</a>
+        <a href="dashboard.html">Parent</a>
+      </span>
+    </div>
+
+    <!-- Rank hero -->
+    <section class="lb-hero" aria-label="Your ranking">
+      <span class="lb-hero-blob b1" aria-hidden="true"></span>
+      <span class="lb-hero-blob b2" aria-hidden="true"></span>
+      <div class="lb-hero-inner">
+        <div>
+          <p class="lb-hero-eyebrow">Your position · This week</p>
+          <div class="lb-hero-rank">
+            <span class="hash">#</span>
+            <span class="num" data-countup="4">4</span>
+            <span class="of">of 28 in Year 5</span>
+          </div>
+          <p class="lb-hero-sub">You climbed <b>2 places</b> since last week. Just <b>140&nbsp;XP</b> to overtake Aisha and reach the podium.</p>
+          <div class="lb-hero-tags">
+            <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#target"/></svg> 2,480 XP</span>
+            <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#naplan"/></svg> 7-day streak</span>
+            <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#trophy"/></svg> 9 badges</span>
+          </div>
+        </div>
+        <div class="lb-hero-side">
+          <div class="lb-league">
+            <span class="medal"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
+            <div>
+              <b>Gold League</b>
+              <span>Top 20% · Year 5</span>
+            </div>
+          </div>
+          <div class="lb-progress-mini">
+            <div class="row"><span>To podium (#3)</span><span>78%</span></div>
+            <div class="bar"><i data-fill="78"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="lb-filters">
+      <span class="lb-filter-label">Group</span>
+      <div class="lb-chipset" id="scopeChips">
+        <button class="lb-chip" data-scope="class">My class</button>
+        <button class="lb-chip active" data-scope="year">Year 5</button>
+        <button class="lb-chip" data-scope="school">Whole school</button>
+      </div>
+      <span class="lb-filter-label">Time</span>
+      <div class="lb-chipset" id="timeChips">
+        <button class="lb-chip active" data-time="week">This week</button>
+        <button class="lb-chip" data-time="month">This month</button>
+        <button class="lb-chip" data-time="all">All time</button>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metric-grid">
+      <div class="metric lb-metric m-rank">
+        <span class="ic"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
+        <span>Your rank</span>
+        <strong>#<span data-countup="4">4</span></strong>
+        <span class="delta up">▲ up 2 this week</span>
+      </div>
+      <div class="metric lb-metric m-xp">
+        <span class="ic"><svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span>XP this week</span>
+        <strong><span data-countup="620">620</span></strong>
+        <span class="delta up">▲ +180 vs last week</span>
+      </div>
+      <div class="metric lb-metric m-streak">
+        <span class="ic"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span>
+        <span>Day streak</span>
+        <strong><span data-countup="7">7</span></strong>
+        <span class="delta up">Personal best 🔥</span>
+      </div>
+      <div class="metric lb-metric m-badge">
+        <span class="ic"><svg><use href="assets/skillup-icons.svg#shield"/></svg></span>
+        <span>Badges earned</span>
+        <strong><span data-countup="9">9</span></strong>
+        <span class="delta up">2 new this week</span>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Left: podium + full list -->
+      <div>
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Top of Year 5</h2>
+              <p class="panel-subtitle">This week's leaders by XP earned.</p>
+            </div>
+          </div>
+
+          <div class="podium">
+            <div class="podium-card podium-2">
+              <span class="crown">2</span>
+              <span class="avatar">MK</span>
+              <b>Mila K.</b>
+              <span>5B · Blue class</span>
+              <div class="xp">2,910 <small>XP</small></div>
+              <div class="stand">2</div>
+            </div>
+            <div class="podium-card podium-1">
+              <span class="crown"><svg width="16" height="16" viewBox="0 0 24 24" fill="#5a3a02"><path d="M3 7l4 3 5-6 5 6 4-3-2 12H5L3 7z"/></svg></span>
+              <span class="avatar">TW</span>
+              <b>Tom W.</b>
+              <span>5A · Green class</span>
+              <div class="xp">3,240 <small>XP</small></div>
+              <div class="stand">1</div>
+            </div>
+            <div class="podium-card podium-3">
+              <span class="crown">3</span>
+              <span class="avatar">AS</span>
+              <b>Aisha S.</b>
+              <span>5A · Green class</span>
+              <div class="xp">2,620 <small>XP</small></div>
+              <div class="stand">3</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Full ranking</h2>
+              <p class="panel-subtitle">Year 5 · This week</p>
+            </div>
+          </div>
+
+          <div class="lb-list">
+            <div class="lb-row top">
+              <span class="rk">1</span>
+              <span class="av" style="background:linear-gradient(135deg,#f4b731,#e0a417)">TW</span>
+              <span class="who"><b>Tom W.</b><span>5A · Green class</span></span>
+              <span class="xp">3,240<small>XP</small></span>
+              <span class="delta same">—</span>
+            </div>
+            <div class="lb-row top">
+              <span class="rk">2</span>
+              <span class="av" style="background:linear-gradient(135deg,#5b8cff,#3767f0)">MK</span>
+              <span class="who"><b>Mila K.</b><span>5B · Blue class</span></span>
+              <span class="xp">2,910<small>XP</small></span>
+              <span class="delta up"><svg viewBox="0 0 24 24"><path d="M12 5l7 8h-4v6H9v-6H5l7-8z"/></svg>1</span>
+            </div>
+            <div class="lb-row top">
+              <span class="rk">3</span>
+              <span class="av" style="background:linear-gradient(135deg,#54d3a0,#168a60)">AS</span>
+              <span class="who"><b>Aisha S.</b><span>5A · Green class</span></span>
+              <span class="xp">2,620<small>XP</small></span>
+              <span class="delta down"><svg viewBox="0 0 24 24"><path d="M12 19l-7-8h4V5h6v6h4l-7 8z"/></svg>1</span>
+            </div>
+            <div class="lb-row is-you">
+              <span class="rk">4</span>
+              <span class="av" style="background:linear-gradient(135deg,#7b5bd6,#5536a4)">JL</span>
+              <span class="who"><b>Jordan Lee</b><span>5B · Blue class</span></span>
+              <span class="xp">2,480<small>XP</small></span>
+              <span class="delta up"><svg viewBox="0 0 24 24"><path d="M12 5l7 8h-4v6H9v-6H5l7-8z"/></svg>2</span>
+            </div>
+            <div class="lb-row">
+              <span class="rk">5</span>
+              <span class="av" style="background:linear-gradient(135deg,#ff9a62,#e0662b)">RP</span>
+              <span class="who"><b>Ravi P.</b><span>5A · Green class</span></span>
+              <span class="xp">2,300<small>XP</small></span>
+              <span class="delta down"><svg viewBox="0 0 24 24"><path d="M12 19l-7-8h4V5h6v6h4l-7 8z"/></svg>1</span>
+            </div>
+            <div class="lb-row">
+              <span class="rk">6</span>
+              <span class="av" style="background:linear-gradient(135deg,#3aa0c9,#1c6f97)">EN</span>
+              <span class="who"><b>Ella N.</b><span>5B · Blue class</span></span>
+              <span class="xp">2,140<small>XP</small></span>
+              <span class="delta up"><svg viewBox="0 0 24 24"><path d="M12 5l7 8h-4v6H9v-6H5l7-8z"/></svg>3</span>
+            </div>
+            <div class="lb-row">
+              <span class="rk">7</span>
+              <span class="av" style="background:linear-gradient(135deg,#d76fae,#a83e83)">SC</span>
+              <span class="who"><b>Sofia C.</b><span>5A · Green class</span></span>
+              <span class="xp">1,995<small>XP</small></span>
+              <span class="delta same">—</span>
+            </div>
+            <div class="lb-row">
+              <span class="rk">8</span>
+              <span class="av" style="background:linear-gradient(135deg,#6d7cff,#4453d6)">LB</span>
+              <span class="who"><b>Liam B.</b><span>5B · Blue class</span></span>
+              <span class="xp">1,870<small>XP</small></span>
+              <span class="delta down"><svg viewBox="0 0 24 24"><path d="M12 19l-7-8h4V5h6v6h4l-7 8z"/></svg>2</span>
+            </div>
+
+            <div class="lb-divider">Keep going to climb higher</div>
+
+            <div class="lb-row">
+              <span class="rk">12</span>
+              <span class="av" style="background:linear-gradient(135deg,#8794ad,#5d6a83)">NG</span>
+              <span class="who"><b>Noah G.</b><span>5A · Green class</span></span>
+              <span class="xp">1,540<small>XP</small></span>
+              <span class="delta up"><svg viewBox="0 0 24 24"><path d="M12 5l7 8h-4v6H9v-6H5l7-8z"/></svg>1</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right: rewards / how to climb -->
+      <div>
+        <section class="panel" style="margin-top:20px">
+          <div class="panel-heading">
+            <div>
+              <h2>Next reward</h2>
+              <p class="panel-subtitle">Reach the podium</p>
+            </div>
+          </div>
+          <div class="next-reward">
+            <div class="row"><span>Progress to #3</span><span>78%</span></div>
+            <div class="bar"><i data-fill="78"></i></div>
+            <p>Earn <b>140 more XP</b> this week to pass Aisha and unlock the <b>Podium badge</b>.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>How to climb</h2>
+              <p class="panel-subtitle">Fast ways to earn XP</p>
+            </div>
+          </div>
+          <div class="quick-actions">
+            <a class="quick-action" href="learning.html" style="display:block">
+              <strong>Finish a lesson</strong>
+              <span>+50 XP each · builds your streak</span>
+            </a>
+            <a class="quick-action" href="selective-practice.html" style="display:block">
+              <strong>Complete a practice set</strong>
+              <span>+80 XP · bonus for high accuracy</span>
+            </a>
+            <a class="quick-action" href="practice.html" style="display:block">
+              <strong>Take a mock test</strong>
+              <span>+150 XP · biggest weekly boost</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Recent badges</h2>
+              <p class="panel-subtitle">Achievements you've unlocked</p>
+            </div>
+          </div>
+          <div class="reward">
+            <span class="ic g"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
+            <div><b>Streak Star</b><span>7 days of practice in a row.</span></div>
+          </div>
+          <div class="reward">
+            <span class="ic b"><svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+            <div><b>Sharp Shooter</b><span>90%+ on 5 practice sets.</span></div>
+          </div>
+          <div class="reward locked">
+            <span class="ic p"><svg><use href="assets/skillup-icons.svg#shield"/></svg></span>
+            <div><b>Podium Finisher</b><span>Locked — reach the top 3.</span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+  // Mobile sidebar
+  var toggle=document.getElementById('navToggle');
+  var sidebar=document.getElementById('sidebar');
+  if(toggle&&sidebar){toggle.addEventListener('click',function(){sidebar.classList.toggle('open');});}
+
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Filter chips (visual switch within a set)
+  document.querySelectorAll('.lb-chipset').forEach(function(set){
+    set.addEventListener('click',function(e){
+      var btn=e.target.closest('.lb-chip'); if(!btn) return;
+      set.querySelectorAll('.lb-chip').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+    });
+  });
+
+  function animate(){
+    // Count-up numbers
+    document.querySelectorAll('[data-countup]').forEach(function(el){
+      var target=parseInt(el.getAttribute('data-countup'),10)||0;
+      if(reduce){el.textContent=target.toLocaleString();return;}
+      var start=null,dur=900;
+      function step(t){
+        if(!start)start=t;
+        var p=Math.min((t-start)/dur,1);
+        var eased=1-Math.pow(1-p,3);
+        el.textContent=Math.round(target*eased).toLocaleString();
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+    // Fill bars
+    document.querySelectorAll('[data-fill]').forEach(function(el){
+      var v=el.getAttribute('data-fill');
+      requestAnimationFrame(function(){el.style.width=v+'%';});
+    });
+  }
+
+  if('IntersectionObserver' in window){
+    var hero=document.querySelector('.lb-hero');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){animate();io.disconnect();}});
+    },{threshold:.2});
+    if(hero)io.observe(hero); else animate();
+  }else{animate();}
+})();
+</script>
+</body>
+</html>

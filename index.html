@@ -3,412 +3,408 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="SkillUP is a modern K–6 learning platform for Maths, English, Vocabulary, Thinking Skills, NAPLAN, OC and Selective preparation.">
-<title>SkillUP | Learn smarter. Grow stronger.</title>
+<meta name="theme-color" content="#2f6bff">
+<meta name="description" content="SkillUP is a colourful K–6 learning platform for Australian primary students. Learn Maths and English, build vocabulary and prepare for NAPLAN, Opportunity Class (OC) and Selective School tests.">
+<title>SkillUP | Learn. Practise. Improve.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
-<link rel="stylesheet" href="css/home.css?v=20260926-assess1">
+<link rel="stylesheet" href="css/home.css?v=20260925-redesign">
 </head>
 <body>
 <header class="site-header">
   <div class="shell nav-shell">
     <a class="brand" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
-    <div class="nav-spacer"></div>
-    <div class="nav-actions">
-      <a class="ghost-link" href="sign-in.html">Sign in</a>
-      <a class="solid-link" href="sign-up.html">Sign up</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <nav class="main-nav">
+        <a class="active" href="index.html">Home</a>
+        <a href="learning.html">Learn</a>
+        <a href="learning.html#assessments">NAPLAN</a>
+        <a href="selective.html">OC</a>
+        <a href="selective.html">Selective</a>
+        <a href="accounts.html?role=teacher">For Teachers</a>
+        <a href="parents.html">For Parents</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="link-signin" href="sign-in.html">Sign In</a>
+        <a class="link-signup" href="sign-up.html">Sign Up</a>
+      </div>
     </div>
   </div>
 </header>
 
 <main>
+<!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-glow glow-a"></div>
-  <div class="hero-glow glow-b"></div>
+  <div class="hero-bg" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <span class="spark s1"></span>
+    <span class="spark s2"></span>
+    <span class="spark s3"></span>
+    <span class="spark s4"></span>
+  </div>
   <div class="shell hero-grid">
     <div class="hero-copy reveal">
-      <div class="eyebrow">FOR K–6 LEARNERS</div>
-      <h1>Learning that feels<br><span class="dynamic-hero-word tone-blue" id="dynamicHeroWord">made for now.</span></h1>
-      <p>One focused platform for lessons, practice and assessment prep — designed to keep students moving, not scrolling.</p>
-
+      <span class="hero-badge">📚 <b>K–6</b> · NAPLAN · OC · Selective</span>
+      <h1><span class="w1">Learn.</span> <span class="w2">Practise.</span> <span class="w3">Improve.</span></h1>
+      <p class="lead">A colourful, friendly place for Australian primary students to master Maths and English, build vocabulary and get ready for NAPLAN, Opportunity Class and Selective School tests.</p>
       <div class="hero-actions">
-        <a class="button button-dark" href="learning.html">Start learning</a>
-        <a class="button button-light" href="selective.html">Explore Selective</a>
+        <a class="button button-primary" href="learning.html">
+          <svg><use href="assets/skillup-icons.svg#target"/></svg>
+          Start Learning
+        </a>
+        <a class="button button-light" href="practice.html">
+          <svg><use href="assets/skillup-icons.svg#naplan"/></svg>
+          Take a Test
+        </a>
       </div>
-
       <div class="hero-proof">
-        <div><b>K–6</b><span>Year levels</span></div>
+        <div><b>7</b><span>Year levels</span></div>
         <div><b>6+</b><span>Learning areas</span></div>
-        <div><b>3</b><span>Assessment pathways</span></div>
+        <div><b>3</b><span>Test pathways</span></div>
       </div>
     </div>
 
     <div class="hero-visual reveal" id="heroVisual">
-      <div class="orbital-ring ring-1"></div>
-      <div class="orbital-ring ring-2"></div>
-      <div class="orbital-ring ring-3"></div>
-
-      <div class="learning-orbit" id="learningOrbit">
-        <div class="orbit-head">
+      <span class="orbit-ring r1" aria-hidden="true"></span>
+      <span class="orbit-ring r2" aria-hidden="true"></span>
+      <div class="glass-card">
+        <div class="glass-head">
           <div>
-            <span>LEARNING FLOW</span>
-            <h2>Your next 20 minutes</h2>
+            <span>Today's plan</span>
+            <b>Your next 20 minutes</b>
           </div>
-          <div class="streak"><i></i>7 day streak</div>
+          <span class="glass-chip">🔥 7 day streak</span>
         </div>
-
-        <div class="path">
-          <div class="path-line"></div>
-
-          <a class="path-step complete step-1" href="learning.html?year=4">
-            <div class="step-icon"><svg><use href="assets/skillup-icons.svg#maths"/></svg></div>
-            <div><span>Maths</span><b>Fractions</b><small>Complete</small></div>
-          </a>
-
-          <a class="path-step current step-2" href="learning.html?year=4">
-            <div class="step-icon"><svg><use href="assets/skillup-icons.svg#english"/></svg></div>
-            <div><span>English</span><b>Grammar</b><small>8 min</small></div>
-          </a>
-
-          <a class="path-step step-3" href="selective.html">
-            <div class="step-icon"><svg><use href="assets/skillup-icons.svg#thinking"/></svg></div>
-            <div><span>Thinking</span><b>Logic</b><small>Next</small></div>
-          </a>
-
-          <a class="path-step step-4" href="#assessments">
-            <div class="step-icon"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></div>
-            <div><span>NAPLAN</span><b>Mini test</b><small>Later</small></div>
-          </a>
+        <div class="glass-steps">
+          <div class="glass-step">
+            <div class="ic"><svg><use href="assets/skillup-icons.svg#maths"/></svg></div>
+            <div><small>Maths</small><b>Fractions</b></div>
+            <span class="state">Done</span>
+          </div>
+          <div class="glass-step is-current">
+            <div class="ic"><svg><use href="assets/skillup-icons.svg#english"/></svg></div>
+            <div><small>English</small><b>Grammar</b></div>
+            <span class="state">8 min</span>
+          </div>
+          <div class="glass-step">
+            <div class="ic"><svg><use href="assets/skillup-icons.svg#thinking"/></svg></div>
+            <div><small>Thinking</small><b>Logic puzzles</b></div>
+            <span class="state">Next</span>
+          </div>
         </div>
-
-        <div class="orbit-footer">
-          <div class="progress-meta"><span>Weekly goal</span><b>72%</b></div>
-          <div class="progress-track"><i></i></div>
+        <div class="glass-foot">
+          <div class="row"><span>Weekly goal</span><b>72%</b></div>
+          <div class="glass-bar"><i></i></div>
         </div>
       </div>
-
-      <div class="float-pill pill-xp"><span>+</span>12 XP</div>
-      <div class="float-pill pill-level">Level 4</div>
-      <div class="float-pill pill-badge">New badge</div>
+      <span class="float-pill pill-a"><i>+</i>12 XP</span>
+      <span class="float-pill pill-b"><i>★</i>Level 4</span>
+      <span class="float-pill pill-c"><i>✓</i>New badge</span>
     </div>
   </div>
 </section>
 
-<section class="section compact-section reveal">
+<!-- ============ GRADE SELECTION ============ -->
+<section class="section reveal" id="grades">
   <div class="shell">
-    <div class="level-header">
-      <div>
-        <span class="eyebrow">CHOOSE YOUR LEVEL</span>
-        <h2>Find your <span class="text-accent accent-green">learning zone.</span></h2>
-        <p>Pick a year and jump straight into the right level of challenge.</p>
-      </div>
-      <div class="level-note"><span></span>Built for K–6 progression</div>
+    <div class="section-head">
+      <span class="eyebrow">Choose your level</span>
+      <h2>Find your <span class="text-accent">learning zone</span></h2>
+      <p>Every year level from Kindergarten to Year 6 — pick yours and jump straight into the right challenge.</p>
     </div>
-
-    <div class="year-carousel-shell">
-      <button class="year-arrow year-arrow-prev" id="yearPrev" type="button" aria-label="Previous year levels">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-      </button>
-      <button class="year-arrow year-arrow-next" id="yearNext" type="button" aria-label="Next year levels">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </button>
-      <div class="year-showcase" id="yearCarousel" aria-label="Choose year level">
-      <a class="year-tile kindy" href="learning.html?year=K">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-k"/></svg></div>
-        <div class="year-copy"><small>START HERE</small><b>Kindy</b><span>Explore, play and discover</span></div>
-        <div class="year-meter"><i style="width:18%"></i></div>
+    <div class="grade-grid">
+      <a class="grade-card g-k" href="learning.html?year=K">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-k"/></svg></div>
+        <small>Start here</small>
+        <b>Kindy</b>
+        <span>Explore &amp; play</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y1" href="learning.html?year=1">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-1"/></svg></div>
-        <div class="year-copy"><small>LEVEL 1</small><b>Year 1</b><span>Build strong foundations</span></div>
-        <div class="year-meter"><i style="width:30%"></i></div>
+      <a class="grade-card g-1" href="learning.html?year=1">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-1"/></svg></div>
+        <small>Level 1</small>
+        <b>Year 1</b>
+        <span>Strong foundations</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y2" href="learning.html?year=2">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-2"/></svg></div>
-        <div class="year-copy"><small>LEVEL 2</small><b>Year 2</b><span>Grow core skills</span></div>
-        <div class="year-meter"><i style="width:42%"></i></div>
+      <a class="grade-card g-2" href="learning.html?year=2">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-2"/></svg></div>
+        <small>Level 2</small>
+        <b>Year 2</b>
+        <span>Grow core skills</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y3" href="learning.html?year=3">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-3"/></svg></div>
-        <div class="year-copy"><small>LEVEL 3</small><b>Year 3</b><span>Take on bigger ideas</span></div>
-        <div class="year-meter"><i style="width:54%"></i></div>
+      <a class="grade-card g-3" href="learning.html?year=3">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-3"/></svg></div>
+        <small>Level 3</small>
+        <b>Year 3</b>
+        <span>Bigger ideas</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y4" href="learning.html?year=4">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-4"/></svg></div>
-        <div class="year-copy"><small>LEVEL 4</small><b>Year 4</b><span>Think more independently</span></div>
-        <div class="year-meter"><i style="width:66%"></i></div>
+      <a class="grade-card g-4" href="learning.html?year=4">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-4"/></svg></div>
+        <small>Level 4</small>
+        <b>Year 4</b>
+        <span>Think independently</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y5" href="learning.html?year=5">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-5"/></svg></div>
-        <div class="year-copy"><small>LEVEL 5</small><b>Year 5</b><span>Stretch and aim higher</span></div>
-        <div class="year-meter"><i style="width:80%"></i></div>
+      <a class="grade-card g-5" href="learning.html?year=5">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-5"/></svg></div>
+        <small>Level 5</small>
+        <b>Year 5</b>
+        <span>Aim higher</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-
-      <a class="year-tile y6" href="learning.html?year=6">
-        <div class="year-icon"><svg><use href="assets/skillup-icons.svg#year-6"/></svg></div>
-        <div class="year-copy"><small>LEVEL 6</small><b>Year 6</b><span>Prepare for what comes next</span></div>
-        <div class="year-meter"><i style="width:96%"></i></div>
+      <a class="grade-card g-6" href="learning.html?year=6">
+        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-6"/></svg></div>
+        <small>Level 6</small>
+        <b>Year 6</b>
+        <span>Ready for what's next</span>
+        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
       </a>
-    </div>
-    <div class="year-carousel-footer" aria-hidden="true">
-      <span>Drag or swipe to explore</span>
-      <div class="year-scroll-progress"><i id="yearScrollBar"></i></div>
-    </div>
     </div>
   </div>
 </section>
 
-<section class="section subjects reveal">
+<!-- ============ LEARNING PATHWAYS ============ -->
+<section class="section reveal" id="assessments">
   <div class="shell">
-    <div class="section-intro">
-      <div>
-        <span class="eyebrow">LEARNING AREAS</span>
-        <h2>Four ways to <span class="text-accent accent-blue">level up.</span></h2>
+    <div class="section-head">
+      <span class="eyebrow">Learning pathways</span>
+      <h2>One platform, <span class="accent-violet">four ways to grow</span></h2>
+      <p>From everyday topic practice to the big tests — choose the pathway that fits your goal.</p>
+    </div>
+    <div class="pathways">
+      <a class="path-card p-learn" href="learning.html">
+        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#maths"/></svg></div>
+        <h3>Learn</h3>
+        <p>Topic-based lessons and guided practice across Maths, English and Vocabulary.</p>
+        <span class="p-link">Explore lessons <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+      <a class="path-card p-naplan" href="learning.html#assessments">
+        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></div>
+        <h3>NAPLAN</h3>
+        <p>Real-style practice tests and skill drills to build confidence for NAPLAN.</p>
+        <span class="p-link">Practise NAPLAN <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+      <a class="path-card p-oc" href="selective.html">
+        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#oc"/></svg></div>
+        <h3>OC</h3>
+        <p>Opportunity Class preparation with reasoning, thinking skills and timed sets.</p>
+        <span class="p-link">Prepare for OC <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+      <a class="path-card p-selective" href="selective.html">
+        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#selective"/></svg></div>
+        <div class="p-body">
+          <span class="p-flag">★ Flagship pathway</span>
+          <h3>Selective School Test</h3>
+          <p>Our most complete pathway — Mathematical Reasoning, Thinking Skills, Reading and full-length practice designed for the Selective High School placement test.</p>
+          <span class="p-link">Start Selective prep <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        </div>
+        <span class="button button-warm">Explore Selective</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STUDENT / TEACHER / PARENT ============ -->
+<section class="section reveal" id="roles">
+  <div class="shell">
+    <div class="section-head">
+      <span class="eyebrow">Made for everyone</span>
+      <h2>Built for <span class="accent-green">students, teachers &amp; parents</span></h2>
+      <p>Three connected spaces, one consistent experience. Hover to see each world come to life.</p>
+    </div>
+    <div class="roles">
+      <a class="role-card role-student" href="sign-up.html?role=student">
+        <span class="role-tag">Student</span>
+        <div class="role-emoji"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></div>
+        <h3>Learn &amp; achieve</h3>
+        <ul>
+          <li>Fun, guided lessons</li>
+          <li>Practice tests &amp; quizzes</li>
+          <li>Badges &amp; achievements</li>
+          <li>See your progress grow</li>
+        </ul>
+        <span class="role-link">Start as a student <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+      <a class="role-card role-teacher" href="accounts.html?role=teacher">
+        <span class="role-tag">Teacher</span>
+        <div class="role-emoji"><svg><use href="assets/skillup-icons.svg#shield"/></svg></div>
+        <h3>Guide &amp; manage</h3>
+        <ul>
+          <li>Class management tools</li>
+          <li>Track student progress</li>
+          <li>Ready-made resources</li>
+          <li>Assign lessons &amp; tests</li>
+        </ul>
+        <span class="role-link">Teacher area <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+      <a class="role-card role-parent" href="parents.html">
+        <span class="role-tag">Parent</span>
+        <div class="role-emoji"><svg><use href="assets/skillup-icons.svg#progress"/></svg></div>
+        <h3>Support &amp; celebrate</h3>
+        <ul>
+          <li>Follow your child's progress</li>
+          <li>Understand test results</li>
+          <li>Helpful learning tips</li>
+          <li>Encourage every win</li>
+        </ul>
+        <span class="role-link">Parent area <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRESS & MOTIVATION ============ -->
+<section class="section reveal" id="progress">
+  <div class="shell">
+    <div class="progress-wrap">
+      <div class="progress-inner">
+        <div class="progress-copy">
+          <span class="eyebrow light">Progress &amp; motivation</span>
+          <h2>Every small win, made visible</h2>
+          <p>SkillUP keeps learning rewarding with clear progress, streaks and achievements — so students always know their next step and feel proud of the last one.</p>
+          <a class="button button-warm" href="learning.html">See it in action</a>
+        </div>
+        <div class="stat-grid">
+          <div class="stat s-1">
+            <div class="s-top"><span class="s-ic"><svg><use href="assets/skillup-icons.svg#progress"/></svg></span><span class="s-label">Learning progress</span></div>
+            <div class="s-value">72<small>%</small></div>
+            <div class="s-bar"><i style="width:72%"></i></div>
+          </div>
+          <div class="stat s-2">
+            <div class="s-top"><span class="s-ic"><svg><use href="assets/skillup-icons.svg#target"/></svg></span><span class="s-label">Topics completed</span></div>
+            <div class="s-value">48<small>/ 60</small></div>
+            <div class="s-bar"><i style="width:80%"></i></div>
+          </div>
+          <div class="stat s-3">
+            <div class="s-top"><span class="s-ic"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span><span class="s-label">Practice streak</span></div>
+            <div class="s-value">7<small>days &amp; last test 88%</small></div>
+            <div class="s-bar"><i style="width:88%"></i></div>
+          </div>
+          <div class="stat s-4">
+            <div class="s-top"><span class="s-ic"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span><span class="s-label">Achievements</span></div>
+            <div class="s-value">9<small>badges earned</small></div>
+            <div class="badges">
+              <span><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
+              <span><svg><use href="assets/skillup-icons.svg#shield"/></svg></span>
+              <span><svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <p>Clear subject spaces with focused practice and progress.</p>
-    </div>
-
-    <div class="subject-layout">
-      <a class="subject-panel panel-large maths-panel" href="learning.html?year=1#subjects">
-        <div class="panel-top">
-          <div class="subject-mark"><svg><use href="assets/skillup-icons.svg#maths"/></svg></div>
-          <span class="mini-chip">Core</span>
-        </div>
-        <div class="panel-copy">
-          <span>Maths</span>
-          <h3>Build confidence by solving, seeing and doing.</h3>
-          <p>Number · Measurement · Problem solving</p>
-        </div>
-        <div class="mini-visual visual-maths" aria-hidden="true">
-          <i></i><i></i><i></i><i></i>
-        </div>
-      </a>
-
-      <a class="subject-panel english-panel" href="learning.html?year=1#subjects">
-        <div class="panel-top">
-          <div class="subject-mark"><svg><use href="assets/skillup-icons.svg#english"/></svg></div>
-          <span class="mini-chip">Core</span>
-        </div>
-        <div class="panel-copy"><span>English</span><h3>Read. Write. Understand.</h3><p>Reading · Grammar · Writing</p></div>
-      </a>
-
-      <a class="subject-panel vocab-panel" href="learning.html?year=1#subjects">
-        <div class="panel-top">
-          <div class="subject-mark"><svg><use href="assets/skillup-icons.svg#vocab"/></svg></div>
-          <span class="mini-chip">Build</span>
-        </div>
-        <div class="panel-copy"><span>Vocabulary</span><h3>More words. Better expression.</h3><p>Meaning · Spelling · Context</p></div>
-      </a>
-
-      <a class="subject-panel panel-wide thinking-panel" href="selective.html">
-        <div class="panel-top">
-          <div class="subject-mark"><svg><use href="assets/skillup-icons.svg#thinking"/></svg></div>
-          <span class="mini-chip">Challenge</span>
-        </div>
-        <div class="panel-copy"><span>Thinking Skills</span><h3>Train the brain to spot patterns, reason and solve.</h3><p>Logic · Strategy · Higher-order thinking</p></div>
-        <div class="logic-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      </a>
     </div>
   </div>
 </section>
 
-<section class="assessment-zone reveal" id="assessments">
-  <div class="shell assessment-shell">
-    <div class="assessment-intro">
-      <span class="eyebrow light">ASSESSMENT PREP</span>
-      <h2>Big tests.<br><span class="text-accent accent-warm">Calm preparation.</span></h2>
-      <p>Focused practice for the next important step, without turning the whole site into a test centre.</p>
-    </div>
-
-    <div class="assessment-list">
-      <a href="assessment-practice.html?mode=naplan3">
-        <span class="assessment-index">01</span>
-        <div><small>NAPLAN</small><b>Year 3 & Year 5 practice</b></div>
-        <svg><use href="assets/skillup-icons.svg#naplan"/></svg>
-      </a>
-      <a href="assessment-practice.html?mode=oc4">
-        <span class="assessment-index">02</span>
-        <div><small>OC</small><b>Year 4 reasoning practice</b></div>
-        <svg><use href="assets/skillup-icons.svg#oc"/></svg>
-      </a>
-      <a href="selective.html">
-        <span class="assessment-index">03</span>
-        <div><small>SELECTIVE</small><b>Selective High School</b></div>
-        <svg><use href="assets/skillup-icons.svg#selective"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
+<!-- ============ FINAL CTA ============ -->
 <section class="section reveal">
-  <div class="shell progress-story">
-    <div class="story-copy">
-      <span class="eyebrow">DESIGNED FOR MOMENTUM</span>
-      <h2>One clear next step.<br><span class="text-accent accent-violet">Every time.</span></h2>
-      <p>Students should never wonder what to do next. SkillUP keeps progress visible, practice focused and the interface light enough to stay out of the way.</p>
-      <a class="button button-dark" href="learning.html">Explore the learning hub</a>
-    </div>
-
-    <div class="story-steps">
-      <div><span>01</span><b>Choose a year</b><p>Start at the right level.</p></div>
-      <div><span>02</span><b>Pick a subject</b><p>Focus on one learning area.</p></div>
-      <div><span>03</span><b>Practice a skill</b><p>Learn through doing.</p></div>
-      <div><span>04</span><b>See progress</b><p>Know what improved.</p></div>
+  <div class="shell">
+    <div class="cta">
+      <div class="inner">
+        <span class="eyebrow light">Ready when you are</span>
+        <h2>Ready to start learning?</h2>
+        <p>Join SkillUP today and turn practice into progress — one small win at a time.</p>
+        <div class="cta-actions">
+          <a class="button button-warm" href="sign-up.html">Create Free Account</a>
+          <a class="button button-ghost" href="sign-in.html">Sign In</a>
+        </div>
+      </div>
     </div>
   </div>
-</section>
-
-<section class="shell final-cta reveal">
-  <div>
-    <span class="eyebrow">READY WHEN YOU ARE</span>
-    <h2>Start with one <span class="text-accent accent-green">small win.</span></h2>
-    <p>Choose a year level and begin.</p>
-  </div>
-  <a class="button button-dark" href="learning.html">Choose your year</a>
 </section>
 </main>
 
 <footer>
-  <div class="shell footer-grid">
-    <div>
-      <img src="assets/skillup-logo.svg" alt="SkillUP">
-      <p>Modern learning for brighter futures.</p>
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/skillup-logo.svg" alt="SkillUP">
+        <p>Colourful, modern learning for Australian primary students — small steps, brighter futures.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <a href="learning.html">Learning Hub</a>
+        <a href="learning.html?year=K">Kindergarten</a>
+        <a href="learning.html?year=3">Year 3</a>
+        <a href="learning.html?year=6">Year 6</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tests</h4>
+        <a href="learning.html#assessments">NAPLAN</a>
+        <a href="selective.html">Opportunity Class</a>
+        <a href="selective.html">Selective</a>
+        <a href="practice.html">Practice</a>
+      </div>
+      <div class="footer-col">
+        <h4>More</h4>
+        <a href="accounts.html?role=teacher">For Teachers</a>
+        <a href="parents.html">For Parents</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+      </div>
     </div>
-    <nav>
-      <a href="learning.html">Learn</a>
-      <a href="selective.html">Selective</a>
-      <a href="#assessments">NAPLAN</a>
-      <a href="accounts.html?role=teacher">Teachers</a>
-      <a href="parents.html">Parents</a>
-    </nav>
-    <nav>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="support.html">Support</a>
-    </nav>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> SkillUP. All rights reserved.</span>
+      <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></span>
+    </div>
   </div>
 </footer>
 
 <script>
 (function(){
-  const els=document.querySelectorAll('.reveal');
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target);}
+  var y=document.getElementById('year');
+  if(y) y.textContent=new Date().getFullYear();
+
+  // Mobile navigation
+  var toggle=document.getElementById('navToggle');
+  var header=document.querySelector('.site-header');
+  if(toggle&&header){
+    toggle.addEventListener('click',function(){
+      var open=document.body.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded',open?'true':'false');
+      toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
     });
-  },{threshold:.12,rootMargin:'0px 0px -50px'});
-  els.forEach(el=>io.observe(el));
-
-  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const heroWord=document.getElementById('dynamicHeroWord');
-  if(heroWord&&!reducedMotion){
-    const words=[
-      ['made for now.','tone-blue'],
-      ['built to grow.','tone-green'],
-      ['ready to explore.','tone-warm'],
-      ['made for now.','tone-blue']
-    ];
-    let wordIndex=0;
-    setInterval(()=>{
-      heroWord.classList.add('is-changing');
-      setTimeout(()=>{
-        wordIndex=(wordIndex+1)%words.length;
-        heroWord.textContent=words[wordIndex][0];
-        heroWord.classList.remove('tone-blue','tone-green','tone-warm');
-        heroWord.classList.add(words[wordIndex][1]);
-        requestAnimationFrame(()=>heroWord.classList.remove('is-changing'));
-      },220);
-    },2800);
-  }
-
-  const visual=document.getElementById('heroVisual');
-  const orbit=document.getElementById('learningOrbit');
-  if(visual&&orbit&&matchMedia('(pointer:fine)').matches){
-    visual.addEventListener('pointermove',e=>{
-      const r=visual.getBoundingClientRect();
-      const x=(e.clientX-r.left)/r.width-.5;
-      const y=(e.clientY-r.top)/r.height-.5;
-      orbit.style.transform=`perspective(1200px) rotateY(${x*5}deg) rotateX(${-y*4}deg) translateY(-3px)`;
-    });
-    visual.addEventListener('pointerleave',()=>orbit.style.transform='perspective(1200px) rotateY(0) rotateX(0)');
-  }
-
-  const learningSteps=[...document.querySelectorAll('.path-step')];
-  if(learningSteps.length&&!reducedMotion){
-    let activeStep=1;
-    learningSteps[activeStep].classList.add('auto-active');
-    setInterval(()=>{
-      learningSteps.forEach(step=>step.classList.remove('auto-active'));
-      activeStep=(activeStep+1)%learningSteps.length;
-      learningSteps[activeStep].classList.add('auto-active');
-    },2400);
-  }
-
-  document.querySelectorAll('.year-tile,.subject-panel,.assessment-list a,.story-steps>div').forEach((item,index)=>{
-    item.style.setProperty('--reveal-delay',Math.min(index%7,6)*55+'ms');
-    item.classList.add('micro-reveal');
-  });
-
-  const microItems=document.querySelectorAll('.micro-reveal');
-  if(microItems.length){
-    const microIO=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('micro-visible');
-          microIO.unobserve(entry.target);
-        }
+    document.querySelectorAll('#navMenu a').forEach(function(a){
+      a.addEventListener('click',function(){
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded','false');
       });
-    },{threshold:.12});
-    microItems.forEach(item=>microIO.observe(item));
+    });
   }
 
-  document.querySelectorAll('.subject-panel,.year-tile,.assessment-list a').forEach(card=>{
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect();
-      card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-      card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  // Scroll reveal
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target);}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -60px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('visible');});
+  }
+
+  // Subtle pointer parallax on the hero card
+  var visual=document.getElementById('heroVisual');
+  var card=visual?visual.querySelector('.glass-card'):null;
+  if(card&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    visual.addEventListener('pointermove',function(e){
+      var r=visual.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-.5;
+      var yy=(e.clientY-r.top)/r.height-.5;
+      card.style.transform='perspective(1100px) rotateY('+(x*5)+'deg) rotateX('+(-yy*4)+'deg)';
     });
-  });
-
-  const carousel=document.getElementById('yearCarousel');
-  const scrollBar=document.getElementById('yearScrollBar');
-  const prevBtn=document.getElementById('yearPrev');
-  const nextBtn=document.getElementById('yearNext');
-  if(carousel){
-    const updateYearProgress=()=>{
-      const max=Math.max(0,carousel.scrollWidth-carousel.clientWidth);
-      const ratio=max>0?carousel.scrollLeft/max:0;
-      if(scrollBar) scrollBar.style.transform='scaleX('+(0.16+(ratio*0.84))+')';
-      if(prevBtn) prevBtn.disabled=carousel.scrollLeft<=4;
-      if(nextBtn) nextBtn.disabled=carousel.scrollLeft>=max-4;
-    };
-
-    const scrollYearCards=(direction)=>{
-      const first=carousel.querySelector('.year-tile');
-      if(!first) return;
-      const styles=getComputedStyle(carousel);
-      const gap=parseFloat(styles.columnGap||styles.gap||'14')||14;
-      const step=first.getBoundingClientRect().width+gap;
-      carousel.scrollBy({left:direction*step,behavior:'smooth'});
-    };
-
-    if(prevBtn) prevBtn.addEventListener('click',()=>scrollYearCards(-1));
-    if(nextBtn) nextBtn.addEventListener('click',()=>scrollYearCards(1));
-
-    carousel.addEventListener('scroll',updateYearProgress,{passive:true});
-    window.addEventListener('resize',updateYearProgress,{passive:true});
-    updateYearProgress();
-    // Native horizontal scrolling keeps the year cards fully clickable.
-    // Arrow buttons above handle desktop navigation; touch users can swipe naturally.
+    visual.addEventListener('pointerleave',function(){card.style.transform='perspective(1100px) rotateY(0) rotateX(0)';});
   }
 })();
 </script>
