@@ -3,7 +3,8 @@ const $=id=>document.getElementById(id),shuffle=a=>[...a].sort(()=>Math.random()
 const pageParams=new URLSearchParams(location.search);
 const exam=pageParams.get('exam')==='oc'?'oc':'selective';
 const requestedStream=pageParams.get('stream');
-let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic='mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view='practice';
+const requestedView=pageParams.get('view')==='mock'?'mock':'practice';
+let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic='mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
 const y5base=()=>window.TY_YEARS345?.topics?.['5']||[],y5extra=()=>window.TY_YEAR5_TESTS?.topics||[],y6=()=>window.TY_YEAR6?.topics||[],thinking=()=>window.SKILLUP_THINKING?.topics||[],writing=()=>window.SKILLUP_WRITING_VOCAB?.topics||[],mrExtra=()=>window.SKILLUP_MR_EXTRA?.topics||[],reading=()=>window.SKILLUP_READING?.topics||[];
 function unique(list){const seen=new Set();return list.filter(x=>{if(seen.has(x[0]))return false;seen.add(x[0]);return true})}
 function practiceTarget(){return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
@@ -168,5 +169,5 @@ function finishMock(){clearInterval(mockTimer);let totalScore=0;const by={},wron
 $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').onclick=()=>{if(mockIndex){mockIndex--;renderMock()}};$('mockNext').onclick=()=>{if(mockIndex===mockTarget()-1)finishMock();else{mockIndex++;renderMock()}};
 if(exam==='oc'&&stream==='writing')stream='thinking';
 ensureWritingButton();
-updateHeader();buildTopics();nextQ();setView('practice');
+updateHeader();buildTopics();nextQ();setView(requestedView);
 })();
