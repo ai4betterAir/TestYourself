@@ -32,8 +32,8 @@ const configs={
     ]
   },
   oc4:{
-    title:'OC Year 4 Mathematical Reasoning',
-    tag:'OC YEAR 4',
+    title:'OC Mathematical Reasoning',
+    tag:'OPPORTUNITY CLASS',
     summary:'Core reasoning + challenge practice',
     copy:'A separate OC reasoning pool that builds from core skills into more challenging mixed questions.',
     accent:'Think deeper. Reason faster.',
@@ -110,8 +110,9 @@ function safeQuestion(e){
 function qs(sel){return document.querySelector(sel)}
 function qsa(sel){return [...document.querySelectorAll(sel)]}
 
-let mode=new URLSearchParams(location.search).get('mode')||'naplan3';
-if(!configs[mode])mode='naplan3';
+const lockedMode=document.body.dataset.lockedMode||'';
+let mode=lockedMode||new URLSearchParams(location.search).get('mode')||'naplan3';
+if(!configs[mode])mode=lockedMode||'naplan3';
 let pool=[],topicKey='mixed',view='practice';
 let current=null,selected=null,checked=false,score=0,attempted=0,qnum=1;
 
@@ -123,10 +124,13 @@ function currentPool(){
 function key(e){return e.source+'::'+e.id}
 
 function setMode(next){
-  mode=configs[next]?next:'naplan3';
+  mode=lockedMode|| (configs[next]?next:'naplan3');
   pool=buildPool(mode);
   topicKey='mixed';score=0;attempted=0;qnum=1;
-  history.replaceState(null,'','assessment-practice.html?mode='+encodeURIComponent(mode));
+  if(!lockedMode){
+    const page=location.pathname.split('/').pop()||'assessment-practice.html';
+    history.replaceState(null,'',page+'?mode='+encodeURIComponent(mode));
+  }
   document.body.dataset.assessmentMode=mode;
   qsa('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   $('heroAccent').textContent=cfg().accent;
