@@ -48,7 +48,7 @@
 <a class="y5" href="learning.html?year=5"><span>5</span><b>Year 5</b><small>Aim higher</small></a>
 <a class="y6" href="learning.html?year=6"><span>6</span><b>Year 6</b><small>Prepare for what comes next</small></a>
 </div></section>
-<section class="library-overview shell" aria-label="Learning Library overview">
+<section id="library-overview" class="library-overview shell" aria-label="Learning Library overview" hidden>
   <div class="library-overview-head">
     <div><span class="eyebrow">YOUR LEARNING LIBRARY</span><h2>More than a year selector</h2><p>Choose a year to open a complete learning space with topics, practice, tests and progress.</p></div>
     <a class="library-outline-link" href="#library-subjects">See the learning areas ↓</a>
@@ -182,8 +182,8 @@
 (function(){
  const q=new URLSearchParams(location.search);const y=q.get('year');const valid=['K','1','2','3','4','5','6'];
  const selector=document.getElementById('year-selector'),hub=document.getElementById('year-hub');
- if(!valid.includes(y)){selector.hidden=false;hub.hidden=true;return}
- selector.hidden=true;hub.hidden=false;localStorage.setItem('skillupYear',y);
+ if(!valid.includes(y)){selector.hidden=false;hub.hidden=true;document.getElementById('library-overview').hidden=false;return}
+ selector.hidden=true;hub.hidden=false;document.getElementById('library-overview').hidden=true;localStorage.setItem('skillupYear',y);
  const label=y==='K'?'Kindy':'Year '+y;
  const text={
  K:['Explore. Play. Discover.','Build early confidence with simple, playful learning experiences.'],
