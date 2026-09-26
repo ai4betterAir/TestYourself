@@ -1,0 +1,32 @@
+/* SkillUP Learning Library — selector polish */
+:root{--lib-ink:#19344f;--lib-muted:#64798c;--lib-line:#dce8f0;--lib-paper:#f6fafc;--lib-navy:#173d59;--lib-blue:#2878aa;--lib-teal:#0b9aa5;--lib-purple:#6657aa;--lib-gold:#f1ad16}
+body{background:var(--lib-paper)!important;color:var(--lib-ink)}
+#year-selector.selector-page{min-height:calc(100vh - 76px);padding:68px 0 90px!important;background:linear-gradient(180deg,#f7fbfe 0%,#eef6fa 100%)!important;position:relative;overflow:hidden}
+#year-selector.selector-page:before{content:"";position:absolute;width:720px;height:720px;border-radius:50%;right:-260px;top:-320px;background:radial-gradient(circle,rgba(11,154,165,.09),rgba(11,154,165,0) 68%);pointer-events:none}
+#year-selector .selector-intro{max-width:1180px!important;text-align:left!important;position:relative;z-index:1}
+#year-selector .selector-intro .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border-radius:999px;background:#e3f3f5;color:var(--lib-teal);font-size:.72rem;letter-spacing:.12em;font-weight:900}
+#year-selector .selector-intro .eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lib-teal);box-shadow:0 0 0 4px rgba(11,154,165,.14)}
+#year-selector .selector-intro h1{font-family:Sora,Nunito,sans-serif!important;font-size:clamp(3rem,5.5vw,5.4rem)!important;line-height:1.02!important;letter-spacing:-.065em!important;color:var(--lib-ink)!important;margin:20px 0 14px!important;max-width:840px}
+#year-selector .selector-intro h1 .text-accent{color:var(--lib-purple)!important}
+#year-selector .selector-intro p{font-size:1.2rem!important;line-height:1.55!important;color:var(--lib-muted)!important;font-weight:700!important;max-width:650px}
+#year-selector .year-selector-grid{max-width:1180px!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:13px!important;margin-top:38px!important;position:relative;z-index:1}
+#year-selector .year-selector-grid a{min-height:205px!important;padding:22px 16px 19px!important;justify-content:flex-start!important;align-items:flex-start!important;border:1px solid rgba(27,65,91,.11)!important;border-radius:19px!important;background:#fff!important;box-shadow:0 10px 22px rgba(24,60,86,.06)!important;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease!important}
+#year-selector .year-selector-grid a:after{content:"";position:absolute;right:-28px;top:-34px;width:110px;height:110px;border-radius:50%;background:var(--card-soft);opacity:.9}
+#year-selector .year-selector-grid a:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--card)!important}
+#year-selector .year-selector-grid a:hover{transform:translateY(-6px)!important;border-color:color-mix(in srgb,var(--card) 40%,#dce8f0)!important;box-shadow:0 18px 32px rgba(24,60,86,.13)!important}
+#year-selector .year-selector-grid a span{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--card-soft)!important;color:var(--card)!important;font-family:Sora,Nunito,sans-serif!important;font-size:1.7rem!important;font-weight:800!important;position:relative;z-index:1}
+#year-selector .year-selector-grid a b{display:block;font-family:Sora,Nunito,sans-serif!important;font-size:1.12rem!important;line-height:1.2!important;color:var(--lib-ink)!important;margin-top:18px!important;position:relative;z-index:1}
+#year-selector .year-selector-grid a small{display:block;font-size:.83rem!important;line-height:1.4!important;color:var(--lib-muted)!important;font-weight:700!important;margin-top:7px!important;position:relative;z-index:1}
+#year-selector .year-selector-grid .k{--card:#159d72;--card-soft:#e4f7ef}
+#year-selector .year-selector-grid .y1{--card:#d97732;--card-soft:#fff0e5}
+#year-selector .year-selector-grid .y2{--card:#2a83b7;--card-soft:#e7f4fb}
+#year-selector .year-selector-grid .y3{--card:#b98816;--card-soft:#fff5d7}
+#year-selector .year-selector-grid .y4{--card:#615ad0;--card-soft:#eeedff}
+#year-selector .year-selector-grid .y5{--card:#c64d7d;--card-soft:#ffeaf2}
+#year-selector .year-selector-grid .y6{--card:#168d7a;--card-soft:#e3f6f1}
+#year-selector .year-selector-grid .y5,#year-selector .year-selector-grid .y6{border-color:color-mix(in srgb,var(--card) 24%,#dce8f0)!important}
+#year-selector .year-selector-grid .y5:after,#year-selector .year-selector-grid .y6:after{width:145px;height:145px;right:-53px;top:-57px;opacity:.65}
+#year-selector .year-selector-grid .y5 span,#year-selector .year-selector-grid .y6 span{box-shadow:0 0 0 5px color-mix(in srgb,var(--card) 10%,transparent)}
+@media(max-width:1000px){#year-selector .year-selector-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;max-width:820px!important;margin-inline:auto!important}#year-selector .selector-intro{text-align:center!important}#year-selector .selector-intro p{margin-inline:auto}}
+@media(max-width:620px){#year-selector.selector-page{padding:44px 0 58px!important}#year-selector .selector-intro h1{font-size:3rem!important;letter-spacing:-.06em!important}#year-selector .selector-intro p{font-size:1rem!important}#year-selector .year-selector-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-top:28px!important}#year-selector .year-selector-grid a{min-height:170px!important;padding:18px 14px 15px!important}#year-selector .year-selector-grid a span{width:48px;height:48px;font-size:1.4rem!important;border-radius:14px!important}#year-selector .year-selector-grid a b{font-size:1rem!important;margin-top:13px!important}#year-selector .year-selector-grid a small{font-size:.76rem!important}}
+@media(prefers-reduced-motion:reduce){#year-selector .year-selector-grid a{transition:none!important}}
