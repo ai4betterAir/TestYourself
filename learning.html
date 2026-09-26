@@ -6,7 +6,7 @@
 <title>Learning Hub | SkillUP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Manrope:wght@500;600;700;800&family=Nunito:wght@600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" href="assets/skillup-logo.svg"><link rel="stylesheet" href="css/learning-library.css?v=20260925-type2">
+<link rel="icon" href="assets/skillup-logo.svg"><link rel="stylesheet" href="css/learning-library.css?v=20260926-assess1">
 </head>
 <body>
 <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a href="index.html">Home</a><a class="active" href="learning.html">Learn</a><a href="selective.html">Selective</a><a href="learning.html#assessments">NAPLAN</a><a href="accounts.html?role=teacher">For Teachers</a><a href="parents.html">For Parents</a><a href="about.html">About</a></nav><div class="auth"><a class="sign-in" href="sign-in.html">Sign in</a><a class="sign-up" href="sign-up.html">Sign up</a></div></div></header>
@@ -67,7 +67,7 @@
 <a class="gk" data-subject="general-knowledge" href="#"><span class="subject-status">WORLD</span><svg><use href="assets/skillup-icons.svg#gk"/></svg><h3>General Knowledge</h3><p>Australia, places, nature and the wider world.</p></a>
 </div></section>
 
-<section class="wrap hub-section tools"><div class="section-head"><div><span class="eyebrow">ASSESSMENT & PROGRESS</span><h2>Practise with purpose.</h2></div><p>Focused practice, progress checks and challenge activities for Year 5.</p></div><div class="tool-grid"><article><svg><use href="assets/skillup-icons.svg#naplan"/></svg><div><b>Practice questions</b><p>Try focused questions at your own pace.</p></div></article><article><svg><use href="assets/skillup-icons.svg#progress"/></svg><div><b>Track progress</b><p>See improvement and revisit weaker areas.</p></div></article><article><svg><use href="assets/skillup-icons.svg#selective"/></svg><div><b>Topic tests</b><p>Check what you know after practice.</p></div></article><article><svg><use href="assets/skillup-icons.svg#shield"/></svg><div><b>Focused learning</b><p>Simple navigation without unnecessary distractions.</p></div></article></div></section>
+<section class="wrap hub-section tools"><div class="section-head"><div><span class="eyebrow">ASSESSMENT & PROGRESS</span><h2>Practise with purpose.</h2></div><p>Focused practice, progress checks and challenge activities for Year 5.</p></div><div class="tool-grid"><article class="assessment-tool-card"><a id="assessmentToolLink" href="practice.html"><svg><use id="assessmentToolIcon" href="assets/skillup-icons.svg#naplan"/></svg><div><b id="assessmentToolTitle">Practice questions</b><p id="assessmentToolCopy">Try focused questions at your own pace.</p></div><span class="tool-arrow">→</span></a></article><article><svg><use href="assets/skillup-icons.svg#progress"/></svg><div><b>Track progress</b><p>See improvement and revisit weaker areas.</p></div></article><article><svg><use href="assets/skillup-icons.svg#selective"/></svg><div><b>Topic tests</b><p>Check what you know after practice.</p></div></article><article><svg><use href="assets/skillup-icons.svg#shield"/></svg><div><b>Focused learning</b><p>Simple navigation without unnecessary distractions.</p></div></article></div></section>
 
 <section class="wrap motivation"><div><span class="eyebrow">SMALL STEPS, BRIGHTER FUTURES</span><h2>Great learners grow one step at a time.</h2><p>Choose a subject, practise a little, and keep moving forward.</p></div><a class="btn" href="#subjects">Choose a subject</a></section>
 </section>
@@ -119,6 +119,23 @@
  if(sectionCopy) sectionCopy.textContent='Choose a subject and jump straight into the right '+label+' practice.';
  const toolsCopy=document.querySelector('.tools .section-head>p');
  if(toolsCopy) toolsCopy.textContent='Focused practice, progress checks and challenge activities for '+label+'.';
+ const assessmentLink=document.getElementById('assessmentToolLink');
+ const assessmentTitle=document.getElementById('assessmentToolTitle');
+ const assessmentCopy=document.getElementById('assessmentToolCopy');
+ const assessmentIcon=document.getElementById('assessmentToolIcon');
+ const assessments={
+   '3':{href:'assessment-practice.html?mode=naplan3',title:'NAPLAN Year 3',copy:'All Year 3 maths + selected Year 4 challenge questions.',icon:'naplan'},
+   '4':{href:'assessment-practice.html?mode=oc4',title:'OC Year 4',copy:'Advanced Year 3 + complete Year 4 question pool.',icon:'oc'},
+   '5':{href:'assessment-practice.html?mode=naplan5',title:'NAPLAN Year 5',copy:'Complete Year 4 + Year 5 core and extension questions.',icon:'naplan'}
+ };
+ if(assessmentLink&&assessments[y]){
+   const a=assessments[y];
+   assessmentLink.href=a.href;
+   assessmentTitle.textContent=a.title;
+   assessmentCopy.textContent=a.copy;
+   assessmentIcon.setAttribute('href','assets/skillup-icons.svg#'+a.icon);
+   assessmentLink.closest('article').classList.add('assessment-special');
+ }
 
  const score=document.querySelector('.y5-score b');
  if(score) score.textContent=plan.score;
