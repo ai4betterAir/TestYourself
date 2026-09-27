@@ -3,7 +3,7 @@ import { submitWritingToDashboard } from './writing-cloud.js?v=20260923';
 const byId = (id) => document.getElementById(id);
 const wordCount = (text) => {
   const value = String(text || '').trim();
-  return value ? (value.match(/\\b[\\w'-]+\\b/g) || []).length : 0;
+  return value ? (value.match(/\b[\w'-]+\b/g) || []).length : 0;
 };
 const setStatus = (message, kind = '') => {
   const box = byId('writingCloudStatus');
