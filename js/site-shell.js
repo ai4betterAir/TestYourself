@@ -52,6 +52,13 @@
     });
   };
 
+  if (!document.getElementById('site-account-nav-style')) {
+    const style = document.createElement('style');
+    style.id = 'site-account-nav-style';
+    style.textContent = '.site-account-link{display:inline-flex!important;align-items:center;gap:7px;line-height:1.05}.site-account-link small{font-size:.68rem;opacity:.72;font-weight:800}.site-signout{cursor:pointer}';
+    document.head.appendChild(style);
+  }
+
   const local = readLocalSession();
   if (local) renderAccountNav(local);
 
