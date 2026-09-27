@@ -79,7 +79,9 @@ function renderDemo(role) {
   $('setupNotice').hidden = true;
   $('statusBanner').hidden = false;
   $('statusBanner').className = 'status-banner preview';
-  $('statusBanner').innerHTML = `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
+  $('statusBanner').innerHTML = localSession
+    ? `<span><strong>Local account mode</strong> — signed in as ${esc(profile.full_name)}. This account is saved only in this browser.</span><span class="preview-switch"><a href="sign-in.html">Switch account</a></span>`
+    : `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
   if (!localSession) document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
   document.querySelectorAll('#profileForm input,#profileForm select,#profileForm button').forEach(control => { control.disabled = true; });
   $('profileMessage').textContent = 'Profile editing is disabled in preview mode.';
@@ -90,7 +92,7 @@ function renderDemo(role) {
 function bindDemoEvents() {
   document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
   $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
-  $('signOut').onclick=()=>location.href='accounts.html';
+  $('signOut').onclick=()=>{ if (readLocal(LOCAL_SESSION, null)) { localStorage.removeItem(LOCAL_SESSION); location.href='sign-in.html'; } else location.href='accounts.html'; };
   if($('copySkillupId')) $('copySkillupId').onclick=copyStudentSkillupId;
   document.addEventListener('click', event => { const opener=event.target.closest('[data-open]'); if(opener) openModal(opener.dataset.open); const closer=event.target.closest('[data-close]'); if(closer) closeModal(closer.dataset.close); });
   if($('peopleAction')) $('peopleAction').onclick=()=>openModal('familyModal');
