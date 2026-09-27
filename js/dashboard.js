@@ -5,6 +5,11 @@ const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;',
 let user, profile, classes = [], classMembers = [], assignments = [], submissions = [], children = [];
 const requestedDemo = new URLSearchParams(location.search).get('demo');
 const demoRole = ['student','teacher','parent'].includes(requestedDemo) ? requestedDemo : null;
+const LOCAL_ACCOUNTS = 'skillupLocalAccounts';
+const LOCAL_SESSION = 'skillupLocalSession';
+const LOCAL_LINKS = 'skillupLocalGuardianLinks';
+const readLocal = (key, fallback = []) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
+const writeLocal = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
 if (demoRole || !isSupabaseConfigured) {
   renderDemo(demoRole || 'student');
@@ -19,7 +24,9 @@ function renderDemo(role) {
   try { localSession = JSON.parse(localStorage.getItem('skillupLocalSession') || 'null'); } catch {}
   const previewRole = localSession?.role || role;
   user = {id: previewRole === 'student' ? 'demo-student' : 'demo-user'};
-  profile = {id:user.id,full_name:localSession?.fullName || (previewRole === 'teacher' ? 'Ms Taylor' : previewRole === 'parent' ? 'Jordan’s family' : 'Jordan Lee'),role:previewRole,status:'active',year_level:localSession?.yearLevel || '4',skillup_id:previewRole==='student'?'SU-48291735':null,created_at:iso(-60)};
+  const localAccounts = readLocal(LOCAL_ACCOUNTS);
+  const localAccount = localAccounts.find(item => item.email === localSession?.email);
+  profile = {id:user.id,full_name:localSession?.fullName || (previewRole === 'teacher' ? 'Ms Taylor' : previewRole === 'parent' ? 'Jordan’s family' : 'Jordan Lee'),role:previewRole,status:'active',year_level:localSession?.yearLevel || '4',skillup_id:localSession?.skillupId || localAccount?.skillupId || (previewRole==='student'?'SU-48291735':null),email:localSession?.email || localAccount?.email || null,created_at:iso(-60)};
   classes = [{id:'class-4b',teacher_id:'demo-user',name:'4B Maths',subject:'Maths',year_level:'4',join_code:'UP4B26'},{id:'class-eng',teacher_id:'demo-user',name:'Year 4 English',subject:'English',year_level:'4',join_code:'READ42'}];
   classMembers = [
     {class_id:'class-4b',student_id:'demo-student'},{class_id:'class-4b',student_id:'student-2'},{class_id:'class-4b',student_id:'student-3'},
@@ -40,7 +47,11 @@ function renderDemo(role) {
     {assignment_id:'vocabulary-context',student_id:'demo-student',status:'graded',submitted_at:iso(-4),score:5,max_score:6},
     {assignment_id:'reading-main-idea',student_id:'demo-student',status:'submitted',submitted_at:iso(-.4),score:4,max_score:6}
   ];
-  children = role === 'parent' ? [{id:'demo-student',full_name:'Jordan Lee',year_level:'4'}] : [];
+  if (previewRole === 'parent') {
+    const links = readLocal(LOCAL_LINKS);
+    const approved = links.filter(link => link.parentEmail === profile.email && link.status === 'approved');
+    children = approved.map(link => { const child = localAccounts.find(item => item.email === link.studentEmail); return child ? {id:child.email,full_name:child.fullName,year_level:child.yearLevel || '4',skillup_id:child.skillupId} : null; }).filter(Boolean);
+  } else children = [];
   $('userName').textContent = profile.full_name;
   $('userRole').textContent = role === 'parent' ? 'Parent / guardian preview' : `${role} preview`;
   $('profileName').value = profile.full_name;
@@ -49,10 +60,10 @@ function renderDemo(role) {
   renderStudentIdentity();
   configureRole();
   render();
-  ['mainAction','workAction','peopleAction','addStudentAction'].forEach(id => {
-    $(id).hidden = true;
-    $(id).style.display = 'none';
-  });
+  ['mainAction','workAction','addStudentAction'].forEach(id => { $(id).hidden = true; $(id).style.display = 'none'; });
+  $('peopleAction').hidden = false;
+  $('peopleAction').style.display = '';
+  if (previewRole === 'teacher') { $('peopleAction').hidden = true; $('peopleAction').style.display = 'none'; }
   $('setupNotice').hidden = true;
   $('statusBanner').hidden = false;
   $('statusBanner').className = 'status-banner preview';
@@ -69,6 +80,8 @@ function bindDemoEvents() {
   $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
   $('signOut').onclick=()=>location.href='accounts.html';
   if($('copySkillupId')) $('copySkillupId').onclick=copyStudentSkillupId;
+  document.addEventListener('click', event => { const opener=event.target.closest('[data-open]'); if(opener) openModal(opener.dataset.open); const closer=event.target.closest('[data-close]'); if(closer) closeModal(closer.dataset.close); });
+  if($('peopleAction')) $('peopleAction').onclick=()=>openModal('familyModal');
 }
 
 async function init() {
@@ -315,6 +328,19 @@ async function joinClass(event){event.preventDefault();const out=$('joinMessage'
 
 async function renderFamilyModal(){
   const box=$('familyContent');
+  if(!supabase){
+    const accounts=readLocal(LOCAL_ACCOUNTS), links=readLocal(LOCAL_LINKS);
+    if(profile.role==='student'){
+      const requests=links.filter(link=>link.studentEmail===profile.email&&link.status==='pending');
+      box.innerHTML=`<div class="skillup-share-card"><span>YOUR PERMANENT SKILLUP ID</span><strong>${esc(profile.skillup_id||'ID pending')}</strong><p>Share this ID with a parent or teacher only when you want them to connect.</p><button class="secondary-button" id="copyFamilySkillupId" type="button">Copy SkillUP ID</button></div><div class="connection-requests"><h3>Parent connection requests</h3>${requests.length?requests.map(r=>{const parent=accounts.find(a=>a.email===r.parentEmail);return `<article class="connection-request"><div><b>${esc(parent?.fullName||'Parent account')}</b><span>Wants to connect to your learning progress</span></div><div><button class="secondary-button approve-parent" data-parent="${esc(r.parentEmail)}" type="button">Approve</button><button class="danger-button decline-parent" data-parent="${esc(r.parentEmail)}" type="button">Decline</button></div></article>`}).join(''):'<p class="panel-subtitle">No pending requests.</p>'}</div>`;
+      if($('copyFamilySkillupId')) $('copyFamilySkillupId').onclick=copyStudentSkillupId;
+      box.querySelectorAll('.approve-parent,.decline-parent').forEach(button=>button.onclick=()=>{const next=links.map(link=>link.studentEmail===profile.email&&link.parentEmail===button.dataset.parent&&link.status==='pending'?{...link,status:button.classList.contains('approve-parent')?'approved':'declined'}:link);writeLocal(LOCAL_LINKS,next);location.reload();});
+    } else if(profile.role==='parent'){
+      box.innerHTML=`<form id="claimFamilyForm" class="dashboard-form"><div class="skillup-id-help"><span>SKILLUP ID</span><strong>Ask your child for the ID shown on their dashboard.</strong><p>Example: SU-48291735. Your child must approve the connection before you can see progress.</p></div><label>Child’s SkillUP ID<input id="familySkillupId" required maxlength="11" autocomplete="off" style="text-transform:uppercase" placeholder="SU-48291735"></label><button class="primary-button" type="submit">Send connection request</button><p id="familyMessage" class="form-message"></p></form>`;
+      $('claimFamilyForm').onsubmit=event=>{event.preventDefault();const out=$('familyMessage');const code=$('familySkillupId').value.trim().toUpperCase();const child=accounts.find(a=>a.role==='student'&&a.skillupId===code);if(!child)return out.textContent='Student SkillUP ID not found in this browser.';if(child.email===profile.email)return out.textContent='A parent account cannot link to itself.';const next=links.filter(link=>!(link.parentEmail===profile.email&&link.studentEmail===child.email)).concat({parentEmail:profile.email,studentEmail:child.email,status:'pending',requestedAt:new Date().toISOString()});writeLocal(LOCAL_LINKS,next);out.textContent='Request sent. Your child must approve it from their dashboard.';out.classList.add('success');};
+    } else box.innerHTML='<p>Family connections are available from student and parent accounts.</p>';
+    return;
+  }
   if(profile.role==='student'){
     const id=profile.skillup_id || 'ID pending';
     const {data:requests=[],error}=await supabase.rpc('list_pending_guardian_requests');
