@@ -56,6 +56,7 @@ export function friendlyError(error) {
   if (/email not confirmed/i.test(message)) return 'Please verify your email before signing in.';
   if (/user already registered/i.test(message)) return 'An account already exists for this email. Try signing in.';
   if (/password/i.test(message) && /characters/i.test(message)) return 'Use a password with at least 10 characters.';
+  if (/504|timeout|timed out|gateway/i.test(message)) return 'The email service took too long to respond. Please check the SMTP settings or try again shortly.';
   return message;
 }
 
