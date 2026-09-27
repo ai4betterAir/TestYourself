@@ -12,7 +12,7 @@ const configs={
     summary:'Core skills + challenge practice',
     copy:'A single NAPLAN numeracy pool with core skills, mixed questions, challenge practice and extension work.',
     accent:'Build. Practise. Test.',
-    practiceTarget:24,mockTarget:35,minutes:40,
+    practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'ncore',label:'Core practice',tone:'blue'},
       {key:'nchallenge',label:'Challenge practice',tone:'violet'},
@@ -25,7 +25,7 @@ const configs={
     summary:'Core skills + challenge practice',
     copy:'A broad NAPLAN practice pool combining core skills with progressively harder challenge questions.',
     accent:'Then test them.',
-    practiceTarget:20,mockTarget:30,minutes:35,
+    practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'y3',label:'Core practice',tone:'blue'},
       {key:'y4adv',label:'Challenge practice',tone:'violet'}
@@ -37,7 +37,7 @@ const configs={
     summary:'Core skills + mixed extension',
     copy:'A broad NAPLAN practice pool combining core, mixed and extension questions.',
     accent:'Build. Stretch. Test.',
-    practiceTarget:24,mockTarget:35,minutes:40,
+    practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'y4',label:'Core practice',tone:'violet'},
       {key:'y5',label:'Mixed practice',tone:'blue'},
@@ -50,7 +50,7 @@ const configs={
     summary:'Core reasoning + challenge practice',
     copy:'A separate OC reasoning pool that builds from core skills into more challenging mixed questions.',
     accent:'Think deeper. Reason faster.',
-    practiceTarget:24,mockTarget:35,minutes:35,
+    practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'y3adv',label:'Core reasoning',tone:'gold'},
       {key:'y4',label:'Challenge reasoning',tone:'violet'}
@@ -139,7 +139,7 @@ const lockedMode=document.body.dataset.lockedMode||'';
 const requestedView=new URLSearchParams(location.search).get('view')==='mock'?'mock':'practice';
 let mode=lockedMode||new URLSearchParams(location.search).get('mode')||'naplan';
 if(!configs[mode])mode=lockedMode||'naplan3';
-let pool=[],topicKey='mixed',view='practice';
+let pool=[],topicKey='mixed',view='practice',mockScope='mixed';
 let current=null,selected=null,checked=false,score=0,attempted=0,qnum=1;
 
 function cfg(){return configs[mode]}
@@ -166,7 +166,7 @@ function setMode(next){
   $('summaryCopy').textContent=cfg().copy;
   $('workspaceTitle').textContent=cfg().title;
   $('mockTitle').textContent=cfg().title+' Mock';
-  $('mockDescription').textContent=cfg().mockTarget+' mixed questions from this separate assessment pool.';
+  $('mockDescription').textContent=cfg().mockTarget+' mixed questions from this separate assessment pool.';if($('mockScopeHint'))$('mockScopeHint').textContent='Choose a topic below if you want a focused test.';
   $('mockQuestions').textContent=cfg().mockTarget;
   $('mockMinutes').textContent=cfg().minutes;
   $('mockTimer').textContent=cfg().minutes+':00';
@@ -285,13 +285,13 @@ function setView(v){
 
 let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=0,mockTimerHandle=null;
 function makeMock(){
-  const total=cfg().mockTarget,seen=new Set();mockQs=[];mockAnswers=Array(total).fill(null);
+  const total=cfg().mockTarget,sourcePool=mockScope==='specific'&&topicKey!=='mixed'?currentPool():pool,seen=new Set();mockQs=[];mockAnswers=Array(total).fill(null);
   let guard=0;
   while(mockQs.length<total&&guard++<2500){
-    const e=randomEntry(pool),q=safeQuestion(e),k=q.text+'|'+q.answer;
+    const e=randomEntry(sourcePool),q=safeQuestion(e),k=q.text+'|'+q.answer;
     if(seen.has(k))continue;seen.add(k);mockQs.push(q);
   }
-  while(mockQs.length<total)mockQs.push(safeQuestion(randomEntry(pool)));
+  while(mockQs.length<total)mockQs.push(safeQuestion(randomEntry(sourcePool)));
   mockIndex=0;mockSeconds=cfg().minutes*60;
 }
 function showMockIntro(){
@@ -341,9 +341,9 @@ function finishMock(){
   $('mockResultTitle').textContent=pct>=85?'Excellent preparation':pct>=70?'Strong progress':pct>=50?'Keep building':'Return to practice first';
   $('mockResultCopy').textContent='You scored '+pct+'%. Review the breakdown below, especially the harder source level.';
   $('levelBreakdown').innerHTML=Object.entries(byLevel).map(([name,v])=>'<div class="result-line"><span>'+name+'</span><b>'+v.right+' / '+v.total+'</b><i><u style="width:'+Math.round(v.right/v.total*100)+'%"></u></i></div>').join('');
-  $('mistakeReview').innerHTML=wrong.length?wrong.slice(0,12).map((x,i)=>'<details><summary>'+(i+1)+'. '+x.topic+'</summary><p>'+x.q+'</p><p>Your answer: <b>'+x.c+'</b></p><p>Correct answer: <b>'+x.a+'</b></p></details>').join(''):'<p class="perfect">✓ No mistakes. Excellent work.</p>';
+  if($('answerReview'))$('answerReview').innerHTML=mockQs.map((q,i)=>{const ci=q.choices.findIndex(v=>String(v)===String(q.answer));const ok=mockAnswers[i]===ci;const chosen=mockAnswers[i]===null?'No answer':q.choices[mockAnswers[i]];return '<details class="answer-row '+(ok?'is-correct':'is-wrong')+'"><summary>'+(i+1)+'. '+q._topic+' — '+(ok?'Correct':'Review answer')+'</summary><p>'+q.text+'</p><p>Your answer: <b>'+chosen+'</b></p><p>Correct answer: <b>'+q.choices[ci]+'</b></p></details>'}).join('');$('mistakeReview').innerHTML=wrong.length?wrong.slice(0,12).map((x,i)=>'<details><summary>'+(i+1)+'. '+x.topic+'</summary><p>'+x.q+'</p><p>Your answer: <b>'+x.c+'</b></p><p>Correct answer: <b>'+x.a+'</b></p></details>').join(''):'<p class="perfect">✓ No mistakes. Excellent work.</p>';
 }
-$('startMock').onclick=startMock;$('retryMock').onclick=startMock;
+$('startMock').onclick=startMock;$('retryMock').onclick=startMock;if($('mockScope'))$('mockScope').onchange=e=>{mockScope=e.target.value;if($('mockScopeHint'))$('mockScopeHint').textContent=mockScope==='specific'?'The test will use the selected topic below.':'Questions will be mixed across the assessment.'};
 $('mockPrev').onclick=()=>{if(mockIndex>0){mockIndex--;renderMock()}};
 $('mockNext').onclick=()=>{if(mockIndex===cfg().mockTarget-1)finishMock();else{mockIndex++;renderMock()}};
 
