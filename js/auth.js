@@ -32,7 +32,19 @@ const nextUrl = () => {
 };
 
 const readLocalAccounts = () => {
-  try { return JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS) || '[]'); } catch { return []; }
+  try {
+    const accounts = JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS) || '[]');
+    let changed = false;
+    const migrated = accounts.map(account => {
+      if (account.role === 'student' && !account.skillupId) {
+        changed = true;
+        return { ...account, skillupId: localSkillupId(accounts) };
+      }
+      return account;
+    });
+    if (changed) localStorage.setItem(LOCAL_ACCOUNTS, JSON.stringify(migrated));
+    return migrated;
+  } catch { return []; }
 };
 const writeLocalAccounts = (accounts) => localStorage.setItem(LOCAL_ACCOUNTS, JSON.stringify(accounts));
 const localSession = (account) => {
