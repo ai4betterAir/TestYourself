@@ -15,8 +15,11 @@ if (demoRole || !isSupabaseConfigured) {
 function renderDemo(role) {
   document.body.dataset.dashboardRole = role;
   const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
-  user = {id: role === 'student' ? 'demo-student' : 'demo-user'};
-  profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',skillup_id:role==='student'?'SU-48291735':null,created_at:iso(-60)};
+  let localSession = null;
+  try { localSession = JSON.parse(localStorage.getItem('skillupLocalSession') || 'null'); } catch {}
+  const previewRole = localSession?.role || role;
+  user = {id: previewRole === 'student' ? 'demo-student' : 'demo-user'};
+  profile = {id:user.id,full_name:localSession?.fullName || (previewRole === 'teacher' ? 'Ms Taylor' : previewRole === 'parent' ? 'Jordan’s family' : 'Jordan Lee'),role:previewRole,status:'active',year_level:localSession?.yearLevel || '4',skillup_id:previewRole==='student'?'SU-48291735':null,created_at:iso(-60)};
   classes = [{id:'class-4b',teacher_id:'demo-user',name:'4B Maths',subject:'Maths',year_level:'4',join_code:'UP4B26'},{id:'class-eng',teacher_id:'demo-user',name:'Year 4 English',subject:'English',year_level:'4',join_code:'READ42'}];
   classMembers = [
     {class_id:'class-4b',student_id:'demo-student'},{class_id:'class-4b',student_id:'student-2'},{class_id:'class-4b',student_id:'student-3'},
