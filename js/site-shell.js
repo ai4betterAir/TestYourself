@@ -33,12 +33,12 @@
     if (!actions || !session?.fullName) return;
     const name = String(session.fullName).trim();
     const role = roleLabel(session.role);
-    actions.innerHTML = \`
+    actions.innerHTML = `
       <a class="link-signin site-account-link" href="${dashboardHref}" aria-label="Open your ${role} dashboard">
         <span>${name}</span><small>${role} dashboard</small>
       </a>
       <a class="link-signup site-signout" href="#" role="button">Sign out</a>
-    \`;
+    `;
     const signOut = actions.querySelector('.site-signout');
     signOut?.addEventListener('click', async event => {
       event.preventDefault();
