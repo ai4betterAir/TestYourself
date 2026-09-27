@@ -1,6 +1,9 @@
 import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=20260921';
 
 const setup = document.getElementById('setupNotice');
+// Always use the public GitHub Pages callback, even when the form was opened from a local copy.
+const PUBLIC_SITE_URL = 'https://ai4betterair.github.io/TestYourself/';
+const publicAuthUrl = (path) => new URL(path, PUBLIC_SITE_URL).href;
 const LOCAL_ACCOUNTS = 'skillupLocalAccounts';
 const LOCAL_SESSION = 'skillupLocalSession';
 const REMEMBERED_EMAIL = 'skillupRememberedEmail';
@@ -152,7 +155,7 @@ if (signUpForm) {
     const { data: result, error } = await supabase.auth.signUp({
       email, password,
       options: {
-        emailRedirectTo: new URL('dashboard.html', location.href).href,
+        emailRedirectTo: publicAuthUrl('dashboard.html'),
         data: { full_name: fullName, requested_role: role, year_level: yearLevel }
       }
     });
@@ -173,7 +176,7 @@ if (forgotForm) forgotForm.addEventListener('submit', async event => {
   setBusy(forgotForm, true); message('');
   const { error } = await supabase.auth.resetPasswordForEmail(
     document.getElementById('email').value.trim(),
-    { redirectTo: new URL('reset-password.html', location.href).href }
+    { redirectTo: publicAuthUrl('reset-password.html') }
   );
   setBusy(forgotForm, false);
   if (error) return message(friendlyError(error));
