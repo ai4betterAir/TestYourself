@@ -14,8 +14,15 @@ function mountBox() {
 }
 
 async function init() {
+  const demo = new URLSearchParams(location.search).get('demo');
+  // Public dashboard previews must remain accessible even when Supabase is configured.
+  // Only real dashboards should call requireUser(), which redirects signed-out users.
+  if (demo === 'teacher' || demo === 'parent') {
+      const box = mountBox();
+      if (box) box.querySelector('#writingInboxList').innerHTML = '<article class="task-card"><div><h3>Screens before bed · Introduction</h3><p>Jordan Lee · 86 words · preview</p><p>An hour of screen light at night steals the next morning’s focus. Screens should stay off in the last hour before bed.</p></div></article>';
+    return;
+  }
   if (!isSupabaseConfigured || !supabase) {
-    const demo = new URLSearchParams(location.search).get('demo');
     if (demo === 'teacher' || demo === 'parent') {
       const box = mountBox();
       if (box) box.querySelector('#writingInboxList').innerHTML = '<article class="task-card"><div><h3>Screens before bed · Introduction</h3><p>Jordan Lee · 86 words · preview</p><p>An hour of screen light at night steals the next morning’s focus. Screens should stay off in the last hour before bed.</p></div></article>';
