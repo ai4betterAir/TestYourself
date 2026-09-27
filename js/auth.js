@@ -4,6 +4,7 @@ const setup = document.getElementById('setupNotice');
 const LOCAL_ACCOUNTS = 'skillupLocalAccounts';
 const LOCAL_SESSION = 'skillupLocalSession';
 const REMEMBERED_EMAIL = 'skillupRememberedEmail';
+const localSkillupId = (accounts) => { let id; do { id = 'SU-' + String(Math.floor(Math.random() * 100000000)).padStart(8, '0'); } while (accounts.some((item) => item.skillupId === id)); return id; };
 
 if (!isSupabaseConfigured) {
   showSetupNotice(setup);
@@ -37,7 +38,7 @@ const writeLocalAccounts = (accounts) => localStorage.setItem(LOCAL_ACCOUNTS, JS
 const localSession = (account) => {
   localStorage.setItem(LOCAL_SESSION, JSON.stringify({
     email: account.email, fullName: account.fullName, role: account.role,
-    yearLevel: account.yearLevel || null, signedInAt: new Date().toISOString()
+    yearLevel: account.yearLevel || null, skillupId: account.skillupId || null, signedInAt: new Date().toISOString()
   }));
 };
 const hashPassword = async (password) => {
@@ -124,7 +125,8 @@ if (signUpForm) {
       if (readLocalAccounts().some((item) => item.email === email)) return message('An account already exists for this email. Sign in instead.');
       setBusy(signUpForm, true); message('');
       try {
-        const account = { email, fullName, role, yearLevel, passwordHash: await hashPassword(password), createdAt: new Date().toISOString() };
+        const existingAccounts = readLocalAccounts();
+        const account = { email, fullName, role, yearLevel, skillupId: role === 'student' ? localSkillupId(existingAccounts) : null, passwordHash: await hashPassword(password), createdAt: new Date().toISOString() };
         writeLocalAccounts([...readLocalAccounts(), account]);
         rememberEmail(email, true);
         return localDashboard(account);
