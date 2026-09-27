@@ -214,17 +214,17 @@ function renderStudent() {
   const average = scored.length ? Math.round(scored.reduce((sum,item) => sum + Number(item.score)/Number(item.max_score)*100,0)/scored.length) : 0;
   const ownRow = leaderboardRows.find(row => row.student_id === user.id || row.display_name === profile.full_name);
   const rank = ownRow?.rank_position || '—';
-  metrics([{label:'SkillUP mark',value:weightedMark ? \`\${weightedMark}/100\` : '—',note:'Weighted accuracy'},{label:'Questions answered',value:questionsAnswered,note:'Completed questions'},{label:'Marks achieved',value:marksAchieved,note:'Total correct marks'},{label:'Leaderboard rank',value:rank,note:'Year-level ranking'}]);
+  metrics([{label:'SkillUP mark',value:weightedMark ? `${weightedMark}/100` : '—',note:'Weighted accuracy'},{label:'Questions answered',value:questionsAnswered,note:'Completed questions'},{label:'Marks achieved',value:marksAchieved,note:'Total correct marks'},{label:'Leaderboard rank',value:rank,note:'Year-level ranking'}]);
   $('primaryPanelTitle').textContent = 'Leaderboard';
   const leaders = leaderboardRows.slice().sort((a,b) => Number(a.rank_position || 999) - Number(b.rank_position || 999)).slice(0,8);
-  $('primaryPanel').innerHTML = leaders.length ? \`<div class="task-list">\${leaders.map(row => {
+  $('primaryPanel').innerHTML = leaders.length ? `<div class="task-list">${leaders.map(row => {
     const isYou = row.student_id === user.id || row.display_name === profile.full_name;
     const badge = row.badge_level || 'Bronze';
-    return \`<article class="task-card\${isYou ? ' current' : ''}"><div><h3>\${row.rank_position || '—'}. \${esc(row.display_name || 'Student')}\${isYou ? ' · You' : ''}</h3><p>\${esc(badge)} · \${Number(row.completed_tests || 0)} tests · \${Number(row.total_points || 0)} points</p></div><strong>\${Number(row.average_percent || 0)}%</strong></article>\`;
-  }).join('')}</div>\` : empty('No leaderboard results yet','Complete a scored test to appear here.');
+    return `<article class="task-card${isYou ? ' current' : ''}"><div><h3>${row.rank_position || '—'}. ${esc(row.display_name || 'Student')}${isYou ? ' · You' : ''}</h3><p>${esc(badge)} · ${Number(row.completed_tests || 0)} tests · ${Number(row.total_points || 0)} points</p></div><strong>${Number(row.average_percent || 0)}%</strong></article>`;
+  }).join('')}</div>` : empty('No leaderboard results yet','Complete a scored test to appear here.');
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = \`<a class="quick-action" href="index.html"><strong>Practice independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>\`;
-  $('insightPanel').innerHTML = scored.length ? \`<strong>\${weightedMark}/100 SkillUP mark</strong>\${average >= 80 ? 'Strong work. Keep answering questions to improve your position.' : 'Review feedback and complete more questions to build your mark.'}\` : '<strong>Your leaderboard starts here</strong>Complete a scored test to receive a SkillUP mark.';
+  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practice independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
+  $('insightPanel').innerHTML = scored.length ? `<strong>${weightedMark}/100 SkillUP mark</strong>${average >= 80 ? 'Strong work. Keep answering questions to improve your position.' : 'Review feedback and complete more questions to build your mark.'}` : '<strong>Your leaderboard starts here</strong>Complete a scored test to receive a SkillUP mark.';
 }
 function renderParent() {
   const childIds = new Set(children.map(item => item.id));
