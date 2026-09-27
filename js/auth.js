@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=20260921';
+import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=20260927-timeout-fix';
 
 const setup = document.getElementById('setupNotice');
 // Always use the public GitHub Pages callback, even when the form was opened from a local copy.
