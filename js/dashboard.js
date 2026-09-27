@@ -54,7 +54,7 @@ function renderDemo(role) {
     children = approved.map(link => { const child = localAccounts.find(item => item.email === link.studentEmail); return child ? {id:child.email,full_name:child.fullName,year_level:child.yearLevel || '4',skillup_id:child.skillupId} : null; }).filter(Boolean);
   } else children = [];
   $('userName').textContent = profile.full_name;
-  $('userRole').textContent = role === 'parent' ? 'Parent / guardian preview' : `${role} preview`;
+  $('userRole').textContent = previewRole === 'student' ? `Student preview · ${profile.skillup_id || 'ID pending'}` : previewRole === 'parent' ? 'Parent / guardian preview' : `${previewRole} preview`;
   $('profileName').value = profile.full_name;
   $('profileYear').value = '4';
   $('profileYearField').hidden = role !== 'student';
@@ -91,7 +91,7 @@ async function init() {
   profile = await getProfile(user.id);
   document.body.dataset.dashboardRole = profile.role || 'student';
   $('userName').textContent = profile.full_name;
-  $('userRole').textContent = profile.role === 'parent' ? 'Parent / guardian' : profile.role;
+  $('userRole').textContent = profile.role === 'student' ? `Student · ${profile.skillup_id || 'ID pending'}` : profile.role === 'parent' ? 'Parent / guardian' : profile.role;
   $('profileName').value = profile.full_name || '';
   $('profileYear').value = profile.year_level || '1';
   $('profileYearField').hidden = profile.role !== 'student';
