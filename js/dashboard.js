@@ -10,6 +10,7 @@ const LOCAL_SESSION = 'skillupLocalSession';
 const LOCAL_LINKS = 'skillupLocalGuardianLinks';
 const readLocal = (key, fallback = []) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
 const writeLocal = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+const normalizeSkillupId = value => { const raw = String(value || '').trim().toUpperCase(); return /^\\d{8}$/.test(raw) ? `SU-${raw}` : raw; };
 
 if (demoRole || !isSupabaseConfigured) {
   renderDemo(demoRole || 'student');
@@ -337,7 +338,7 @@ async function renderFamilyModal(){
       box.querySelectorAll('.approve-parent,.decline-parent').forEach(button=>button.onclick=()=>{const next=links.map(link=>link.studentEmail===profile.email&&link.parentEmail===button.dataset.parent&&link.status==='pending'?{...link,status:button.classList.contains('approve-parent')?'approved':'declined'}:link);writeLocal(LOCAL_LINKS,next);location.reload();});
     } else if(profile.role==='parent'){
       box.innerHTML=`<form id="claimFamilyForm" class="dashboard-form"><div class="skillup-id-help"><span>SKILLUP ID</span><strong>Ask your child for the ID shown on their dashboard.</strong><p>Example: SU-48291735. Your child must approve the connection before you can see progress.</p></div><label>Child’s SkillUP ID<input id="familySkillupId" required maxlength="11" autocomplete="off" style="text-transform:uppercase" placeholder="SU-48291735"></label><button class="primary-button" type="submit">Send connection request</button><p id="familyMessage" class="form-message"></p></form>`;
-      $('claimFamilyForm').onsubmit=event=>{event.preventDefault();const out=$('familyMessage');const code=$('familySkillupId').value.trim().toUpperCase();const child=accounts.find(a=>a.role==='student'&&a.skillupId===code);if(!child)return out.textContent='Student SkillUP ID not found in this browser.';if(child.email===profile.email)return out.textContent='A parent account cannot link to itself.';const next=links.filter(link=>!(link.parentEmail===profile.email&&link.studentEmail===child.email)).concat({parentEmail:profile.email,studentEmail:child.email,status:'pending',requestedAt:new Date().toISOString()});writeLocal(LOCAL_LINKS,next);out.textContent='Request sent. Your child must approve it from their dashboard.';out.classList.add('success');};
+      $('claimFamilyForm').onsubmit=event=>{event.preventDefault();const out=$('familyMessage');const code=normalizeSkillupId($('familySkillupId').value);if(!profile.email)return out.textContent='This is the sample preview. Sign in to your parent account before linking a real student.';const child=accounts.find(a=>a.role==='student'&&a.skillupId===code);if(!child)return out.textContent='Student SkillUP ID not found in this browser. Use the same browser for preview accounts, or connect Supabase for cross-device accounts.';if(child.email===profile.email)return out.textContent='A parent account cannot link to itself.';const next=links.filter(link=>!(link.parentEmail===profile.email&&link.studentEmail===child.email)).concat({parentEmail:profile.email,studentEmail:child.email,status:'pending',requestedAt:new Date().toISOString()});writeLocal(LOCAL_LINKS,next);out.textContent='Request sent. Your child must approve it from their dashboard.';out.classList.add('success');};
     } else box.innerHTML='<p>Family connections are available from student and parent accounts.</p>';
     return;
   }
@@ -381,7 +382,7 @@ async function renderFamilyModal(){
       const out=$('familyMessage');
       out.classList.remove('success');
       const {error}=await supabase.rpc('request_guardian_link_by_skillup_id',{
-        skillup_id_input:$('familySkillupId').value.trim().toUpperCase()
+        skillup_id_input:normalizeSkillupId($('familySkillupId').value)
       });
       out.textContent=error?friendlyError(error):'Request sent. Your child needs to approve it from their dashboard.';
       out.classList.toggle('success',!error);
