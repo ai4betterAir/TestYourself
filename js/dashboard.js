@@ -68,7 +68,7 @@ function renderDemo(role) {
   $('statusBanner').hidden = false;
   $('statusBanner').className = 'status-banner preview';
   $('statusBanner').innerHTML = `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
-  document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
+  if (!localSession) document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
   document.querySelectorAll('#profileForm input,#profileForm select,#profileForm button').forEach(control => { control.disabled = true; });
   $('profileMessage').textContent = 'Profile editing is disabled in preview mode.';
   $('signOut').textContent = 'Exit preview';
