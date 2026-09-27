@@ -1,0 +1,35 @@
+/* Dedicated writing studio: calm, spacious and focused on drafting. */
+.writing-studio{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff 0%,#fbfaff 58%,#f1f7ff 100%);border:1px solid #dce5f2;box-shadow:0 18px 44px rgba(54,73,124,.11)}
+.writing-studio::before{content:"";position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,#5c63d8,#2d9acb,#24b784)}
+.writing-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px}
+.writing-heading>div{min-width:0}
+.writing-heading>div>span{display:inline-flex;padding:7px 11px;border-radius:999px;background:#eeeaff;color:#5a50bf;font-size:.73rem;letter-spacing:.1em;font-weight:900}
+.writing-heading h3{font-size:clamp(1.8rem,3vw,2.55rem);line-height:1.1;margin:10px 0 9px;color:#20385b}
+.writing-heading p{max-width:760px;margin:0;color:#596b86;font-size:1.05rem;line-height:1.65}
+.writing-badge{flex:0 0 auto;padding:10px 13px;border-radius:12px;background:#e9f8f2;color:#167657;font-weight:900;font-size:.8rem}
+.writing-studio .plan-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin:20px 0}
+.writing-studio .plan-grid div{min-height:84px;padding:16px;background:#fff;border:1px solid #e2e8f2;border-radius:15px;box-shadow:0 6px 16px rgba(42,64,110,.05)}
+.writing-studio .plan-grid b{margin-bottom:8px;color:#386cc4;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}
+.writing-studio .plan-grid span{display:block;color:#475b78;line-height:1.45;font-weight:700}
+.writing-editor-shell{padding:18px;border:1px solid #dfe7f1;border-radius:18px;background:rgba(255,255,255,.86)}
+.editor-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px}
+.writing-label{font-weight:900;color:#243f66}
+.editor-toolbar>span{color:#74839a;font-size:.85rem;font-weight:800}
+.editor-toolbar>span strong{color:#4d5dcc;font-size:1.3rem;font-family:Fredoka,sans-serif}
+#writingBox{display:block;min-height:330px;width:100%;box-sizing:border-box;border:2px solid #cfdced;border-radius:15px;padding:18px 19px;background:#fff;color:#263b5b;font:700 1.08rem/1.75 Nunito,sans-serif;resize:vertical;transition:border-color .18s,box-shadow .18s}
+#writingBox::placeholder{color:#9aa8ba;font-weight:700}
+#writingBox:focus{border-color:#5b6bdb;box-shadow:0 0 0 4px rgba(91,107,219,.12);outline:0}
+.writing-studio .writing-tools{grid-template-columns:minmax(0,1.5fr) minmax(190px,.7fr);margin-top:14px}
+.writing-studio .writing-tools>div{background:#f7f9fd;border:1px solid #e2e8f1}
+.writing-studio .writing-tools b{display:block;margin-bottom:8px;color:#2b476e}
+.writing-studio .writing-tools label{display:block;padding:5px 0;color:#526681;font-size:.91rem}
+.writing-studio .writing-tools input{accent-color:#5869d8;margin-right:7px}
+.writing-goal strong{display:block;margin:8px 0 4px;color:#5364ca;font:700 1.45rem Fredoka,sans-serif}
+.writing-goal small{display:block;color:#7d899c;line-height:1.45;font-weight:700}
+.writing-actions{align-items:center;flex-wrap:wrap;margin-top:18px}
+.writing-actions button{min-height:46px}
+.writing-actions #sendWriting{margin-left:auto}
+.writing-cloud-status{min-height:24px;margin-top:12px;color:#35638a;font-weight:900}
+.writing-cloud-status.success{color:#167657}
+.writing-cloud-status.error{color:#b24747}
+@media(max-width:760px){.writing-heading{display:block}.writing-badge{display:inline-flex;margin-top:14px}.writing-studio .plan-grid{grid-template-columns:1fr}.writing-studio .writing-tools{grid-template-columns:1fr}#writingBox{min-height:260px}.writing-actions #sendWriting{margin-left:0;width:100%}}
