@@ -137,7 +137,7 @@
     result.hidden = false;
     result.innerHTML = `
       <span>FINAL MARK</span><strong>${score} / 20</strong><b>${percent}%</b>
-      <p>${percent >= 85 ? 'Excellent English work!' : percent >= 70 ? 'Strong result. Review the weaker skill below.' : percent >= 50 ? 'Good effort. Review the lessons, then try again.' : 'Return to the lessons and practise before another test.'}</p>
+      <p>${percent >= 85 ? 'Excellent English work!' : percent >= 70 ? 'Strong result. Review the weaker skill below.' : percent >= 50 ? 'Good effort. Review the lessons, then try again.' : 'Return to the lessons and practice before another test.'}</p>
       <div class="english-test-breakdown">${Object.entries(bySkill).map(([name, value]) => `<div><span>${name}</span><b>${value.correct}/${value.total}</b></div>`).join('')}</div>
       <div class="english-test-actions"><button class="secondary" id="englishTestReview">Back to lessons</button><button class="primary" id="englishTestAgain">New test</button></div>`;
     element('englishTestReview').onclick = showCourse;

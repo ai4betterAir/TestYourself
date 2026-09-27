@@ -11,7 +11,7 @@ const configs={
     tag:'NAPLAN',
     summary:'Core skills + challenge practice',
     copy:'A single NAPLAN numeracy pool with core skills, mixed questions, challenge practice and extension work.',
-    accent:'Build. Practise. Test.',
+    accent:'Build. Practice. Test.',
     practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'ncore',label:'Core practice',tone:'blue'},

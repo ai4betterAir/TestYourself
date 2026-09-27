@@ -1,7 +1,7 @@
 {
   "name": "SkillUP Learning",
   "short_name": "SkillUP",
-  "description": "Learn, practise, test and improve across primary Maths, English, Vocabulary and Selective preparation.",
+  "description": "Learn, practice, test and improve across primary Maths, English, Vocabulary and Selective preparation.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fbff",

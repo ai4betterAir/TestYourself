@@ -131,7 +131,7 @@ for (const [relative, needle, replacement] of exports) {
 }
 
 const contentReplacements = [
-  ['The source book also practises', 'This course also practises'],
+  ['The source book also practices', 'This course also practices'],
   ['The book includes terminating decimals', 'Terminating decimals are included'],
   ['The book extends integer ideas', 'This lesson extends integer ideas'],
   ['The book also includes', 'The lesson also includes'],

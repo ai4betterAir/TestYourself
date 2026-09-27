@@ -180,7 +180,7 @@ function renderStudent() {
   $('primaryPanelTitle').textContent = 'What to do next';
   $('primaryPanel').innerHTML = taskCards(open.slice(0,5), byAssignment);
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practise independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
+  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practice independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
   $('insightPanel').innerHTML = scored.length ? `<strong>${average}% recent accuracy</strong>${average >= 80 ? 'Strong work. Keep practising the skills behind any missed questions.' : 'Review feedback and try a short practice set before the next assignment.'}` : '<strong>Your first result will appear here</strong>Complete an assigned test to build a useful progress picture.';
 }
 
