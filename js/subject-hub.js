@@ -78,7 +78,7 @@ const scienceCommon={
 const gkCommon={
  K:[['My community','Learn about familiar people and places.'],['Australia','Recognise simple Australian symbols and places.'],['Animals','Discover common animals.'],['Nature','Explore land, water and plants.'],['Celebrations','Learn about familiar cultural events.'],['Everyday facts','Build useful knowledge about daily life.']],
  '1':[['Australia','Learn about Australia, states and symbols.'],['World & places','Discover countries, landmarks and maps.'],['Animals','Meet animals from Australia and the world.'],['Nature','Explore oceans, forests and environments.'],['Community','Learn about helpers, places and everyday life.'],['Fun facts','Discover interesting facts about our world.']],
- '2':[['Australia','States, territories, landmarks and symbols.'],['World geography','Continents, oceans and countries.'],['Animals & habitats','Connect animals with where they live.'],['People & communities','Explore roles, places and cultures.'],['History basics','Learn simple stories from the past.'],['Interesting facts','Build broad everyday knowledge.']],
+ '2':[['Australia','States, territories, landmarks and symbols.'],['World geography','Continents, oceans and countries.'],['Country capitals','Learn the capital cities of Australia and selected countries.'],['Animals & habitats','Connect animals with where they live.'],['People & communities','Explore roles, places and cultures.'],['History basics','Learn simple stories from the past.'],['Interesting facts','Build broad everyday knowledge.']],
  '3':[['Australia & regions','Explore states, landscapes and communities.'],['World geography','Use maps, continents and oceans.'],['History & culture','Discover people, events and traditions.'],['Nature & environment','Explore ecosystems and natural features.'],['Science & inventions','Learn about useful discoveries and technology.'],['Current knowledge','Build awareness of the wider world.']],
  '4':[['Australian geography','Explore regions, climate and landmarks.'],['World geography','Countries, capitals, landforms and maps.'],['History & culture','Learn about significant people and traditions.'],['Environment','Understand ecosystems and global environments.'],['Science & technology','Explore inventions and discoveries.'],['Civics & society','Learn how communities and institutions work.']],
  '5':[['Australia','Geography, government, history and culture.'],['World knowledge','Countries, capitals, regions and landmarks.'],['History','Connect key periods, people and events.'],['Environment','Explore global ecosystems and sustainability.'],['Science & innovation','Discover major ideas and inventions.'],['Civics & society','Understand institutions, communities and citizenship.']],
@@ -111,6 +111,7 @@ function hrefFor(title,index){
    return 'vocabulary.html';
  }
  if(subject==='science')return 'science-practice.html?year='+encodeURIComponent(year)+'&topic='+encodeURIComponent(title);
+ if(subject==='general-knowledge' && year==='2' && /capital/i.test(title))return 'country-capitals.html';
  return '#';
 }
 const previewIds=['preview-1','preview-2','preview-3'];
@@ -136,7 +137,7 @@ const grid=document.getElementById('topic-grid');
 topics.forEach((t,i)=>{
  const a=document.createElement('a');a.className='topic-card';a.href=hrefFor(t[0],i);
  if(subject==='general-knowledge')a.classList.add('coming');
- a.innerHTML='<span class="num">'+String(i+1).padStart(2,'0')+'</span><h3>'+t[0]+'</h3><p>'+t[1]+'</p><span class="status">'+(subject==='general-knowledge'?'TOPIC OVERVIEW · LESSONS COMING SOON':'OPEN TOPIC')+'</span>';
+ a.innerHTML='<span class="num">'+String(i+1).padStart(2,'0')+'</span><h3>'+t[0]+'</h3><p>'+t[1]+'</p><span class="status">'+(subject==='general-knowledge' && !(subject==='general-knowledge' && year==='2' && /capital/i.test(t[0]))?'TOPIC OVERVIEW · LESSONS COMING SOON':'OPEN TOPIC')+'</span>';
  if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
  grid.appendChild(a);
 });
