@@ -136,7 +136,7 @@ if(previewCards.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches)
 const grid=document.getElementById('topic-grid');
 topics.forEach((t,i)=>{
  const a=document.createElement('a');a.className='topic-card';a.href=hrefFor(t[0],i);
- if(subject==='general-knowledge')a.classList.add('coming');
+ if(subject==='general-knowledge' && !(year==='2' && /capital/i.test(t[0])))a.classList.add('coming');
  a.innerHTML='<span class="num">'+String(i+1).padStart(2,'0')+'</span><h3>'+t[0]+'</h3><p>'+t[1]+'</p><span class="status">'+(subject==='general-knowledge' && !(subject==='general-knowledge' && year==='2' && /capital/i.test(t[0]))?'TOPIC OVERVIEW · LESSONS COMING SOON':'OPEN TOPIC')+'</span>';
  if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
  grid.appendChild(a);
