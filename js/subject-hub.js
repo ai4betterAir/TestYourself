@@ -110,6 +110,7 @@ function hrefFor(title,index){
    if(['2','3','4','5','6'].includes(year))return 'vocabulary-year'+year+'.html';
    return 'vocabulary.html';
  }
+ if(subject==='science')return 'science-practice.html?year='+encodeURIComponent(year)+'&topic='+encodeURIComponent(title);
  return '#';
 }
 const previewIds=['preview-1','preview-2','preview-3'];
