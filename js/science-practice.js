@@ -6,12 +6,12 @@
   const all=bank[year];
   const topics=[...new Set(all.map(q=>q.topic))];
   const $=id=>document.getElementById(id);
-  let mode='practice', topic='mixed', questions=[], index=0, selected=null, score=0, reviewed=new Set(), timer=null, seconds=1200, testAnswers=[];
+  let mode='practice', topic=params.get('topic')||'mixed', questions=[], index=0, selected=null, score=0, reviewed=new Set(), timer=null, seconds=1200, testAnswers=[];
   const profile=(()=>{try{return JSON.parse(localStorage.getItem('tyProfile')||'{}')}catch(e){return {}}})();
   $('yearLabel').textContent=label;
   $('studentName').textContent=profile.studentName||'Learner';
   $('yearSelect').value=year;
-  $('topicSelect').innerHTML='<option value="mixed">Mixed topics</option>'+topics.map(t=>'<option value="'+t+'">'+t+'</option>').join('');
+  $('topicSelect').innerHTML='<option value="mixed">Mixed topics</option>'+topics.map(t=>'<option value="'+t+'">'+t+'</option>').join(''); $('topicSelect').value=topics.includes(topic)?topic:'mixed'; topic=topics.includes(topic)?topic:'mixed';
   function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
   function pickSet(size, scoped){
     const source=scoped==='mixed'?all:all.filter(q=>q.topic===scoped);
