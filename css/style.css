@@ -572,7 +572,7 @@ textarea.support-field { resize: vertical; }
 .step-card:not(:last-child)::after { content: ""; position: absolute; top: 47px; left: 67%; width: 70%; border-top: 2px dashed #d7d8df; }
 .step-num { position: absolute; top: -4px; left: calc(50% - 52px); z-index: 2; width: 25px; height: 25px; display: grid; place-items: center; border-radius: 50%; background: #26375f; color: white; font-size: .72rem; font-weight: 900; }
 .step-illustration { width: 88px; height: 88px; display: grid; place-items: center; border-radius: 25px; margin: 0 auto 18px; font-size: 2rem; }
-.i-learn { background: #e9f1ff; } .i-practise { background: #e9f9f0; } .i-challenge { background: #fff0dc; }
+.i-learn { background: #e9f1ff; } .i-practice { background: #e9f9f0; } .i-challenge { background: #fff0dc; }
 .step-card h3 { margin: 0 0 6px; font: 700 1.1rem/1.2 "Fredoka", sans-serif; }
 .step-card p { margin: 0; color: #7a8496; font-size: .82rem; }
 

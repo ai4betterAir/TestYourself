@@ -5,7 +5,7 @@
     text, answer, choices: shuffle([...new Set(choices.map(String))]), tip, topic, name
   });
   const words = [
-    { w: "eventually", group: "time", meaning: "after some time; in the end", ex: "The team practised each afternoon. Eventually, they won the final.", use: "Join a long process to its later result. Do not use for a sudden event.", tone: "time linker" },
+    { w: "eventually", group: "time", meaning: "after some time; in the end", ex: "The team practiced each afternoon. Eventually, they won the final.", use: "Join a long process to its later result. Do not use for a sudden event.", tone: "time linker" },
     { w: "finally", group: "time", meaning: "at the last stage", ex: "She packed, checked the list and locked the door. Finally, she left.", use: "Close a sequence. Use once, at the last step.", tone: "time linker" },
     { w: "initially", group: "time", meaning: "at the start", ex: "Initially, the plan seemed simple. Later, extra costs appeared.", use: "Open a then-later contrast.", tone: "time linker" },
     { w: "meanwhile", group: "time", meaning: "at the same time, in another place or strand", ex: "The class wrote quietly. Meanwhile, the storm moved closer.", use: "Switch to a second action happening at the same time.", tone: "time linker" },

@@ -20,8 +20,8 @@
   <aside class="dashboard-sidebar" id="sidebar">
     <a class="account-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a>
     <div class="dashboard-user">
-      <strong>Jordan Lee</strong>
-      <span>Student Preview</span>
+      <strong id="lbUserName">Jordan Lee</strong>
+      <span id="lbUserRole">Student Preview</span>
     </div>
     <nav class="dashboard-nav" aria-label="Dashboard">
       <a href="dashboard.html"><button type="button">Overview</button></a>
@@ -51,7 +51,7 @@
 
     <!-- Preview banner -->
     <div class="status-banner preview">
-      <span>Preview mode — realistic sample rankings, with no account or personal data.</span>
+      <span id="lbModeBanner">Preview mode — realistic sample rankings, with no account or personal data.</span>
       <span class="preview-switch">
         <a href="#" class="active">Student</a>
         <a href="dashboard.html">Teacher</a>
@@ -68,11 +68,11 @@
           <p class="lb-hero-eyebrow">Your position · This week</p>
           <div class="lb-hero-rank">
             <span class="hash">#</span>
-            <span class="num" data-countup="4">4</span>
-            <span class="of">of 28 in Year 5</span>
+            <span class="num" id="lbHeroRank">4</span>
+            <span class="of" id="lbHeroTotal">of 28 in Year 5</span>
           </div>
-          <p class="lb-hero-sub">You climbed <b>2 places</b> since last week. Just <b>140&nbsp;XP</b> to overtake Aisha and reach the podium.</p>
-          <div class="lb-hero-tags">
+          <p class="lb-hero-sub" id="lbHeroSummary">Complete a practice set to appear in your year-level ranking.</p>
+          <div class="lb-hero-tags" id="lbHeroTags">
             <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#target"/></svg> 2,480 XP</span>
             <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#naplan"/></svg> 7-day streak</span>
             <span class="lb-tag"><svg><use href="assets/skillup-icons.svg#trophy"/></svg> 9 badges</span>
@@ -82,8 +82,8 @@
           <div class="lb-league">
             <span class="medal"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
             <div>
-              <b>Gold League</b>
-              <span>Top 20% · Year 5</span>
+              <b id="lbLeague">Gold League</b>
+              <span id="lbLeagueSub">Top 20% · Year 5</span>
             </div>
           </div>
           <div class="lb-progress-mini">
@@ -99,7 +99,7 @@
       <span class="lb-filter-label">Group</span>
       <div class="lb-chipset" id="scopeChips">
         <button class="lb-chip" data-scope="class">My class</button>
-        <button class="lb-chip active" data-scope="year">Year 5</button>
+        <button class="lb-chip active" data-scope="year" id="lbYearChip">Year 5</button>
         <button class="lb-chip" data-scope="school">Whole school</button>
       </div>
       <span class="lb-filter-label">Time</span>
@@ -115,25 +115,25 @@
       <div class="metric lb-metric m-rank">
         <span class="ic"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
         <span>Your rank</span>
-        <strong>#<span data-countup="4">4</span></strong>
+        <strong>#<span id="lbMetricRank">4</span></strong>
         <span class="delta up">▲ up 2 this week</span>
       </div>
       <div class="metric lb-metric m-xp">
         <span class="ic"><svg><use href="assets/skillup-icons.svg#target"/></svg></span>
         <span>XP this week</span>
-        <strong><span data-countup="620">620</span></strong>
+        <strong><span id="lbMetricPoints">620</span></strong>
         <span class="delta up">▲ +180 vs last week</span>
       </div>
       <div class="metric lb-metric m-streak">
         <span class="ic"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span>
         <span>Day streak</span>
-        <strong><span data-countup="7">7</span></strong>
+        <strong><span id="lbMetricTests">7</span></strong>
         <span class="delta up">Personal best 🔥</span>
       </div>
       <div class="metric lb-metric m-badge">
         <span class="ic"><svg><use href="assets/skillup-icons.svg#shield"/></svg></span>
         <span>Badges earned</span>
-        <strong><span data-countup="9">9</span></strong>
+        <strong><span id="lbMetricBadges">9</span></strong>
         <span class="delta up">2 new this week</span>
       </div>
     </div>
@@ -144,12 +144,12 @@
         <section class="panel">
           <div class="panel-heading">
             <div>
-              <h2>Top of Year 5</h2>
-              <p class="panel-subtitle">This week's leaders by XP earned.</p>
+              <h2 id="lbTopHeading">Top students in Year 5</h2>
+              <p class="panel-subtitle" id="lbTopSub">Highest-performing students in this year level.</p>
             </div>
           </div>
 
-          <div class="podium">
+          <div class="podium" id="lbPodium">
             <div class="podium-card podium-2">
               <span class="crown">2</span>
               <span class="avatar">MK</span>
@@ -181,11 +181,11 @@
           <div class="panel-heading">
             <div>
               <h2>Full ranking</h2>
-              <p class="panel-subtitle">Year 5 · This week</p>
+              <p class="panel-subtitle" id="lbFullSub">Year-level results · This week</p>
             </div>
           </div>
 
-          <div class="lb-list">
+          <div class="lb-list" id="lbList">
             <div class="lb-row top">
               <span class="rk">1</span>
               <span class="av" style="background:linear-gradient(135deg,#f4b731,#e0a417)">TW</span>
@@ -298,11 +298,11 @@
         <section class="panel">
           <div class="panel-heading">
             <div>
-              <h2>Recent badges</h2>
-              <p class="panel-subtitle">Achievements you've unlocked</p>
+              <h2>Performance badges</h2>
+              <p class="panel-subtitle">Badges earned from your own results.</p>
             </div>
           </div>
-          <div class="reward">
+          <div class="reward" id="lbRewards">
             <span class="ic g"><svg><use href="assets/skillup-icons.svg#trophy"/></svg></span>
             <div><b>Streak Star</b><span>7 days of practice in a row.</span></div>
           </div>
@@ -369,5 +369,6 @@
   }else{animate();}
 })();
 </script>
+<script src="js/supabase-config.js"></script><script type="module" src="js/leaderboard.js?v=20260927"></script>
 </body>
 </html>

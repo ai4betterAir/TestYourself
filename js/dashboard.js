@@ -2,9 +2,15 @@ import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfil
 
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-let user, profile, classes = [], classMembers = [], assignments = [], submissions = [], children = [];
+let user, profile, classes = [], classMembers = [], assignments = [], submissions = [], children = [], leaderboardRows = [];
 const requestedDemo = new URLSearchParams(location.search).get('demo');
 const demoRole = ['student','teacher','parent'].includes(requestedDemo) ? requestedDemo : null;
+const LOCAL_ACCOUNTS = 'skillupLocalAccounts';
+const LOCAL_SESSION = 'skillupLocalSession';
+const LOCAL_LINKS = 'skillupLocalGuardianLinks';
+const readLocal = (key, fallback = []) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
+const writeLocal = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+const normalizeSkillupId = value => { const raw = String(value || '').trim().toUpperCase(); return /^\\d{8}$/.test(raw) ? `SU-${raw}` : raw; };
 
 if (demoRole || !isSupabaseConfigured) {
   renderDemo(demoRole || 'student');
@@ -15,8 +21,13 @@ if (demoRole || !isSupabaseConfigured) {
 function renderDemo(role) {
   document.body.dataset.dashboardRole = role;
   const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
-  user = {id: role === 'student' ? 'demo-student' : 'demo-user'};
-  profile = {id:user.id,full_name:role === 'teacher' ? 'Ms Taylor' : role === 'parent' ? 'Jordan’s family' : 'Jordan Lee',role,status:'active',year_level:'4',skillup_id:role==='student'?'SU-48291735':null,created_at:iso(-60)};
+  let localSession = null;
+  try { localSession = JSON.parse(localStorage.getItem('skillupLocalSession') || 'null'); } catch {}
+  const previewRole = localSession?.role || role;
+  user = {id: previewRole === 'student' ? 'demo-student' : 'demo-user'};
+  const localAccounts = readLocal(LOCAL_ACCOUNTS);
+  const localAccount = localAccounts.find(item => item.email === localSession?.email);
+  profile = {id:user.id,full_name:localSession?.fullName || (previewRole === 'teacher' ? 'Ms Taylor' : previewRole === 'parent' ? 'Jordan’s family' : 'Jordan Lee'),role:previewRole,status:'active',year_level:localSession?.yearLevel || '4',skillup_id:localSession?.skillupId || localAccount?.skillupId || (previewRole==='student'?'SU-48291735':null),email:localSession?.email || localAccount?.email || null,created_at:iso(-60)};
   classes = [{id:'class-4b',teacher_id:'demo-user',name:'4B Maths',subject:'Maths',year_level:'4',join_code:'UP4B26'},{id:'class-eng',teacher_id:'demo-user',name:'Year 4 English',subject:'English',year_level:'4',join_code:'READ42'}];
   classMembers = [
     {class_id:'class-4b',student_id:'demo-student'},{class_id:'class-4b',student_id:'student-2'},{class_id:'class-4b',student_id:'student-3'},
@@ -37,24 +48,41 @@ function renderDemo(role) {
     {assignment_id:'vocabulary-context',student_id:'demo-student',status:'graded',submitted_at:iso(-4),score:5,max_score:6},
     {assignment_id:'reading-main-idea',student_id:'demo-student',status:'submitted',submitted_at:iso(-.4),score:4,max_score:6}
   ];
-  children = role === 'parent' ? [{id:'demo-student',full_name:'Jordan Lee',year_level:'4'}] : [];
+  if (previewRole === 'student') {
+    const scored = submissions.filter(item => item.student_id === 'demo-student' && item.max_score);
+    const answered = scored.reduce((sum, item) => sum + Number(item.max_score || 0), 0);
+    const marks = scored.reduce((sum, item) => sum + Number(item.score || 0), 0);
+    const mark = answered ? Math.round(marks / answered * 100) : 0;
+    leaderboardRows = [
+      {student_id:'student-2',display_name:'Aisha K.',average_percent:94,completed_tests:8,total_points:752,badge_level:'Platinum',rank_position:1},
+      {student_id:'demo-student',display_name:profile.full_name,average_percent:mark || 85,completed_tests:scored.length || 2,total_points:marks || 17,badge_level:(mark || 85)>=90?'Platinum':(mark || 85)>=80?'Gold':'Silver',rank_position:2},
+      {student_id:'student-3',display_name:'Noah R.',average_percent:81,completed_tests:6,total_points:486,badge_level:'Gold',rank_position:3},
+      {student_id:'student-4',display_name:'Mia T.',average_percent:76,completed_tests:5,total_points:380,badge_level:'Silver',rank_position:4}
+    ];
+  } else if (previewRole === 'parent') {
+    const links = readLocal(LOCAL_LINKS);
+    const approved = links.filter(link => link.parentEmail === profile.email && link.status === 'approved');
+    children = approved.map(link => { const child = localAccounts.find(item => item.email === link.studentEmail); return child ? {id:child.email,full_name:child.fullName,year_level:child.yearLevel || '4',skillup_id:child.skillupId} : null; }).filter(Boolean);
+  } else children = [];
   $('userName').textContent = profile.full_name;
-  $('userRole').textContent = role === 'parent' ? 'Parent / guardian preview' : `${role} preview`;
+  $('userRole').textContent = previewRole === 'student' ? `Student preview · ${profile.skillup_id || 'ID pending'}` : previewRole === 'parent' ? 'Parent / guardian preview' : `${previewRole} preview`;
   $('profileName').value = profile.full_name;
   $('profileYear').value = '4';
   $('profileYearField').hidden = role !== 'student';
   renderStudentIdentity();
   configureRole();
   render();
-  ['mainAction','workAction','peopleAction','addStudentAction'].forEach(id => {
-    $(id).hidden = true;
-    $(id).style.display = 'none';
-  });
+  ['mainAction','workAction','addStudentAction'].forEach(id => { $(id).hidden = true; $(id).style.display = 'none'; });
+  $('peopleAction').hidden = false;
+  $('peopleAction').style.display = '';
+  if (previewRole === 'teacher') { $('peopleAction').hidden = true; $('peopleAction').style.display = 'none'; }
   $('setupNotice').hidden = true;
   $('statusBanner').hidden = false;
   $('statusBanner').className = 'status-banner preview';
-  $('statusBanner').innerHTML = `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
-  document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
+  $('statusBanner').innerHTML = localSession
+    ? `<span><strong>Local account mode</strong> — signed in as ${esc(profile.full_name)}. This account is saved only in this browser.</span><span class="preview-switch"><a href="sign-in.html">Switch account</a></span>`
+    : `<span><strong>Preview mode</strong> — realistic sample information, with no account or personal data.</span><span class="preview-switch"><a class="${role==='student'?'active':''}" href="dashboard.html?demo=student">Student</a><a class="${role==='teacher'?'active':''}" href="dashboard.html?demo=teacher">Teacher</a><a class="${role==='parent'?'active':''}" href="dashboard.html?demo=parent">Parent</a></span>`;
+  if (!localSession) document.querySelectorAll('.quick-action[type="button"], .quick-action:not(a)').forEach(button => { button.disabled = true; });
   document.querySelectorAll('#profileForm input,#profileForm select,#profileForm button').forEach(control => { control.disabled = true; });
   $('profileMessage').textContent = 'Profile editing is disabled in preview mode.';
   $('signOut').textContent = 'Exit preview';
@@ -64,8 +92,10 @@ function renderDemo(role) {
 function bindDemoEvents() {
   document.querySelectorAll('.dashboard-nav button').forEach(button => button.addEventListener('click',()=>showSection(button.dataset.section, button.textContent)));
   $('mobileNav').onclick=()=> $('sidebar').classList.toggle('open');
-  $('signOut').onclick=()=>location.href='accounts.html';
+  $('signOut').onclick=()=>{ if (readLocal(LOCAL_SESSION, null)) { localStorage.removeItem(LOCAL_SESSION); location.href='sign-in.html'; } else location.href='accounts.html'; };
   if($('copySkillupId')) $('copySkillupId').onclick=copyStudentSkillupId;
+  document.addEventListener('click', event => { const opener=event.target.closest('[data-open]'); if(opener) openModal(opener.dataset.open); const closer=event.target.closest('[data-close]'); if(closer) closeModal(closer.dataset.close); });
+  if($('peopleAction')) $('peopleAction').onclick=()=>openModal('familyModal');
 }
 
 async function init() {
@@ -74,7 +104,7 @@ async function init() {
   profile = await getProfile(user.id);
   document.body.dataset.dashboardRole = profile.role || 'student';
   $('userName').textContent = profile.full_name;
-  $('userRole').textContent = profile.role === 'parent' ? 'Parent / guardian' : profile.role;
+  $('userRole').textContent = profile.role === 'student' ? `Student · ${profile.skillup_id || 'ID pending'}` : profile.role === 'parent' ? 'Parent / guardian' : profile.role;
   $('profileName').value = profile.full_name || '';
   $('profileYear').value = profile.year_level || '1';
   $('profileYearField').hidden = profile.role !== 'student';
@@ -108,6 +138,8 @@ async function loadRoleData() {
     if (classIds.length) ({ data: classes = [] } = await supabase.from('classes').select('*').in('id', classIds));
     ({ data: assignments = [] } = await supabase.from('assignments').select('*').order('due_at', { ascending: true }));
     ({ data: submissions = [] } = await supabase.from('submissions').select('*').eq('student_id', user.id));
+    const leaderboard = await supabase.rpc('get_student_leaderboard', { year_level_input: profile.year_level || '1', period_input: 'all' });
+    leaderboardRows = leaderboard.data || [];
   } else if (profile.role === 'parent') {
     const { data: links = [] } = await supabase.from('guardian_links').select('student_id').eq('parent_id', user.id).eq('status', 'approved');
     const ids = links.map(item => item.student_id);
@@ -121,6 +153,9 @@ async function loadRoleData() {
 
 function configureRole() {
   const teacher = profile.role === 'teacher', student = profile.role === 'student';
+  const overviewNav = document.querySelector('[data-section="overview"]');
+  if (overviewNav) overviewNav.textContent = student ? 'Leaderboard' : 'Overview';
+  if (student) { $('pageTitle').textContent = 'Leaderboard'; $('welcomeText').textContent = 'Your achievement, progress and position among learners.'; }
   $('workNav').textContent = teacher ? 'Assignments' : 'My work';
   $('peopleNav').textContent = teacher ? 'Classes & students' : student ? 'My classes' : 'My children';
   $('mainAction').hidden = !teacher || profile.status !== 'active';
@@ -175,15 +210,24 @@ function renderStudent() {
   const open = assignments.filter(item => ['open','overdue'].includes(assignmentState(item, byAssignment.get(item.id))));
   const complete = submissions.filter(item => item.submitted_at);
   const scored = complete.filter(item => item.max_score);
+  const questionsAnswered = scored.reduce((sum,item) => sum + Number(item.max_score || 0), 0);
+  const marksAchieved = scored.reduce((sum,item) => sum + Number(item.score || 0), 0);
+  const weightedMark = questionsAnswered ? Math.round(marksAchieved / questionsAnswered * 100) : 0;
   const average = scored.length ? Math.round(scored.reduce((sum,item) => sum + Number(item.score)/Number(item.max_score)*100,0)/scored.length) : 0;
-  metrics([{label:'To do',value:open.length,note:'Current assignments'},{label:'Due soon',value:open.filter(item => item.due_at && new Date(item.due_at) < new Date(Date.now()+2*864e5)).length,note:'Next 48 hours'},{label:'Completed',value:complete.length,note:'Submitted work'},{label:'Average',value:scored.length ? `${average}%` : '—',note:'Scored submissions'}]);
-  $('primaryPanelTitle').textContent = 'What to do next';
-  $('primaryPanel').innerHTML = taskCards(open.slice(0,5), byAssignment);
+  const ownRow = leaderboardRows.find(row => row.student_id === user.id || row.display_name === profile.full_name);
+  const rank = ownRow?.rank_position || '—';
+  metrics([{label:'SkillUP mark',value:weightedMark ? `${weightedMark}/100` : '—',note:'Weighted accuracy'},{label:'Questions answered',value:questionsAnswered,note:'Completed questions'},{label:'Marks achieved',value:marksAchieved,note:'Total correct marks'},{label:'Leaderboard rank',value:rank,note:'Year-level ranking'}]);
+  $('primaryPanelTitle').textContent = 'Leaderboard';
+  const leaders = leaderboardRows.slice().sort((a,b) => Number(a.rank_position || 999) - Number(b.rank_position || 999)).slice(0,8);
+  $('primaryPanel').innerHTML = leaders.length ? `<div class="task-list">${leaders.map(row => {
+    const isYou = row.student_id === user.id || row.display_name === profile.full_name;
+    const badge = row.badge_level || 'Bronze';
+    return `<article class="task-card${isYou ? ' current' : ''}"><div><h3>${row.rank_position || '—'}. ${esc(row.display_name || 'Student')}${isYou ? ' · You' : ''}</h3><p>${esc(badge)} · ${Number(row.completed_tests || 0)} tests · ${Number(row.total_points || 0)} points</p></div><strong>${Number(row.average_percent || 0)}%</strong></article>`;
+  }).join('')}</div>` : empty('No leaderboard results yet','Complete a scored test to appear here.');
   $('progressPanel').innerHTML = scoreSummary(submissions);
-  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practise independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
-  $('insightPanel').innerHTML = scored.length ? `<strong>${average}% recent accuracy</strong>${average >= 80 ? 'Strong work. Keep practising the skills behind any missed questions.' : 'Review feedback and try a short practice set before the next assignment.'}` : '<strong>Your first result will appear here</strong>Complete an assigned test to build a useful progress picture.';
+  $('quickActions').innerHTML = `<a class="quick-action" href="index.html"><strong>Practice independently</strong><span>Explore the SkillUP learning library</span></a><button class="quick-action" data-open="joinModal"><strong>Join a class</strong><span>Use the code from your teacher</span></button><button class="quick-action" data-open="familyModal"><strong>Parent connections</strong><span>Share your SkillUP ID and approve parent requests</span></button>`;
+  $('insightPanel').innerHTML = scored.length ? `<strong>${weightedMark}/100 SkillUP mark</strong>${average >= 80 ? 'Strong work. Keep answering questions to improve your position.' : 'Review feedback and complete more questions to build your mark.'}` : '<strong>Your leaderboard starts here</strong>Complete a scored test to receive a SkillUP mark.';
 }
-
 function renderParent() {
   const childIds = new Set(children.map(item => item.id));
   const childSubs = submissions.filter(item => childIds.has(item.student_id));
@@ -312,6 +356,19 @@ async function joinClass(event){event.preventDefault();const out=$('joinMessage'
 
 async function renderFamilyModal(){
   const box=$('familyContent');
+  if(!supabase){
+    const accounts=readLocal(LOCAL_ACCOUNTS), links=readLocal(LOCAL_LINKS);
+    if(profile.role==='student'){
+      const requests=links.filter(link=>link.studentEmail===profile.email&&link.status==='pending');
+      box.innerHTML=`<div class="skillup-share-card"><span>YOUR PERMANENT SKILLUP ID</span><strong>${esc(profile.skillup_id||'ID pending')}</strong><p>Share this ID with a parent or teacher only when you want them to connect.</p><button class="secondary-button" id="copyFamilySkillupId" type="button">Copy SkillUP ID</button></div><div class="connection-requests"><h3>Parent connection requests</h3>${requests.length?requests.map(r=>{const parent=accounts.find(a=>a.email===r.parentEmail);return `<article class="connection-request"><div><b>${esc(parent?.fullName||'Parent account')}</b><span>Wants to connect to your learning progress</span></div><div><button class="secondary-button approve-parent" data-parent="${esc(r.parentEmail)}" type="button">Approve</button><button class="danger-button decline-parent" data-parent="${esc(r.parentEmail)}" type="button">Decline</button></div></article>`}).join(''):'<p class="panel-subtitle">No pending requests.</p>'}</div>`;
+      if($('copyFamilySkillupId')) $('copyFamilySkillupId').onclick=copyStudentSkillupId;
+      box.querySelectorAll('.approve-parent,.decline-parent').forEach(button=>button.onclick=()=>{const next=links.map(link=>link.studentEmail===profile.email&&link.parentEmail===button.dataset.parent&&link.status==='pending'?{...link,status:button.classList.contains('approve-parent')?'approved':'declined'}:link);writeLocal(LOCAL_LINKS,next);location.reload();});
+    } else if(profile.role==='parent'){
+      box.innerHTML=`<form id="claimFamilyForm" class="dashboard-form"><div class="skillup-id-help"><span>SKILLUP ID</span><strong>Ask your child for the ID shown on their dashboard.</strong><p>Example: SU-48291735. Your child must approve the connection before you can see progress.</p></div><label>Child’s SkillUP ID<input id="familySkillupId" required maxlength="11" autocomplete="off" style="text-transform:uppercase" placeholder="SU-48291735"></label><button class="primary-button" type="submit">Send connection request</button><p id="familyMessage" class="form-message"></p></form>`;
+      $('claimFamilyForm').onsubmit=event=>{event.preventDefault();const out=$('familyMessage');const code=normalizeSkillupId($('familySkillupId').value);if(!profile.email)return out.textContent='This is the sample preview. Sign in to your parent account before linking a real student.';const child=accounts.find(a=>a.role==='student'&&a.skillupId===code);if(!child)return out.textContent='Student SkillUP ID not found in this browser. Use the same browser for preview accounts, or connect Supabase for cross-device accounts.';if(child.email===profile.email)return out.textContent='A parent account cannot link to itself.';const next=links.filter(link=>!(link.parentEmail===profile.email&&link.studentEmail===child.email)).concat({parentEmail:profile.email,studentEmail:child.email,status:'pending',requestedAt:new Date().toISOString()});writeLocal(LOCAL_LINKS,next);out.textContent='Request sent. Your child must approve it from their dashboard.';out.classList.add('success');};
+    } else box.innerHTML='<p>Family connections are available from student and parent accounts.</p>';
+    return;
+  }
   if(profile.role==='student'){
     const id=profile.skillup_id || 'ID pending';
     const {data:requests=[],error}=await supabase.rpc('list_pending_guardian_requests');
@@ -352,7 +409,7 @@ async function renderFamilyModal(){
       const out=$('familyMessage');
       out.classList.remove('success');
       const {error}=await supabase.rpc('request_guardian_link_by_skillup_id',{
-        skillup_id_input:$('familySkillupId').value.trim().toUpperCase()
+        skillup_id_input:normalizeSkillupId($('familySkillupId').value)
       });
       out.textContent=error?friendlyError(error):'Request sent. Your child needs to approve it from their dashboard.';
       out.classList.toggle('success',!error);

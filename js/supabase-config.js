@@ -1,6 +1,7 @@
 // Public browser configuration for SkillUP.
-// The anon key is designed to be public. Never place a service-role key here.
+// This publishable key is safe to include in browser code when Supabase RLS policies are enabled.
+// Never place a service-role key here.
 window.SKILLUP_SUPABASE = {
-  url: 'YOUR_SUPABASE_PROJECT_URL',
-  anonKey: 'YOUR_SUPABASE_ANON_KEY'
+  url: 'https://ozulajyjcttnpesvrbbm.supabase.co',
+  anonKey: 'sb_publishable_Ofx31uI5SCuFyykEleHBHA_lJ_ITFRg'
 };

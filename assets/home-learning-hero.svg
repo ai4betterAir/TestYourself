@@ -44,7 +44,7 @@
     <path d="M384 9h43c13 0 22 10 22 22v18c0 13-9 22-22 22h-43Z" fill="url(#paper)"/>
     <g stroke="#BED0DA" stroke-width="2"><path d="M393 23h44M393 33h44M393 43h44M393 53h44"/></g>
     <g transform="translate(70 18)" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="0" y="0" width="42" height="42" rx="7" stroke-width="4"/><path d="M6 22l9 9L36 7"/></g>
-    <text x="173" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">PRACTISE</text>
+    <text x="173" y="47" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" fill="#fff">PRACTICE</text>
   </g>
   <g transform="translate(2 128)">
     <rect x="32" y="0" width="416" height="72" rx="20" fill="url(#b3)"/>
