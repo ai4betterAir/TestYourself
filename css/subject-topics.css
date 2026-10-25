@@ -1,0 +1,70 @@
+/* SkillUP subject topic pages (Maths first; reusable for other subjects).
+   Builds on the tokens in css/home.css. */
+
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Nunito',sans-serif;line-height:1.55}
+.subj-main{display:flex;flex-direction:column}
+
+/* ---------- Hero ---------- */
+.subj-hero{background:linear-gradient(180deg,#e6f2ff 0%,#f3f8ff 70%,var(--paper) 100%);padding:28px 0 48px}
+.subj-hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.88rem;font-weight:700;color:var(--muted)}
+.crumbs a{color:var(--muted);text-decoration:none}
+.crumbs a:hover{color:var(--blue)}
+.subj-copy{display:flex;flex-direction:column;gap:18px}
+.subj-badge{align-self:flex-start;padding:6px 14px;border-radius:999px;background:rgba(47,107,255,.1);color:var(--blue-deep);font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.subj-copy h1{margin:0;font-family:'Sora',sans-serif;font-size:clamp(2.5rem,5.4vw,4.2rem);font-weight:800;line-height:1.02;letter-spacing:-.03em;color:var(--ink);text-wrap:balance}
+.subj-copy h1 em{font-style:normal;color:var(--green)}
+.subj-lead{margin:0;max-width:34ch;font-size:1.18rem;font-weight:700;color:var(--ink-soft);text-wrap:pretty}
+.subj-cta{display:flex;flex-wrap:wrap;gap:12px}
+.subj-cta .button{text-decoration:none}
+.subj-facts{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.subj-facts li{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.9rem;font-weight:800;color:var(--ink-soft)}
+.subj-facts svg{width:16px;height:16px;color:var(--green)}
+.subj-art{display:flex;justify-content:center}
+.subj-art img{width:100%;max-width:620px;height:auto;border-radius:var(--r-xl);box-shadow:0 30px 70px rgba(47,107,255,.16)}
+
+/* ---------- Sections ---------- */
+.subj-section{padding:52px 0}
+.subj-section + .subj-section{padding-top:8px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:24px}
+.sec-head h2{margin:0;font-family:'Sora',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.sec-head p{margin:0;color:var(--muted);font-weight:700}
+.back-link{align-self:flex-start;display:inline-flex;gap:6px;margin-bottom:20px;font-weight:800;color:var(--blue-deep);text-decoration:none}
+.back-link:hover{text-decoration:underline}
+
+/* ---------- Topic cards ---------- */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.topic{--c:var(--blue);--c-soft:rgba(47,107,255,.1);position:relative;display:flex;flex-direction:column;gap:12px;padding:24px 22px 20px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);box-shadow:0 8px 24px rgba(18,42,79,.06);color:var(--ink);text-decoration:none;overflow:hidden;transition:translate .25s ease,box-shadow .25s ease,border-color .25s ease}
+.topic::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.topic:hover{box-shadow:0 22px 44px rgba(18,42,79,.12);border-color:var(--c-soft)}
+.topic:focus-visible{outline:3px solid var(--c);outline-offset:3px}
+.topic.c-green{--c:var(--green);--c-soft:rgba(23,189,124,.12)}
+.topic.c-amber{--c:var(--amber-deep);--c-soft:rgba(255,159,28,.14)}
+.topic.c-purple{--c:var(--purple);--c-soft:rgba(124,92,255,.12)}
+.t-ic{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;background:var(--c-soft);color:var(--c);transition:scale .25s ease,rotate .25s ease}
+.t-ic svg{width:26px;height:26px}
+.topic:hover .t-ic{scale:1.08;rotate:-6deg}
+.topic h3{margin:0;font-family:'Sora',sans-serif;font-size:1.12rem;font-weight:700}
+.topic p{margin:0;color:var(--muted);font-weight:600;font-size:.97rem}
+.t-go{margin-top:auto;padding-top:6px;display:flex;align-items:center;gap:6px;font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;color:var(--c)}
+.t-go svg{width:16px;height:16px;transition:translate .25s ease}
+.topic:hover .t-go svg{translate:4px 0}
+
+/* ---------- Tip + more subjects ---------- */
+.tip{display:flex;align-items:center;gap:16px;margin-top:28px;padding:18px 22px;border-radius:var(--r-md);background:#fff8ea;border:1px solid rgba(255,159,28,.25);font-weight:700;color:#6b4300}
+.tip svg{flex:none;width:26px;height:26px;color:var(--amber-deep)}
+.more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.more{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:'Sora',sans-serif;font-weight:700;transition:translate .25s ease,box-shadow .25s ease}
+.more:hover{box-shadow:0 16px 34px rgba(18,42,79,.1)}
+.more span{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--paper-2);color:var(--blue)}
+.more svg{width:24px;height:24px}
+
+/* ---------- Footer ---------- */
+.subj-footer{margin-top:40px;padding:28px 0;border-top:1px solid var(--line);background:#fff}
+.subj-footer .shell{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-weight:700}
+.subj-footer img{height:34px;width:auto}
+
+@media (max-width:860px){
+  .subj-hero-grid{grid-template-columns:1fr;gap:28px}
+  .subj-art img{max-width:480px}
+}
