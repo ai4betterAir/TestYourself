@@ -1,0 +1,38 @@
+name: SkillUP 2026 homepage preview
+on:
+  push:
+    branches: [skillup-homepage-2026]
+  pull_request:
+    branches: [main]
+    paths:
+      - index.html
+      - css/home-2026.css
+      - scripts/homepage-preview.js
+      - .github/workflows/homepage-preview.yml
+jobs:
+  homepage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Test homepage and capture screenshots
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-homepage-http.log 2>&1 &
+          for attempt in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/index.html >/dev/null && break
+            sleep 1
+          done
+          node scripts/homepage-preview.js
+      - name: Upload desktop and mobile previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-homepage-2026-screenshots
+          path: homepage-preview/*.png
+          if-no-files-found: warn
