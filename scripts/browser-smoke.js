@@ -39,9 +39,9 @@ for (const device of [
     const page = await visit(mobile, file);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (overflow > 2) failures.push(`${file}: ${device.name} has ${overflow}px horizontal overflow`);
-    const nav = page.locator('body > header nav').first();
+    const nav = page.locator('#su26-navigation, body > header nav').first();
     if (await nav.count()) {
-      const menu = page.locator('.site-menu-button, .home-menu-btn, .menu-toggle, .course-menu').first();
+      const menu = page.locator('.su26-toggle, .menu-button, .site-menu-button, .home-menu-btn, .menu-toggle, .course-menu').first();
       if (!await menu.count() || !await menu.isVisible()) {
         failures.push(`${file}: ${device.name} menu button is not visible`);
       } else {

@@ -19,6 +19,32 @@
     });
   }
 
+  // Apply the existing six-question course layouts consistently on every year page.
+  // Load only after the course's own scripts have created the required APIs.
+  const courseAssets = (() => {
+    if (['vocabulary-year3.html','vocabulary-year4.html','vocabulary-year5.html','vocabulary-year6.html'].includes(pageName)) {
+      return { css: 'css/vocabulary-six.css', js: 'js/vocabulary-six-question.js' };
+    }
+    if (pageName === 'english-practice.html') {
+      return { css: 'css/english-six.css', js: 'js/english-six-question.js' };
+    }
+    return null;
+  })();
+  if (courseAssets) {
+    if (!document.querySelector('link[href*="' + courseAssets.css.split('/').pop() + '"]')) {
+      const style = document.createElement('link');
+      style.rel = 'stylesheet';
+      style.href = root + courseAssets.css;
+      document.head.appendChild(style);
+    }
+    if (!document.querySelector('script[src*="' + courseAssets.js.split('/').pop() + '"]')) {
+      const script = document.createElement('script');
+      script.src = root + courseAssets.js;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  }
+
   if (main && !main.id) main.id = 'main-content';
 
   const localSessionKey = 'skillupLocalSession';
