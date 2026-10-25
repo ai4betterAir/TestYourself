@@ -27,6 +27,7 @@ try {
   if(kindy !== 'subject.html?year=K&subject=science') failures.push('Kindergarten year selection failed');
   await desktop.locator('#subjectYear').selectOption('');
   await desktop.screenshot({path:'homepage-preview/desktop.png',fullPage:true,animations:'disabled'});
+  await desktop.locator('#year-levels').screenshot({path:'homepage-preview/year-cards-desktop.png',animations:'disabled'});
   const mobile = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1});
   const mobileResponse = await mobile.goto(base+'/index.html',{waitUntil:'domcontentloaded',timeout:20000});
   if(!mobileResponse?.ok()) failures.push('Mobile homepage HTTP '+mobileResponse?.status());
@@ -42,6 +43,7 @@ try {
   const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth - document.documentElement.clientWidth);
   if(overflow>2) failures.push('Mobile horizontal overflow: '+overflow+'px');
   await mobile.screenshot({path:'homepage-preview/mobile.png',fullPage:true,animations:'disabled'});
+  await mobile.locator('#year-levels').screenshot({path:'homepage-preview/year-cards-mobile.png',animations:'disabled'});
   console.log('Homepage screenshots saved to homepage-preview/.');
   await desktop.close();await mobile.close();
 } finally {await browser.close();}
