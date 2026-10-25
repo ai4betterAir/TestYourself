@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
 <link rel="stylesheet" href="css/home.css?v=20260925-redesign">
-</head>
+<link rel="stylesheet" href="css/skillup-motion.css?v=1"><script src="js/skillup-motion.js?v=1" defer></script></head>
 <body>
 <header class="site-header">
   <div class="shell nav-shell">
@@ -20,7 +20,13 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-menu" id="navMenu">
-      <nav class="main-nav"><a class="active" href="index.html">Home</a></nav>
+      <nav class="main-nav" aria-label="Main">
+        <a class="active" href="index.html" aria-current="page">Home</a>
+        <a href="learning.html">Learn</a>
+        <a href="selective.html">Selective</a>
+        <a href="accounts.html?role=teacher">For Teachers</a>
+        <a href="parents.html">For Parents</a>
+      </nav>
       <div class="nav-actions">
         <a class="link-signin" href="sign-in.html">Sign In</a>
         <a class="link-signup" href="sign-up.html">Sign Up</a>
@@ -97,8 +103,8 @@
         </div>
       </div>
       <span class="float-pill pill-a"><i>+</i>12 XP</span>
-      <span class="float-pill pill-b"><i>★</i>Level 4</span>
-      <span class="float-pill pill-c"><i>✓</i>New badge</span>
+      <span class="float-pill pill-b"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="currentColor"/></svg></i>Level 4</span>
+      <span class="float-pill pill-c"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i>New badge</span>
     </div>
   </div>
 </section>
@@ -111,55 +117,55 @@
       <h2>Find your <span class="text-accent">learning zone</span></h2>
       <p>Every year level from Kindergarten to Year 6 — pick yours and jump straight into the right challenge.</p>
     </div>
-    <div class="grade-grid">
-      <a class="grade-card g-k" href="learning.html?year=K">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-k"/></svg></div>
-        <small>Start here</small>
-        <b>Kindy</b>
-        <span>Explore &amp; play</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+    <div class="ladder">
+      <a class="rung" style="--lvl:0" href="learning.html?year=K">
+        <small>Kindergarten</small>
+        <span class="rung-num" aria-hidden="true">K</span>
+        <b>Explore &amp; play</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go">Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-1" href="learning.html?year=1">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-1"/></svg></div>
-        <small>Level 1</small>
-        <b>Year 1</b>
-        <span>Strong foundations</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:1" href="learning.html?year=1">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">1</span>
+        <b>Strong foundations</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 1:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-2" href="learning.html?year=2">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-2"/></svg></div>
-        <small>Level 2</small>
-        <b>Year 2</b>
-        <span>Grow core skills</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:2" href="learning.html?year=2">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">2</span>
+        <b>Grow core skills</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 2:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-3" href="learning.html?year=3">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-3"/></svg></div>
-        <small>Level 3</small>
-        <b>Year 3</b>
-        <span>Bigger ideas</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:3" href="learning.html?year=3">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">3</span>
+        <b>Bigger ideas</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 3:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-4" href="learning.html?year=4">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-4"/></svg></div>
-        <small>Level 4</small>
-        <b>Year 4</b>
-        <span>Think independently</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:4" href="learning.html?year=4">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">4</span>
+        <b>Think independently</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 4:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-5" href="learning.html?year=5">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-5"/></svg></div>
-        <small>Level 5</small>
-        <b>Year 5</b>
-        <span>Aim higher</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:5" href="learning.html?year=5">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">5</span>
+        <b>Aim higher</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 5:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="grade-card g-6" href="learning.html?year=6">
-        <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-6"/></svg></div>
-        <small>Level 6</small>
-        <b>Year 6</b>
-        <span>Ready for what's next</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+      <a class="rung" style="--lvl:6" href="learning.html?year=6">
+        <small>Year</small>
+        <span class="rung-num" aria-hidden="true">6</span>
+        <b>Ready for high school</b>
+        <span class="rung-meter" aria-hidden="true"><i></i></span>
+        <span class="rung-go"><span class="sr-only">Year 6:</span> Start <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
   </div>
