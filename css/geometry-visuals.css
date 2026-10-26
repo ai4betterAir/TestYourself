@@ -1,7 +1,7 @@
 /* SkillUP original diagram presentation for illustrated maths and geometry */
 .geometry-diagram{display:block;width:min(100%,790px);margin:17px auto 20px;padding:13px;border-radius:20px;
   border:1px solid #d8e4f2;background:linear-gradient(160deg,#fff,#f7fbff);
-  box-shadow:0 10px 25px rgba(32,67,120,.07);text-align:center}
+  box-shadow:0 10px 25px rgba(32,67,120,.07);text-align:center;scroll-margin-top:110px}
 .geometry-diagram[hidden]{display:none!important}
 .geometry-diagram img{display:block;width:100%;height:auto;max-height:350px;object-fit:contain;
   background:#f6faff;border-radius:12px}
@@ -19,3 +19,5 @@
  .geometry-review img{max-height:200px}
  .geometry-diagram figcaption{font-size:11px}
 }
+
+#quiz,#testBody{scroll-margin-top:100px}
