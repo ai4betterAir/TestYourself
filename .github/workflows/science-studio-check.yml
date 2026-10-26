@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - 'science-practice.html'
+      - 'science.html'
+      - 'js/science-home-2026.js'
+      - 'scripts/browser-science-hub.mjs'
       - 'css/science-practice-2026.css'
       - 'js/science-practice.js'
       - 'js/science-visuals-2026.js'
@@ -35,6 +38,7 @@ jobs:
           python3 -m http.server 4173 >/tmp/science-studio-qa.log 2>&1 &
           for i in {1..20}; do curl --fail --silent http://127.0.0.1:4173/science-practice.html >/dev/null && break; sleep 1; done
           node scripts/browser-science-studio.mjs
+          node scripts/browser-science-hub.mjs
       - name: Save screenshot previews
         if: always()
         uses: actions/upload-artifact@v4
