@@ -66,6 +66,7 @@ try{
    await page.locator('#explainBtn').click();
    assert.ok(await page.locator('#explainBox').isVisible());
    if(s.year==='5' && s.topic==='geometry'){
+     if(mobile)await page.locator('#practiceGeometryFigure').evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));
      await page.locator('#practiceGeometryFigure').screenshot({path:'geometry-previews/year5-geometry-'+(mobile?'mobile':'desktop')+'.png',animations:'disabled'});
      await page.locator('.mode-tab[data-mode="test"]').click();
      await page.locator('#testScope').selectOption('specific');
