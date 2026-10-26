@@ -201,4 +201,5 @@ $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').
 if(exam==='oc'&&stream==='writing')stream='thinking';
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
+if(requestedStream==='thinking'&&pageParams.get('topic')==='visual'&&requestedView==='practice')showQuiz();
 })();
