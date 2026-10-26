@@ -13,3 +13,7 @@
  .question-figure img{max-height:none}
  .question-figure figcaption{font-size:11px}
  .review-figure{margin:10px auto}}
+.visual-full-link{display:inline-block;margin-left:9px;color:#2d63c5;font-weight:900;
+ text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.visual-full-link:hover{color:#1d4599}
+.visual-full-link:focus-visible{outline:3px solid #315fc9;outline-offset:3px;border-radius:3px}
