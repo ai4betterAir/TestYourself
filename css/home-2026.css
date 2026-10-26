@@ -79,53 +79,115 @@ svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-wi
 .section-heading p{margin:0;color:var(--muted);max-width:625px;font-size:15px}
 .small-link{font-size:13px;white-space:nowrap;color:var(--blue);font-weight:800;display:inline-flex;align-items:center;gap:6px;padding:8px 0}
 .small-link svg{width:16px}
-/* A calmer, more useful alternative to the former seven saturated columns. */
-.year-level-section{background:#f7f9fd;border-block:1px solid #ebeff6}
-.year-section-heading{margin-bottom:32px}
-.year-section-heading h2{max-width:760px}
-.year-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+/* SkillUP 2026 approved illustrated, pastel year selector */
+.year-level-section{
+  position:relative;overflow:hidden;padding:85px 0 90px;
+  background:radial-gradient(ellipse 400px 260px at 0% 23%,#e5f8f8 0%,transparent 95%),
+  radial-gradient(ellipse 440px 250px at 100% 0%,#f1effe 0%,transparent 90%),#fafcff;
+  border-block:1px solid #eef2f8;
+}
+.year-level-section::before,.year-level-section::after{
+  content:'';position:absolute;z-index:0;pointer-events:none;filter:blur(.5px);
+  width:240px;height:150px;border-radius:50%;opacity:.55;
+}
+.year-level-section::before{background:#e2f7f4;left:-135px;top:160px;transform:rotate(-28deg)}
+.year-level-section::after{background:#e9e5ff;right:-155px;top:13px;transform:rotate(-17deg)}
+.year-level-container{width:min(1640px,calc(100% - 56px));max-width:1640px}
+.year-intro{position:relative;z-index:1;text-align:center;margin:0 auto 42px;max-width:950px}
+.year-eyebrow{display:inline-flex;align-items:center;gap:14px;text-transform:uppercase;
+  letter-spacing:.24em;color:#3563aa;font:800 13px/1.4 'DM Sans',sans-serif}
+.year-eyebrow::before,.year-eyebrow::after{content:'';width:29px;height:1px;background:#b3c6df}
+.year-intro h2{font:800 clamp(2.2rem,4.1vw,3.6rem)/1.14 'Manrope','DM Sans',sans-serif;
+  letter-spacing:-.055em;color:#132857;margin:14px 0 12px}
+.year-intro h2 span{background:linear-gradient(110deg,#3667e9,#7142df);background-clip:text;
+  -webkit-background-clip:text;color:transparent}
+.year-intro p{color:#60748f;font-size:clamp(14px,1.3vw,17px);margin:0}
+.year-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;align-items:stretch}
 .year-card{
-  --year-accent:#345bd8;--year-wash:#edf2fe;
-  position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:stretch;
-  min-width:0;min-height:237px;padding:23px 24px 21px;border-radius:23px;
-  background:linear-gradient(148deg,#fff 51%,var(--year-wash) 155%);
-  border:1px solid #dfe7f1;box-shadow:0 5px 22px rgba(24,52,85,.035);
-  overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  --year-from:#c5ddfc;--year-to:#f3f8ff;--year-accent:#315edc;
+  position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;
+  min-width:0;min-height:405px;padding:28px 15px 20px;
+  text-align:center;overflow:hidden;border-radius:27px;
+  border:1.5px solid rgba(255,255,255,.92);
+  background:linear-gradient(180deg,var(--year-from) 0%,var(--year-to) 100%);
+  box-shadow:0 16px 34px rgba(37,67,116,.11),0 1px 0 rgba(255,255,255,.95) inset;
+  transition:transform .24s ease,box-shadow .24s ease;
 }
-.year-card:before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--year-accent)}
+.year-card::before{content:'';pointer-events:none;position:absolute;z-index:-1;
+  width:178%;height:110px;left:-33%;bottom:42px;border-radius:60% 70% 0 0;
+  background:color-mix(in srgb,var(--year-from) 80%,#fff);
+  opacity:.5;transform:rotate(-8deg)}
+.year-card::after{content:'';pointer-events:none;position:absolute;z-index:-1;
+  width:130%;height:78px;right:-28%;bottom:37px;border-radius:75% 50% 0 0;
+  background:color-mix(in srgb,var(--year-from) 70%,#fff);opacity:.65;
+  transform:rotate(15deg)}
 .year-card:hover,.year-card:focus-visible{
-  transform:translateY(-5px);box-shadow:0 20px 45px rgba(29,51,83,.12);
-  border-color:color-mix(in srgb,var(--year-accent) 40%,#dfe7f1)
+  transform:translateY(-7px);
+  box-shadow:0 25px 55px rgba(28,59,104,.16),0 1px 0 #fff inset;
 }
-.year-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.year-number{
-  display:grid;place-items:center;flex:none;width:51px;height:51px;border-radius:15px;
-  color:var(--year-accent);background:var(--year-wash);font:800 22px/1 'Manrope','DM Sans',sans-serif;
-  letter-spacing:-.065em;
+.year-icon{display:grid;place-items:center;flex:none;width:94px;height:94px;
+  margin-bottom:19px;border-radius:23px;background:rgba(255,255,255,.44);
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 12px 25px rgba(52,73,112,.05)}
+.year-icon svg{width:84px;height:84px;fill:none;stroke:none;
+  filter:drop-shadow(0 5px 3px rgba(30,50,72,.09))}
+.year-level{display:block;font-weight:900;color:var(--year-accent);font-size:11px;
+  letter-spacing:.125em;line-height:1.4;text-transform:uppercase}
+.year-card h3{font:800 clamp(19px,1.6vw,27px)/1.2 'Manrope','DM Sans',sans-serif;
+  letter-spacing:-.045em;color:#0d2455;margin:13px 0 14px;white-space:nowrap}
+.year-card p{position:relative;z-index:1;font-size:clamp(12px,1.04vw,15px);
+  line-height:1.5;color:#2d4265;margin:0 0 24px;max-width:174px}
+.year-button{position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;
+  gap:12px;min-width:0;width:100%;min-height:48px;
+  margin-top:auto;padding:11px 13px;border-radius:999px;
+  background:var(--year-accent);color:#fff;font-size:14px;font-weight:900;
+  box-shadow:0 8px 18px color-mix(in srgb,var(--year-accent) 22%,transparent);
+  transition:transform .18s ease,filter .18s ease}
+.year-button svg{width:16px;height:16px;stroke:#fff;stroke-width:2.3;flex:none}
+.year-card:hover .year-button{filter:brightness(1.06);transform:translateY(-2px)}
+@media(max-width:1250px){
+ .year-level-container{width:min(100% - 38px,1150px)}
+ .year-grid{gap:10px}
+ .year-card{padding:25px 10px 18px;min-height:385px;border-radius:21px}
+ .year-icon{width:78px;height:78px;border-radius:20px}
+ .year-icon svg{width:73px;height:73px}
+ .year-card h3{font-size:21px}
+ .year-button{font-size:12.5px;min-height:43px;gap:6px}
+ .year-card p{font-size:12.5px}
 }
-.year-pill{display:inline-flex;align-items:center;white-space:nowrap;letter-spacing:.095em;
-  font-size:10px;font-weight:800;color:#8090a5;margin-top:7px}
-.year-card-body{position:relative;z-index:1;margin:23px 0 22px}
-.year-card h3{font:800 22px/1.25 'Manrope','DM Sans',sans-serif;letter-spacing:-.045em;color:#172942;margin:0 0 7px}
-.year-highlight{font-weight:750;color:var(--year-accent)!important;margin:0 0 7px!important;font-size:13px!important;line-height:1.4}
-.year-description{color:#64748b;font-size:12.5px;line-height:1.58;margin:0;max-width:260px}
-.year-cta{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:auto;
-  font-size:12.5px;font-weight:800;color:#28486f;transition:gap .2s ease}
-.year-cta svg{width:17px;height:17px;stroke-width:2.2;color:var(--year-accent)}
-.year-card:hover .year-cta{gap:13px}
-.year-card.kindy{grid-column:span 2;background:linear-gradient(112deg,#fff 27%,#f0faf7 100%);border-color:#d9eae5}
-.year-card.kindy .year-number{width:63px;height:63px;font-size:29px;border-radius:18px}
-.year-card.kindy .year-pill{color:#0a7772}
-.year-card.kindy .year-card-body{margin-top:24px}
-.year-card.kindy h3{font-size:clamp(25px,2.4vw,32px);max-width:310px}
-.year-card.kindy .year-highlight{font-size:15px!important}
-.year-card.kindy .year-description{max-width:325px;font-size:13.5px}
-.year-card.kindy .year-cta{color:#087f79}
-.year-watermark{position:absolute;right:35px;bottom:-88px;color:#d9f3eb;font:800 270px/1 'Manrope',sans-serif;
-  letter-spacing:-.1em;pointer-events:none;user-select:none;z-index:0;opacity:.70}
-.year-section-footnote{display:flex;align-items:center;gap:9px;color:#73839a;
-  font-size:12.5px;margin:20px 2px 0}
-.year-section-footnote svg{flex:none;width:16px;height:16px;stroke:#128c79;stroke-width:2.4}
+@media(max-width:1000px){
+ .year-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+ .year-card{padding:26px 15px 19px;min-height:345px}
+ .year-icon{width:91px;height:91px}
+ .year-icon svg{width:82px;height:82px}
+ .year-card h3{font-size:23px}
+ .year-card p{font-size:14px}
+ .year-button{font-size:14px;min-height:47px}
+}
+@media(max-width:690px){
+ .year-level-section{padding:59px 0 68px}
+ .year-level-container{width:calc(100% - 28px)}
+ .year-intro{margin-bottom:28px}
+ .year-intro h2{font-size:clamp(29px,8vw,42px)}
+ .year-intro p{font-size:14px}
+ .year-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .year-card{min-height:330px;padding:21px 12px 15px;border-radius:21px}
+ .year-icon{height:73px;width:73px;margin-bottom:15px;border-radius:19px}
+ .year-icon svg{width:68px;height:68px}
+ .year-card h3{font-size:21px;margin:11px 0 12px}
+ .year-card p{font-size:12px;margin-bottom:20px}
+ .year-button{min-height:43px;font-size:12.5px}
+ .year-card:last-child{grid-column:1/-1;max-width:400px;width:100%;justify-self:center}
+}
+@media(max-width:375px){
+ .year-grid{gap:9px}
+ .year-card{padding:18px 9px 13px;min-height:315px}
+ .year-icon{width:66px;height:66px}
+ .year-icon svg{width:62px;height:62px}
+ .year-card h3{font-size:19px}
+ .year-card p{font-size:11.5px}
+ .year-button{padding:9px 7px}
+}
 .subject-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .subject-card{display:flex;align-items:flex-start;gap:17px;padding:24px;border:1px solid var(--line);border-radius:19px;background:#fff;min-height:145px;transition:transform .18s,box-shadow .18s,border-color .18s}
 .subject-icon,.path-icon{display:grid;place-items:center;flex:none;width:51px;height:51px;border-radius:15px;background:#edf3ff;color:var(--blue)}
@@ -171,9 +233,9 @@ svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-wi
 .footer a:hover{color:var(--blue)}
 .footer-bottom{display:flex;justify-content:space-between;gap:25px;align-items:center;flex-wrap:wrap;border-top:1px solid #e2e7ee;margin-top:40px;padding-top:21px;font-size:12px;color:#8792a5}
 .footer-bottom a{display:inline;color:#6f7c92}
-@media(max-width:1100px){.hero-layout{gap:40px;grid-template-columns:minmax(0,1fr) minmax(360px,.91fr)}.year-grid{gap:13px}.year-card{padding:20px}.main-nav a{padding:9px 10px}.subject-card{padding:19px}}
-@media(max-width:950px){.nav-layout{height:73px}.menu-button{display:grid}.main-nav{display:none;position:absolute;top:72px;left:20px;right:20px;flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 20px 45px rgba(34,55,89,.14);margin:0;z-index:10}.main-nav.is-open{display:flex}.main-nav a{font-size:15px;padding:12px 14px}.nav-actions{margin-left:auto}.hero-layout{grid-template-columns:1fr 1fr;gap:25px;min-height:500px}.hero h1{font-size:clamp(2.8rem,5.3vw,4.3rem)}.hero-copy>p{font-size:16px}.demo-window{padding:18px}.demo-problem{padding:13px}.demo-equation{font-size:22px;gap:12px}.subject-grid,.path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.year-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.year-card{min-height:218px;padding:19px}.year-card.kindy{grid-column:span 2}.audience{align-items:flex-start;flex-direction:column}}
-@media(max-width:690px){.container{width:min(100% - 32px,1190px)}.nav-layout{height:67px;gap:12px}.brand img{width:124px}.nav-signup{min-height:39px;padding:0 11px}.nav-actions .text-action{display:none}.main-nav{top:65px;left:12px;right:12px}.hero-layout{grid-template-columns:1fr;gap:22px;min-height:auto;padding-block:58px 44px}.hero h1{font-size:clamp(3rem,10.3vw,4.1rem)}.hero-copy>p{font-size:16px}.demo-scene{max-width:500px;width:100%;margin:12px auto 0}.demo-window{max-width:470px}.demo-note{right:0}.section{padding:59px 0}.section-heading{align-items:flex-start;flex-direction:column;gap:13px}.section-heading h2{font-size:clamp(1.9rem,7vw,2.4rem)}.year-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.year-card{min-height:205px;padding:16px}.year-card.kindy{grid-column:span 2;min-height:230px}.year-number{width:43px;height:43px;font-size:20px}.year-pill{font-size:9px}.year-card h3{font-size:19px}.year-card-body{margin:20px 0 16px}.year-card.kindy .year-card-body{margin-top:23px}.year-watermark{font-size:215px;right:25px;bottom:-60px}.year-section-footnote{align-items:flex-start}.subject-grid,.path-grid,.steps{grid-template-columns:1fr}.subject-card{min-height:105px}.path-card{min-height:210px}.step:not(:last-child):after{display:none}.steps{gap:30px}.audience{padding:30px 23px}.audience-buttons{width:100%}.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 20px}.footer-brand{grid-column:1/-1}.footer-bottom{margin-top:30px}}
+@media(max-width:1100px){.hero-layout{gap:40px;grid-template-columns:minmax(0,1fr) minmax(360px,.91fr)}.main-nav a{padding:9px 10px}.subject-card{padding:19px}}
+@media(max-width:950px){.nav-layout{height:73px}.menu-button{display:grid}.main-nav{display:none;position:absolute;top:72px;left:20px;right:20px;flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 20px 45px rgba(34,55,89,.14);margin:0;z-index:10}.main-nav.is-open{display:flex}.main-nav a{font-size:15px;padding:12px 14px}.nav-actions{margin-left:auto}.hero-layout{grid-template-columns:1fr 1fr;gap:25px;min-height:500px}.hero h1{font-size:clamp(2.8rem,5.3vw,4.3rem)}.hero-copy>p{font-size:16px}.demo-window{padding:18px}.demo-problem{padding:13px}.demo-equation{font-size:22px;gap:12px}.subject-grid,.path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.audience{align-items:flex-start;flex-direction:column}}
+@media(max-width:690px){.container{width:min(100% - 32px,1190px)}.nav-layout{height:67px;gap:12px}.brand img{width:124px}.nav-signup{min-height:39px;padding:0 11px}.nav-actions .text-action{display:none}.main-nav{top:65px;left:12px;right:12px}.hero-layout{grid-template-columns:1fr;gap:22px;min-height:auto;padding-block:58px 44px}.hero h1{font-size:clamp(3rem,10.3vw,4.1rem)}.hero-copy>p{font-size:16px}.demo-scene{max-width:500px;width:100%;margin:12px auto 0}.demo-window{max-width:470px}.demo-note{right:0}.section{padding:59px 0}.section-heading{align-items:flex-start;flex-direction:column;gap:13px}.section-heading h2{font-size:clamp(1.9rem,7vw,2.4rem)}.subject-grid,.path-grid,.steps{grid-template-columns:1fr}.subject-card{min-height:105px}.path-card{min-height:210px}.step:not(:last-child):after{display:none}.steps{gap:30px}.audience{padding:30px 23px}.audience-buttons{width:100%}.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 20px}.footer-brand{grid-column:1/-1}.footer-bottom{margin-top:30px}}
 @media(max-width:390px){.hero-actions .button{flex:1 1 100%}.nav-signup{font-size:12px}.demo-equation{gap:10px}.fraction{font-size:20px}.demo-note{position:static;margin-top:13px}.subject-select{flex-wrap:wrap}}
-@media(max-width:410px){.year-card{padding:15px 14px;min-height:215px}.year-pill{max-width:64px;white-space:normal;text-align:right;line-height:1.3}.year-card h3{font-size:18px}.year-highlight{font-size:12px!important}.year-description{font-size:12px}.year-card.kindy{min-height:229px}.year-card.kindy h3{font-size:27px}}
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
