@@ -66,7 +66,7 @@ function setTopic(t){
  topic=t;
  $('activeTopicLabel').textContent=t==='mixed'?'All science topics':t;
  $('topicDescription').textContent=t==='mixed'?'Discover life, materials, Earth, energy and scientific thinking.':(visuals?.description(t)||'Explore this science topic.');
- $('notebookArt').innerHTML=visuals?.thumbnail(t==='mixed'?(topics[0]||'Investigations'):t)||'';
+ $('notebookArt').innerHTML=visuals?.thumbnail(t)||'';
  const n=t==='mixed'?all.length:all.filter(q=>q.topic===t).length;
  $('topicCount').textContent=n+' original questions available';
  document.querySelectorAll('.topic-pill').forEach(b=>{
