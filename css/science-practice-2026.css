@@ -175,3 +175,5 @@ body[data-year="4"],body[data-year="5"],body[data-year="6"]{--mint:#119bae;--tea
 .science-hub-note strong{color:#147963;margin-right:4px}
 @media(max-width:1000px){.science-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.science-hub-main{padding-top:22px}.science-hub-heading{display:block}.science-hub-heading .topic-count{margin-top:14px}.science-topic-grid{grid-template-columns:1fr;gap:13px}.topic-card-visual{height:155px}.topic-card-info{padding:16px 18px}.topic-card-info p{min-height:0;margin-bottom:15px}.science-hub-note{padding:15px}}
+
+@media(max-width:600px){.study-sidebar .side-score{grid-column:1/-1;display:flex;align-items:center;gap:11px;white-space:nowrap}.study-sidebar .side-score strong{white-space:nowrap;font-size:1.35rem}.study-sidebar .side-score span{font-size:.75rem}}
