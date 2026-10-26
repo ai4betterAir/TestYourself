@@ -21,7 +21,7 @@ const topics=[
  ['sets','⊂','Sets & Classification','All, some, none and category reasoning'],
  ['visual','▦','Visual Reasoning','Figure matrices, rotations, reflections and visual patterns'],
  ['cube','⬡','Cube & Dice Rotation','3D faces, nets, hidden faces and impossible rotations'],
- ['ocfigures','▤','OC Figure Skills','50 original OC-friendly image puzzles'],
+ ['ocfigures','▤','Figure Skills (50 Puzzles)','Symmetry, figure matching, sequences, odd one out and shape counting'],
  ['symmetry','◫','Symmetry & Reflection','Find the mirrored picture'],
  ['figurematch','▧','Matching Figures','Match a picture exactly'],
  ['visualpatterns','↻','Visual Sequences','Continue picture and colour patterns'],
