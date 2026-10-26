@@ -1,1 +1,78 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Science | SkillUP</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/year1-subject.css?v=1"><script>window.addEventListener("DOMContentLoaded",()=>{const y=new URLSearchParams(location.search).get("year")||"1";const label=y==="K"?"Kindy":"Year "+y;document.querySelectorAll(".crumb").forEach(e=>e.innerHTML=e.innerHTML.replace(/Year 1/g,label));const hero=document.querySelector(".hero h1");if(hero)hero.innerHTML=hero.innerHTML.replace(/Year 1/g,label);document.querySelectorAll('a[href*="learning.html?year=1"]').forEach(a=>a.href="learning.html?year="+encodeURIComponent(y));document.querySelectorAll(".card").forEach(a=>{const t=a.querySelector("h3")?.textContent||"";a.href="science-practice.html?year="+encodeURIComponent(y)+"&topic="+encodeURIComponent(t)});});</script></head><body><header class="top"><a href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP"></a><nav><a href="index.html">Home</a><a href="learning.html?year=1">Year 1</a><a href="selective.html">Selective</a><a href="accounts.html?role=teacher">For Teachers</a><a href="parents.html">For Parents</a></nav><div class="auth"><a class="signin" href="sign-in.html">Sign in</a><a class="signup" href="sign-up.html">Sign up</a></div></header><section class="hero"><div class="crumb">Home · Learn · Year 1 · Science</div><h1>Year 1 <em>Science</em></h1><h2>Explore. Ask. Discover.</h2><p>Discover the world through simple Year 1 science topics.</p></section><main class="wrap"><a class="back" href="learning.html?year=1">← Back to Year 1 Learning Hub</a><div class="heading"><h2>Choose a topic</h2><p>Pick a topic and start learning.</p></div><div class="grid"><a class="card" href="#"><i>⚗</i><h3>Living Things</h3><p>Explore plants, animals and their needs.</p></a><a class="card" href="#"><i>★</i><h3>Our Bodies</h3><p>Learn about body parts and senses.</p></a><a class="card" href="#"><i>◆</i><h3>Weather & Seasons</h3><p>Observe weather and seasonal changes.</p></a><a class="card" href="#"><i>◎</i><h3>Materials</h3><p>Explore what everyday objects are made from.</p></a><a class="card" href="#"><i>✦</i><h3>Earth & Sky</h3><p>Discover the Sun, Moon and our planet.</p></a><a class="card" href="#"><i>▥</i><h3>Forces & Movement</h3><p>Explore pushes, pulls and movement.</p></a></div><div class="tip">Small steps make strong learners. Choose one topic, practise it, then come back for another.</div></main><footer><div class="footer"><img src="assets/skillup-logo.svg" alt="SkillUP"><span>Small Steps · Brighter Futures</span></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#117c9b">
+<meta name="description" content="Discover science with original diagrams, experiments, age-appropriate practice and timed tests from Kindergarten to Year 6.">
+<title>Science Topics | SkillUP</title>
+<link rel="icon" href="assets/skillup-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/science-practice-2026.css?v=20261026">
+</head>
+<body class="science-studio" data-year="3">
+<a class="skip-link" href="#work">Skip to science questions</a>
+<header class="studio-header">
+  <div class="studio-container nav-inner">
+    <a class="site-logo" href="index.html"><img src="assets/skillup-logo.svg" alt="SkillUP homepage"></a>
+    <nav class="studio-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="learning.html">Learning</a>
+      <a href="practice.html">Maths</a>
+      <a href="science-practice.html" aria-current="page">Science</a>
+      <a href="selective.html">Selective</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-signin" href="sign-in.html">Sign in</a>
+      <a class="nav-signup" href="sign-up.html">Sign up <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</header>
+
+<section class="science-hero" aria-labelledby="heroTitle">
+  <div class="studio-container science-hero-layout">
+    <div class="science-hero-copy">
+      <div class="crumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><a id="learningBack" href="learning.html?year=3">Learning</a><span aria-hidden="true">/</span><span id="yearLabel">Year 3</span><span aria-hidden="true">/</span><strong>Science</strong></div>
+      <span class="hero-eyebrow"><span class="eyebrow-dot"></span> EXPLORE · OBSERVE · DISCOVER</span>
+      <h1 id="heroTitle">Year 3 <span>Science Studio</span></h1>
+      <p id="heroCopy">Explore the natural world through colourful diagrams, curious questions and activities that help ideas make sense.</p>
+      <div class="hero-tools">
+        <label class="year-picker" for="yearSelect"><span>School year</span>
+          <select id="yearSelect"><option value="K">Kindy</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select>
+        </label>
+        <a class="back-button" id="hubBack" href="learning.html?year=3">← Back to learning hub</a>
+      </div>
+      <div class="hero-proof"><span>Original science illustrations</span><span>Instant answer explanations</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 580 440" role="presentation" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="planetGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4fd6bf"/><stop offset="1" stop-color="#177ac0"/></linearGradient><linearGradient id="flaskGrad" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a8f0e4"/><stop offset="1" stop-color="#17b9b0"/></linearGradient></defs>
+        <circle cx="318" cy="205" r="179" fill="#d6f8ee" opacity=".74"/>
+        <ellipse cx="315" cy="213" rx="241" ry="78" fill="none" stroke="#75cbd9" stroke-width="3" transform="rotate(-27 315 213)" stroke-dasharray="11 13"/>
+        <circle cx="317" cy="208" r="115" fill="url(#planetGrad)" stroke="#188bab" stroke-width="5"/>
+        <path d="M284 111q-26 5-48 32l-10 39 24 20 10 31 32 6 15-21-18-28 23-26 16-34-11-18Zm85 7 19 30 31 13-7 28 24 22-5 36-35-8-12-25-25-8 2-33-19-10 8-23z" fill="#c6f6ab" opacity=".91"/>
+        <path d="M263 260q28-19 48-8l27 22-12 35-27 16-25-24-12-18z" fill="#e8fbbe" opacity=".87"/>
+        <ellipse cx="317" cy="208" rx="50" ry="114" fill="none" stroke="#c7ecf8" stroke-width="3" opacity=".52"/>
+        <path d="M204 208H431" stroke="#c7ecf8" stroke-width="3" opacity=".6"/>
+        <g transform="translate(62 82) rotate(-10)"><rect x="0" y="0" width="115" height="123" rx="23" fill="#fff" stroke="#d3e6f1" stroke-width="4"/><path d="M58 94V52M58 72Q27 68 26 40Q52 38 58 57M58 63Q92 65 93 30Q69 29 58 55" stroke="#24a479" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M26 40Q55 36 58 65Q31 68 26 40M94 30Q68 28 58 57Q87 62 94 30" fill="#75d9a9"/><ellipse cx="58" cy="97" rx="33" ry="9" fill="#e4f6ed"/></g>
+        <g transform="translate(402 67)"><circle cx="40" cy="40" r="42" fill="#fff" stroke="#d3e6f1" stroke-width="4"/><circle cx="40" cy="40" r="20" fill="#ffe5a0" stroke="#ffbd43" stroke-width="4"/><g stroke="#ffba3c" stroke-width="5" stroke-linecap="round"><path d="M40 6V1M40 79V73M6 40H1M79 40H73M17 17L11 11M68 68L73 73M17 63L11 70M68 12L73 7"/></g></g>
+        <g transform="translate(386 309) rotate(8)"><rect x="0" y="0" width="132" height="89" rx="21" fill="#fff" stroke="#d3e6f1" stroke-width="4"/><path d="M45 17V42L29 67Q25 76 36 76H101Q112 76 105 67L88 42V17" stroke="#199eaa" stroke-width="5" fill="none" stroke-linejoin="round"/><path d="M36 66H101Q109 77 94 78H42Q27 77 36 66" fill="#67dfc6"/><circle cx="77" cy="58" r="5" fill="#fff"/><circle cx="53" cy="65" r="4" fill="#fff"/></g>
+        <g fill="#f5b54b"><circle cx="152" cy="333" r="10"/><circle cx="467" cy="245" r="7"/></g><g stroke="#2dbba8" stroke-width="4" stroke-linecap="round"><path d="M134 294v18m-9-9h18M470 275v16m-8-8h16"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<main class="studio-container science-hub-main">
+  <div class="science-hub-heading"><div><span class="section-eyebrow">SCIENCE TOPICS</span><h2>Choose your next discovery</h2><p>Explore the right topics for your year and practise with original scientific illustrations.</p></div><span class="topic-count" id="topicCount">Learning topics</span></div>
+  <div class="science-topic-grid" id="scienceTopicGrid" aria-label="Science topics"></div>
+  <div class="science-hub-note"><strong>Explore. Ask. Discover.</strong> Every science topic includes guided diagrams, answer explanations and practice. Use the timed test whenever you're ready.</div>
+</main>
+<footer class="studio-footer"><div class="studio-container"><span>© 2026 SkillUP</span><span>Discover · Observe · Question · Learn</span></div></footer>
+<script src="js/science-bank.js"></script>
+<script src="js/science-visuals-2026.js?v=20261026"></script>
+<script src="js/science-home-2026.js?v=20261026"></script>
+<script src="js/site-shell.js"></script>
+</body></html>
