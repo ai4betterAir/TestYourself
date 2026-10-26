@@ -26,7 +26,7 @@ function card(topic,i){
  const a=document.createElement('a');
  a.className='science-topic-card';
  a.href='science-practice.html?year='+encodeURIComponent(year)+(topic==='mixed'?'':'&topic='+encodeURIComponent(topic));
- const figure=document.createElement('div');figure.className='topic-card-visual';figure.innerHTML=V?.thumbnail(topic==='mixed'?(topics[0]||'Investigations'):topic)||'';
+ const figure=document.createElement('div');figure.className='topic-card-visual';figure.innerHTML=V?.thumbnail(topic)||'';
  const info=document.createElement('div');info.className='topic-card-info';
  const tag=document.createElement('span');tag.className='topic-card-tag';tag.textContent=topic==='mixed'?'ALL SCIENCE':'TOPIC '+String(i).padStart(2,'0');
  const h=document.createElement('h3');h.textContent=topic==='mixed'?'Mix everything together':topic;
