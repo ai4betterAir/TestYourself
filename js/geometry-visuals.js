@@ -198,7 +198,8 @@ if(typeof makeQuestion==="function"){
   return visual||previous();
  };
 }
-if(typeof buildSet==="function"&&typeof guide==="function"&&typeof grade!=="undefined"&&typeof topic!=="undefined"){
- if(which(grade,topic)){buildSet();guide();}
+if(typeof buildSet==="function"&&typeof grade!=="undefined"&&typeof topic!=="undefined"&&which(grade,topic)){
+ buildSet();
+ document.getElementById('tryGuidedAgain')?.click();
 }
 })();
