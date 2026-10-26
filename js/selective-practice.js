@@ -122,7 +122,7 @@ function buildTopics(){
  $('qnum').textContent=`${qnum} / ${target}`;
 }
 function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();showQuiz()}
-function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';shuffle(q.choices).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
+function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';(q.image?q.choices:shuffle(q.choices)).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
 function renderVisual(figureId,imageId,q){
  const figure=$(figureId),img=$(imageId);
  if(!figure||!img)return;
