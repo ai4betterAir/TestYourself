@@ -4496,7 +4496,7 @@
 ];
  function question(level='mix', category='all') {
    const familyNames={ocfigures:['Symmetry and Reflection','Matching Figures','Simple Visual Patterns','Odd One Out','Counting Shapes'],symmetry:['Symmetry and Reflection'],figurematch:['Matching Figures'],visualpatterns:['Simple Visual Patterns'],figureodd:['Odd One Out'],shapecount:['Counting Shapes'],cube:['Cube & Dice Rotation']};
-   const pool=familyNames[category] ? questions.filter(q=>familyNames[category].includes(q.subtype)) : questions;
+   const pool=category==='visual' ? questions.filter(q=>q.id.startsWith('TS-VIS-')) : familyNames[category] ? questions.filter(q=>familyNames[category].includes(q.subtype)) : questions;
    const subset=level==='5' ? pool.filter(q=>q.difficulty!=='challenge') : pool;
    const q=subset[Math.floor(Math.random()*subset.length)];
    return {...q,choices:[...q.choices]};

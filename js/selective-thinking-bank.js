@@ -21,7 +21,7 @@ const topics=[
  ['sets','⊂','Sets & Classification','All, some, none and category reasoning'],
  ['visual','▦','Visual Reasoning','Figure matrices, rotations, reflections and visual patterns'],
  ['cube','⬡','Cube & Dice Rotation','3D faces, nets, hidden faces and impossible rotations'],
- ['ocfigures','▤','OC Figure Skills','50 original OC-friendly image puzzles'],
+ ['ocfigures','▤','Figure Skills (50 Puzzles)','Symmetry, figure matching, sequences, odd one out and shape counting'],
  ['symmetry','◫','Symmetry & Reflection','Find the mirrored picture'],
  ['figurematch','▧','Matching Figures','Match a picture exactly'],
  ['visualpatterns','↻','Visual Sequences','Continue picture and colour patterns'],
@@ -126,7 +126,7 @@ function sets(level){
  if(type===4)return Q('All blue cards are numbered. Some numbered cards are large. What can be concluded about blue cards being large?','Nothing definite',['All blue cards are large','No blue cards are large','Some blue cards are large','Nothing definite'],'The “some large” numbered cards may or may not be blue.','sets','Sets & Classification');
  return Q('Some doctors are researchers. All researchers read scientific papers. What must be true?','Some doctors read scientific papers',['Some doctors read scientific papers','All doctors are researchers','No doctors read scientific papers','All paper readers are doctors'],'The doctors who are researchers follow the researcher rule.','sets','Sets & Classification');
 }
-function visual(level){return window.SKILLUP_VISUAL.question(level)}
+function visual(level){return window.SKILLUP_VISUAL.question(level,'visual')}
 function cube(level){return window.SKILLUP_VISUAL.question(level,'cube')}
 function ocfigures(level){return window.SKILLUP_VISUAL.question(level,'ocfigures')}
 function symmetry(level){return window.SKILLUP_VISUAL.question(level,'symmetry')}

@@ -4,7 +4,9 @@ const pageParams=new URLSearchParams(location.search);
 const exam=pageParams.get('exam')==='oc'?'oc':'selective';
 const requestedStream=pageParams.get('stream');
 const requestedView=pageParams.get('view')==='mock'?'mock':'practice';
-let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
+const visualTopicIds=new Set(['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount']);
+const thinkingTopicIds=new Set((window.SKILLUP_THINKING?.topics||[]).map(t=>t[0]));
+let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&thinkingTopicIds.has(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
 const y5base=()=>window.TY_YEARS345?.topics?.['5']||[],y5extra=()=>window.TY_YEAR5_TESTS?.topics||[],y6=()=>window.TY_YEAR6?.topics||[],thinking=()=>window.SKILLUP_THINKING?.topics||[],writing=()=>window.SKILLUP_WRITING_VOCAB?.topics||[],mrExtra=()=>window.SKILLUP_MR_EXTRA?.topics||[],reading=()=>window.SKILLUP_READING?.topics||[];
 function unique(list){const seen=new Set();return list.filter(x=>{if(seen.has(x[0]))return false;seen.add(x[0]);return true})}
 function practiceTarget(){return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
@@ -71,6 +73,7 @@ function paintLearn(){
  box.innerHTML=`<span class="kicker">LEARN THIS WORD</span><h3>${card.title}</h3><p><b>Meaning:</b> ${card.meaning}</p><p><b>In a sentence:</b> ${card.example}</p><p><b>How to use it:</b> ${card.use}</p><p><b>Tone:</b> ${card.tone}</p>`;
 }
 function updateHeader(){
+ document.body.dataset.stream=stream;
  const isThinking=stream==='thinking',isReading=stream==='reading',isWriting=stream==='writing';
  if(exam==='oc'){
    document.title='OC Practice | SkillUP';
@@ -80,14 +83,14 @@ function updateHeader(){
    const streambar=$('streambar');if(streambar)streambar.setAttribute('aria-hidden','true');
    $('heroTag').textContent=isThinking?'OC · THINKING SKILLS':isReading?'OC · READING':'OC · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
-   $('heroDesc').textContent=isThinking?'Focused OC thinking-skills practice with logic, evidence, ordering and reasoning questions.':isReading?'Focused OC reading practice with original SkillUP passages, inference and vocabulary in context.':'Use the dedicated OC mathematical reasoning pool.';
+   $('heroDesc').textContent=isThinking?'OC Thinking Skills includes logical reasoning, figure patterns, symmetry, shape puzzles and cube rotations.':isReading?'Focused OC reading practice with original SkillUP passages, inference and vocabulary in context.':'Use the dedicated OC mathematical reasoning pool.';
    $('mockTabLabel').textContent=isThinking||isReading?'30-question OC Mock':'OC Mock';
    $('mode5').textContent=isThinking?'Core Thinking':isReading?'Reading Core':'Core';
    $('mode6').textContent=isThinking?'Challenge Thinking':isReading?'Reading Challenge':'Challenge';
    $('modeMix').textContent=isThinking?'Mixed OC Thinking':isReading?'Mixed OC Reading':'Mixed OC';
    $('notice').innerHTML='Use <b>Practice</b> to learn from hints. Use <b>Mock</b> when you are ready to work without hints.';
    $('practiceHeading').textContent=isThinking?'Choose an OC Thinking Skills topic':isReading?'Choose an OC Reading skill':'Choose an OC reasoning skill';
-   $('practiceSub').textContent=isThinking?'Logic, evidence, ordering and arguments.':isReading?'Paired texts, inference and vocabulary in context.':'Focused OC reasoning practice.';
+   $('practiceSub').textContent=isThinking?'Logic, evidence, ordering, visual sequences, figure matching, symmetry and cube rotations.':isReading?'Paired texts, inference and vocabulary in context.':'Focused OC reasoning practice.';
    $('mockTitle').textContent=isThinking?'30-question OC Thinking Skills Mock':isReading?'30-question OC Reading Mock':'OC Mathematical Reasoning Mock';
    $('mockIntroText').textContent='Mixed OC practice questions. No hints. Move between questions before finishing.';
    $('sourceNote').textContent='SkillUP OC practice is independent and does not reproduce official NSW Opportunity Class test questions.';
@@ -99,14 +102,14 @@ function updateHeader(){
    const home=$('examHome');if(home){home.href='selective.html';home.textContent='Selective';}
    $('heroTag').textContent=isWriting?'SELECTIVE · WRITING VOCABULARY':isThinking?'SELECTIVE · THINKING SKILLS':isReading?'SELECTIVE · READING':'NSW SELECTIVE · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isWriting?'Use precise words.<br><span>Then write with them.</span>':isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
-   $('heroDesc').textContent=isWriting?'Learn high-value writing words such as cognitive, fascination, convey and evaluate. See the meaning, a model sentence and how to use the word, then practice.' :isThinking?'Practice original SkillUP questions based on common selective thinking-skill formats.':isReading?'Selective-style reading practice with original SkillUP passages.':'Focused Year 5–6 mathematical reasoning practice.';
+   $('heroDesc').textContent=isWriting?'Learn high-value writing words such as cognitive, fascination, convey and evaluate. See the meaning, a model sentence and how to use the word, then practice.' :isThinking?'Selective Thinking Skills includes logic, non-verbal figure patterns, cube rotations, symmetry and visual reasoning.':isReading?'Selective-style reading practice with original SkillUP passages.':'Focused Year 5–6 mathematical reasoning practice.';
    $('mockTabLabel').textContent=isWriting?'20-word Mock':isThinking||isReading?'30-question Mock':'35-question Mock';
    $('mode5').textContent=isWriting?'Core words':isThinking?'Foundation Thinking':isReading?'Reading Core':'Year 5 Foundation';
    $('mode6').textContent=isWriting?'Challenge words':isThinking?'Challenge Thinking':isReading?'Reading Challenge':'Year 6 Textbook + Selective';
    $('modeMix').textContent=isWriting?'Mixed words':isThinking?'Mixed Thinking':isReading?'Mixed Reading':'Mixed Year 5–6';
    $('notice').innerHTML=isWriting?'First read the <b>Learn this word</b> card. Then answer the practice question. The mock has 20 questions and 20 minutes.':'Use <b>Practice</b> to learn from hints. Use <b>Mock</b> when you are ready.';
    $('practiceHeading').textContent=isWriting?'Choose a writing-vocabulary skill':isThinking?'Choose a Thinking Skills topic':isReading?'Choose a Reading skill':'Choose a skill, or use Mixed Selective';
-   $('practiceSub').textContent=isWriting?'Meaning, model sentences, fill-the-blank and tone.':isThinking?'Logic, evidence, ordering and arguments.':isReading?'Paired texts, inference and vocabulary in context.':'Practice one topic at a time with a short hint after each question.';
+   $('practiceSub').textContent=isWriting?'Meaning, model sentences, fill-the-blank and tone.':isThinking?'Logic, evidence, ordering, visual sequences, figure matching, symmetry and cube rotations.':isReading?'Paired texts, inference and vocabulary in context.':'Practice one topic at a time with a short hint after each question.';
    $('mockTitle').textContent=isWriting?'20-question Writing Vocabulary Mock':isThinking?'30-question Thinking Skills Mock':isReading?'30-question Selective Reading Mock':'35-question Mathematical Reasoning Mock';
    $('mockIntroText').textContent=isWriting?'20 mixed writing-vocabulary questions. 20 minutes. No learn card during the mock.':'Mixed questions. No hints. Move between questions before finishing.';
    $('sourceNote').textContent=isWriting?'Writing Vocabulary uses original SkillUP word cards and sentences for precise written language.':'SkillUP Selective practice is independent and does not reproduce official NSW test questions.';
@@ -114,14 +117,52 @@ function updateHeader(){
  document.querySelectorAll('.streambar button').forEach(b=>b.classList.toggle('active',b.dataset.stream===stream));
 }
 function buildTopics(){
- const list=topicsFor(mode),target=practiceTarget();
- $('topicCount').textContent=list.filter(x=>x[0]!=='mixed').length;
- $('topics').innerHTML='';
- const mixed=document.createElement('button');mixed.className='topic '+(topic==='mixed'?'active':'');mixed.innerHTML=`<b>⚡ ${stream==='writing'?'Mixed writing words':stream==='thinking'?(exam==='oc'?'Mixed OC Thinking':'Mixed Thinking'):stream==='reading'?(exam==='oc'?'Mixed OC Reading':'Mixed Reading'):(exam==='oc'?'Mixed OC':'Mixed Selective')}</b><span>${stream==='writing'?'Meaning, usage, context and tone':stream==='thinking'?'Random thinking-skill questions':'Random questions across available skills'}</span>`;mixed.onclick=()=>choose('mixed');$('topics').appendChild(mixed);
- list.filter(x=>x[0]!=='mixed').forEach(x=>{const b=document.createElement('button');b.className='topic '+(topic===x[0]?'active':'');b.innerHTML=`<b>${x[1]} ${x[2]}</b><span>${x[3]}</span>`;b.onclick=()=>choose(x[0]);$('topics').appendChild(b)});
+ const list=topicsFor(mode),target=practiceTarget(),host=$('topics');
+ const entries=list.filter(x=>x[0]!=='mixed');
+ $('topicCount').textContent=entries.length;
+ host.replaceChildren();
+ const mixed=document.createElement('button');
+ mixed.type='button';
+ mixed.className='topic '+(topic==='mixed'?'active':'');
+ mixed.dataset.topic='mixed';
+ const mixedName=stream==='writing'?'Mixed writing words':stream==='thinking'?(exam==='oc'?'Mixed OC Thinking':'Mixed Thinking'):stream==='reading'?(exam==='oc'?'Mixed OC Reading':'Mixed Reading'):(exam==='oc'?'Mixed OC':'Mixed Selective');
+ const title=document.createElement('b');title.textContent='⚡ '+mixedName;
+ const sub=document.createElement('span');sub.textContent=stream==='writing'?'Meaning, usage, context and tone':stream==='thinking'?'Logic and figure reasoning together':'Random questions across available skills';
+ mixed.append(title,sub);
+ mixed.setAttribute('aria-pressed',String(topic==='mixed'));
+ mixed.onclick=()=>choose('mixed');
+ host.appendChild(mixed);
+ function appendTopic(entry){
+  const b=document.createElement('button');b.type='button';b.dataset.topic=entry[0];
+  b.className='topic '+(topic===entry[0]?'active':'');
+  const label=document.createElement('b');label.textContent=entry[1]+' '+entry[2];
+  const desc=document.createElement('span');desc.textContent=entry[3];
+  b.append(label,desc);
+  b.setAttribute('aria-pressed',String(topic===entry[0]));
+  b.onclick=()=>choose(entry[0]);host.appendChild(b);
+ }
+ function addGroup(name,description){
+  const group=document.createElement('div');group.className='thinking-topic-heading';
+  const heading=document.createElement('h3');heading.textContent=name;
+  const desc=document.createElement('p');desc.textContent=description;
+  group.append(heading,desc);host.appendChild(group);
+ }
+ if(stream==='thinking'){
+  addGroup('Verbal & Logical Reasoning','Logic, evidence, ordering, family relationships, assumptions and numerical thinking');
+  entries.filter(x=>!visualTopicIds.has(x[0])).forEach(appendTopic);
+  addGroup('Visual & Non-verbal Reasoning','Figure patterns, rotations, cube and dice puzzles, symmetry, matching, odd one out and counting shapes');
+  entries.filter(x=>visualTopicIds.has(x[0])).forEach(appendTopic);
+ }else entries.forEach(appendTopic);
  $('qnum').textContent=`${qnum} / ${target}`;
 }
-function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();showQuiz()}
+function saveSelectionToUrl(){
+ const params=new URLSearchParams(location.search);
+ params.set('stream',stream);
+ if(topic==='mixed')params.delete('topic');
+ else params.set('topic',topic);
+ history.replaceState(null,'',location.pathname+'?'+params.toString()+location.hash);
+}
+function choose(id){topic=id;qnum=1;score=attempted=0;saveSelectionToUrl();buildTopics();nextQ();showQuiz()}
 function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';(q.image?q.choices:shuffle(q.choices)).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
 function renderVisual(figureId,imageId,q){
  const figure=$(figureId),img=$(imageId);
@@ -161,6 +202,7 @@ function showQuiz(){const pv=$('practiceView');if(pv)pv.classList.add('answering
 function setStream(s){
  if(exam==='oc'&&s==='math'){location.href='assessment-practice.html?mode=oc4';return}
  stream=s;topic='mixed';score=attempted=0;qnum=1;mode='mix';
+ saveSelectionToUrl();
  document.querySelectorAll('.modebar button').forEach(b=>b.classList.toggle('active',b.dataset.mode==='mix'));
  updateHeader();buildTopics();nextQ();showMockIntro();setView('practice');showTopics();
 }
@@ -189,7 +231,7 @@ $('check').addEventListener('click',()=> {
 $('next').onclick=()=>{const target=practiceTarget();qnum=qnum>=target?1:qnum+1;nextQ()};
 let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
 function showMockIntro(){clearInterval(mockTimer);mockSeconds=mockDuration();$('mockIntro').hidden=false;$('mockQuiz').hidden=true;$('mockResult').hidden=true;tick()}
-function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(topic)?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(topic)?topic:'mixed'))}
+function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'))}
 function tick(){const m=Math.floor(mockSeconds/60),s=mockSeconds%60;$('mockTimer').textContent=`${m}:${String(s).padStart(2,'0')}`;$('timerText').textContent=$('mockTimer').textContent}
 function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
 function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockTimer=setInterval(()=>{mockSeconds--;tick();if(mockSeconds<=0)finishMock()},1000)}
@@ -215,5 +257,5 @@ $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').
 if(exam==='oc'&&stream==='writing')stream='thinking';
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(requestedStream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(pageParams.get('topic'))&&requestedView==='practice')showQuiz();
+if(requestedStream==='thinking'&&thinkingTopicIds.has(pageParams.get('topic'))&&requestedView==='practice')showQuiz();
 })();
