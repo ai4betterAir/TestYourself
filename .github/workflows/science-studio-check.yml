@@ -1,0 +1,48 @@
+name: SkillUP Science Studio K–6 checks
+on:
+  push:
+    branches: [skillup-science-k6-visual-redesign]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'science-practice.html'
+      - 'science.html'
+      - 'js/science-home-2026.js'
+      - 'scripts/browser-science-hub.mjs'
+      - 'css/science-practice-2026.css'
+      - 'js/science-practice.js'
+      - 'js/science-visuals-2026.js'
+      - 'scripts/check-science-studio.mjs'
+      - 'scripts/browser-science-studio.mjs'
+      - '.github/workflows/science-studio-check.yml'
+jobs:
+  science-studio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate science questions and SVG descriptions K–6
+        run: |
+          node --check js/science-practice.js
+          node --check js/science-visuals-2026.js
+          node scripts/check-science-studio.mjs
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.62.1
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+      - name: Test K–6 desktop and mobile science practice and timed reviews
+        run: |
+          python3 -m http.server 4173 >/tmp/science-studio-qa.log 2>&1 &
+          for i in {1..20}; do curl --fail --silent http://127.0.0.1:4173/science-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-science-studio.mjs
+          node scripts/browser-science-hub.mjs
+      - name: Save screenshot previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-science-studio-previews
+          path: science-studio-previews/*.png
+          if-no-files-found: warn

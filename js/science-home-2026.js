@@ -1,0 +1,41 @@
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const bank=window.SKILLUP_SCIENCE||{},V=window.SKILLUP_SCIENCE_VISUALS;
+const params=new URLSearchParams(location.search);
+let year=params.get('year')||params.get('grade')||'1';
+if(!bank[year])year='1';
+const label=year==='K'?'Kindy':'Year '+year;
+document.body.dataset.year=year;
+$('yearSelect').value=year;
+$('yearLabel').textContent=label;
+$('heroTitle').innerHTML='';
+$('heroTitle').append(document.createTextNode(label+' '));
+const span=document.createElement('span');span.textContent='Science Studio';$('heroTitle').append(span);
+$('heroCopy').textContent='Explore real science topics for '+label+' through original illustrations, practice and discovery.';
+$('hubBack').href='learning.html?year='+encodeURIComponent(year);
+$('learningBack').href='learning.html?year='+encodeURIComponent(year);
+document.title=label+' Science Topics | SkillUP';
+$('yearSelect').addEventListener('change',e=>{location.href='science.html?year='+encodeURIComponent(e.target.value)});
+const all=[...bank[year],...(V?.enrich(year)||[])];
+const topics=[...new Set(all.map(q=>q.topic))];
+$('topicCount').textContent=topics.length+' learning topics';
+const host=$('scienceTopicGrid');
+function card(topic,i){
+ const n=topic==='mixed'?all.length:all.filter(q=>q.topic===topic).length;
+ const a=document.createElement('a');
+ a.className='science-topic-card';
+ a.href='science-practice.html?year='+encodeURIComponent(year)+(topic==='mixed'?'':'&topic='+encodeURIComponent(topic));
+ const figure=document.createElement('div');figure.className='topic-card-visual';figure.innerHTML=V?.thumbnail(topic)||'';
+ const info=document.createElement('div');info.className='topic-card-info';
+ const tag=document.createElement('span');tag.className='topic-card-tag';tag.textContent=topic==='mixed'?'ALL SCIENCE':'TOPIC '+String(i).padStart(2,'0');
+ const h=document.createElement('h3');h.textContent=topic==='mixed'?'Mix everything together':topic;
+ const text=document.createElement('p');text.textContent=topic==='mixed'?'A little of every science topic in one practice session.':(V?.description(topic)||'Explore science and build skills through observation.');
+ const bottom=document.createElement('div');bottom.className='topic-card-bottom';
+ const qty=document.createElement('span');qty.textContent=n+' questions';
+ const go=document.createElement('span');go.className='topic-card-link';go.textContent='Explore →';
+ bottom.append(qty,go);info.append(tag,h,text,bottom);a.append(figure,info);
+ return a;
+}
+host.append(card('mixed',0),...topics.map((t,i)=>card(t,i+1)));
+})();
