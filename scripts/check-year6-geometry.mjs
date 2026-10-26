@@ -30,7 +30,7 @@ for(const topic of routes){
   assert.ok(q.diagramSvg.startsWith('<svg xmlns="http://www.w3.org/2000/svg"'));
   assert.ok(q.diagramSvg.endsWith('</svg>'));
   assert.ok(q.diagramSvg.length>600&&q.imageAlt.length>=35);
-  assert.ok(q.tip.length>18&&q.explanation.length>20);
+  assert.ok(q.tip.length>18&&q.explanation.length>20,q.geometryFamily+' tip='+q.tip+' explanation='+q.explanation);
   assert.ok(!/<(?:script|foreignObject|image)\b/i.test(q.diagramSvg));
   if(q.geometryFamily==='Year 6 cube nets'){
     const face=q.text.match(/face ([A-F])\?/)[1];
