@@ -1,0 +1,57 @@
+name: SkillUP OC figure question checks
+on:
+  push:
+    branches: [skillup-oc-figures-option-a]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/selective/thinking/TS-OC*.svg'
+      - 'data/oc-figures-option-a-spec.json'
+      - 'js/selective-visual-bank.js'
+      - 'js/selective-thinking-bank.js'
+      - 'js/selective-practice.js'
+      - 'selective-practice.html'
+      - 'scripts/check-visual-thinking.mjs'
+      - 'scripts/check-oc-figures.mjs'
+      - 'scripts/browser-oc-figures.mjs'
+      - '.github/workflows/oc-figures-check.yml'
+jobs:
+  oc-figures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify 50 new puzzles and original visual bank
+        run: |
+          node scripts/check-oc-figures.mjs
+          node scripts/check-visual-thinking.mjs
+          node scripts/check-cube-questions.mjs
+      - name: Validate all 100 new SVGs as XML
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          images=[p for p in Path('assets/selective/thinking').glob('TS-OC*.svg')]
+          assert len(images)==100, len(images)
+          for p in images: ET.parse(p)
+          print('All',len(images),'new SVGs passed XML validation')
+          PY
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Test OC and Selective category practice and mock reviews
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-oc-figure-http.log 2>&1 &
+          for attempt in {1..20}; do curl --fail --silent http://127.0.0.1:4173/selective-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-oc-figures.mjs
+          node scripts/browser-cube-thinking.mjs
+      - name: Upload 12 responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-oc-figure-previews
+          path: oc-figure-previews/*.png
+          if-no-files-found: warn

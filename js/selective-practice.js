@@ -4,7 +4,7 @@ const pageParams=new URLSearchParams(location.search);
 const exam=pageParams.get('exam')==='oc'?'oc':'selective';
 const requestedStream=pageParams.get('stream');
 const requestedView=pageParams.get('view')==='mock'?'mock':'practice';
-let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&['visual','cube'].includes(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
+let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
 const y5base=()=>window.TY_YEARS345?.topics?.['5']||[],y5extra=()=>window.TY_YEAR5_TESTS?.topics||[],y6=()=>window.TY_YEAR6?.topics||[],thinking=()=>window.SKILLUP_THINKING?.topics||[],writing=()=>window.SKILLUP_WRITING_VOCAB?.topics||[],mrExtra=()=>window.SKILLUP_MR_EXTRA?.topics||[],reading=()=>window.SKILLUP_READING?.topics||[];
 function unique(list){const seen=new Set();return list.filter(x=>{if(seen.has(x[0]))return false;seen.add(x[0]);return true})}
 function practiceTarget(){return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
@@ -122,7 +122,7 @@ function buildTopics(){
  $('qnum').textContent=`${qnum} / ${target}`;
 }
 function choose(id){topic=id;qnum=1;score=attempted=0;buildTopics();nextQ();showQuiz()}
-function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';shuffle(q.choices).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
+function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';(q.image?q.choices:shuffle(q.choices)).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
 function renderVisual(figureId,imageId,q){
  const figure=$(figureId),img=$(imageId);
  if(!figure||!img)return;
@@ -189,7 +189,7 @@ $('check').addEventListener('click',()=> {
 $('next').onclick=()=>{const target=practiceTarget();qnum=qnum>=target?1:qnum+1;nextQ()};
 let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
 function showMockIntro(){clearInterval(mockTimer);mockSeconds=mockDuration();$('mockIntro').hidden=false;$('mockQuiz').hidden=true;$('mockResult').hidden=true;tick()}
-function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&['visual','cube'].includes(topic)?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&['visual','cube'].includes(topic)?topic:'mixed'))}
+function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(topic)?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(topic)?topic:'mixed'))}
 function tick(){const m=Math.floor(mockSeconds/60),s=mockSeconds%60;$('mockTimer').textContent=`${m}:${String(s).padStart(2,'0')}`;$('timerText').textContent=$('mockTimer').textContent}
 function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
 function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockTimer=setInterval(()=>{mockSeconds--;tick();if(mockSeconds<=0)finishMock()},1000)}
@@ -215,5 +215,5 @@ $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').
 if(exam==='oc'&&stream==='writing')stream='thinking';
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(requestedStream==='thinking'&&['visual','cube'].includes(pageParams.get('topic'))&&requestedView==='practice')showQuiz();
+if(requestedStream==='thinking'&&['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount'].includes(pageParams.get('topic'))&&requestedView==='practice')showQuiz();
 })();
