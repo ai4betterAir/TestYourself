@@ -19,6 +19,8 @@ try {
     assert.ok(info.src.startsWith('assets/selective/thinking/TS-VIS-'),'Question did not use local SVG');
     assert.ok(info.alt.length>=45,'Missing accessible description');
     assert.ok(info.width <= info.viewport,'Image exceeds viewport width');
+    const zoomHref=await page.locator('#questionFigure .visual-full-link').getAttribute('href');
+    assert.equal(zoomHref,info.src,'Zoom link must open the full-resolution SVG');
     await page.locator('#questionFigure').screenshot({path:'visual-previews/practice-'+cfg.label+'.png',animations:'disabled'});
     if(cfg.label==='desktop'){
       const q=await page.evaluate((src)=>window.SKILLUP_VISUAL.questions.find(v=>v.image===src),info.src);
