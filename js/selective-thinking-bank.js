@@ -18,7 +18,8 @@ const topics=[
  ['probability','?','Probability & Chance','Simple probability and possible outcomes'],
  ['family','⌂','Family Relationships','Work out how people are related'],
  ['argument','⚖','Arguments & Assumptions','Best support, objection and assumption'],
- ['sets','⊂','Sets & Classification','All, some, none and category reasoning']
+ ['sets','⊂','Sets & Classification','All, some, none and category reasoning'],
+ ['visual','▦','Visual Reasoning','Original figure matrices, rotations, reflections and pattern puzzles']
 ];
 function logic(level){
  const type=rnd(0,5),[a,b]=threeNames();
@@ -118,7 +119,8 @@ function sets(level){
  if(type===4)return Q('All blue cards are numbered. Some numbered cards are large. What can be concluded about blue cards being large?','Nothing definite',['All blue cards are large','No blue cards are large','Some blue cards are large','Nothing definite'],'The “some large” numbered cards may or may not be blue.','sets','Sets & Classification');
  return Q('Some doctors are researchers. All researchers read scientific papers. What must be true?','Some doctors read scientific papers',['Some doctors read scientific papers','All doctors are researchers','No doctors read scientific papers','All paper readers are doctors'],'The doctors who are researchers follow the researcher rule.','sets','Sets & Classification');
 }
-const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets};
+function visual(level){return window.SKILLUP_VISUAL.question(level)}
+const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets,visual};
 function question(topic='mixed',level='mix'){
  let id=topic;
  if(id==='mixed')id=pick(topics)[0];
