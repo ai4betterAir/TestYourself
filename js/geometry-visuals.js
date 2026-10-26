@@ -87,7 +87,7 @@ function rectangleMetric(which){
  d+=line(x,y2+18,x2,y2+18,"#a8c4de",2)+line(x-18,y,x-18,y2,"#a8c4de",2);
  const candidate=[answer,w*h,2*(w+h),w+h,w*h+2,2*w+h,answer+4].filter((v,i,arr)=>v>0&&arr.indexOf(v)===i).slice(0,4);
  while(candidate.length<4)candidate.push(answer+candidate.length*3+1);
- return {text:which==="area"?"What is the area of the rectangle?":"What is the perimeter of the rectangle?",answer:`${answer} ${which==="area"?"cm²":"cm"}`,choices:shuffle(candidate.map(v=>`${v} ${which==="area"?"cm²":"cm"}`)),tip:which==="area"?"Area = length × width.":"Perimeter = twice the sum of length and width.",explanation:which==="area"?`${w} × ${h} = ${area} cm².`:`2 × (${w} + ${h}) = ${perimeter} cm.`,diagram:base(d),alt:`A blue rectangle with horizontal side labelled ${w} cm and vertical side labelled ${h} cm.`,type:which==="area"?"Rectangle area":"Rectangle perimeter"};
+ return {text:which==="area"?"What is the area of the rectangle?":"What is the perimeter of the rectangle?",answer:`${answer} ${which==="area"?"cm²":"cm"}`,choices:shuffle(candidate.map(v=>`${v} ${which==="area"?"cm²":"cm"}`)),tip:which==="area"?"Area = length × width.":"Perimeter = twice the sum of length and width.",explanation:which==="area"?`Multiply the two side lengths: ${w} × ${h} = ${area} square centimetres.`:`Add the lengths of all four sides: 2 × (${w} + ${h}) = ${perimeter} centimetres.`,diagram:base(d),alt:`A blue rectangle with horizontal side labelled ${w} cm and vertical side labelled ${h} cm.`,type:which==="area"?"Rectangle area":"Rectangle perimeter"};
 }
 function areaGrid(){
  const rows=R(2,5),cols=R(3,7),sz=40,x=380-cols*sz/2,y=180-rows*sz/2;
