@@ -1,0 +1,23 @@
+/* SkillUP original diagram presentation for illustrated maths and geometry */
+.geometry-diagram{display:block;width:min(100%,790px);margin:17px auto 20px;padding:13px;border-radius:20px;
+  border:1px solid #d8e4f2;background:linear-gradient(160deg,#fff,#f7fbff);
+  box-shadow:0 10px 25px rgba(32,67,120,.07);text-align:center;scroll-margin-top:110px}
+.geometry-diagram[hidden]{display:none!important}
+.geometry-diagram img{display:block;width:100%;height:auto;max-height:350px;object-fit:contain;
+  background:#f6faff;border-radius:12px}
+.geometry-diagram figcaption{font-size:13px;font-weight:700;color:#6a7892;padding:7px 0 2px}
+.geometry-guided{padding:8px;margin:10px 0}
+.geometry-guided img{max-height:235px}
+.geometry-review{margin:12px 0;padding:8px;max-width:560px}
+.geometry-review img{max-height:240px}
+.geometry-review-explanation{margin-top:10px;padding:12px;border-left:4px solid #438e78;
+  border-radius:7px;background:#edfaf5;color:#215e4e;font-size:14px;line-height:1.65}
+@media(max-width:650px){
+ .geometry-diagram{padding:6px;margin:12px auto;border-radius:12px}
+ .geometry-diagram img{max-height:none}
+ .geometry-guided img{max-height:225px}
+ .geometry-review img{max-height:200px}
+ .geometry-diagram figcaption{font-size:11px}
+}
+
+#quiz,#testBody{scroll-margin-top:100px}
