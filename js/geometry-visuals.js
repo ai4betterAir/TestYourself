@@ -163,6 +163,7 @@ const which=(grade,topic)=> {
  if(g==="2")allowed=allowed.filter(k=>!["triangle","prismVolume"].includes(k));
  if(g==="3")allowed=allowed.filter(k=>k!=="triangle"&&k!=="prismVolume");
  if(g==="4")allowed=allowed.filter(k=>k!=="prismVolume");
+ if((g==="5"||g==="6")&&topic==="geometry")allowed=allowed.filter(k=>!["shapeName","solid"].includes(k));
  return allowed.length?allowed:null;
 };
 function question(grade,topic){
