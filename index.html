@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
 <link rel="stylesheet" href="css/home.css?v=20260925-redesign">
+<link rel="stylesheet" href="css/home-photo-2026.css?v=20261026a">
 </head>
 <body>
 <header class="site-header">
@@ -20,7 +21,13 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-menu" id="navMenu">
-      <nav class="main-nav"><a class="active" href="index.html">Home</a></nav>
+      <nav class="main-nav" aria-label="Main navigation">
+          <a class="active" aria-current="page" href="index.html">Home</a>
+          <a href="practice.html">Practice</a>
+          <a href="#pathways">Tests</a>
+          <a href="learning.html">Subjects</a>
+          <a href="about.html">About</a>
+        </nav>
       <div class="nav-actions">
         <a class="link-signin" href="sign-in.html">Sign In</a>
         <a class="link-signup" href="sign-up.html">Sign Up</a>
@@ -30,85 +37,36 @@
 </header>
 
 <main>
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-    <span class="blob blob-3"></span>
-    <span class="spark s1"></span>
-    <span class="spark s2"></span>
-    <span class="spark s3"></span>
-    <span class="spark s4"></span>
+<!-- ============ PHOTOGRAPHIC HERO ============ -->
+<section class="hero hero-photo-home" aria-labelledby="heroHeadline">
+  <div class="hero-photo-illustration" aria-hidden="true">
+    <img src="https://images.pexels.com/photos/7256936/pexels-photo-7256936.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1350"
+      alt="" loading="eager" decoding="async" fetchpriority="high">
   </div>
-  <div class="shell hero-grid">
-    <div class="hero-copy reveal">
-      <span class="hero-badge">📚 <b>K–6</b> · NAPLAN · OC · Selective</span>
-      <h1><span class="w1">Learn.</span> <span class="w2">Practice.</span> <span class="w3">Improve.</span></h1>
-      <p class="lead">A colourful, friendly place for Australian primary students to master Maths and English, build vocabulary and get ready for NAPLAN, Opportunity Class and Selective School tests.</p>
+  <div class="hero-photo-shade" aria-hidden="true"></div>
+  <div class="shell hero-photo-content">
+    <div class="hero-copy">
+      <span class="hero-overline">SkillUP · Kindergarten to Year 6</span>
+      <h1 id="heroHeadline">Build Skills <span class="hero-h1-sub">for a <em class="bright">Brighter</em> <em class="tomorrow">Tomorrow</em></span></h1>
+      <p class="lead">From Kindergarten to Year 6, discover engaging learning, practice and challenges for every step — including NAPLAN, OC and Selective preparation.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="learning.html">
-          <svg><use href="assets/skillup-icons.svg#target"/></svg>
-          Start Learning
-        </a>
-        <a class="button button-light" href="practice.html">
-          <svg><use href="assets/skillup-icons.svg#naplan"/></svg>
-          Take a Test
-        </a>
+        <a class="button button-primary" href="#grades">Get Started <span aria-hidden="true">→</span></a>
+        <a class="button hero-secondary" href="#pathways">Explore Tests <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="hero-proof">
-        <div><b>7</b><span>Year levels</span></div>
-        <div><b>6+</b><span>Learning areas</span></div>
-        <div><b>3</b><span>Test pathways</span></div>
+      <div class="hero-highlights" aria-label="SkillUP learning highlights">
+        <span>✓ Australian curriculum focused</span>
+        <span>✓ Practice and timed tests</span>
       </div>
-    </div>
-
-    <div class="hero-visual reveal" id="heroVisual">
-      <span class="orbit-ring r1" aria-hidden="true"></span>
-      <span class="orbit-ring r2" aria-hidden="true"></span>
-      <div class="glass-card">
-        <div class="glass-head">
-          <div>
-            <span>Today's plan</span>
-            <b>Your next 20 minutes</b>
-          </div>
-          <span class="glass-chip">🔥 7 day streak</span>
-        </div>
-        <div class="glass-steps">
-          <div class="glass-step">
-            <div class="ic"><svg><use href="assets/skillup-icons.svg#maths"/></svg></div>
-            <div><small>Maths</small><b>Fractions</b></div>
-            <span class="state">Done</span>
-          </div>
-          <div class="glass-step is-current">
-            <div class="ic"><svg><use href="assets/skillup-icons.svg#english"/></svg></div>
-            <div><small>English</small><b>Grammar</b></div>
-            <span class="state">8 min</span>
-          </div>
-          <div class="glass-step">
-            <div class="ic"><svg><use href="assets/skillup-icons.svg#thinking"/></svg></div>
-            <div><small>Thinking</small><b>Logic puzzles</b></div>
-            <span class="state">Next</span>
-          </div>
-        </div>
-        <div class="glass-foot">
-          <div class="row"><span>Weekly goal</span><b>72%</b></div>
-          <div class="glass-bar"><i></i></div>
-        </div>
-      </div>
-      <span class="float-pill pill-a"><i>+</i>12 XP</span>
-      <span class="float-pill pill-b"><i>★</i>Level 4</span>
-      <span class="float-pill pill-c"><i>✓</i>New badge</span>
     </div>
   </div>
 </section>
 
 <!-- ============ GRADE SELECTION ============ -->
-<section class="section reveal" id="grades">
+<section class="section grade-section reveal" id="grades" aria-label="Choose your year level">
   <div class="shell">
     <div class="section-head">
-      <span class="eyebrow">Choose your level</span>
-      <h2>Find your <span class="text-accent">learning zone</span></h2>
+      <span class="eyebrow">Start learning today</span>
+      <h2>Choose your <span class="text-accent">year</span></h2>
       <p>Every year level from Kindergarten to Year 6 — pick yours and jump straight into the right challenge.</p>
     </div>
     <div class="grade-grid">
@@ -117,56 +75,56 @@
         <small>Start here</small>
         <b>Kindy</b>
         <span>Explore &amp; play</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-1" href="learning.html?year=1">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-1"/></svg></div>
         <small>Level 1</small>
         <b>Year 1</b>
         <span>Strong foundations</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-2" href="learning.html?year=2">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-2"/></svg></div>
         <small>Level 2</small>
         <b>Year 2</b>
         <span>Grow core skills</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-3" href="learning.html?year=3">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-3"/></svg></div>
         <small>Level 3</small>
         <b>Year 3</b>
         <span>Bigger ideas</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-4" href="learning.html?year=4">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-4"/></svg></div>
         <small>Level 4</small>
         <b>Year 4</b>
         <span>Think independently</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-5" href="learning.html?year=5">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-5"/></svg></div>
         <small>Level 5</small>
         <b>Year 5</b>
         <span>Aim higher</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
       <a class="grade-card g-6" href="learning.html?year=6">
         <div class="grade-icon"><svg><use href="assets/skillup-icons.svg#year-6"/></svg></div>
         <small>Level 6</small>
         <b>Year 6</b>
         <span>Ready for what's next</span>
-        <span class="grade-go">Enter <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
+        <span class="grade-go">Enter <span aria-hidden="true">→</span></span>
       </a>
     </div>
   </div>
 </section>
 
 <!-- ============ LEARNING PATHWAYS ============ -->
-<section class="section reveal" id="assessments">
+<section class="section reveal" id="pathways" id="assessments">
   <div class="shell">
     <div class="section-head">
       <span class="eyebrow">Learning pathways</span>
