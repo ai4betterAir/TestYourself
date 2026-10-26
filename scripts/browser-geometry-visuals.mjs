@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {chromium} from 'playwright';
 const origin='http://127.0.0.1:4173';
 fs.mkdirSync('geometry-previews',{recursive:true});
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||undefined});
 const samples=[
  {year:'1',topic:'shapes2d'},
  {year:'2',topic:'g2geometry'},
