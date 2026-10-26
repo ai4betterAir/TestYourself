@@ -7,7 +7,7 @@ for(const file of ['js/selective-visual-bank.js','js/selective-thinking-bank.js'
 }
 const visuals=context.window.SKILLUP_VISUAL;
 assert.equal(visuals.questions.length,60,'Exactly 60 original visual questions are required');
-assert.equal(new Set(visuals.questions.map(q=>q.id)).size,50,'Question IDs must be unique');
+assert.equal(new Set(visuals.questions.map(q=>q.id)).size,60,'Question IDs must be unique');
 const groups=new Map();
 for (const q of visuals.questions){
   groups.set(q.subtype,(groups.get(q.subtype)||0)+1);
