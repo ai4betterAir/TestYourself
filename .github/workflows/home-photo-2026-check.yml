@@ -1,7 +1,7 @@
 name: SkillUP people-free photo homepage check
 on:
   push:
-    branches: [skillup-home-photographic-2026]
+    branches: [skillup-home-photographic-2026, skillup-home-fullwidth-hero-fix]
   pull_request:
     branches: [main]
     paths:
