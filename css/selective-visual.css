@@ -1,0 +1,15 @@
+/* Visual Thinking Skills: accessible image frames, mobile-first. */
+.question-figure{display:block;width:min(100%,960px);margin:20px auto 22px;padding:12px;
+ background:#f8fbff;border:1px solid #dfe8f6;border-radius:19px;
+ box-shadow:0 10px 26px rgba(30,61,109,.07);}
+.question-figure[hidden]{display:none!important}
+.question-figure img{display:block;width:100%;height:auto;max-height:520px;
+ object-fit:contain;background:#f8fbff;border-radius:12px}
+.question-figure figcaption{font:700 13px/1.5 Nunito,system-ui,sans-serif;
+ margin:9px 4px 1px;color:#657795;text-align:center}
+.review-figure{display:block;width:min(100%,660px);height:auto;margin:13px auto;
+ border-radius:13px;border:1px solid #e0e8f4;background:#f8fbff}
+@media(max-width:650px){.question-figure{padding:6px;margin:13px auto 17px;border-radius:12px}
+ .question-figure img{max-height:none}
+ .question-figure figcaption{font-size:11px}
+ .review-figure{margin:10px auto}}
