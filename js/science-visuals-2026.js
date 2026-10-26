@@ -1,7 +1,7 @@
 /* Original SkillUP science diagrams and supplemental questions. No external images or people. */
 (function(){
 'use strict';
-const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;'}[c]));
+const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;' ,'"':'&quot;'}[c]));
 const T=(x,y,s,size=18,colour='#234c64',weight=800)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="'+size+'" font-weight="'+weight+'" fill="'+colour+'" font-family="Arial,Helvetica,sans-serif">'+E(s)+'</text>';
 const C=(x,y,r,fill,stroke='none',w=2)=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+w+'"/>';
 const L=(x,y,X,Y,col='#6b9db2',width=3,dash='')=>'<path d="M'+x+' '+y+'L'+X+' '+Y+'" stroke="'+col+'" stroke-width="'+width+'" stroke-linecap="round" '+(dash?'stroke-dasharray="'+dash+'"':'')+' fill="none"/>';
