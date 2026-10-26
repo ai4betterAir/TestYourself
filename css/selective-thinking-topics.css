@@ -1,0 +1,37 @@
+/* Thinking Skills contains all verbal and figure-based reasoning topics. */
+body[data-stream="thinking"] .topics .topic[data-topic="mixed"]{
+  grid-column:1/-1;
+  min-height:87px;
+  border:1.5px solid #cfc6f5;
+  background:linear-gradient(105deg,#f6f4ff,#f7fffe);
+  display:flex;flex-direction:column;justify-content:center;
+}
+body[data-stream="thinking"] .topics .topic[data-topic="mixed"].active{border:2px solid #855fe0;background:#f2ecff}
+body[data-stream="thinking"] .topics .thinking-topic-heading{
+  grid-column:1/-1;
+  padding:15px 19px;
+  background:linear-gradient(115deg,#f3f8ff,#f0faf7);
+  border:1px solid #dbe8ed;
+  border-radius:17px;
+  margin-top:4px;
+}
+body[data-stream="thinking"] .topics .thinking-topic-heading h3{
+  color:#254b6d;font-family:Sora,Arial,sans-serif;font-size:1.12rem;
+  font-weight:800;letter-spacing:-.025em;margin:0 0 5px;
+}
+body[data-stream="thinking"] .topics .thinking-topic-heading p{
+  font-family:Nunito,Arial,sans-serif;font-size:.84rem;font-weight:750;
+  line-height:1.5;color:#597489;margin:0;
+}
+body[data-stream="thinking"] .topics .thinking-topic-heading:nth-of-type(2){
+  border-color:#dacff0;background:linear-gradient(115deg,#f8f4ff,#f3faff);
+}
+body[data-stream="thinking"] .topics .topic:focus-visible{outline:3px solid #7454d6;outline-offset:3px}
+body[data-stream="thinking"] .topics .topic[aria-pressed="true"]:not([data-topic="mixed"]){
+  border-color:#8a6bdc;background:#f8f5ff;
+}
+@media(max-width:700px){
+ body[data-stream="thinking"] .topics .thinking-topic-heading{padding:13px 15px}
+ body[data-stream="thinking"] .topics .thinking-topic-heading h3{font-size:1rem}
+ body[data-stream="thinking"] .topics .thinking-topic-heading p{font-size:.78rem}
+}
