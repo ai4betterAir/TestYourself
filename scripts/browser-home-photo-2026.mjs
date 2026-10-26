@@ -6,6 +6,8 @@ fs.mkdirSync('home-photo-previews',{recursive:true});
 const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||undefined});
 const views=[
   {name:'desktop',width:1640,height:950,cols:7},
+  {name:'wide',width:2528,height:980,cols:7},
+  {name:'user-screenshot',width:1264,height:859,cols:7},
   {name:'laptop',width:1280,height:850,cols:7},
   {name:'tablet',width:810,height:1030,cols:4},
   {name:'mobile',width:390,height:844,cols:2}
@@ -22,7 +24,9 @@ try{
   assert.match(await page.locator('#heroHeadline').innerText(),/Brighter Tomorrow/);
   const image=page.locator('.hero-photo-illustration img');
   const src=await image.getAttribute('src');
-  assert.ok(src.startsWith('https://images.pexels.com/photos/7634592/'),'Wrong photo');
+  assert.ok(src.startsWith('https://images.pexels.com/photos/12969056/'),'Wrong photo');
+  const photoLoaded=await image.evaluate(img=>img.complete && img.naturalWidth>100);
+  assert.ok(photoLoaded,'The hero photograph failed to load');
   const cards=page.locator('.grade-card');
   assert.equal(await cards.count(),7,'K–6 cards missing');
   const years=await cards.locator('b').allTextContents();
@@ -40,6 +44,10 @@ try{
       viewport:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,
       hero:rect(document.querySelector('.hero-photo-home')),
       cards:rect(document.querySelector('.grade-grid')),
+      gradeShell:rect(document.querySelector('.grade-section>.shell')),
+      navShell:rect(document.querySelector('.nav-shell')),
+      pathShell:rect(document.querySelector('#pathways .shell')),
+      photo:rect(document.querySelector('.hero-photo-illustration')),
       first:rect(first),second:rect(second),
       header:rect(document.querySelector('.site-header'))
     };
@@ -47,6 +55,12 @@ try{
   assert.ok(layout.scrollWidth<=layout.viewport+2,'Horizontal overflow '+view.name+': '+JSON.stringify(layout));
   assert.ok(layout.hero.height>=430,'Hero collapsed '+view.name);
   assert.ok(layout.first.width>=135,'Card unreadable '+view.name);
+  const shellRatio=layout.gradeShell.width/layout.viewport;
+  assert.ok(shellRatio>=.88,'Grade section too narrow at '+view.name+' ratio='+shellRatio);
+  if(view.width>1150){
+    assert.ok(layout.pathShell.width/layout.viewport>.88,'Pathway cards leave a large unused right side');
+    assert.ok(layout.navShell.width/layout.viewport>.88,'Navigation does not span the layout');
+  }
   if(view.name==='desktop'||view.name==='laptop')assert.ok(Math.abs(layout.first.top-layout.second.top)<4,'Year cards should be on one row');
   if(view.name==='mobile')assert.ok(Math.abs(layout.first.top-layout.second.top)<4,'Mobile should have 2 cards per row');
   if(view.name==='mobile'){
