@@ -171,6 +171,7 @@ function renderVisual(figureId,imageId,q){
  const source=(q?.imageMobile && window.matchMedia('(max-width:650px)').matches) ? q.imageMobile : q?.image;
  if(typeof source!=='string'||!/^assets\/selective\/thinking\/[a-zA-Z0-9_-]+\.(svg|png)$/.test(source)){
    figure.hidden=true;
+   figure.closest('.quiz')?.classList.remove('visual-problem');
    img.removeAttribute('src');
    img.alt='';
    figure.querySelector('.visual-full-link')?.removeAttribute('href');
@@ -178,10 +179,37 @@ function renderVisual(figureId,imageId,q){
  }
  img.alt=q.imageAlt||'Visual reasoning diagram';
  img.onerror=()=>{figure.hidden=true;};
+ figure.closest('.quiz')?.classList.add('visual-problem');
  img.src=source;
  const zoom=figure.querySelector('.visual-full-link');
  if(zoom)zoom.href=source;
  figure.hidden=false;
+}
+let lastPracticePageScroll=0,lastPracticeTopic='mixed',dialogWasOpen=false;
+function practiceDialogState(){return !!$('practiceDialog')?.open}
+function updatePracticeDialogHeader(){
+ const title=$('practiceDialogTitle'),eyebrow=$('practiceDialogHelp'),progress=$('practiceDialogProgress');
+ if(title)title.textContent=current?._name||((stream==='thinking')?'Thinking Skills':'Practice');
+ if(eyebrow)eyebrow.textContent='SKILLUP · '+(exam==='oc'?'OC':'SELECTIVE')+' · '+(stream==='thinking'?'THINKING SKILLS':stream.toUpperCase());
+ if(progress)progress.textContent='Question '+qnum+' of '+practiceTarget();
+}
+function restorePracticeScreen(){
+ const holder=$('practiceDialogQuestionHost');
+ const quiz=holder?.querySelector('.quiz');
+ if(quiz)$('practiceView').appendChild(quiz);
+ document.body.classList.remove('practice-dialog-active');
+ $('practiceView')?.classList.remove('answering');
+ const close=$('backToTopics');if(close)close.hidden=true;
+ if(!dialogWasOpen)return;
+ dialogWasOpen=false;
+ const target=[...document.querySelectorAll('#topics button[data-topic]')].find(b=>b.dataset.topic===lastPracticeTopic);
+ if(target)target.focus({preventScroll:true});
+ window.scrollTo({top:lastPracticePageScroll,behavior:'instant'});
+}
+function closePracticeDialog(){
+ const dialog=$('practiceDialog');
+ if(dialog?.open)dialog.close();
+ restorePracticeScreen();
 }
 function nextQ(){
  current=make();selected=null;paintLearn();
@@ -194,11 +222,36 @@ function nextQ(){
  $('level').textContent=current._year||modeLabel();
  $('qnum').textContent=`${qnum} / ${practiceTarget()}`;
  $('score').textContent=`${score} / ${attempted}`;
+ updatePracticeDialogHeader();
+ if(practiceDialogState())$('practiceDialogScroll').scrollTop=0;
  renderAnswers('answers',current,(b)=>{const host=$('answers');host.querySelectorAll('button').forEach(z=>z.classList.remove('selected'));b.classList.add('selected');selected=b});
 }
-function setView(v){view=v;document.querySelectorAll('.top-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));$('practiceView').hidden=v!=='practice';$('mockView').hidden=v!=='mock';if(v==='mock')showMockIntro();else $('timerText').textContent='—'}
-function showTopics(){const pv=$('practiceView');if(pv)pv.classList.remove('answering');const bt=$('backToTopics');if(bt)bt.hidden=true;window.scrollTo({top:(pv?.offsetTop||0)-90,behavior:'smooth'})}
-function showQuiz(){const pv=$('practiceView');if(pv)pv.classList.add('answering');const bt=$('backToTopics');if(bt)bt.hidden=false;const quiz=document.querySelector('.quiz');if(quiz)window.scrollTo({top:quiz.offsetTop-90,behavior:'smooth'})}
+function setView(v){
+ if(v!=='practice'&&practiceDialogState())closePracticeDialog();
+ view=v;
+ document.querySelectorAll('.top-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+ $('practiceView').hidden=v!=='practice';$('mockView').hidden=v!=='mock';
+ if(v==='mock')showMockIntro();else $('timerText').textContent='—';
+}
+function showTopics(){closePracticeDialog()}
+function showQuiz(){
+ const dialog=$('practiceDialog'),holder=$('practiceDialogQuestionHost');
+ const quiz=$('practiceView').querySelector('.quiz')||holder?.querySelector('.quiz');
+ if(!dialog||!holder||!quiz)return;
+ if(!dialog.open){
+  lastPracticePageScroll=window.scrollY;
+  lastPracticeTopic=topic;
+  holder.appendChild(quiz);
+  dialog.showModal();
+  dialogWasOpen=true;
+  document.body.classList.add('practice-dialog-active');
+ }
+ $('practiceView').classList.add('answering');
+ $('backToTopics').hidden=false;
+ updatePracticeDialogHeader();
+ $('practiceDialogScroll').scrollTop=0;
+ $('backToTopics').focus({preventScroll:true});
+}
 function setStream(s){
  if(exam==='oc'&&s==='math'){location.href='assessment-practice.html?mode=oc4';return}
  stream=s;topic='mixed';score=attempted=0;qnum=1;mode='mix';
@@ -217,7 +270,11 @@ document.querySelectorAll('.streambar button').forEach(b=>{
  if(exam==='oc'&&b.dataset.stream==='math'){b.textContent='🔢 OC Mathematical Reasoning';b.onclick=()=>location.href='assessment-practice.html?mode=oc4';}
  else b.onclick=()=>setStream(b.dataset.stream);
 });
-{const _bt=$('backToTopics');if(_bt)_bt.onclick=()=>showTopics();}
+{const _bt=$('backToTopics');if(_bt)_bt.onclick=showTopics;}
+{const dialog=$('practiceDialog');if(dialog){
+ dialog.addEventListener('cancel',e=>{e.preventDefault();closePracticeDialog()});
+ dialog.addEventListener('close',restorePracticeScreen);
+}}
 document.querySelectorAll('.top-tabs button').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 document.querySelectorAll('.modebar button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.modebar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;topic='mixed';score=attempted=0;qnum=1;updateHeader();buildTopics();nextQ();showMockIntro();showTopics()});
 $('check').onclick=()=>{if(!selected){$('feedback').textContent='Choose an answer first.';return}if(selected.dataset.checked)return;attempted++;const ok=String(selected.textContent)===String(current.answer);if(ok){score++;selected.classList.add('correct');$('feedback').textContent='✓ Correct!'}else{selected.classList.add('wrong');[...$('answers').children].find(b=>String(b.textContent)===String(current.answer))?.classList.add('correct');$('feedback').textContent=`Answer: ${current.answer}`}selected.dataset.checked='1';$('score').textContent=`${score} / ${attempted}`};

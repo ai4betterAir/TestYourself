@@ -1,0 +1,166 @@
+/* SkillUP focused practice dialog: questions start at viewport top,
+   with a persistent Close control that restores the original topic screen. */
+body.practice-dialog-active{overflow:hidden!important}
+.practice-dialog{
+  position:fixed;
+  inset:0;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  width:100vw;
+  max-width:100vw;
+  height:100vh;
+  height:100dvh;
+  max-height:100dvh;
+  border:0;
+  overflow:hidden;
+  background:#f4f7fc;
+  color:#173257;
+  z-index:3000;
+}
+.practice-dialog[open]{display:flex;flex-direction:column}
+.practice-dialog::backdrop{background:rgba(13,30,57,.62)}
+.practice-dialog-toolbar{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:13px clamp(16px,3vw,44px);
+  min-height:78px;
+  background:linear-gradient(100deg,#fff 0%,#f9faff 64%,#f0faf8 100%);
+  border-bottom:1px solid #d9e4ef;
+  box-shadow:0 4px 12px rgba(26,52,92,.05);
+  z-index:1;
+}
+.practice-dialog-heading{min-width:0}
+.practice-dialog-eyebrow{font:850 .69rem/1.5 Nunito,Arial,sans-serif;letter-spacing:.105em;color:#785dc5;display:block}
+.practice-dialog-toolbar h2{
+  margin:3px 0 0;
+  color:#213b63;
+  font:800 clamp(.99rem,1.7vw,1.35rem)/1.25 Sora,Arial,sans-serif;
+  letter-spacing:-.025em;
+  max-width:60vw;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.practice-dialog-tools{display:flex;align-items:center;gap:17px;flex-shrink:0}
+.practice-dialog-progress{font:850 .78rem Nunito,Arial,sans-serif;color:#5e7393;white-space:nowrap}
+.practice-dialog-close{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border:1.5px solid #bbcae0;
+  background:#fff;
+  color:#385170;
+  border-radius:14px;
+  padding:11px 17px;
+  min-height:45px;
+  font:900 .88rem Nunito,Arial,sans-serif;
+  cursor:pointer;
+}
+.practice-dialog-close:hover{background:#fff0f2;border-color:#d8929e;color:#9e445e}
+.practice-dialog-close:focus-visible{outline:3px solid #315cdd;outline-offset:3px}
+.practice-dialog-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  overscroll-behavior:contain;
+  scroll-behavior:auto;
+  padding:20px clamp(12px,2.6vw,46px) 34px;
+}
+.practice-dialog-inner{width:min(100%,1320px);margin-inline:auto}
+.practice-dialog .quiz{
+  width:100%;
+  margin:0!important;
+  padding:clamp(15px,2.5vw,28px)!important;
+  max-width:none;
+  box-shadow:0 12px 30px rgba(36,67,116,.06)!important;
+  border:1px solid #dbe5f0!important;
+}
+.practice-dialog .quiz .qtop{align-items:center}
+.practice-dialog .quiz .qtop b{color:#59718e}
+.practice-dialog .quiz h2#question{
+  font-size:clamp(1.23rem,1.8vw,1.65rem)!important;
+  line-height:1.42!important;
+  margin:15px 0 13px!important;
+}
+.practice-dialog .quiz .answers button{
+  min-height:56px;
+  border-radius:13px;
+  font:850 .9rem/1.4 Nunito,Arial,sans-serif;
+}
+.practice-dialog .quiz .question-figure{width:100%;margin:0 0 12px!important}
+.practice-dialog .quiz .question-figure img{max-height:48dvh}
+.practice-dialog .quiz .tip{font-size:.85rem;margin-top:11px!important}
+.practice-dialog .quiz .actions{margin-top:12px}
+.practice-dialog .quiz .feedback{margin-top:12px}
+.practice-dialog .quiz.visual-problem{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(275px,.85fr);
+  grid-template-areas:
+    "meta meta"
+    "question question"
+    "figure choices"
+    "figure actions"
+    "figure feedback"
+    "figure explanation"
+    "hint hint";
+  align-items:start;
+  gap:8px 22px;
+}
+.practice-dialog .quiz.visual-problem .qtop{grid-area:meta}
+.practice-dialog .quiz.visual-problem #question{grid-area:question}
+.practice-dialog .quiz.visual-problem #questionFigure{grid-area:figure}
+.practice-dialog .quiz.visual-problem #answers{
+  grid-area:choices;
+  align-self:start;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+.practice-dialog .quiz.visual-problem .actions{grid-area:actions}
+.practice-dialog .quiz.visual-problem #feedback{grid-area:feedback}
+.practice-dialog .quiz.visual-problem #cubeExplanation{grid-area:explanation}
+.practice-dialog .quiz.visual-problem #tip{grid-area:hint}
+.practice-dialog .quiz.visual-problem #questionFigure img{max-height:min(52dvh,480px)}
+.practice-dialog .quiz.visual-problem #answers button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  font-size:1.02rem;
+  text-align:center;
+  padding:10px;
+}
+.practice-dialog .quiz.visual-problem .actions button{flex:1 1 115px}
+@media(max-width:760px){
+  .practice-dialog-toolbar{min-height:70px;padding:10px 13px;gap:9px}
+  .practice-dialog-eyebrow{font-size:.59rem}
+  .practice-dialog-toolbar h2{max-width:55vw;font-size:.97rem}
+  .practice-dialog-tools{gap:8px}
+  .practice-dialog-progress{display:none}
+  .practice-dialog-close{min-height:42px;padding:9px 13px;font-size:.83rem}
+  .practice-dialog-scroll{padding:12px 10px 28px}
+  .practice-dialog .quiz{padding:14px 12px!important;border-radius:18px!important}
+  .practice-dialog .quiz.visual-problem{display:block}
+  .practice-dialog .quiz h2#question{font-size:clamp(1.11rem,4.5vw,1.4rem)!important;margin:12px 0!important}
+  .practice-dialog .quiz .question-figure img{max-height:44dvh}
+  .practice-dialog .quiz.visual-problem .answers{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:7px;
+    margin-top:12px;
+  }
+  .practice-dialog .quiz.visual-problem .answers button{min-height:46px;padding:8px 4px}
+  .practice-dialog .quiz .actions{margin-top:12px}
+  .practice-dialog .quiz .actions button{flex:1 1 120px}
+  .practice-dialog .quiz .tip{padding:11px;font-size:.78rem}
+}
+@media(max-width:430px){
+  .practice-dialog-toolbar h2{max-width:52vw}
+  .practice-dialog-toolbar{padding-inline:10px}
+}
+@media(prefers-reduced-motion:reduce){.practice-dialog-scroll{scroll-behavior:auto}}

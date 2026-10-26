@@ -28,6 +28,7 @@ try {
       await page.locator('#answers button').filter({hasText:new RegExp('^'+q.answer+'$')}).click();
       await page.locator('#check').click();
       assert.ok((await page.locator('#feedback').innerText()).includes('Correct'),'Practice answer scoring broken');
+      await page.locator('#backToTopics').click();
       await page.locator('.top-tabs button[data-view="mock"]').click();
       await page.locator('#startMock').click();
       await page.locator('#mockQuestionFigure').waitFor({state:'visible',timeout:10000});

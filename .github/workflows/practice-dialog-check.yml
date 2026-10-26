@@ -1,0 +1,42 @@
+name: Fullscreen Selective and OC practice checks
+on:
+  push:
+    branches: [skillup-practice-top-screen-dialog]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'selective-practice.html'
+      - 'js/selective-practice.js'
+      - 'css/selective-practice-dialog.css'
+      - 'scripts/browser-practice-dialog.mjs'
+      - '.github/workflows/practice-dialog-check.yml'
+jobs:
+  practice-dialog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate JavaScript files
+        run: |
+          node --check js/selective-practice.js
+          node --check scripts/browser-practice-dialog.mjs
+          node scripts/check-oc-figures.mjs
+      - name: Install Playwright runtime
+        run: |
+          npm install --no-save playwright@1.62.1
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+      - name: Test fullscreen question and Close behaviour
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-practice-dialog.log 2>&1 &
+          for attempt in {1..20}; do curl --fail --silent http://127.0.0.1:4173/selective-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-practice-dialog.mjs
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-practice-dialog-previews
+          path: practice-dialog-previews/*.png
+          if-no-files-found: warn

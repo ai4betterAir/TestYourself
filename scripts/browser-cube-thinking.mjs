@@ -40,7 +40,8 @@ try{
    await page.locator('#next').click();
    assert.ok(await page.locator('#cubeExplanation').isHidden(),'Explanation not cleared between questions');
    // Real mock should retain cube figures.
-   await page.locator('.top-tabs button[data-view="mock"]').click();
+   await page.locator('#backToTopics').click();
+      await page.locator('.top-tabs button[data-view="mock"]').click();
    await page.locator('#startMock').click();
    await page.locator('#mockQuestionFigure').waitFor({state:'visible',timeout:12000});
    assert.match(await page.locator('#mockQuestionImage').getAttribute('src'),/TS-CUBE-\d{3}(-mobile)?\.svg$/);
