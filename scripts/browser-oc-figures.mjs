@@ -39,7 +39,8 @@ try {
    await page.locator('#next').click();
    assert.ok(await page.locator('#cubeExplanation').isHidden());
    if(topic==='ocfigures'&&viewport.name==='desktop'){
-     await page.locator('.top-tabs button[data-view="mock"]').click();
+     await page.locator('#backToTopics').click();
+      await page.locator('.top-tabs button[data-view="mock"]').click();
      await page.locator('#startMock').click();
      await page.locator('#mockQuestionFigure').waitFor({state:'visible'});
      assert.match(await page.locator('#mockQuestionImage').getAttribute('src'),/TS-OC/);
