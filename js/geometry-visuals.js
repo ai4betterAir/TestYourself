@@ -140,7 +140,7 @@ const y6Distractors=(answer,alternatives,unit="")=>{
  return shuffle([...new Set(opts)].slice(0,4));
 };
 const y6Result=(type,q,answer,choices,figure,tip,explanation,alt)=>({
- text:q,answer:String(answer),choices:shuffle(choices),diagram:base(figure),tip,explanation,alt,type
+ text:q,answer:String(answer),choices:shuffle(choices),diagram:base(figure),tip,explanation:explanation.length<35?`${tip} ${explanation}`:explanation,alt,type
 });
 const y6Prism=(a,b,c)=>{
  let d=poly([[238,153],[387,108],[540,153],[390,197]],"#e3f2ff","#5481ac");
