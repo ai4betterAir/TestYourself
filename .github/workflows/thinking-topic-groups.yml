@@ -1,0 +1,46 @@
+name: Unified Thinking Skills topic checks
+on:
+  push:
+    branches: [skillup-thinking-skills-unified-visual-topics]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'selective.html'
+      - 'oc.html'
+      - 'selective-practice.html'
+      - 'js/selective-thinking-bank.js'
+      - 'js/selective-practice.js'
+      - 'css/selective-thinking-topics.css'
+      - 'scripts/browser-thinking-topic-groups.mjs'
+      - '.github/workflows/thinking-topic-groups.yml'
+jobs:
+  thinking-groups:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check syntax and preserve original figure bank
+        run: |
+          node --check js/selective-practice.js
+          node --check js/selective-thinking-bank.js
+          node scripts/check-oc-figures.mjs
+          node scripts/check-cube-questions.mjs
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.62.1
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+      - name: Verify all Thinking Skills categories on OC and Selective
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-thinking.log 2>&1 &
+          for n in {1..20}; do curl --fail --silent http://127.0.0.1:4173/selective-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-thinking-topic-groups.mjs
+      - name: Save topic grouping screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-thinking-topic-group-previews
+          path: thinking-topic-previews/*.png
+          if-no-files-found: warn
