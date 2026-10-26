@@ -24,8 +24,12 @@ try{
   assert.match(await page.locator('#heroHeadline').innerText(),/Brighter Tomorrow/);
   const image=page.locator('.hero-photo-illustration img');
   const src=await image.getAttribute('src');
-  assert.ok(src.startsWith('https://images.pexels.com/photos/12969056/'),'Wrong photo');
-  const photoLoaded=await image.evaluate(img=>img.complete && img.naturalWidth>100);
+  assert.ok(src.startsWith('https://images.pexels.com/photos/7634592/'),'Wrong photo');
+  const photoLoaded=await image.evaluate(img=>new Promise(resolve=>{
+    if(img.complete)return resolve(img.naturalWidth>100);
+    img.addEventListener('load',()=>resolve(img.naturalWidth>100),{once:true});
+    img.addEventListener('error',()=>resolve(false),{once:true});
+  }));
   assert.ok(photoLoaded,'The hero photograph failed to load');
   const cards=page.locator('.grade-card');
   assert.equal(await cards.count(),7,'K–6 cards missing');
