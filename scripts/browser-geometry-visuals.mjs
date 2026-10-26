@@ -33,7 +33,7 @@ try{
   for(const mobile of [false,true]){
    if(mobile && !['1','5','6'].includes(s.year))continue;
    const page=await browser.newPage({viewport:mobile?{width:390,height:844}:{width:1250,height:900}});
-   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const errors=[];page.on('pageerror',e=>errors.push(e.stack||e.message));
    await page.addInitScript((g)=>{
      localStorage.setItem('tyProfile',JSON.stringify({grade:g,studentName:'Geometry Tester'}));
    },s.year);
