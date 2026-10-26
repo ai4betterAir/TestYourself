@@ -132,11 +132,14 @@ function renderVisual(figureId,imageId,q){
    figure.hidden=true;
    img.removeAttribute('src');
    img.alt='';
+   figure.querySelector('.visual-full-link')?.removeAttribute('href');
    return;
  }
  img.alt=q.imageAlt||'Visual reasoning diagram';
  img.onerror=()=>{figure.hidden=true;};
  img.src=source;
+ const zoom=figure.querySelector('.visual-full-link');
+ if(zoom)zoom.href=source;
  figure.hidden=false;
 }
 function nextQ(){
