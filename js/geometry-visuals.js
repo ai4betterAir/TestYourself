@@ -192,6 +192,29 @@ function renderImage(id,q){
  }else{img.removeAttribute("src");img.alt="";}
 }
 window.SKILLUP_GEOMETRY={question,hasTopic:(grade,topic)=>!!which(grade,topic),renderImage,types:Object.keys(generators)};
+if(typeof topicList==="function"){
+ const priorTopicList=topicList;
+ const supplemental=[
+  ["angles","∠","Angles & Triangle Geometry","Visual angle types, diagrams and missing angles"],
+  ["symmetry","↔","Symmetry & Transformations","Lines of symmetry, turns and slides"],
+  ["coordinates","⊞","Coordinates & Position","Read points and positions on a labelled grid"],
+  ["perimeterarea","▭","Perimeter & Area Diagrams","Measure rectangles and count square units"],
+  ["circles","◯","Circles & Radius","Identify radius and calculate diameter"],
+  ["solids","⬡","3D Shapes & Solids","Recognise and measure illustrated solid figures"]
+ ];
+ topicList=function(){
+  const base=priorTopicList();
+  if(!["4","5","6"].includes(String(grade)))return base;
+  const list=[...base],existing=new Set(list.map(x=>x[0]));
+  for(const entry of supplemental){
+    if((String(grade)==="4" && !["angles","symmetry","perimeterarea"].includes(entry[0]))||existing.has(entry[0])||!which(grade,entry[0]))continue;
+    list.push(entry);
+    existing.add(entry[0]);
+  }
+  return list;
+ };
+ if(typeof buildTopics==="function")buildTopics();
+}
 if(typeof makeQuestion==="function"){
  const previous=makeQuestion;
  makeQuestion=function(){
