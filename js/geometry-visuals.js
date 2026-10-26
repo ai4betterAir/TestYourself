@@ -198,8 +198,15 @@ if(typeof makeQuestion==="function"){
   return visual||previous();
  };
 }
-if(typeof buildSet==="function"&&typeof grade!=="undefined"&&typeof topic!=="undefined"&&which(grade,topic)){
- buildSet();
- document.getElementById('tryGuidedAgain')?.click();
+if(typeof buildSet==="function"&&typeof grade!=="undefined"&&typeof topic!=="undefined"){
+ const requested=new URLSearchParams(location.search).get('topic');
+ if(requested&&which(grade,requested)&&typeof topicList==="function"&&topicList().some(x=>x[0]===requested)){
+   const button=[...document.querySelectorAll('.p-topic')].find(x=>x.dataset.topic===requested);
+   if(button)button.click();
+   else{topic=requested;buildSet();document.getElementById('tryGuidedAgain')?.click();}
+ }else if(which(grade,topic)){
+   buildSet();
+   document.getElementById('tryGuidedAgain')?.click();
+ }
 }
 })();
