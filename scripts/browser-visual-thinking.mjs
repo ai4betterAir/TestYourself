@@ -44,4 +44,16 @@ try {
     console.log(cfg.label+' visual practice passed');
     await page.close();
   }
+  // Deep links work for both examination pathways without topic-click prerequisites.
+  for(const url of [
+    '/selective-practice.html?stream=thinking&topic=visual',
+    '/selective-practice.html?exam=oc&stream=thinking&topic=visual'
+  ]){
+    const page=await browser.newPage({viewport:{width:1000,height:800}});
+    await page.goto(base+url,{waitUntil:'domcontentloaded',timeout:20000});
+    await page.locator('#questionFigure').waitFor({state:'visible',timeout:12000});
+    const loaded=await page.locator('#questionImage').evaluate(el=>el.complete&&el.naturalWidth>0);
+    assert.ok(loaded,'Visual direct link failed for '+url);
+    await page.close();
+  }
 }finally{await browser.close()}
