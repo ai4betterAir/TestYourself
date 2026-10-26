@@ -93,7 +93,7 @@ body{background:#f8fbff}
  .hero-photo-illustration{width:63%;opacity:.7}
  .hero-photo-content .hero-copy{width:72%}
  .hero-photo-home:before{background:linear-gradient(90deg,#f8fcff 0%,rgba(249,253,255,.97) 46%,rgba(249,253,255,.2) 100%)}
- .grade-section>.shell{width:min(100% - 28px,700px);padding:17px}
+ .grade-section>.shell{width:min(calc(100% - 28px),700px);padding:17px}
 }
 @media(max-width:600px){
  .nav-shell{height:72px}
