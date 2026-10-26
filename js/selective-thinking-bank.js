@@ -20,7 +20,13 @@ const topics=[
  ['argument','⚖','Arguments & Assumptions','Best support, objection and assumption'],
  ['sets','⊂','Sets & Classification','All, some, none and category reasoning'],
  ['visual','▦','Visual Reasoning','Figure matrices, rotations, reflections and visual patterns'],
- ['cube','⬡','Cube & Dice Rotation','3D faces, nets, hidden faces and impossible rotations']
+ ['cube','⬡','Cube & Dice Rotation','3D faces, nets, hidden faces and impossible rotations'],
+ ['ocfigures','▤','OC Figure Skills','50 original OC-friendly image puzzles'],
+ ['symmetry','◫','Symmetry & Reflection','Find the mirrored picture'],
+ ['figurematch','▧','Matching Figures','Match a picture exactly'],
+ ['visualpatterns','↻','Visual Sequences','Continue picture and colour patterns'],
+ ['figureodd','◈','Odd One Out','Find the figure that breaks the rule'],
+ ['shapecount','◉','Counting Shapes','Count triangles, squares and other shapes']
 ];
 function logic(level){
  const type=rnd(0,5),[a,b]=threeNames();
@@ -122,7 +128,13 @@ function sets(level){
 }
 function visual(level){return window.SKILLUP_VISUAL.question(level)}
 function cube(level){return window.SKILLUP_VISUAL.question(level,'cube')}
-const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets,visual,cube};
+function ocfigures(level){return window.SKILLUP_VISUAL.question(level,'ocfigures')}
+function symmetry(level){return window.SKILLUP_VISUAL.question(level,'symmetry')}
+function figurematch(level){return window.SKILLUP_VISUAL.question(level,'figurematch')}
+function visualpatterns(level){return window.SKILLUP_VISUAL.question(level,'visualpatterns')}
+function figureodd(level){return window.SKILLUP_VISUAL.question(level,'figureodd')}
+function shapecount(level){return window.SKILLUP_VISUAL.question(level,'shapecount')}
+const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets,visual,cube,ocfigures,symmetry,figurematch,visualpatterns,figureodd,shapecount};
 function question(topic='mixed',level='mix'){
  let id=topic;
  if(id==='mixed')id=pick(topics)[0];
