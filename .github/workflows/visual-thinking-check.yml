@@ -1,0 +1,52 @@
+name: SkillUP visual Thinking Skills checks
+on:
+  push:
+    branches: [skillup-selective-visual-thinking]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/selective/thinking/**'
+      - 'js/selective-visual-bank.js'
+      - 'js/selective-thinking-bank.js'
+      - 'js/selective-practice.js'
+      - 'selective-practice.html'
+      - 'css/selective-visual.css'
+      - 'scripts/check-visual-thinking.mjs'
+      - 'scripts/browser-visual-thinking.mjs'
+      - '.github/workflows/visual-thinking-check.yml'
+jobs:
+  visual-thinking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate question bank and SVG references
+        run: node scripts/check-visual-thinking.mjs
+      - name: Validate all 50 SVG XML diagrams
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          paths=list(Path('assets/selective/thinking').glob('TS-VIS-*.svg'))
+          assert len(paths)==50, len(paths)
+          for path in paths: ET.parse(path)
+          print('Valid SVG XML:',len(paths))
+          PY
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Run visual practice and timed-mock browser tests
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-visual-http.log 2>&1 &
+          for attempt in {1..20}; do curl --fail --silent http://127.0.0.1:4173/selective-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-visual-thinking.mjs
+      - name: Upload desktop and mobile visual previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-visual-thinking-previews
+          path: visual-previews/*.png
+          if-no-files-found: warn
