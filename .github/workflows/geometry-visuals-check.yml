@@ -23,10 +23,11 @@ jobs:
           node-version: '20'
       - name: Verify question diagrams and maths answer validity
         run: node scripts/check-geometry-visuals.mjs
-      - name: Install Playwright Chromium
+      - name: Use system Chrome for Playwright tests
         run: |
           npm install --no-save playwright@1.62.1
-          npx playwright install --with-deps chromium
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
       - name: Test all years, guided practice, tests and mobile rendering
         run: |
           python3 -m http.server 4173 >/tmp/skillup-geometry.log 2>&1 &
