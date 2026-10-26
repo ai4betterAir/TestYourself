@@ -19,7 +19,8 @@ const topics=[
  ['family','⌂','Family Relationships','Work out how people are related'],
  ['argument','⚖','Arguments & Assumptions','Best support, objection and assumption'],
  ['sets','⊂','Sets & Classification','All, some, none and category reasoning'],
- ['visual','▦','Visual Reasoning','Original figure matrices, rotations, reflections and pattern puzzles']
+ ['visual','▦','Visual Reasoning','Figure matrices, rotations, reflections and visual patterns'],
+ ['cube','⬡','Cube & Dice Rotation','3D faces, nets, hidden faces and impossible rotations']
 ];
 function logic(level){
  const type=rnd(0,5),[a,b]=threeNames();
@@ -120,7 +121,8 @@ function sets(level){
  return Q('Some doctors are researchers. All researchers read scientific papers. What must be true?','Some doctors read scientific papers',['Some doctors read scientific papers','All doctors are researchers','No doctors read scientific papers','All paper readers are doctors'],'The doctors who are researchers follow the researcher rule.','sets','Sets & Classification');
 }
 function visual(level){return window.SKILLUP_VISUAL.question(level)}
-const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets,visual};
+function cube(level){return window.SKILLUP_VISUAL.question(level,'cube')}
+const makers={logic,evidence,order,seating,time,number,rate,data,probability,family,argument,sets,visual,cube};
 function question(topic='mixed',level='mix'){
  let id=topic;
  if(id==='mixed')id=pick(topics)[0];

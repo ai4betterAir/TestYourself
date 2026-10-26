@@ -1,0 +1,335 @@
+{
+  "description":"Original SkillUP cube rotation set. Faces T/F/R use a right-handed cube frame. ▲ opposite ★, ● opposite ◆, ■ opposite +.",
+  "version":"2026-10-26",
+  "questions":[
+  {
+    "id": "TS-CUBE-001",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "foundation",
+    "text": "Which option shows the same cube as the reference after rotation?",
+    "image": "assets/selective/thinking/TS-CUBE-001.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-001-mobile.svg",
+    "imageAlt": "A three-dimensional reference cube with a symbol on each top, front and right face, and four labelled 3D answer cubes A to D.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "B",
+    "tip": "The circle moves to the top, square to the front and triangle to the right.",
+    "explanation": "A rotation can cycle three faces around a corner without reversing their order. In B, ● is on top, ■ at the front and ▲ on the right. The other options mirror the corner.",
+    "cubeSpec": {
+      "kind": "match",
+      "ref": "▲●■",
+      "views": null,
+      "options": [
+        "●▲■",
+        "●■▲",
+        "■●▲",
+        "▲■●"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-002",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "foundation",
+    "text": "Which cube can be obtained by rotating the reference cube?",
+    "image": "assets/selective/thinking/TS-CUBE-002.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-002-mobile.svg",
+    "imageAlt": "A three-dimensional reference cube with a symbol on each top, front and right face, and four labelled 3D answer cubes A to D.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "C",
+    "tip": "Keep the clockwise order of the three faces, not only their symbols.",
+    "explanation": "The diamond, square and star cycle together: ◆ moves to the top, ■ to the front and ★ to the right. Only C keeps their original corner order.",
+    "cubeSpec": {
+      "kind": "match",
+      "ref": "★◆■",
+      "views": null,
+      "options": [
+        "■◆★",
+        "★■◆",
+        "◆■★",
+        "◆★■"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-003",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "foundation",
+    "text": "Which option is a real rotation, rather than a mirror image?",
+    "image": "assets/selective/thinking/TS-CUBE-003.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-003-mobile.svg",
+    "imageAlt": "A three-dimensional reference cube with a symbol on each top, front and right face, and four labelled 3D answer cubes A to D.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "D",
+    "tip": "A physical rotation cannot reverse the handedness of the three corner faces.",
+    "explanation": "Option D, ▲ on top, ● at the front and ■ on the right, is a true rotation. The other three options reverse two faces and are mirror arrangements.",
+    "cubeSpec": {
+      "kind": "match",
+      "ref": "■▲●",
+      "views": null,
+      "options": [
+        "●▲■",
+        "▲■●",
+        "■●▲",
+        "▲●■"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-004",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "intermediate",
+    "text": "Fold the net into a cube. Which option is impossible?",
+    "image": "assets/selective/thinking/TS-CUBE-004.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-004-mobile.svg",
+    "imageAlt": "A flat six-face cube net with original shapes, plus four possible answer cubes labelled A to D. Top, front and right faces of each cube are shown.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "A",
+    "tip": "Check the opposite pairs before comparing the corners.",
+    "explanation": "The circle ● and diamond ◆ are opposite faces in the net, so they can never share an edge. A shows both as neighbours. B, C and D are possible rotations.",
+    "cubeSpec": {
+      "kind": "net-impossible",
+      "ref": null,
+      "views": null,
+      "options": [
+        "▲●◆",
+        "▲●■",
+        "★◆■",
+        "●★■"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-005",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "intermediate",
+    "text": "The two diagrams show the same cube. Which symbol is opposite the star?",
+    "image": "assets/selective/thinking/TS-CUBE-005.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-005-mobile.svg",
+    "imageAlt": "Two views of the same six-symbol cube are shown as three-dimensional diagrams, with answer options A to D. The top, front and right faces are visible.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "A",
+    "tip": "A face touches four neighbours, leaving one opposite face.",
+    "explanation": "The star ★ touches ●, +, ◆ and ■ across the two views. The only unaccounted symbol is ▲, so the triangle must be opposite the star.",
+    "cubeSpec": {
+      "kind": "views-opposite",
+      "ref": null,
+      "views": [
+        "★●+",
+        "★◆■"
+      ],
+      "options": [
+        "▲",
+        "■",
+        "●",
+        "+"
+      ],
+      "target": "★"
+    }
+  },
+  {
+    "id": "TS-CUBE-006",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "intermediate",
+    "text": "Fold the net into a cube. Which option correctly shows the star on top?",
+    "image": "assets/selective/thinking/TS-CUBE-006.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-006-mobile.svg",
+    "imageAlt": "A flat six-face cube net with original shapes, plus four possible answer cubes labelled A to D. Top, front and right faces of each cube are shown.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "C",
+    "tip": "Place the star on top and check the order of the other two visible faces.",
+    "explanation": "With ★ on top and ◆ at the front, ■ is on the right in the genuine cube. C keeps the correct arrangement; the other options reverse the corner order.",
+    "cubeSpec": {
+      "kind": "net-match",
+      "ref": null,
+      "views": null,
+      "options": [
+        "★■◆",
+        "★◆+",
+        "★◆■",
+        "★●■"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-007",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "intermediate",
+    "text": "Which option shows the same cube after rotation?",
+    "image": "assets/selective/thinking/TS-CUBE-007.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-007-mobile.svg",
+    "imageAlt": "A three-dimensional reference cube with a symbol on each top, front and right face, and four labelled 3D answer cubes A to D.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "B",
+    "tip": "Follow the diamond, plus and triangle around their shared corner.",
+    "explanation": "The ▲ / ◆ / + arrangement in B is a cyclic movement of the reference ◆ / + / ▲ corner. A, C and D reverse the orientation.",
+    "cubeSpec": {
+      "kind": "match",
+      "ref": "◆+▲",
+      "views": null,
+      "options": [
+        "▲+◆",
+        "▲◆+",
+        "◆▲+",
+        "+◆▲"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-008",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "challenge",
+    "text": "Study the two views. Which cube cannot be formed?",
+    "image": "assets/selective/thinking/TS-CUBE-008.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-008-mobile.svg",
+    "imageAlt": "Two views of the same six-symbol cube are shown as three-dimensional diagrams, with answer options A to D. The top, front and right faces are visible.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "D",
+    "tip": "First infer the opposite face pairs; then check three-face order.",
+    "explanation": "D reverses the triangle–square–circle corner. A, B and C are valid rotations consistent with both reference views. A cube cannot be reflected to make D.",
+    "cubeSpec": {
+      "kind": "views-impossible",
+      "ref": null,
+      "views": [
+        "★●+",
+        "★◆■"
+      ],
+      "options": [
+        "●■▲",
+        "★◆■",
+        "◆★+",
+        "▲■●"
+      ],
+      "target": null
+    }
+  },
+  {
+    "id": "TS-CUBE-009",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "challenge",
+    "text": "Two views keep the circle on top. Which symbol is opposite the triangle?",
+    "image": "assets/selective/thinking/TS-CUBE-009.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-009-mobile.svg",
+    "imageAlt": "Two views of the same six-symbol cube are shown as three-dimensional diagrams, with answer options A to D. The top, front and right faces are visible.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "B",
+    "tip": "Keep the circle fixed and notice how the front and right faces change.",
+    "explanation": "The square moves from the front to the right while the circle stays on top. This reveals the quarter-turn, showing ★ on the opposite side from ▲. Answer B.",
+    "cubeSpec": {
+      "kind": "views-opposite",
+      "ref": null,
+      "views": [
+        "●■▲",
+        "●★■"
+      ],
+      "options": [
+        "+",
+        "★",
+        "◆",
+        "■"
+      ],
+      "target": "▲"
+    }
+  },
+  {
+    "id": "TS-CUBE-010",
+    "topic": "visual",
+    "name": "Cube & Dice Rotation",
+    "subtype": "Cube & Dice Rotation",
+    "difficulty": "challenge",
+    "text": "Using the cube net and reference view, which option is a valid rotation?",
+    "image": "assets/selective/thinking/TS-CUBE-010.svg",
+    "imageMobile": "assets/selective/thinking/TS-CUBE-010-mobile.svg",
+    "imageAlt": "A flat six-face cube net with original shapes, plus four possible answer cubes labelled A to D. Top, front and right faces of each cube are shown.",
+    "choices": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "answer": "C",
+    "tip": "Check opposite pairs first, then the orientation of the three visible faces.",
+    "explanation": "C has ● on top, ■ at the front and ▲ on the right, which is a valid rotation. B puts opposite + and ■ together; A and D reverse the face order.",
+    "cubeSpec": {
+      "kind": "net-match-reference",
+      "ref": "+◆★",
+      "views": null,
+      "options": [
+        "★◆+",
+        "+■◆",
+        "●■▲",
+        "▲■●"
+      ],
+      "target": null
+    }
+  }
+]
+}

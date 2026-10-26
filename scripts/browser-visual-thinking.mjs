@@ -16,14 +16,14 @@ try {
     await page.locator('#questionFigure').waitFor({state:'visible',timeout:12000});
     const info=await page.locator('#questionImage').evaluate(img=>({loaded:img.complete&&img.naturalWidth>0,src:img.getAttribute('src'),alt:img.alt,width:img.getBoundingClientRect().width,viewport:document.documentElement.clientWidth}));
     assert.ok(info.loaded,'Visual SVG failed to load');
-    assert.ok(info.src.startsWith('assets/selective/thinking/TS-VIS-'),'Question did not use local SVG');
+    assert.ok(/^assets\/selective\/thinking\/TS-(VIS|CUBE)-\d{3}(-mobile)?\.svg$/.test(info.src),'Question did not use a local SVG');
     assert.ok(info.alt.length>=45,'Missing accessible description');
     assert.ok(info.width <= info.viewport,'Image exceeds viewport width');
     const zoomHref=await page.locator('#questionFigure .visual-full-link').getAttribute('href');
     assert.equal(zoomHref,info.src,'Zoom link must open the full-resolution SVG');
     await page.locator('#questionFigure').screenshot({path:'visual-previews/practice-'+cfg.label+'.png',animations:'disabled'});
     if(cfg.label==='desktop'){
-      const q=await page.evaluate((src)=>window.SKILLUP_VISUAL.questions.find(v=>v.image===src),info.src);
+      const q=await page.evaluate((src)=>window.SKILLUP_VISUAL.questions.find(v=>v.image===src||v.imageMobile===src),info.src);
       assert.ok(q,'Current SVG must have a bank record');
       await page.locator('#answers button').filter({hasText:new RegExp('^'+q.answer+'$')}).click();
       await page.locator('#check').click();
