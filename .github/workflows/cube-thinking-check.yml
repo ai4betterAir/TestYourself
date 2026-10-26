@@ -1,0 +1,56 @@
+name: SkillUP cube reasoning tests
+on:
+  push:
+    branches: [skillup-cube-thinking-10]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/selective/thinking/TS-CUBE-*'
+      - 'data/cube-thinking-spec.json'
+      - 'js/selective-visual-bank.js'
+      - 'js/selective-thinking-bank.js'
+      - 'js/selective-practice.js'
+      - 'selective-practice.html'
+      - 'css/selective-visual.css'
+      - 'scripts/check-cube-questions.mjs'
+      - 'scripts/browser-cube-thinking.mjs'
+      - '.github/workflows/cube-thinking-check.yml'
+jobs:
+  cube-questions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify cube mathematics and question bank
+        run: |
+          node scripts/check-cube-questions.mjs
+          node scripts/check-visual-thinking.mjs
+      - name: Validate all 20 SVGs as XML
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          files=list(Path('assets/selective/thinking').glob('TS-CUBE-*.svg'))
+          assert len(files)==20,len(files)
+          for f in files: ET.parse(f)
+          print('20 cube diagrams pass XML checks')
+          PY
+      - name: Install browser test
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Test Selective and OC cube quizzes and mock reviews
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-cube-http.log 2>&1 &
+          for i in {1..20}; do curl --fail --silent http://127.0.0.1:4173/selective-practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-cube-thinking.mjs
+          node scripts/browser-visual-thinking.mjs
+      - name: Save desktop and mobile previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-cube-rotation-10-preview
+          path: cube-previews/*.png
+          if-no-files-found: warn
