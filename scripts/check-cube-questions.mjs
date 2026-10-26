@@ -53,7 +53,7 @@ const ctx=vm.createContext({window:{}});
 for(const file of ['js/selective-visual-bank.js','js/selective-thinking-bank.js']){
  vm.runInContext(fs.readFileSync(file,'utf8'),ctx,{filename:file});
 }
-assert.equal(ctx.window.SKILLUP_VISUAL.questions.length,60);
+assert.equal(ctx.window.SKILLUP_VISUAL.questions.length,110);
 assert.ok(ctx.window.SKILLUP_THINKING.topics.some(t=>t[0]==='cube'));
 for(let i=0;i<150;i++){
  const q=ctx.window.SKILLUP_THINKING.question('cube',i%2?'5':'6');
