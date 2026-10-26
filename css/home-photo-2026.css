@@ -1,0 +1,131 @@
+/* SkillUP 2026 photo homepage refresh: people-free learning materials, no UI screenshots. */
+:root {--home-blue:#166bf4;--home-ink:#102858;}
+body{background:#f8fbff}
+:where(.site-header,.hero-photo-home,.grade-section) :focus-visible{outline:3px solid #0a67eb;outline-offset:4px}
+.site-header{background:rgba(255,255,255,.98);border-bottom:1px solid #e5ebf3;box-shadow:0 3px 14px rgba(18,42,79,.04)}
+.nav-shell{height:76px}
+.brand img{width:162px}
+.main-nav{gap:3px}
+.main-nav a{padding:10px 12px;font-size:.86rem;color:#24395e}
+.main-nav a.active{color:#135fe2;background:transparent}
+.main-nav a.active::after{background:#176ef3}
+.nav-actions{gap:10px}
+.nav-actions a{border-radius:999px;min-height:43px;display:inline-flex;align-items:center;justify-content:center}
+.nav-actions .link-signin{border:1.5px solid #a9c4e8;background:#fff;color:#244772;padding:9px 22px}
+.nav-actions .link-signup{background:#126bf3;color:#fff;border:1.5px solid #126bf3;box-shadow:0 5px 14px rgba(23,102,238,.13);padding:9px 25px}
+.nav-actions .link-signup:hover{background:#0958d1}
+
+/* A single clear hero photograph; actual headings and CTAs remain live HTML. */
+.hero-photo-home{position:relative;isolation:isolate;min-height:490px;padding:0;overflow:hidden;
+ background:linear-gradient(105deg,#fafdff 0%,#f4faff 48%,#d7ecf6 100%)}
+.hero-photo-home:before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse at 5% 14%,rgba(234,247,225,.75),transparent 36%),
+ linear-gradient(90deg,#f8fcff 0%,rgba(248,252,255,.98) 33%,rgba(247,251,255,.74) 50%,rgba(247,251,255,0) 73%)}
+.hero-photo-illustration{position:absolute;right:0;top:0;bottom:0;width:60%;overflow:hidden;z-index:0}
+.hero-photo-illustration img{height:100%;width:100%;object-fit:cover;object-position:center 53%;display:block}
+.hero-photo-shade{position:absolute;inset:auto 0 0;z-index:1;height:30%;pointer-events:none;
+ background:linear-gradient(0deg,rgba(242,248,252,.18),transparent)}
+.hero-photo-content{position:relative;z-index:2;display:flex;align-items:center;min-height:490px;padding-block:46px 66px}
+.hero-photo-content .hero-copy{width:min(56%,690px)}
+.hero-overline{display:inline-flex;padding:6px 13px;border-radius:999px;border:1px solid #c9e6de;background:#edfaf6;
+ color:#176d5f;font-family:'Sora',sans-serif;font-size:.7rem;font-weight:750;letter-spacing:.05em}
+.hero-photo-home h1{max-width:740px;margin:19px 0 18px;color:#102653;font-size:clamp(2.65rem,4.25vw,4.65rem);
+ font-family:'Sora',sans-serif;font-weight:800;line-height:1.12;letter-spacing:-.055em}
+.hero-photo-home h1 .hero-h1-sub{display:block;font-size:.75em;font-weight:700;line-height:1.27;letter-spacing:-.055em}
+.hero-photo-home h1 em{font-style:normal;font-weight:800}
+.hero-photo-home h1 .bright{color:#266df0}
+.hero-photo-home h1 .tomorrow{color:#0aa477}
+.hero-photo-home p.lead{max-width:555px;color:#486082;font-size:clamp(.97rem,1.4vw,1.08rem);line-height:1.65;font-weight:650}
+.hero-photo-home .hero-actions{gap:12px;margin-top:24px}
+.hero-photo-home .button{min-height:50px;border-radius:999px;font-size:.91rem;padding:0 24px;font-weight:800}
+.hero-photo-home .button-primary{background:linear-gradient(120deg,#1267f3,#3187ff);color:#fff;box-shadow:0 10px 28px rgba(30,100,235,.18)}
+.hero-photo-home .button-primary:hover{box-shadow:0 14px 30px rgba(30,100,235,.25)}
+.hero-photo-home .hero-secondary{background:rgba(255,255,255,.9);border:1.4px solid #93b7e5;color:#1959aa}
+.hero-photo-home .hero-secondary:hover{background:#e9f4ff;transform:translateY(-2px)}
+.hero-highlights{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;color:#47617e;font-size:.8rem;font-weight:800}
+.hero-highlights span{display:inline-flex;gap:6px;align-items:center}
+.hero-highlights span::first-letter{color:#15a97e}
+
+/* Seven brightly colored portrait cards mimic the approved visual reference. */
+.grade-section{position:relative;z-index:4;padding:0 0 44px;margin-top:-28px}
+.grade-section>.shell{width:min(1400px,calc(100% - 56px));padding:20px 22px 26px;border-radius:28px;
+ background:#fff;box-shadow:0 15px 50px rgba(34,60,102,.08)}
+.grade-section .section-head{margin:3px auto 18px;text-align:center}
+.grade-section .section-head .eyebrow{display:none}
+.grade-section .section-head h2{font-size:clamp(1.3rem,2vw,1.8rem);line-height:1.2}
+.grade-section .section-head p{font-size:.88rem;margin-top:5px;color:#607796}
+.grade-section .grade-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:13px}
+.grade-section .grade-card{min-height:282px;padding:19px 16px 17px;gap:10px;border-radius:26px;
+ box-shadow:0 7px 19px rgba(32,58,108,.09);border:1px solid rgba(255,255,255,.23);isolation:isolate;
+ transition:transform .22s ease,box-shadow .22s ease}
+.grade-section .grade-card:after{width:122px;height:122px;right:-41px;bottom:-42px;background:rgba(255,255,255,.15)}
+.grade-section .grade-card:hover{transform:translateY(-6px);box-shadow:0 17px 28px rgba(32,58,108,.15)}
+.grade-section .grade-icon{width:64px;height:64px;background:rgba(255,255,255,.21);border-radius:17px}
+.grade-section .grade-icon svg{width:49px;height:49px}
+.grade-section .grade-card small{font-size:.67rem;line-height:1.35;letter-spacing:.08em;margin-top:3px}
+.grade-section .grade-card b{font-size:clamp(1.22rem,1.55vw,1.7rem);font-weight:800;line-height:1.15;margin-top:9px}
+.grade-section .grade-card>span:not(.grade-go){font-size:.81rem;line-height:1.5;min-height:38px}
+.grade-section .grade-go{align-self:flex-start;margin-top:auto;background:#fff;color:#133a73;
+ display:inline-flex;gap:13px;min-height:37px;padding:8px 15px;border-radius:999px;font-size:.83rem;
+ font-weight:850;opacity:1;box-shadow:0 2px 5px rgba(42,65,103,.08)}
+.grade-section .grade-go span{font-size:1.05rem;line-height:1}
+.grade-section .grade-card:hover .grade-go{background:#f4fbff}
+.grade-section .g-k{background:linear-gradient(155deg,#fc669a,#fd8680)}
+.grade-section .g-1{background:linear-gradient(150deg,#ffa31a,#ffcb43)}
+.grade-section .g-2{background:linear-gradient(150deg,#f4cf32,#a4d532)}
+.grade-section .g-3{background:linear-gradient(150deg,#13cb77,#18b99c)}
+.grade-section .g-4{background:linear-gradient(150deg,#12be91,#13c6ea)}
+.grade-section .g-5{background:linear-gradient(150deg,#2877f5,#36aff3)}
+.grade-section .g-6{background:linear-gradient(150deg,#8055f7,#a75bf7)}
+
+@media(min-width:1250px){.hero-photo-content,.nav-shell{width:min(1400px,calc(100% - 70px))}}
+@media(max-width:1150px){
+ .hero-photo-home{min-height:450px}
+ .hero-photo-content{min-height:450px}
+ .hero-photo-content .hero-copy{width:64%}
+ .hero-photo-illustration{width:57%}
+ .grade-section .grade-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .grade-section .grade-card{min-height:255px}
+ .grade-section .grade-card b{font-size:1.6rem}
+}
+@media(max-width:820px){
+ .nav-menu{top:76px}
+ .hero-photo-illustration{width:63%;opacity:.7}
+ .hero-photo-content .hero-copy{width:72%}
+ .hero-photo-home:before{background:linear-gradient(90deg,#f8fcff 0%,rgba(249,253,255,.97) 46%,rgba(249,253,255,.2) 100%)}
+ .grade-section>.shell{width:min(calc(100% - 28px),700px);padding:17px}
+}
+@media(max-width:600px){
+ .nav-shell{height:72px}
+ .nav-menu{top:72px}
+ .hero-photo-home{min-height:0}
+ .hero-photo-illustration{top:auto;bottom:0;width:100%;height:220px;opacity:.88}
+ .hero-photo-illustration img{object-position:center 53%}
+ .hero-photo-home:before{background:linear-gradient(180deg,#fafdff 0%,#fafdff 49%,rgba(250,253,255,.96) 59%,rgba(250,253,255,.03) 100%)}
+ .hero-photo-content{display:block;min-height:0;padding-top:36px;padding-bottom:228px}
+ .hero-photo-content .hero-copy{width:100%;max-width:100%}
+ .hero-photo-home h1{font-size:clamp(2.18rem,9vw,3.2rem);margin:15px 0}
+ .hero-photo-home h1 .hero-h1-sub{font-size:.69em}
+ .hero-photo-home p.lead{font-size:.94rem;max-width:95%}
+ .hero-photo-home .hero-actions{flex-direction:row;gap:9px}
+ .hero-photo-home .hero-actions .button{width:auto;min-height:46px;padding:0 16px;font-size:.78rem}
+ .hero-overline{font-size:.63rem}
+ .hero-highlights{font-size:.73rem;gap:9px;margin-top:14px}
+ .grade-section{margin-top:-18px;padding-bottom:24px}
+ .grade-section .section-head{margin-bottom:14px}
+ .grade-section .section-head h2{font-size:1.35rem}
+ .grade-section .section-head p{font-size:.78rem}
+ .grade-section .grade-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .grade-section .grade-card{min-height:244px;padding:15px 14px;border-radius:21px;gap:8px}
+ .grade-section .grade-icon{width:56px;height:56px}
+ .grade-section .grade-icon svg{width:43px;height:43px}
+ .grade-section .grade-card b{font-size:1.47rem;margin-top:auto}
+ .grade-section .grade-card small{font-size:.62rem}
+ .grade-section .grade-card>span:not(.grade-go){font-size:.77rem;min-height:30px}
+ .grade-section .grade-go{min-height:35px;padding:7px 13px;font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){.grade-section .grade-card:hover{transform:none}}
+
+/* Keep every homepage section visible without relying on scroll-trigger timing. */
+.home-refresh .reveal{opacity:1;transform:none;transition:none}
+.hero-photo-illustration img{filter:saturate(1.14) contrast(1.045)}
