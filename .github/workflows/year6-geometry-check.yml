@@ -1,0 +1,40 @@
+name: Year 6 Advanced Geometry Visuals
+on:
+  push:
+    branches: [skillup-year6-advanced-geometry-figures]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'js/geometry-visuals.js'
+      - 'scripts/check-year6-geometry.mjs'
+      - 'scripts/browser-year6-geometry.mjs'
+      - '.github/workflows/year6-geometry-check.yml'
+jobs:
+  year6-geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate Year 6 maths and younger year isolation
+        run: |
+          node scripts/check-year6-geometry.mjs
+          node scripts/check-geometry-visuals.mjs
+      - name: Install browser runtime
+        run: |
+          npm install --no-save playwright@1.62.1
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+      - name: Test Year 6 practice and mock review
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-year6-geometry.log 2>&1 &
+          for attempt in {1..20}; do curl --fail --silent http://127.0.0.1:4173/practice.html >/dev/null && break; sleep 1; done
+          node scripts/browser-year6-geometry.mjs
+      - name: Upload illustrated Year 6 previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-year6-geometry-previews
+          path: year6-geometry-previews/*.png
+          if-no-files-found: warn

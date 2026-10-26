@@ -133,6 +133,193 @@ function prismVolume(){
  while(wrong.length<4)wrong.push(vol+wrong.length+5);
  return {text:"What is the volume of the rectangular prism?",answer:`${vol} cm³`,choices:shuffle(wrong.slice(0,4).map(v=>`${v} cm³`)),tip:"Volume = length × width × height.",explanation:`${a} × ${b} × ${c} = ${vol} cm³.`,diagram:base(d),alt:`A three-dimensional rectangular prism with edge lengths marked ${a}, ${b} and ${c} centimetres.`,type:"Prism volume"};
 }
+const y6Distractors=(answer,alternatives,unit="")=>{
+ const val=String(answer)+unit,opts=[val,...alternatives.map(v=>String(v)+unit).filter(v=>String(v)+unit!==val)];
+ let step=1;
+ while(new Set(opts).size<4){opts.push(String(Number(answer)+step*7)+unit);step++;}
+ return shuffle([...new Set(opts)].slice(0,4));
+};
+const y6Result=(type,q,answer,choices,figure,tip,explanation,alt)=>({
+ text:q,answer:String(answer),choices:shuffle(choices),diagram:base(figure),tip,explanation:explanation.length<35?`${tip} ${explanation}`:explanation,alt,type
+});
+const y6Prism=(a,b,c)=>{
+ let d=poly([[238,153],[387,108],[540,153],[390,197]],"#e3f2ff","#5481ac");
+ d+=poly([[238,153],[390,197],[390,308],[238,264]],"#faffff","#5481ac");
+ d+=poly([[390,197],[540,153],[540,262],[390,308]],"#c3e0f4","#5481ac");
+ return d+label(314,334,`${a} cm`,21)+label(533,308,`${b} cm`,21)+label(584,222,`${c} cm`,21);
+};
+const y6AngleArc=(cx,cy,r,start,end,col)=>{
+ const steps=Math.max(4,Math.ceil(Math.abs(end-start)/6));
+ const p=Array.from({length:steps+1},(_,i)=>{
+  const t=(start+(end-start)*i/steps)*Math.PI/180;
+  return [(cx+r*Math.cos(t)).toFixed(1),(cy+r*Math.sin(t)).toFixed(1)];
+ });
+ return `<polyline points="${p.map(x=>x.join(",")).join(" ")}" fill="none" stroke="${col}" stroke-width="4"/>`;
+};
+function y6Straight(){
+ const a=pick([34,47,58,72,103,114,129]),b=180-a,cx=353,cy=287,r=165,t=-a*Math.PI/180;
+ let d=line(142,cy,574,cy)+line(cx,cy,cx+r*Math.cos(t),cy+r*Math.sin(t));
+ d+=y6AngleArc(cx,cy,53,0,-a,"#d87650")+y6AngleArc(cx,cy,70,-a,-180,"#38998a");
+ d+=label(cx+105*Math.cos(t/2),cy+105*Math.sin(t/2),a+"°",24,"#b66b47");
+ d+=label(cx+96*Math.cos((a+180)*Math.PI/360),cy-96*Math.sin((a+180)*Math.PI/360),"?",30,"#298876");
+ d+=label(380,373,"Angles above a straight line",18,"#57718f");
+ return y6Result("Year 6 supplementary angles","Find the missing angle on the straight line.",b+"°",y6Distractors(b,[a,360-a,90+a],"°"),d,
+ "Angles on a straight line total 180°.",`180° − ${a}° = ${b}°.`,
+ `An illustrated straight line split by a ray into two adjacent angles, one ${a} degrees and the other unknown.`);
+}
+function y6Vertical(){
+ const a=pick([41,53,67,74,108,123]),cx=385,cy=206,t=-a*Math.PI/180,r=165;
+ let d=line(cx-190,cy,cx+190,cy)+line(cx-r*Math.cos(t),cy-r*Math.sin(t),cx+r*Math.cos(t),cy+r*Math.sin(t));
+ d+=y6AngleArc(cx,cy,54,0,-a,"#d78050")+y6AngleArc(cx,cy,62,180,180-a,"#36a390");
+ d+=label(cx+107*Math.cos(t/2),cy+107*Math.sin(t/2),a+"°",25,"#b56d48");
+ d+=label(cx-101*Math.cos(t/2),cy-101*Math.sin(t/2),"?",30,"#298876");
+ return y6Result("Year 6 vertically opposite angles","What is the angle vertically opposite the labelled angle?",a+"°",y6Distractors(a,[180-a,a+30,90+a],"°"),d,
+ "Vertically opposite angles are equal.",`The two angles directly opposite one another are equal, so the missing angle is ${a}°.`,
+ `Two crossing lines forming opposite angles, with one marked ${a} degrees and the opposite marked with a question mark.`);
+}
+function y6Interior(){
+ const n=pick([3,4,5,6,8,9,10,12]),a=(n-2)*180/n;
+ let d=poly(points(n,380,194,123),"#d8efe6","#318b74")+label(380,192,`${n}`,45,"#286e60")+label(380,229,"equal sides",18,"#286e60");
+ d+=label(379,365,"Regular polygon",21,"#597492");
+ return y6Result("Year 6 regular polygon interior angles",`What is the size of each interior angle of a regular ${n}-sided polygon?`,a+"°",
+ y6Distractors(a,[360/n,(n-2)*180,a+20],"°"),d,"Sum of interior angles is (n − 2) × 180°. Divide by n for each angle.",
+ `(${n} − 2) × 180° ÷ ${n} = ${a}°.`,
+ `A regular polygon with ${n} clearly visible equal sides.`);
+}
+function y6Exterior(){
+ const n=pick([3,4,5,6,8,9,10,12]),a=360/n,pts=points(n,375,195,127);
+ let d=poly(pts,"#e3e1fa","#7765b7")+line(...pts[2],pts[2][0]+(pts[2][0]-pts[1][0])*.66,pts[2][1]+(pts[2][1]-pts[1][1])*.66,"#d08054",3);
+ d+=label(378,363,`${n} equal sides`,20,"#5d7090");
+ return y6Result("Year 6 regular polygon exterior angles",`A regular ${n}-sided polygon is shown. Find each exterior angle.`,a+"°",
+ y6Distractors(a,[180-a,(n-2)*180/n,a+20],"°"),d,"The exterior angles of a polygon add to 360°.",
+ `360° ÷ ${n} = ${a}°.`,
+ `A regular ${n}-sided polygon with an extended exterior side highlighted in orange.`);
+}
+function y6Composite(){
+ const w=R(10,16),h=R(7,12),cw=R(2,5),ch=R(2,4),answer=w*h-cw*ch;
+ const x=210,y=91,W=330,H=219,nx=x+W*(w-cw)/w,ny=y+H*ch/h;
+ let d=poly([[x,y],[nx,y],[nx,ny],[x+W,ny],[x+W,y+H],[x,y+H]],"#d1ebfa","#3777a9");
+ d+=line(nx,y,x+W,y,"#9baec4",2,"6 5")+line(x+W,y,x+W,ny,"#9baec4",2,"6 5");
+ d+=label(x+W/2,y+H+38,`${w} cm`,21)+label(x-53,y+H/2,`${h} cm`,21);
+ d+=label((nx+x+W)/2,y-15,`${cw} cm`,19,"#aa6b51")+label(x+W+47,(ny+y)/2+8,`${ch} cm`,19,"#aa6b51");
+ return y6Result("Year 6 composite shape area","Find the area of the blue L-shaped region.",answer+" cm²",
+ y6Distractors(answer,[w*h,cw*ch,(w-cw)*(h-ch)]," cm²"),d,
+ "Calculate the whole rectangle, then subtract the removed corner.",
+ `${w} × ${h} − ${cw} × ${ch} = ${answer} cm².`,
+ `An L-shaped blue region formed by removing a ${cw} by ${ch} centimetre corner from a ${w} by ${h} centimetre rectangle.`);
+}
+function y6Shaded(){
+ const w=R(10,18),h=R(8,14),a=R(3,6),b=R(2,5),ans=w*h-a*b;
+ let d=rect(205,90,350,226,"#c9eadb","#258b71",4)+rect(281,148,200,111,"#fff","#5f83a9",3);
+ d+=label(378,75,`${w} cm`,22)+label(600,213,`${h} cm`,22)+label(379,139,`${a} cm`,20)+label(516,216,`${b} cm`,20);
+ d+=label(379,366,"Only the green region is shaded",18,"#57758a");
+ return y6Result("Year 6 shaded region area","What is the area of the shaded region?",ans+" cm²",
+ y6Distractors(ans,[w*h,a*b,w*h+a*b]," cm²"),d,
+ "Subtract the smaller unshaded rectangle from the larger rectangle.",
+ `${w} × ${h} − ${a} × ${b} = ${ans} cm².`,
+ `A large green rectangle ${w} by ${h} cm containing a smaller unshaded rectangle ${a} by ${b} cm.`);
+}
+function y6Surface(){
+ const a=R(3,9),b=R(2,7),c=R(2,6),ans=2*(a*b+a*c+b*c);
+ return y6Result("Year 6 surface area of prisms","What is the total surface area of the rectangular prism?",ans+" cm²",
+ y6Distractors(ans,[a*b*c,a*b+a*c+b*c,2*(a+b+c)]," cm²"),y6Prism(a,b,c),
+ "A rectangular prism has three pairs of identical rectangular faces.",
+ `2 × (${a} × ${b} + ${a} × ${c} + ${b} × ${c}) = ${ans} cm².`,
+ `An isometric rectangular prism with side measurements ${a}, ${b}, and ${c} centimetres.`);
+}
+function y6Volume(){
+ const a=R(3,9),b=R(2,7),c=R(2,6),ans=a*b*c;
+ return y6Result("Year 6 prism volume","What is the volume of this rectangular prism?",ans+" cm³",
+ y6Distractors(ans,[2*(a*b+a*c+b*c),a*b+a*c+b*c,ans+c]," cm³"),y6Prism(a,b,c),
+ "Multiply the length, width and height.",`${a} × ${b} × ${c} = ${ans} cm³.`,
+ `A rectangular prism with side measurements of ${a} cm, ${b} cm and ${c} cm.`);
+}
+function y6Net(){
+ const opposite={A:"C",B:"D",C:"A",D:"B",E:"F",F:"E"},key=pick(["A","B","E"]),answer=opposite[key];
+ const positions=[["A",210,163],["B",292,163],["C",374,163],["D",456,163],["E",292,81],["F",292,245]];
+ let d=positions.map(([s,x,y],i)=>rect(x,y,82,82,["#daecff","#c7f1df","#ffead3","#ecdffd","#d8ebf6","#f9dce6"][i],"#6680a1",2)+label(x+41,y+54,s,29)).join("");
+ d+=label(380,373,"Fold the net along the square edges",19,"#5d7592");
+ const choices=shuffle([answer,...shuffle("ABCDEF".split("").filter(s=>s!==answer&&s!==key)).slice(0,3)]);
+ return y6Result("Year 6 cube nets",`Fold the cube net. Which letter is opposite face ${key}?`,answer,choices,d,
+ "Opposite faces of the cube never touch.",
+ `Folded net: A faces C; B faces D; and E faces F. Therefore, ${key} is opposite ${answer}.`,
+ `A cube net with faces A, B, C, D in a horizontal row, E above B and F below B.`);
+}
+function y6UnitCube(x,y,s=33){
+ return poly([[x,y],[x+s,y-s*.33],[x+2*s,y],[x+s,y+s*.33]],"#e6f3ff","#6392b1")+
+ poly([[x,y],[x+s,y+s*.33],[x+s,y+s*1.35],[x,y+s]],"#fff","#6392b1")+
+ poly([[x+s,y+s*.33],[x+2*s,y],[x+2*s,y+s],[x+s,y+s*1.35]],"#d0e5f7","#6392b1");
+}
+function y6Block(){
+ const heights=[R(2,4),R(2,4),R(2,4)],sum=heights.reduce((a,b)=>a+b,0);
+ let d="";
+ heights.forEach((n,i)=>{for(let k=0;k<n;k++)d+=y6UnitCube(130+i*208,267-k*46,39);d+=label(169+i*208,359,`Stack ${i+1}`,17,"#5b7593")});
+ return y6Result("Year 6 counting unit cubes","How many unit cubes are in the three separate stacks?",String(sum),
+ y6Distractors(sum,[sum-1,sum+2,heights[0]*heights[1]*heights[2]]),d,
+ "Count the cubes in each stack, including each lower cube.",`${heights.join(" + ")} = ${sum} cubes.`,
+ `Three separate towers of ${heights[0]}, ${heights[1]}, and ${heights[2]} isometric unit cubes.`);
+}
+function y6Grid(){
+ const x0=174,y0=61,step=27,ox=x0+6*step,oy=y0+6*step;let d="";
+ for(let i=0;i<=12;i++){
+  d+=line(x0+i*step,y0,x0+i*step,y0+12*step,"#d5e1ef",1);
+  d+=line(x0,y0+i*step,x0+12*step,y0+i*step,"#d5e1ef",1);
+  if(i%2===0)d+=label(x0+i*step,y0+12*step+19,String(i-6),12,"#66819c")+label(x0-22,y0+i*step+4,String(6-i),12,"#66819c");
+ }
+ d+=line(ox,y0,ox,y0+12*step,"#426c97",3)+line(x0,oy,x0+12*step,oy,"#426c97",3);
+ return {d,X:n=>ox+n*step,Y:n=>oy-n*step};
+}
+function y6Reflect(){
+ const x=R(2,4),y=R(1,4),g=y6Grid(),answer=`(${-x}, ${y})`;
+ let d=g.d+circle(g.X(x),g.Y(y),8,"#f8a36c","#c96e39",2)+label(g.X(x)+15,g.Y(y)-14,"P",17);
+ d+=label(596,95,"Reflect in y-axis",18,"#715fa1");
+ return y6Result("Year 6 coordinate reflection","Point P reflects across the y-axis. Where is its image?",answer,
+ shuffle([answer,`(${x}, ${-y})`,`(${-x}, ${-y})`,`(${x}, ${y})`]),d,
+ "Change the sign of x. The y coordinate stays the same.",`(${x}, ${y}) becomes (${-x}, ${y}).`,
+ `Cartesian coordinate grid from minus six to six with point P at (${x}, ${y}) and y-axis as the mirror line.`);
+}
+function y6Translate(){
+ const x=R(-3,1),y=R(-3,1),dx=R(2,4),dy=R(1,3),nx=x+dx,ny=y+dy,g=y6Grid(),ans=`(${nx}, ${ny})`;
+ let d=g.d+circle(g.X(x),g.Y(y),8,"#f9ac69","#d37c35",2)+label(g.X(x)-13,g.Y(y)-16,"P",18);
+ d+=line(g.X(x)+12,g.Y(y)-8,g.X(nx)-9,g.Y(ny)+8,"#238d79",4);
+ d+=label(609,107,`${dx} right`,18,"#267a6b")+label(609,133,`${dy} up`,18,"#267a6b");
+ const options=[ans,`(${x-dx}, ${ny})`,`(${nx}, ${y-dy})`,`(${nx+3}, ${ny+2})`];
+ return y6Result("Year 6 coordinate translation",`Point P moves ${dx} right and ${dy} up. Where does it finish?`,ans,shuffle(options),d,
+ "Add to both coordinates: right adds to x, up adds to y.",
+ `(${x} + ${dx}, ${y} + ${dy}) = ${ans}.`,
+ `Coordinate grid with a plotted point P at (${x}, ${y}) and a right/up translation arrow.`);
+}
+function y6Circumference(){
+ const r=R(3,12),val=(2*3.14*r).toFixed(2),ans=val+" cm";
+ let d=circle(380,188,126,"#eee4ff","#8564b1",4)+circle(380,188,4,"#8564b1","#8564b1",1);
+ d+=line(380,188,506,188,"#c97484",4)+label(463,171,`${r} cm`,21,"#aa6076");
+ d+=label(381,365,"Use π = 3.14",21,"#566f91");
+ return y6Result("Year 6 circle circumference","Using π = 3.14, what is the circle circumference?",ans,
+ y6Distractors(val,[(3.14*r).toFixed(2),(3.14*r*r).toFixed(2),(2*3.14*r+3.14).toFixed(2)]," cm"),d,
+ "Use circumference = 2 × π × radius.",`2 × 3.14 × ${r} = ${val} cm.`,
+ `A circle with centre point and radius labelled ${r} cm.`);
+}
+const y6Generators={straight:y6Straight,vertical:y6Vertical,interior:y6Interior,exterior:y6Exterior,composite:y6Composite,shaded:y6Shaded,surface:y6Surface,volume:y6Volume,net:y6Net,blocks:y6Block,reflect:y6Reflect,translate:y6Translate,circumference:y6Circumference};
+const y6Routes={
+ geometry:Object.keys(y6Generators),
+ angles:["straight","vertical","interior","exterior"],
+ symmetry:["reflect","translate"],
+ coordinates:["reflect","translate"],
+ perimeterarea:["composite","shaded"],volume:["volume","surface","blocks"],solids:["surface","volume","net","blocks"],
+ circles:["circumference"],scale:["reflect","translate"],
+ y6polygons:["interior","exterior"],y6angles:["straight","vertical"],
+ y6nets:["net"],y6composite:["composite","shaded"],y6blocks:["blocks"],y6surface:["surface"]
+};
+function y6Question(topic){
+ const allowed=y6Routes[topic];
+ if(!allowed)return null;
+ for(let i=0;i<25;i++){
+  const q=y6Generators[pick(allowed)]();
+  if(q.choices.length===4&&new Set(q.choices).size===4&&q.choices.includes(q.answer))return q;
+ }
+ throw Error("Year 6 original diagram has nonunique answer: "+topic);
+}
+
 function route(){
  const paths={shapes2d:["shapeName","shapeSides","symmetry"],shapes3d:["solid"],position:["translation","coordinate"],
   g2geometry:["shapeName","shapeSides","solid","symmetry","translation"],
@@ -157,7 +344,7 @@ const permitted={
 };
 const which=(grade,topic)=> {
  const g=String(grade);
- const map=route();if(!(permitted[g]&&permitted[g].has(topic)&&map[topic]))return null;
+ const map=route();if(g==='6'&&y6Routes[topic])return y6Routes[topic];if(!(permitted[g]&&permitted[g].has(topic)&&map[topic]))return null;
  let allowed=map[topic];
  if(g==="1")allowed=allowed.filter(k=>!["coordinate","triangle","angle","prismVolume"].includes(k));
  if(g==="2")allowed=allowed.filter(k=>!["triangle","prismVolume"].includes(k));
@@ -167,6 +354,9 @@ const which=(grade,topic)=> {
  return allowed.length?allowed:null;
 };
 function question(grade,topic){
+ if(String(grade)==='6'&&y6Routes[topic]){
+  const q=y6Question(topic);return {text:q.text,answer:String(q.answer),choices:q.choices.map(String),tip:q.tip,explanation:q.explanation,diagramSvg:q.diagram,imageAlt:q.alt,geometryFamily:q.type};
+ }
  const allowed=which(grade,topic);
  if(!allowed)return null;
  for(let attempts=0;attempts<15;attempts++){
@@ -200,14 +390,20 @@ if(typeof topicList==="function"){
   ["coordinates","⊞","Coordinates & Position","Read points and positions on a labelled grid"],
   ["perimeterarea","▭","Perimeter & Area Diagrams","Measure rectangles and count square units"],
   ["circles","◯","Circles & Radius","Identify radius and calculate diameter"],
-  ["solids","⬡","3D Shapes & Solids","Recognise and measure illustrated solid figures"]
+  ["solids","⬡","3D Shapes & Solids","Recognise and measure illustrated solid figures"],
+  ["y6angles","∠","Advanced Angle Puzzles","Straight and vertically opposite angles"],
+  ["y6polygons","⬠","Polygon Angle Diagrams","Interior and exterior angles of regular polygons"],
+  ["y6composite","▱","Composite & Shaded Area","Find areas of L-shapes and shaded regions"],
+  ["y6nets","▦","Cube Nets","Determine opposite faces from folded nets"],
+  ["y6blocks","⬡","Count 3D Blocks","Count unit cubes in towers"],
+  ["y6surface","◫","3D Surface Area","Calculate areas of all faces of prisms"]
  ];
  topicList=function(){
   const base=priorTopicList();
   if(!["4","5","6"].includes(String(grade)))return base;
   const list=[...base],existing=new Set(list.map(x=>x[0]));
   for(const entry of supplemental){
-    if((String(grade)==="4" && !["angles","symmetry","perimeterarea"].includes(entry[0]))||existing.has(entry[0])||!which(grade,entry[0]))continue;
+    if((String(grade)==="4" && !["angles","symmetry","perimeterarea"].includes(entry[0]))||(String(grade)!=="6"&&entry[0].startsWith("y6"))||existing.has(entry[0])||!which(grade,entry[0]))continue;
     list.push(entry);
     existing.add(entry[0]);
   }
