@@ -17,6 +17,8 @@ const dots=(pts,col='#4b94ca')=>pts.map(([x,y])=>C(x,y,5,col)).join('');
 const card=(x,y,symbol,caption,col='#e6f6f8')=>R(x,y,136,123,col,17,'#d5e8ef')+T(x+68,y+63,symbol,39)+T(x+68,y+99,caption,15,'#55778c');
 function scene(key){
  switch(key){
+ case 'mixed':return sun(135,136,40)+plant(320,286,1.1,true)+C(482,148,59,'#e7f6ff','#66a5bb',3)+P('M458 122v39l-20 30h89l-19-30v-39','none','#1ca9a1',5)+P('M452 181h60q8 17 2 17h-61q-8-6-1-17','#6bdfc9','#3ac3aa',2)+T(305,339,'Nature  ·  Experiments  ·  Discovery',18);
+
  case 'daynight':return sun(126,154,45)+earth(439,153,76)+P('M330 102Q260 152 328 208','none','#21a6a7',4)+T(290,91,'ROTATION',18)+T(129,290,'Sun',23)+T(439,290,'Earth',23)+P('M443 51v-17l-12 10M443 34l12 10','none','#2d93ad',4);
  case 'water':return sun(130,108,31)+cloud(408,99)+P('M74 265Q210 240 340 258Q455 272 551 256v74H74Z','#83d4e8','#3597c1',2)+arrow(235,245,230,139)+arrow(423,139,443,236)+T(232,121,'↑',33,'#189ca4')+T(453,177,'↓',33,'#2086be')+T(294,311,'WATER',21);
  case 'seasons':return [['SUMMER','#fff4d3'],['AUTUMN','#fff0db'],['WINTER','#e1f2ff'],['SPRING','#e8f8ed']].map(([n,col],i)=>{const x=20+i*143;return R(x,86,130,206,col,17)+T(x+65,127,n,15)+(i===0?sun(x+65,201,29):i===2?cloud(x+65,200):plant(x+66,250,.6,i===3))}).join('');
@@ -40,7 +42,7 @@ function scene(key){
  }
 }
 const familyTopic={
- 'Patterns in nature':'daynight','Earth & space':'space','Earth & sky':'space','Earth & weather':'weather',
+ 'mixed':'mixed','Patterns in nature':'daynight','Earth & space':'space','Earth & sky':'space','Earth & weather':'weather',
  'Earth systems':'water','Weather':'weather','Weather & seasons':'seasons',
  'Life cycles':'plant','Living things':'plant','Living world':'habitat','Living systems':'food',
  'Habitats':'habitat','Our bodies & senses':'experiment','Movement':'shadow',
