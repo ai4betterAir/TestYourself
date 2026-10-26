@@ -43,6 +43,17 @@ try{
    await page.locator('#learnPanel').waitFor({state:'visible',timeout:15000});
    const selectedGrade=await page.locator('#gradeSelect').inputValue();
    assert.equal(selectedGrade,s.year,'Year= deep link ignored');
+   if(s.year==='5'&&s.topic==='angles'){
+  console.log('DEBUG Year5 angles',await page.evaluate(()=>({
+    grade,topic,href:location.href,
+    requested:new URLSearchParams(location.search).get('topic'),
+    available:topicList().filter(x=>x[0]==='angles').map(x=>x[2]),
+    registered:window.SKILLUP_GEOMETRY?.hasTopic(grade,'angles'),
+    currentQuestion:document.getElementById('guidedQuestion')?.textContent,
+    guidedFigureHidden:document.getElementById('guidedGeometryFigure')?.hidden,
+    button:!!document.querySelector('.p-topic[data-topic="angles"]')
+  })));
+}
    await checkImg(page,'#guidedGeometryFigure');
    await page.locator('#startPractice').click();
    await page.locator('#quiz').waitFor({state:'visible'});
