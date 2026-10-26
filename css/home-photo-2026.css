@@ -125,3 +125,7 @@ body{background:#f8fbff}
  .grade-section .grade-go{min-height:35px;padding:7px 13px;font-size:.78rem}
 }
 @media(prefers-reduced-motion:reduce){.grade-section .grade-card:hover{transform:none}}
+
+/* Keep every homepage section visible without relying on scroll-trigger timing. */
+.home-refresh .reveal{opacity:1;transform:none;transition:none}
+.hero-photo-illustration img{filter:saturate(1.14) contrast(1.045)}
