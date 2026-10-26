@@ -43,6 +43,8 @@ try {
   const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth - document.documentElement.clientWidth);
   if(overflow>2) failures.push('Mobile horizontal overflow: '+overflow+'px');
   await mobile.screenshot({path:'homepage-preview/mobile.png',fullPage:true,animations:'disabled'});
+  // Avoid showing the sticky global header across a long element-only screenshot.
+  await mobile.addStyleTag({content:'.site-header{position:static!important}'});
   await mobile.locator('#year-levels').screenshot({path:'homepage-preview/year-cards-mobile.png',animations:'disabled'});
   console.log('Homepage screenshots saved to homepage-preview/.');
   await desktop.close();await mobile.close();
