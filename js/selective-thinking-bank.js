@@ -145,7 +145,9 @@ function question(topic='mixed',level='mix'){
  while(q.choices.length<4){q.choices.push(`Option ${q.choices.length+1}`)}
  q.choices=q.choices.slice(0,4);
  if(!q.choices.includes(String(q.answer)))q.choices[0]=String(q.answer);
- q.choices=shuffle(q.choices);
+ // Diagram options are labelled A–D inside the SVG. Keep answer buttons in that order.
+ if(q.image && q.choices.length===4 && ['A','B','C','D'].every(v=>q.choices.includes(v)))q.choices=['A','B','C','D'];
+ else q.choices=shuffle(q.choices);
  return q;
 }
 window.SKILLUP_THINKING={topics,question};
