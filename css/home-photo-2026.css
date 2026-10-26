@@ -129,3 +129,47 @@ body{background:#f8fbff}
 /* Keep every homepage section visible without relying on scroll-trigger timing. */
 .home-refresh .reveal{opacity:1;transform:none;transition:none}
 .hero-photo-illustration img{filter:saturate(1.14) contrast(1.045)}
+
+/* Full-width desktop composition. Avoid a narrow 1400px shell at large effective
+   viewports and browser zoom levels, which left a wide unused area on the right. */
+.home-refresh .shell,
+.home-refresh .nav-shell,
+.home-refresh .hero-photo-content,
+.home-refresh .grade-section>.shell {
+  width:calc(100% - clamp(28px,6vw,120px));
+  max-width:none;
+  margin-inline:auto;
+}
+.home-refresh .grade-section>.shell{padding-inline:clamp(15px,2.1vw,32px)}
+.home-refresh .hero-photo-illustration{width:59%;background:#d4f2e9}
+.home-refresh .hero-photo-illustration img{object-fit:cover;object-position:50% 46%;filter:saturate(1.14) contrast(1.025)}
+.home-refresh .hero-photo-home::before{
+  background:linear-gradient(90deg,#f7fdff 0%,rgba(249,253,255,.99) 29%,
+              rgba(248,252,255,.83) 43%,rgba(248,252,255,.10) 66%,transparent 84%);
+}
+.home-refresh .hero-photo-content .hero-copy{max-width:760px;flex:0 1 56%}
+.home-refresh #grades,.home-refresh #pathways{scroll-margin-top:90px}
+.home-refresh .grade-section .section-head{max-width:none}
+.home-refresh .grade-section .section-head p{max-width:840px;margin-inline:auto}
+@media(min-width:1800px){
+ .home-refresh .hero-photo-home h1{font-size:clamp(3.3rem,4vw,5.25rem)}
+ .home-refresh .grade-section .grade-card{min-height:305px}
+ .home-refresh .grade-section .grade-card b{font-size:clamp(1.45rem,1.45vw,2rem)}
+ .home-refresh .grade-section .grade-go{font-size:.9rem}
+}
+@media(max-width:820px){
+ .home-refresh .hero-photo-content .hero-copy{width:75%;flex:0 1 75%}
+ .home-refresh .hero-photo-illustration{width:62%}
+ .home-refresh .hero-photo-home::before{
+   background:linear-gradient(90deg,#f9fdff 0%,rgba(249,253,255,.97) 42%,
+               rgba(249,253,255,.45) 78%,transparent);
+ }
+}
+@media(max-width:600px){
+ .home-refresh .hero-photo-content .hero-copy{width:100%;max-width:100%;flex:0 1 100%}
+ .home-refresh .hero-photo-illustration{width:100%}
+ .home-refresh .hero-photo-illustration img{object-position:center 54%}
+ .home-refresh .hero-photo-home::before{
+   background:linear-gradient(180deg,#fafdff 0%,#fafdff 48%,rgba(250,253,255,.9) 60%,transparent 100%);
+ }
+}
