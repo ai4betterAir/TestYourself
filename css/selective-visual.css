@@ -17,3 +17,11 @@
  text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .visual-full-link:hover{color:#1d4599}
 .visual-full-link:focus-visible{outline:3px solid #315fc9;outline-offset:3px;border-radius:3px}
+
+/* Cube working-out displays, matching SkillUP's pastel educational theme. */
+.cube-explanation{display:block;margin-top:16px;padding:17px 21px;border:1px solid #b6dacd;
+ border-radius:15px;background:#eefbf6;color:#225b49;font:750 15px/1.7 Nunito,system-ui,sans-serif;
+ white-space:pre-wrap;}
+.cube-explanation[hidden]{display:none!important}
+.cube-review-explanation{border-left:4px solid #368c75;background:#edf9f5;
+ border-radius:7px;padding:10px 14px;color:#2c6355;line-height:1.6;}
