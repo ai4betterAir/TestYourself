@@ -22,7 +22,7 @@ try{
   assert.match(await page.locator('#heroHeadline').innerText(),/Brighter Tomorrow/);
   const image=page.locator('.hero-photo-illustration img');
   const src=await image.getAttribute('src');
-  assert.ok(src.startsWith('https://images.pexels.com/photos/7256936/'),'Wrong photo');
+  assert.ok(src.startsWith('https://images.pexels.com/photos/7634592/'),'Wrong photo');
   const cards=page.locator('.grade-card');
   assert.equal(await cards.count(),7,'K–6 cards missing');
   const years=await cards.locator('b').allTextContents();
@@ -55,9 +55,21 @@ try{
     assert.ok(await page.locator('.main-nav a[href="practice.html"]').isVisible(),'Mobile navigation missing');
     await page.locator('#navToggle').click();
   }
+  // Capture the live first impression before scrolling down to the cards.
+  await page.evaluate(()=>window.scrollTo(0,0));
+  await page.screenshot({path:'home-photo-previews/'+view.name+'-hero.png',animations:'disabled'});
   await page.locator('#grades').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(250);
-  await page.screenshot({path:'home-photo-previews/'+view.name+'.png',animations:'disabled',fullPage:view.name==='desktop'});
+  await page.waitForTimeout(300);
+  await page.screenshot({path:'home-photo-previews/'+view.name+'.png',animations:'disabled'});
+  // Scroll all sections before full-page capture so optional reveal animations have run.
+  if(view.name==='desktop'){
+    await page.evaluate(async()=>{
+      for(let y=0;y<document.documentElement.scrollHeight;y+=450){window.scrollTo(0,y);await new Promise(resolve=>setTimeout(resolve,55));}
+      window.scrollTo(0,0);
+    });
+    await page.waitForTimeout(300);
+    await page.screenshot({path:'home-photo-previews/desktop-full.png',animations:'disabled',fullPage:true});
+  }
   console.log('Passed homepage',view.name,'photo:',src,'size:',layout.hero.height,'grade columns first-row correct');
   assert.equal(errors.length,0,'Browser JS errors '+view.name+': '+errors.join('\n'));
   await page.close();
