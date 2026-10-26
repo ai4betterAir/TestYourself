@@ -1,0 +1,42 @@
+name: SkillUP people-free photo homepage check
+on:
+  push:
+    branches: [skillup-home-photographic-2026]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'css/home-photo-2026.css'
+      - 'scripts/browser-home-photo-2026.mjs'
+      - '.github/workflows/home-photo-2026-check.yml'
+jobs:
+  homepage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check homepage links and markup
+        run: |
+          node --check scripts/browser-home-photo-2026.mjs
+          grep -q 'Build Skills' index.html
+          grep -q 'home-photo-2026.css' index.html
+          test $(grep -c 'class="grade-card ' index.html) -eq 7
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.62.1
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then npx playwright install chromium; else echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"; fi
+      - name: Browser checks and screenshots
+        run: |
+          python3 -m http.server 4173 >/tmp/skillup-home-photo.log 2>&1 &
+          for attempt in {1..20}; do curl --fail --silent http://127.0.0.1:4173/index.html >/dev/null && break; sleep 1; done
+          node scripts/browser-home-photo-2026.mjs
+      - name: Upload responsive homepage screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillup-home-photo-preview
+          path: home-photo-previews/*.png
+          if-no-files-found: warn
