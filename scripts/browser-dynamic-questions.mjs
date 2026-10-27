@@ -71,7 +71,8 @@ try{
    await page.keyboard.press('Enter');
    assert.equal(await page.locator('#feedback').innerText(),'','Next question should clear feedback');
    assert.equal(await page.locator('#check').isDisabled(),true);
-   assert.equal(await page.locator('#reasoningCue').isHidden(),true,'Non-scheduling question must not show an irrelevant timeline');
+   const nextQuestion=await page.locator('#question').innerText();
+   assert.equal(await page.locator('#reasoningCue').isVisible(),/meets? every \d+ days?/i.test(nextQuestion),'Timeline should show only for scheduling questions');
    await page.locator('#backToTopics').click();
    assert.equal(await page.locator('#practiceDialog').evaluate(el=>el.open),false);
    assert.deepEqual(errors,[],exam+' page JavaScript errors');
