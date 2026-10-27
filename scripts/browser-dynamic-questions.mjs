@@ -40,10 +40,21 @@ try{
    const dims=await page.evaluate(()=>{
      const dialog=document.querySelector('#practiceDialog').getBoundingClientRect();
      const quiz=document.querySelector('#practiceDialog .quiz').getBoundingClientRect();
-     return {viewport:innerWidth,dialogRight:dialog.right,quizRight:quiz.right,scroll:document.querySelector('#practiceDialogScroll').scrollWidth,client:document.querySelector('#practiceDialogScroll').clientWidth};
+     const box=document.querySelector('#practiceDialog .quiz');
+     const question=document.querySelector('#question').getBoundingClientRect();
+     const cue=document.querySelector('#reasoningCue').getBoundingClientRect();
+     const firstAnswer=document.querySelector('#answers button').getBoundingClientRect();
+     return {viewport:innerWidth,dialogRight:dialog.right,quizRight:quiz.right,quizLeft:quiz.left,
+       quizScrollLeft:box.scrollLeft,questionLeft:question.left,cueLeft:cue.left,firstAnswerLeft:firstAnswer.left,
+       scroll:document.querySelector('#practiceDialogScroll').scrollWidth,client:document.querySelector('#practiceDialogScroll').clientWidth};
    });
    assert.ok(dims.dialogRight<=dims.viewport+2&&dims.quizRight<=dims.viewport+2,'Question overflow');
    assert.ok(dims.scroll<=dims.client+2,'Horizontal scroll in question panel');
+   assert.equal(dims.quizScrollLeft,0,'Quiz must not scroll sideways after advancing questions');
+   assert.ok(dims.questionLeft>=dims.quizLeft+8,'Question text is clipped on the left: '+JSON.stringify(dims));
+   assert.ok(dims.cueLeft>=dims.quizLeft+8,'Illustrated timeline is clipped on the left: '+JSON.stringify(dims));
+   assert.ok(dims.firstAnswerLeft>=dims.quizLeft+8,'Answer choices are clipped on the left: '+JSON.stringify(dims));
+   assert.equal(await page.locator('#answers button').filter({hasText:'Option 4'}).count(),0,'Placeholder distractors should never appear');
    await page.keyboard.press('1');
    assert.equal(await page.locator('#answers button').first().getAttribute('aria-pressed'),'true');
    assert.equal(await page.locator('#check').isEnabled(),true);
