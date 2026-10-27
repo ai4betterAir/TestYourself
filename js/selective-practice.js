@@ -296,6 +296,7 @@ function nextQ(){
   quiz.classList.remove('dynamic-quiz');
   void quiz.offsetWidth;
   quiz.classList.add('dynamic-quiz');
+  quiz.scrollLeft=0;
  }
 }
 function setView(v){
