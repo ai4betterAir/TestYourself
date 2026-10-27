@@ -34,7 +34,8 @@
 }
 .practice-dialog .quiz{
   position:relative;
-  overflow:hidden;
+  overflow:clip;
+  max-width:100%;
   isolation:isolate;
   background:radial-gradient(circle at 98% 3%,rgba(220,233,255,.65),transparent 25%),
              linear-gradient(180deg,#fff 0%,#fff 75%,#fcfdff 100%)!important;
@@ -225,3 +226,10 @@
 @media(prefers-reduced-motion:reduce){
  .practice-dialog .quiz,.practice-dialog .quiz .answers button,.practice-dialog .quiz .feedback,.practice-dialog .practice-dialog-score{animation:none!important;transition:none!important;transform:none!important}
 }
+
+/* A quiz card must never acquire a horizontal scroll position when browser
+   focus follows a Next or Check button: keep all children at their real x. */
+.practice-dialog .quiz>*{max-width:100%;min-width:0}
+.practice-dialog .quiz .answers{width:100%;min-width:0}
+.practice-dialog .quiz .reasoning-cue{max-width:100%;overflow:clip}
+.practice-dialog .quiz .reasoning-step-connector{min-width:0}
