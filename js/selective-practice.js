@@ -163,7 +163,18 @@ function saveSelectionToUrl(){
  history.replaceState(null,'',location.pathname+'?'+params.toString()+location.hash);
 }
 function choose(id){topic=id;qnum=1;score=attempted=0;saveSelectionToUrl();buildTopics();nextQ();showQuiz()}
-function renderAnswers(hostId,q,clickHandler){const host=$(hostId);host.innerHTML='';(q.image?q.choices:shuffle(q.choices)).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>clickHandler(b,v);host.appendChild(b)})}
+function renderAnswers(hostId,q,clickHandler){
+ const host=$(hostId);host.replaceChildren();
+ (q.image?q.choices:shuffle(q.choices)).forEach((v,i)=>{
+  const b=document.createElement('button');b.type='button';b.textContent=v;
+  b.dataset.key=String(i+1);
+  b.setAttribute('aria-keyshortcuts',String(i+1));
+  b.setAttribute('aria-pressed','false');
+  b.title='Press '+(i+1)+' to choose this answer';
+  b.onclick=()=>clickHandler(b,v);
+  host.appendChild(b);
+ });
+}
 function renderVisual(figureId,imageId,q){
  const figure=$(figureId),img=$(imageId);
  if(!figure||!img)return;
@@ -186,12 +197,59 @@ function renderVisual(figureId,imageId,q){
  figure.hidden=false;
 }
 let lastPracticePageScroll=0,lastPracticeTopic='mixed',dialogWasOpen=false;
+let answerLocked=false;
+function updateDynamicProgress(){
+ const total=practiceTarget(),meter=$('practiceDialogMeter'),fill=$('practiceDialogMeterFill');
+ const scoreLabel=$('practiceDialogScore');
+ if(meter){meter.setAttribute('aria-valuemax',String(total));meter.setAttribute('aria-valuenow',String(qnum))}
+ if(fill)fill.style.width=Math.max(0,Math.min(100,qnum/total*100))+'%';
+ if(scoreLabel)scoreLabel.textContent=attempted?score+' / '+attempted+' correct':'0 correct';
+}
+function renderReasoningCue(q){
+ const cue=$('reasoningCue');
+ if(!cue)return;
+ cue.replaceChildren();cue.hidden=true;
+ // Display only when the wording clearly describes repeated meetings.
+ // The unknown day count is intentionally not supplied.
+ if(q?.image)return;
+ const sentence=q?.text||'';
+ const period=sentence.match(/meets? every (\d+) days?/i);
+ const ordinal=sentence.match(/(\d+)(?:st|nd|rd|th) meeting/i);
+ const first=sentence.match(/first meeting is on (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i);
+ const gap=Number(period?.[1]),count=Number(ordinal?.[1]);
+ if(!gap||!count||count<3||count>7||gap>30)return;
+ const header=document.createElement('div');header.className='reasoning-cue-head';
+ const title=document.createElement('strong');title.className='reasoning-cue-title';title.textContent='Visualise the meeting schedule';
+ const helper=document.createElement('span');helper.className='reasoning-cue-helper';helper.textContent='Count the gaps between meetings';
+ header.append(title,helper);
+ const stages=document.createElement('div');stages.className='reasoning-steps';
+ for(let n=1;n<=count;n++){
+  const stage=document.createElement('div');stage.className='reasoning-stage';
+  const marker=document.createElement('span');marker.className='reasoning-stage-marker';marker.textContent=n===count?'?':String(n);
+  const label=document.createElement('span');label.className='reasoning-stage-label';label.textContent='Meet '+n;
+  const day=document.createElement('span');day.className='reasoning-stage-day';day.textContent=n===1&&first?first[1]:'';
+  stage.append(marker,label,day);stages.appendChild(stage);
+  if(n<count){const connector=document.createElement('div');connector.className='reasoning-step-connector';connector.textContent='+'+gap+' d';stages.appendChild(connector)}
+ }
+ cue.append(header,stages);cue.hidden=false;
+}
+function updateAnswerInteraction(){
+ const answers=$('answers');
+ if(!answers)return;
+ answers.classList.toggle('locked',answerLocked);
+ [...answers.querySelectorAll('button')].forEach(b=>{
+  b.setAttribute('aria-pressed',String(b===selected));
+ });
+ $('check').disabled=answerLocked||!selected;
+}
+
 function practiceDialogState(){return !!$('practiceDialog')?.open}
 function updatePracticeDialogHeader(){
  const title=$('practiceDialogTitle'),eyebrow=$('practiceDialogHelp'),progress=$('practiceDialogProgress');
  if(title)title.textContent=current?._name||((stream==='thinking')?'Thinking Skills':'Practice');
  if(eyebrow)eyebrow.textContent='SKILLUP · '+(exam==='oc'?'OC':'SELECTIVE')+' · '+(stream==='thinking'?'THINKING SKILLS':stream.toUpperCase());
  if(progress)progress.textContent='Question '+qnum+' of '+practiceTarget();
+ updateDynamicProgress();
 }
 function restorePracticeScreen(){
  const holder=$('practiceDialogQuestionHost');
@@ -212,19 +270,34 @@ function closePracticeDialog(){
  restorePracticeScreen();
 }
 function nextQ(){
- current=make();selected=null;paintLearn();
+ current=make();selected=null;answerLocked=false;paintLearn();
  $('question').textContent=current.text;
+ renderReasoningCue(current);
  renderVisual('questionFigure','questionImage',current);
  const worked=$('cubeExplanation');if(worked){worked.hidden=true;worked.textContent='';}
  $('tip').textContent='💡 '+(current.tip||'Use your best reasoning.');
  $('feedback').textContent='';
+ $('feedback').classList.remove('is-correct','is-wrong');
  $('badge').textContent=topic==='mixed'?(stream==='writing'?'Mixed writing words':stream==='thinking'?(exam==='oc'?'Mixed OC Thinking':'Mixed Thinking'):stream==='reading'?(exam==='oc'?'Mixed OC Reading':'Mixed Reading'):(exam==='oc'?'Mixed OC':'Mixed Selective')):current._name;
  $('level').textContent=current._year||modeLabel();
  $('qnum').textContent=`${qnum} / ${practiceTarget()}`;
  $('score').textContent=`${score} / ${attempted}`;
  updatePracticeDialogHeader();
  if(practiceDialogState())$('practiceDialogScroll').scrollTop=0;
- renderAnswers('answers',current,(b)=>{const host=$('answers');host.querySelectorAll('button').forEach(z=>z.classList.remove('selected'));b.classList.add('selected');selected=b});
+ renderAnswers('answers',current,(b)=>{
+  if(answerLocked)return;
+  const host=$('answers');
+  host.querySelectorAll('button').forEach(z=>z.classList.remove('selected'));
+  b.classList.add('selected');selected=b;updateAnswerInteraction();
+ });
+ updateAnswerInteraction();
+ const quiz=$('question')?.closest('.quiz');
+ if(quiz){
+  quiz.classList.remove('dynamic-quiz');
+  void quiz.offsetWidth;
+  quiz.classList.add('dynamic-quiz');
+  quiz.scrollLeft=0;
+ }
 }
 function setView(v){
  if(v!=='practice'&&practiceDialogState())closePracticeDialog();
@@ -275,9 +348,46 @@ document.querySelectorAll('.streambar button').forEach(b=>{
  dialog.addEventListener('cancel',e=>{e.preventDefault();closePracticeDialog()});
  dialog.addEventListener('close',restorePracticeScreen);
 }}
+{const dialog=$('practiceDialog');
+ if(dialog)dialog.addEventListener('keydown',event=>{
+  if(event.altKey||event.ctrlKey||event.metaKey||event.isComposing)return;
+  const target=event.target;
+  if(target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;
+  if(/^[1-4]$/.test(event.key)){
+   const button=$('answers')?.children[Number(event.key)-1];
+   if(!button||answerLocked)return;
+   event.preventDefault();button.click();button.focus({preventScroll:true});return;
+  }
+  if(event.key==='Enter'&&target?.id!=='backToTopics'&&target?.id!=='next'&&target?.id!=='check'){
+   event.preventDefault();
+   if(answerLocked)$('next').click();else if(selected)$('check').click();
+  }
+ });
+}
 document.querySelectorAll('.top-tabs button').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 document.querySelectorAll('.modebar button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.modebar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;topic='mixed';score=attempted=0;qnum=1;updateHeader();buildTopics();nextQ();showMockIntro();showTopics()});
-$('check').onclick=()=>{if(!selected){$('feedback').textContent='Choose an answer first.';return}if(selected.dataset.checked)return;attempted++;const ok=String(selected.textContent)===String(current.answer);if(ok){score++;selected.classList.add('correct');$('feedback').textContent='✓ Correct!'}else{selected.classList.add('wrong');[...$('answers').children].find(b=>String(b.textContent)===String(current.answer))?.classList.add('correct');$('feedback').textContent=`Answer: ${current.answer}`}selected.dataset.checked='1';$('score').textContent=`${score} / ${attempted}`};
+$('check').onclick=()=>{
+ if(!selected||answerLocked)return;
+ attempted++;answerLocked=true;
+ const ok=String(selected.textContent)===String(current.answer);
+ const feedback=$('feedback');
+ if(ok){
+  score++;
+  selected.classList.add('correct');
+  feedback.textContent='✓ Correct — well reasoned!';
+  feedback.classList.add('is-correct');
+  const scoreElement=$('practiceDialogScore');
+  if(scoreElement){scoreElement.classList.remove('score-pop');void scoreElement.offsetWidth;scoreElement.classList.add('score-pop')}
+ }else{
+  selected.classList.add('wrong');
+  [...$('answers').children].find(b=>String(b.textContent)===String(current.answer))?.classList.add('correct');
+  feedback.textContent='Correct answer: '+current.answer;
+  feedback.classList.add('is-wrong');
+ }
+ selected.dataset.checked='1';
+ $('score').textContent=score+' / '+attempted;
+ updateAnswerInteraction();updateDynamicProgress();
+};
 $('check').addEventListener('click',()=> {
   const box=$('cubeExplanation');
   if(!box || !selected?.dataset.checked) return;
