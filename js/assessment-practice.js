@@ -49,7 +49,7 @@ const configs={
     tag:'OPPORTUNITY CLASS',
     summary:'Core reasoning + challenge practice',
     copy:'A separate OC reasoning pool that builds from core skills into more challenging mixed questions.',
-    accent:'Think deeper. Reason faster.',
+    accent:'Reason faster.',
     practiceTarget:10,mockTarget:20,minutes:20,
     sources:[
       {key:'y3adv',label:'Core reasoning',tone:'gold'},

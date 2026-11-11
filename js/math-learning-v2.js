@@ -53,9 +53,54 @@ function updateMark(){let d;try{d=JSON.parse(localStorage.getItem(`skillup-math-
 $('startTestBtn').onclick=startTest;$('restartTest').onclick=startTest;$('testScope').onchange=e=>{testScope=e.target.value;showTestIntro()};$('testPrev').onclick=()=>{if(testIndex){testIndex--;renderTest()}};$('testNext').onclick=()=>{if(testIndex===19)finishTest();else{testIndex++;renderTest()}};
 document.querySelectorAll('.mode-tab').forEach(b=>b.onclick=()=>switchMode(b.dataset.mode));$('startPractice').onclick=()=>switchMode('practice');$('tryGuidedAgain').onclick=buildGuided;
 $('menuToggle').onclick=()=>{$('practiceNav').classList.toggle('open')};
-$('gradeSelect').addEventListener('change',()=>setTimeout(()=>{const requested=new URLSearchParams(location.search).get('topic');if(requested&&topicList().some(x=>x[0]===requested))topic=requested;buildTopics();guide();updateMark();switchMode('learn')},0));
+function resolveRequestedTopic(requested){
+ if(!requested)return null;
+ const normalize=value=>String(value||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ const list=topicList();
+ const exact=list.find(x=>x[0]===requested);
+ if(exact)return exact[0];
+ const byName=list.find(x=>normalize(x[2])===requested);
+ if(byName)return byName[0];
+ const aliases={
+  'counting':['number'],
+  'number-order':['number','compare'],
+  'simple-addition':['addition','g2addsub3','g2facts'],
+  'shapes':['shapes2d','g2geometry','geometry','measurement'],
+  'shapes-and-patterns':['shapes2d','patterns','g2geometry'],
+  'measurement':['measurement','g2measurement','volume','length','perimeterarea','area','capacity'],
+  'number-and-place-value':['number','g2place1000','g2place100'],
+  'numbers-to-1000':['g2place1000','g2place100','number'],
+  'addition-and-subtraction':['addition','g2addsub3','g2facts','operations','subtraction'],
+  'multiplication-and-division':['multiplication','g2multdiv','division'],
+  'fractions-and-decimals':['fractions','fractiondecimal','g2fractionschance','decimals'],
+  'fractions-decimals-and-percentages':['fractions','fractiondecimal','ratiopercent','g2fractionschance'],
+  'percentages':['percentage','ratiopercent','percent'],
+  'time-and-money':['time','g2moneytime','money','rate','measurement'],
+  'data-and-graphs':['data','g2datagraphs'],
+  'data-and-chance':['data','g2datagraphs','g2fractionschance','chance'],
+  'four-operations':['operations','number','g2multdiv','division','multiplication'],
+  'whole-numbers':['number','numeration','placevalue'],
+  'operations':['operations','number','mixed'],
+  'geometry':['geometry','g2geometry','shapes2d','measurement','g2measurement'],
+  'problem-solving':['wordproblems','mixed'],
+  'patterns-and-algebra':['algebra','patterns'],
+  'patterns':['patterns','algebra'],
+  'money':['money','g2moneytime'],
+  'time':['time','g2moneytime'],
+  'fractions':['fractions','g2fractionschance'],
+  'multiplication':['multiplication','g2multdiv'],
+  'data':['data','g2datagraphs'],
+
+ };
+ const match=(aliases[requested]||[]).find(id=>list.some(x=>x[0]===id));
+ if(match)return match;
+ if(aliases[requested])return (list.find(x=>x[0]==='mixed')||list[list.length-1])?.[0]||null;
+ return null;
+}
+$('gradeSelect').addEventListener('change',()=>setTimeout(()=>{const requested=new URLSearchParams(location.search).get('topic');const resolved=resolveRequestedTopic(requested);if(resolved)topic=resolved;buildTopics();guide();updateMark();switchMode('learn')},0));
 const requestedTopic=new URLSearchParams(location.search).get('topic');
-if(requestedTopic&&topicList().some(x=>x[0]===requestedTopic))topic=requestedTopic;
+const resolvedTopic=resolveRequestedTopic(requestedTopic);
+if(resolvedTopic)topic=resolvedTopic;
 if(new URLSearchParams(location.search).get('focus')||requestedTopic){document.body.classList.add('focus-learn');window.scrollTo({top:0});}
 buildTopics();buildSet();guide();updateMark();switchMode('learn');
 })();
