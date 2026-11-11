@@ -1,5 +1,5 @@
 // Topic 14 upgrade: Year 5 Measurement, Units & Time.
-// Newly written SkillUP material covering Year 5 measurement chapters as a curriculum and difficulty reference.
+// Newly written GoThriveUp material covering Year 5 measurement chapters as a curriculum and difficulty reference.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

@@ -1,5 +1,5 @@
 // Selective Topic 4: Division Reasoning.
-// Newly written SkillUP questions based on reasoning styles from the uploaded Grade 5 division chapter.
+// Newly written GoThriveUp questions based on reasoning styles from the uploaded Grade 5 division chapter.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

@@ -1,5 +1,5 @@
 // Grade 4 topics follow the 14 chapters of Progress in Mathematics Grade 4.
-// Questions are newly written for SkillUP and do not reproduce the textbook.
+// Questions are newly written for GoThriveUp and do not reproduce the textbook.
 (function () {
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const P=a=>a[R(0,a.length-1)];

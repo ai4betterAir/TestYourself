@@ -1,4 +1,4 @@
-/* Original SkillUP visual reasoning questions. Created for this project; no textbook images. */
+/* Original GoThriveUp visual reasoning questions. Created for this project; no textbook images. */
 (function(){
  'use strict';
  const questions=[

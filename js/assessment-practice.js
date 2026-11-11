@@ -170,7 +170,7 @@ function setMode(next){
   $('mockQuestions').textContent=cfg().mockTarget;
   $('mockMinutes').textContent=cfg().minutes;
   $('mockTimer').textContent=cfg().minutes+':00';
-  document.title=cfg().title+' | SkillUP';
+  document.title=cfg().title+' | GoThriveUp';
   renderSources();
   renderTopics();
   nextPractice(true);

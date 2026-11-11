@@ -17,7 +17,7 @@
     };
   }
   function letter(p, student) {
-    return ["SkillUP Selective Writing", "Student: " + (student || "Student"), "Topic: " + p.topic, "Section: " + p.section, "Words: " + p.words, "Saved: " + p.at.replace("T", " ").slice(0, 16), "", p.text || "(empty)"].join("\n");
+    return ["GoThriveUp Selective Writing", "Student: " + (student || "Student"), "Topic: " + p.topic, "Section: " + p.section, "Words: " + p.words, "Saved: " + p.at.replace("T", " ").slice(0, 16), "", p.text || "(empty)"].join("\n");
   }
   function status(msg, ok) {
     const el = document.getElementById("writeSaveStatus");
@@ -67,7 +67,7 @@
     if (!p.text) return status("Write something before sending.");
     const to = [c.teacher, c.parent].map((x) => x.trim()).filter(Boolean);
     if (!to.length) return status("Add a teacher email and/or a parent email.");
-    location.href = "mailto:" + to.join(",") + "?subject=" + encodeURIComponent("SkillUP writing: " + p.topic) + "&body=" + encodeURIComponent(letter(p, c.student));
+    location.href = "mailto:" + to.join(",") + "?subject=" + encodeURIComponent("GoThriveUp writing: " + p.topic) + "&body=" + encodeURIComponent(letter(p, c.student));
     status("Email window opened.", true);
   }
   async function sendDash() {

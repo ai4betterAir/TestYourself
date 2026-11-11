@@ -15,7 +15,7 @@ if(!subjects[subject])subject='maths';
 const label=year==='K'?'Kindy':'Year '+year;
 const meta=subjects[subject];
 document.body.dataset.subject=subject;
-document.title=label+' '+meta.label+' | SkillUP';
+document.title=label+' '+meta.label+' | GoThriveUp';
 document.getElementById('hero-year').textContent=label;
 document.getElementById('hero-subject').textContent=meta.label;
 document.getElementById('hero-tagline').textContent=meta.tag;

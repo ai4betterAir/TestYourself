@@ -7,7 +7,7 @@
 
   button.addEventListener('click', async () => {
     const report = [
-      'SkillUP issue report',
+      'GoThriveUp issue report',
       `Page or topic: ${page.value.trim() || 'Not provided'}`,
       `Problem: ${problem.value.trim() || 'Not provided'}`,
       `Browser page: ${location.href}`,

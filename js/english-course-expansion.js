@@ -1,4 +1,4 @@
-/* Additional original SkillUP lessons. Loaded after the core course data. */
+/* Additional original GoThriveUp lessons. Loaded after the core course data. */
 (() => {
   if (typeof DATA === 'undefined') return;
 

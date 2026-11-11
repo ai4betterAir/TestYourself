@@ -1,5 +1,5 @@
 // Grade 2 topics follow the 12 chapters of Progress in Mathematics Grade 2.
-// Questions are newly written for SkillUP. Material beyond the Year 2 level is routed to Year 3 extensions.
+// Questions are newly written for GoThriveUp. Material beyond the Year 2 level is routed to Year 3 extensions.
 (function(){
 const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,P=a=>a[R(0,a.length-1)],S=a=>[...a].sort(()=>Math.random()-.5),U=a=>[...new Set(a.map(String))];
 function N(answer,step=1,min=0){const v=new Set([Number(answer)]);let k=1;while(v.size<4){v.add(Math.max(min,Number(answer)+k*step));if(v.size<4)v.add(Math.max(min,Number(answer)-k*step));k++}return S([...v].map(String))}

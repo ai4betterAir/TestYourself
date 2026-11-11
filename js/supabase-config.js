@@ -1,4 +1,4 @@
-// Public browser configuration for SkillUP.
+// Public browser configuration for GoThriveUp.
 // This publishable key is safe to include in browser code when Supabase RLS policies are enabled.
 // Never place a service-role key here.
 window.SKILLUP_SUPABASE = {

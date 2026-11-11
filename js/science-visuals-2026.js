@@ -1,4 +1,4 @@
-/* Original SkillUP science diagrams and supplemental questions. No external images or people. */
+/* Original GoThriveUp science diagrams and supplemental questions. No external images or people. */
 (function(){
 'use strict';
 const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;' ,'"':'&quot;'}[c]));
@@ -141,7 +141,7 @@ const B={
 };
 function forTopic(year,topic){return (B[String(year)]||[]).filter(q=>q.topic===topic)}
 function enrich(year){return (B[String(year)]||[]).map(q=>({...q,options:[...q.options]}))}
-function illustrate(q){const key=inferKey(q);return {svg:svgFor(key),alt:'Original SkillUP science illustration about '+(q.topic||'science').toLowerCase()+'. '+({daynight:'The Sun and rotating Earth.',water:'Water, cloud and circular arrows.',seasons:'Four season panels.',plant:'Stages of a growing plant.',moon:'Five phases of the Moon.',shadow:'A Sun, object and its shadow.',animal:'Egg, caterpillar, pupa and adult butterfly.',tides:'The Moon and ocean water around Earth.',weather:'Sun, cloud and rain panels.',habitat:'Plants, sunshine and living habitats.',food:'Producer and consumer stages.',matter:'Particles in solid, liquid and gas.',magnet:'A horseshoe magnet and small metal objects.',circuit:'A battery, wires and lamp in a complete circuit.',earth:'Cross-section of Earth’s layers.',space:'The Sun and Earth in space.',experiment:'Three samples recorded for a fair test.',graph:'A three-column observation graph.',sustain:'The Earth with sustainability arrows.'}[key]||'A science diagram.')}}
+function illustrate(q){const key=inferKey(q);return {svg:svgFor(key),alt:'Original GoThriveUp science illustration about '+(q.topic||'science').toLowerCase()+'. '+({daynight:'The Sun and rotating Earth.',water:'Water, cloud and circular arrows.',seasons:'Four season panels.',plant:'Stages of a growing plant.',moon:'Five phases of the Moon.',shadow:'A Sun, object and its shadow.',animal:'Egg, caterpillar, pupa and adult butterfly.',tides:'The Moon and ocean water around Earth.',weather:'Sun, cloud and rain panels.',habitat:'Plants, sunshine and living habitats.',food:'Producer and consumer stages.',matter:'Particles in solid, liquid and gas.',magnet:'A horseshoe magnet and small metal objects.',circuit:'A battery, wires and lamp in a complete circuit.',earth:'Cross-section of Earth’s layers.',space:'The Sun and Earth in space.',experiment:'Three samples recorded for a fair test.',graph:'A three-column observation graph.',sustain:'The Earth with sustainability arrows.'}[key]||'A science diagram.')}}
 function thumbnail(topic){return svgFor(familyTopic[topic]||'experiment')}
 function description(topic){return descriptions[familyTopic[topic]]||'Observe evidence, ask questions and explore scientific ideas.'}
 window.SKILLUP_SCIENCE_VISUALS={enrich,forTopic,illustrate,thumbnail,description,svgFor};

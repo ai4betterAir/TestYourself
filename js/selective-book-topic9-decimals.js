@@ -1,5 +1,5 @@
 // Selective Topic 9: Decimal Reasoning.
-// Newly written SkillUP questions inspired by decimal reasoning styles in the uploaded Grade 5 book.
+// Newly written GoThriveUp questions inspired by decimal reasoning styles in the uploaded Grade 5 book.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)],shuffle=a=>[...a].sort(()=>Math.random()-.5),uniq=a=>[...new Set(a.map(String))];

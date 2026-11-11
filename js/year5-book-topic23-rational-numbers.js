@@ -1,5 +1,5 @@
 // Topic 23: Year 5 Rational Numbers & Number Lines.
-// Newly written SkillUP material covering the Year 5 Rational Numbers enrichment page.
+// Newly written GoThriveUp material covering the Year 5 Rational Numbers enrichment page.
 (function(){
   if(!window.SKILLUP_MATH)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

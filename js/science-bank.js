@@ -1,4 +1,4 @@
-/* SkillUP Science question bank: Kindy–Year 6. Each year has 20 original, age-appropriate questions. */
+/* GoThriveUp Science question bank: Kindy–Year 6. Each year has 20 original, age-appropriate questions. */
 (function(){
   const q=(topic,text,answer,options,explanation)=>({topic,text,answer,options,explanation});
   const B={

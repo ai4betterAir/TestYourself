@@ -1,4 +1,4 @@
-/* SkillUP Science Studio — shared K–6 practice and assessment controller. */
+/* GoThriveUp Science Studio — shared K–6 practice and assessment controller. */
 (function(){
 'use strict';
 const params=new URLSearchParams(location.search);
@@ -233,7 +233,7 @@ function boot(){
  $('heroCopy').textContent='Explore the natural world through original diagrams, observations and science questions created for '+label+'.';
  $('learningBack').href='learning.html?year='+encodeURIComponent(year);
  $('hubBack').href='learning.html?year='+encodeURIComponent(year);
- document.title=label+' Science Studio | SkillUP';
+ document.title=label+' Science Studio | GoThriveUp';
  buildTopics();setTopic(topic);
  $('yearSelect').onchange=e=>{
   const next=e.target.value,newTopics=new Set((core[next]||[]).map(q=>q.topic));

@@ -1,5 +1,5 @@
 // Selective Topic 13: Volume & 3D Measurement Reasoning.
-// Newly written SkillUP questions extending the uploaded Grade 5 solid-figure and volume concepts.
+// Newly written GoThriveUp questions extending the uploaded Grade 5 solid-figure and volume concepts.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

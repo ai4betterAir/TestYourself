@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#2f6bff">
-<meta name="description" content="Choose a school year and explore SkillUP learning pathways across Maths, English, Reading, Vocabulary, Science and General Knowledge.">
-<title>Learning Hub | SkillUP</title>
+<meta name="description" content="Choose a school year and explore GoThriveUp learning pathways across Maths, English, Reading, Vocabulary, Science and General Knowledge.">
+<title>Learning Hub | GoThriveUp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/skillup-logo.svg">
@@ -45,7 +45,7 @@
     <div><span class="eyebrow">YOUR LEARNING LIBRARY</span><h2>More than a year selector</h2><p>Choose a year to open a complete learning space with topics, practice, tests and progress.</p></div>
     <a class="library-outline-link" href="#library-subjects">See the learning areas ↓</a>
   </div>
-  <div class="learning-flow" aria-label="How SkillUP works">
+  <div class="learning-flow" aria-label="How GoThriveUp works">
     <article><span class="flow-icon learn">↗</span><div><b>Learn</b><p>Understand the idea with clear examples.</p></div></article>
     <article><span class="flow-icon practice">✦</span><div><b>Practice</b><p>Build accuracy with guided questions.</p></div></article>
     <article><span class="flow-icon test">✓</span><div><b>Test</b><p>Check what you can do independently.</p></div></article>
@@ -147,7 +147,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year"></span> SkillUP. All rights reserved.</span>
+      <span>© <span id="year"></span> GoThriveUp. All rights reserved.</span>
       <span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></span>
     </div>
   </div>
@@ -198,7 +198,7 @@
    '6':{hero:'get ready for next.',words:['get ready for next.','extend your thinking.','master key skills.','finish strong.'],maths:'Percentages & algebra',english:'Writing & grammar',challenge:'Selective thinking',challengeSubject:'selective',score:'76',goal:'4 of 5 sessions'}
  };
  const plan=yearPlans[y];
- document.title=label+' Learning Hub | SkillUP';
+ document.title=label+' Learning Hub | GoThriveUp';
  document.querySelector('.year-copy .eyebrow').textContent='For '+label+' learners';
  document.getElementById('hub-tagline').textContent='One focused space for stronger '+label+' learning.';
  document.getElementById('hub-copy').textContent=(y==='K'?'Build early confidence across Maths, English, Reading, Vocabulary, Science and General Knowledge — with playful, clear next steps.':'Build confidence across Maths, English, Reading, Vocabulary, Science and General Knowledge — with clear next steps and focused practice.');
@@ -207,7 +207,7 @@
  const primary=document.querySelector('.hero-actions .primary');
  if(primary) primary.textContent='Start learning';
  const secondary=document.querySelector('.hero-actions .secondary');
- if(secondary) secondary.textContent='Back to SkillUP';
+ if(secondary) secondary.textContent='Back to GoThriveUp';
  const sectionTitle=document.querySelector('#subjects .section-head h2');
  if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
