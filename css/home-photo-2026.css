@@ -3,8 +3,8 @@
 body{background:#f8fbff}
 :where(.site-header,.hero-photo-home,.grade-section) :focus-visible{outline:3px solid #0a67eb;outline-offset:4px}
 .site-header{background:rgba(255,255,255,.98);border-bottom:1px solid #e5ebf3;box-shadow:0 3px 14px rgba(18,42,79,.04)}
-.nav-shell{height:76px}
-.brand img{width:162px}
+.nav-shell{height:86px}
+.brand img{width:220px}
 .main-nav{gap:3px}
 .main-nav a{padding:10px 12px;font-size:.86rem;color:#24395e}
 .main-nav a.active{color:#135fe2;background:transparent}
