@@ -1,5 +1,5 @@
 /* Shared visual extensions for NAPLAN and OC landing pages.
-   Loads after selective-landing.css to keep the same SkillUP design language. */
+   Loads after selective-landing.css to keep the same LearnAndExcel design language. */
 
 .assessment-landing .site-header{box-shadow:0 1px 0 rgba(22,48,122,.06)}
 .assessment-landing .sel-hero{padding-top:52px}

@@ -1,23 +1,17 @@
 {
-  "name": "GoThriveUp Learning",
-  "short_name": "GoThriveUp",
-  "description": "Learn, practice, test and improve across primary Maths, English, Vocabulary and Selective preparation.",
+  "name": "LearnAndExcel",
+  "short_name": "LearnAndExcel",
+  "description": "Learn, practice, test and improve across primary Maths, English, Science and Selective preparation.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fbff",
-  "theme_color": "#3767f0",
+  "theme_color": "#0b2a60",
   "icons": [
     {
-      "src": "assets/skillup-icon-192.png",
-      "sizes": "192x192",
+      "src": "assets/learnandexcel-icon.png",
+      "sizes": "1254x1254",
       "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "assets/skillup-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

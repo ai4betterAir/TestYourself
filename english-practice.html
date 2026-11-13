@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="GoThriveUp English learning and practice for Years 1–6: reading, grammar, spelling and writing.">
-<title>English Practice | GoThriveUp</title>
-<link rel="icon" type="image/svg+xml" href="assets/skillup-logo.svg">
+<meta name="description" content="LearnAndExcel English learning and practice for Years 1–6: reading, grammar, spelling and writing.">
+<title>English Practice | LearnAndExcel</title>
+<link rel="icon" type="image/svg+xml" href="assets/learnandexcel-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/english-course.css"><link rel="stylesheet" href="css/english-writing.css?v=20260927">
-<link rel="manifest" href="site.webmanifest"><meta name="theme-color" content="#3767f0"><link rel="canonical" href="https://ai4betterair.github.io/TestYourself/english-practice.html"><meta property="og:title" content="English Practice | GoThriveUp"><meta property="og:description" content="GoThriveUp English learning and practice for Years 1–6: reading, grammar, spelling and writing."><meta property="og:type" content="website"><link rel="apple-touch-icon" href="assets/skillup-icon-192.png"><meta property="og:url" content="https://ai4betterair.github.io/TestYourself/english-practice.html"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="GoThriveUp primary learning for Years 1–6"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="English Practice | GoThriveUp"><meta name="twitter:description" content="GoThriveUp English learning and practice for Years 1–6: reading, grammar, spelling and writing."><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/skillup-social.png"></head>
+<link rel="manifest" href="site.webmanifest"><meta name="theme-color" content="#3767f0"><link rel="canonical" href="https://ai4betterair.github.io/TestYourself/english-practice.html"><meta property="og:title" content="English Practice | LearnAndExcel"><meta property="og:description" content="LearnAndExcel English learning and practice for Years 1–6: reading, grammar, spelling and writing."><meta property="og:type" content="website"><link rel="apple-touch-icon" href="assets/learnandexcel-icon.png"><meta property="og:url" content="https://ai4betterair.github.io/TestYourself/english-practice.html"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/learnandexcel-logo.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="LearnAndExcel primary learning for Years 1–6"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="English Practice | LearnAndExcel"><meta name="twitter:description" content="LearnAndExcel English learning and practice for Years 1–6: reading, grammar, spelling and writing."><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/learnandexcel-logo.png"></head>
 <body>
 <header class="course-header">
-<a class="course-logo" href="index.html"><img src="assets/gothriveup-logo.png" alt="GoThriveUp"></a>
+<a class="course-logo" href="index.html"><img src="assets/learnandexcel-logo.png" alt="LearnAndExcel"></a>
 <button id="courseMenu" class="course-menu" aria-label="Open menu">☰</button>
 <nav id="courseNav"><a href="index.html">Home</a><a href="practice.html">Maths</a><a href="vocabulary.html">Vocabulary</a><a class="active" href="english.html">English</a><a href="selective-practice.html">Selective</a></nav>
 <div class="course-mark"><span>⭐</span><div><small>English progress</small><b id="englishMark">Start learning</b></div></div>
@@ -39,7 +39,7 @@
 <div class="question-card"><div class="question-meta"><span id="questionCount"></span><b id="questionType"></b></div><h3 id="readingQuestion"></h3><div class="answers" id="readingAnswers"></div><div class="feedback" id="readingFeedback"></div><div class="actions"><button class="secondary" id="readingPrev">← Previous</button><button class="primary" id="readingNext">Next →</button></div></div>
 </div>
 <div id="quizActivity" hidden>
-<div class="question-card"><div class="question-meta"><span id="quizCount"></span><b id="quizType"></b></div><h3 id="quizQuestion"></h3><div class="answers" id="quizAnswers"></div><div class="feedback" id="quizFeedback"></div><div class="coach"><b>💡 GoThriveUp Coach</b><p id="quizHint"></p></div><div class="actions"><button class="secondary" id="quizPrev">← Previous</button><button class="primary" id="quizNext">Next →</button></div></div>
+<div class="question-card"><div class="question-meta"><span id="quizCount"></span><b id="quizType"></b></div><h3 id="quizQuestion"></h3><div class="answers" id="quizAnswers"></div><div class="feedback" id="quizFeedback"></div><div class="coach"><b>💡 LearnAndExcel Coach</b><p id="quizHint"></p></div><div class="actions"><button class="secondary" id="quizPrev">← Previous</button><button class="primary" id="quizNext">Next →</button></div></div>
 </div>
 <div id="writingActivity" hidden>
 <div class="writing-prompt writing-studio"><div class="writing-heading"><div><span id="writingType"></span><h3 id="writingTitle"></h3><p id="writingPrompt"></p></div><span class="writing-badge">Draft studio</span></div><div class="plan-grid" id="writingPlan"></div><div class="writing-editor-shell"><div class="editor-toolbar"><label class="writing-label" for="writingBox">Your draft</label><span><strong id="wordCount">0</strong> words <small id="wordGoal"></small></span></div><textarea id="writingBox" rows="14" placeholder="Start with your opening sentence…"></textarea><div class="writing-tools"><div><b>Editing checklist</b><div id="writingChecklist"></div></div><div class="writing-goal"><b>Writing goal</b><strong id="wordGoalCard">Writing target</strong><small>Use the plan above, then reread your work.</small></div></div></div><div class="writing-actions actions"><button class="secondary" id="clearWriting">Clear draft</button><button class="secondary" id="saveWriting">Save draft</button><button class="primary" id="sendWriting">Send to teacher and parent dashboard →</button></div><div class="writing-cloud-status" id="writingCloudStatus" aria-live="polite"></div><div class="feedback" id="writingFeedback"></div></div>
@@ -48,6 +48,6 @@
 </section>
 </section>
 </main>
-<footer><div class="footer-bottom"><span>© 2026 GoThriveUp</span><span>English · Learn · Practice · Improve</span></div></footer>
+<footer><div class="footer-bottom"><span>© 2026 LearnAndExcel</span><span>English · Learn · Practice · Improve</span></div></footer>
 <script src="js/english-course.js"></script><script src="js/english-course-expansion.js"></script><script src="js/english-test.js"></script><script type="module" src="js/english-writing-save.js?v=20260927"></script>
 <script src="js/site-shell.js"></script></body></html>

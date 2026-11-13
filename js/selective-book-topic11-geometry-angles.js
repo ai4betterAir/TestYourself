@@ -1,5 +1,5 @@
 // Selective Topic 11: Geometry & Angles Reasoning.
-// Newly written GoThriveUp questions covering Year 5 geometry chapter.
+// Newly written LearnAndExcel questions covering Year 5 geometry chapter.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

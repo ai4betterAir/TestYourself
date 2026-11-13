@@ -1,5 +1,5 @@
 // Selective Topic 7: Fraction Addition & Subtraction Reasoning.
-// Newly written GoThriveUp questions based on the structure and reasoning styles of the uploaded Grade 5 fraction chapter.
+// Newly written LearnAndExcel questions based on the structure and reasoning styles of the uploaded Grade 5 fraction chapter.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

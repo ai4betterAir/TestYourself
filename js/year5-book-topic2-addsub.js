@@ -1,5 +1,5 @@
 // Topic 2 upgrade: Year 5 Addition, Subtraction & Estimation.
-// Newly written GoThriveUp material covering the Year 5 curriculum and problem-solving style.
+// Newly written LearnAndExcel material covering the Year 5 curriculum and problem-solving style.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

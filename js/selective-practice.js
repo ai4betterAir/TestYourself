@@ -76,14 +76,14 @@ function updateHeader(){
  document.body.dataset.stream=stream;
  const isThinking=stream==='thinking',isReading=stream==='reading',isWriting=stream==='writing';
  if(exam==='oc'){
-   document.title='OC Practice | GoThriveUp';
+   document.title='OC Practice | LearnAndExcel';
    document.body.dataset.exam='oc';
    const home=$('examHome');if(home){home.href='oc.html';home.textContent='OC';}
    const sw=$('examSwitch');if(sw){sw.hidden=false;sw.querySelectorAll('[data-oc-stream]').forEach(a=>a.classList.toggle('active',a.dataset.ocStream===stream));}
    const streambar=$('streambar');if(streambar)streambar.setAttribute('aria-hidden','true');
    $('heroTag').textContent=isThinking?'OC · THINKING SKILLS':isReading?'OC · READING':'OC · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
-   $('heroDesc').textContent=isThinking?'OC Thinking Skills includes logical reasoning, figure patterns, symmetry, shape puzzles and cube rotations.':isReading?'Focused OC reading practice with original GoThriveUp passages, inference and vocabulary in context.':'Use the dedicated OC mathematical reasoning pool.';
+   $('heroDesc').textContent=isThinking?'OC Thinking Skills includes logical reasoning, figure patterns, symmetry, shape puzzles and cube rotations.':isReading?'Focused OC reading practice with original LearnAndExcel passages, inference and vocabulary in context.':'Use the dedicated OC mathematical reasoning pool.';
    $('mockTabLabel').textContent=isThinking||isReading?'30-question OC Mock':'OC Mock';
    $('mode5').textContent=isThinking?'Core Thinking':isReading?'Reading Core':'Core';
    $('mode6').textContent=isThinking?'Challenge Thinking':isReading?'Reading Challenge':'Challenge';
@@ -93,16 +93,16 @@ function updateHeader(){
    $('practiceSub').textContent=isThinking?'Logic, evidence, ordering, visual sequences, figure matching, symmetry and cube rotations.':isReading?'Paired texts, inference and vocabulary in context.':'Focused OC reasoning practice.';
    $('mockTitle').textContent=isThinking?'30-question OC Thinking Skills Mock':isReading?'30-question OC Reading Mock':'OC Mathematical Reasoning Mock';
    $('mockIntroText').textContent='Mixed OC practice questions. No hints. Move between questions before finishing.';
-   $('sourceNote').textContent='GoThriveUp OC practice is independent and does not reproduce official NSW Opportunity Class test questions.';
+   $('sourceNote').textContent='LearnAndExcel OC practice is independent and does not reproduce official NSW Opportunity Class test questions.';
  }else{
    document.body.dataset.exam='selective';
    const sw=$('examSwitch');if(sw)sw.hidden=true;
    const streambar=$('streambar');if(streambar)streambar.removeAttribute('aria-hidden');
-   document.title='Selective Practice | GoThriveUp';
+   document.title='Selective Practice | LearnAndExcel';
    const home=$('examHome');if(home){home.href='selective.html';home.textContent='Selective';}
    $('heroTag').textContent=isWriting?'SELECTIVE · WRITING VOCABULARY':isThinking?'SELECTIVE · THINKING SKILLS':isReading?'SELECTIVE · READING':'NSW SELECTIVE · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isWriting?'Use precise words.<br><span>Then write with them.</span>':isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
-   $('heroDesc').textContent=isWriting?'Learn high-value writing words such as cognitive, fascination, convey and evaluate. See the meaning, a model sentence and how to use the word, then practice.' :isThinking?'Selective Thinking Skills includes logic, non-verbal figure patterns, cube rotations, symmetry and visual reasoning.':isReading?'Selective-style reading practice with original GoThriveUp passages.':'Focused Year 5–6 mathematical reasoning practice.';
+   $('heroDesc').textContent=isWriting?'Learn high-value writing words such as cognitive, fascination, convey and evaluate. See the meaning, a model sentence and how to use the word, then practice.' :isThinking?'Selective Thinking Skills includes logic, non-verbal figure patterns, cube rotations, symmetry and visual reasoning.':isReading?'Selective-style reading practice with original LearnAndExcel passages.':'Focused Year 5–6 mathematical reasoning practice.';
    $('mockTabLabel').textContent=isWriting?'20-word Mock':isThinking||isReading?'30-question Mock':'35-question Mock';
    $('mode5').textContent=isWriting?'Core words':isThinking?'Foundation Thinking':isReading?'Reading Core':'Year 5 Foundation';
    $('mode6').textContent=isWriting?'Challenge words':isThinking?'Challenge Thinking':isReading?'Reading Challenge':'Year 6 Textbook + Selective';
@@ -112,7 +112,7 @@ function updateHeader(){
    $('practiceSub').textContent=isWriting?'Meaning, model sentences, fill-the-blank and tone.':isThinking?'Logic, evidence, ordering, visual sequences, figure matching, symmetry and cube rotations.':isReading?'Paired texts, inference and vocabulary in context.':'Practice one topic at a time with a short hint after each question.';
    $('mockTitle').textContent=isWriting?'20-question Writing Vocabulary Mock':isThinking?'30-question Thinking Skills Mock':isReading?'30-question Selective Reading Mock':'35-question Mathematical Reasoning Mock';
    $('mockIntroText').textContent=isWriting?'20 mixed writing-vocabulary questions. 20 minutes. No learn card during the mock.':'Mixed questions. No hints. Move between questions before finishing.';
-   $('sourceNote').textContent=isWriting?'Writing Vocabulary uses original GoThriveUp word cards and sentences for precise written language.':'GoThriveUp Selective practice is independent and does not reproduce official NSW test questions.';
+   $('sourceNote').textContent=isWriting?'Writing Vocabulary uses original LearnAndExcel word cards and sentences for precise written language.':'LearnAndExcel Selective practice is independent and does not reproduce official NSW test questions.';
  }
  document.querySelectorAll('.streambar button').forEach(b=>b.classList.toggle('active',b.dataset.stream===stream));
 }

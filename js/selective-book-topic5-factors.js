@@ -1,5 +1,5 @@
 // Selective Topic 5: Factors, Primes, GCF & LCM Reasoning.
-// Newly written GoThriveUp questions covering Year 5 reasoning.
+// Newly written LearnAndExcel questions covering Year 5 reasoning.
 (function(){
   if(!window.SKILLUP_MR_EXTRA)return;
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;

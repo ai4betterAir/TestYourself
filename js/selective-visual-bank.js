@@ -1,4 +1,4 @@
-/* Original GoThriveUp visual reasoning questions. Created for this project; no textbook images. */
+/* Original LearnAndExcel visual reasoning questions. Created for this project; no textbook images. */
 (function(){
  'use strict';
  const questions=[

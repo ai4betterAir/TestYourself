@@ -1,5 +1,5 @@
 // Year 6 topics cover the main number, algebra, measurement, geometry and data strands.
-// All questions are original GoThriveUp practice content.
+// All questions are original LearnAndExcel practice content.
 (function () {
   const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
   const pick = values => values[randomInt(0, values.length - 1)];
