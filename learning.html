@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/home.css?v=20260925-redesign">
 <link rel="stylesheet" href="css/learn-hub.css?v=20260926-polishb"><link rel="stylesheet" href="css/learn-library-polish.css?v=20260926b">
 <link rel="stylesheet" href="css/year-cards.css?v=20261114a">
+<link rel="stylesheet" href="css/kindy-reference.css">
 </head>
 <body>
 <header class="site-header">
@@ -237,7 +238,7 @@
  const primary=document.querySelector('.hero-actions .primary');
  if(primary) primary.textContent='Start learning';
  const secondary=document.querySelector('.hero-actions .secondary');
- if(secondary) secondary.textContent='Back to Acorn &amp; Shine';
+ if(secondary) secondary.textContent='Back to Acorn & Shine';
  const sectionTitle=document.querySelector('#subjects .section-head h2');
  if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
@@ -271,7 +272,7 @@
 
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let wordIndex=0;
- if(em&&!reduced){
+ if(em&&y!=='K'&&!reduced){
    setInterval(()=>{
      em.classList.add('is-changing');
      setTimeout(()=>{
@@ -292,7 +293,7 @@
  }
 
  const subjectCards=[...document.querySelectorAll('.hub-subject-grid [data-subject]')];
- if(subjectCards.length&&!reduced){
+ if(subjectCards.length&&y!=='K'&&!reduced){
    let featured=0;
    subjectCards[featured].classList.add('auto-featured');
    setInterval(()=>{
