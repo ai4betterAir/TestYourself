@@ -82,10 +82,10 @@ for (const file of pages) {
     html = addBeforeHeadEnd(html, `<meta property="og:url" content="${canonical}">`);
   }
   if (!/<meta\s+property=["']og:image["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, '<meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo.png"><meta property="og:image:width" content="2172"><meta property="og:image:height" content="724"><meta property="og:image:alt" content="Acorn & Shine primary learning for Years 1–6">');
+    html = addBeforeHeadEnd(html, '<meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo-transparent.png"><meta property="og:image:width" content="2172"><meta property="og:image:height" content="724"><meta property="og:image:alt" content="Acorn & Shine primary learning for Years 1–6">');
   }
   if (!/<meta\s+name=["']twitter:card["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}"><meta name="twitter:description" content="${pageDescription.replace(/"/g, '&quot;')}"><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo.png">`);
+    html = addBeforeHeadEnd(html, `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}"><meta name="twitter:description" content="${pageDescription.replace(/"/g, '&quot;')}"><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo-transparent.png">`);
   }
 
   if (file === 'practice.html' && !html.includes('question-quality-fixes.js')) {
