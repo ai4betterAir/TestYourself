@@ -247,7 +247,10 @@
  const hubDesigns = {
    '1': {heading:'Learn with confidence.', copy:'Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.'},
    '2': {heading:'Build on what you know.', copy:'Explore equal groups, practise spelling patterns and read stories with confidence.', stylesheet:'css/year-two-reference.css'},
-   '3': {heading:'Explore bigger ideas.', copy:'Discover fractions, build strong paragraphs and find clues in what you read.', stylesheet:'css/year-three-reference.css'}
+   '3': {heading:'Explore bigger ideas.', copy:'Discover fractions, build strong paragraphs and find clues in what you read.', stylesheet:'css/year-three-reference.css'},
+   '4': {heading:'Think independently.', copy:'Investigate shapes, sharpen your grammar and use clues to solve logic challenges.', stylesheet:'css/year-four-reference.css'},
+   '5': {heading:'Think bigger.', copy:'Explore fractions and decimals, build a persuasive argument and solve logic puzzles.', stylesheet:'css/year-five-reference.css'},
+   '6': {heading:'Ready for what’s next.', copy:'Work with percentages and algebra, develop your writing and sharpen your reasoning.', stylesheet:'css/year-six-reference.css'}
  };
  const illustratedHub = hubDesigns[y];
  if(illustratedHub){
@@ -285,7 +288,7 @@
  }
  if(taskChallenge){
    taskChallenge.href=plan.challengeSubject==='selective'?'selective.html':'subject.html?year='+encodeURIComponent(y)+'&subject='+plan.challengeSubject;
-   taskChallenge.querySelector('small').textContent=plan.challengeSubject==='selective'?'THINKING':'READING';
+   taskChallenge.querySelector('small').textContent=plan.challengeSubject==='selective'?'THINKING SKILLS':'READING';
    taskChallenge.querySelector('b').textContent=plan.challenge;
    const use=taskChallenge.querySelector('use');
    if(use) use.setAttribute('href','assets/skillup-icons.svg#'+(plan.challengeSubject==='selective'?'thinking':'reading'));
