@@ -173,3 +173,50 @@ body{background:#f8fbff}
    background:linear-gradient(180deg,#fafdff 0%,#fafdff 48%,rgba(250,253,255,.9) 60%,transparent 100%);
  }
 }
+
+/* Homepage test pathways: make NAPLAN and OC match the Selective feature-card layout. */
+.home-refresh .pathway-feature-list{grid-template-columns:1fr;gap:18px}
+.home-refresh .pathway-feature-list .path-card.p-naplan,
+.home-refresh .pathway-feature-list .path-card.p-oc{
+  grid-column:1/-1;flex-direction:row;align-items:center;gap:32px;
+  color:#fff;border:0;
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan{
+  background:linear-gradient(120deg,#075f75,#137f9e 56%,#315fbd);
+}
+.home-refresh .pathway-feature-list .path-card.p-oc{
+  background:linear-gradient(120deg,#8f4b08,#c45d23 56%,#a9435f);
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan::before,
+.home-refresh .pathway-feature-list .path-card.p-oc::before{
+  content:"";position:absolute;inset:0;background:
+    radial-gradient(400px 200px at 90% 20%,rgba(255,255,255,.22),transparent 60%);
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-icon,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-icon{
+  position:relative;z-index:1;flex:0 0 auto;background:rgba(255,255,255,.2);
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-body,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-body{
+  position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:8px;
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan p,
+.home-refresh .pathway-feature-list .path-card.p-oc p{color:rgba(255,255,255,.92)}
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-link,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-link{color:#fff;margin-top:8px}
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-flag,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-flag{
+  position:relative;z-index:1;align-self:flex-start;padding:7px 14px;border-radius:999px;
+  background:rgba(255,255,255,.2);font-family:'Sora',sans-serif;font-size:.72rem;
+  font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+}
+.home-refresh .pathway-feature-list .path-card.p-naplan .button,
+.home-refresh .pathway-feature-list .path-card.p-oc .button{position:relative;z-index:1;flex:0 0 auto}
+@media(max-width:820px){
+  .home-refresh .pathway-feature-list .path-card.p-naplan,
+  .home-refresh .pathway-feature-list .path-card.p-oc,
+  .home-refresh .pathway-feature-list .path-card.p-selective{
+    flex-direction:column;align-items:flex-start;text-align:left;
+  }
+  .home-refresh .pathway-feature-list .path-card .p-body{width:100%}
+}
