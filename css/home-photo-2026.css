@@ -423,3 +423,13 @@ body{background:#f8fbff}
   .home-refresh .pathway-feature-list .path-card.p-selective{min-height:100px;padding:12px}
   .home-refresh .pathway-feature-list .path-card p{font-size:.79rem}
 }
+
+
+/* Keep the headline wrap close to the supplied homepage reference on desktop. */
+@media(min-width:601px){
+  .home-refresh .hero-photo-content .hero-copy{width:42%;max-width:610px;flex:0 1 42%}
+  .home-refresh .hero-photo-home h1{font-size:clamp(2.35rem,3.45vw,3.55rem);font-weight:600;line-height:1.12}
+  .home-refresh .hero-photo-home h1 .hero-h1-sub{font-weight:600}
+  .home-refresh .hero-photo-home h1 .bright,
+  .home-refresh .hero-photo-home h1 .tomorrow{font-weight:600}
+}
