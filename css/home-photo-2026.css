@@ -220,3 +220,206 @@ body{background:#f8fbff}
   }
   .home-refresh .pathway-feature-list .path-card .p-body{width:100%}
 }
+
+
+/* Acorn & Shine homepage reference direction (cream, teal, navy and soft gold). */
+.home-refresh .site-header{
+  background:rgba(255,255,255,.97);
+  border-bottom:1px solid #e8eee9;
+  box-shadow:none;
+}
+.home-refresh .nav-shell{height:76px}
+.home-refresh .main-nav a{color:#10295c}
+.home-refresh .main-nav a:hover,.home-refresh .main-nav a.active{
+  color:#10295c;background:transparent
+}
+.home-refresh .main-nav a::after{background:#10aaa8;height:3px}
+.home-refresh .nav-actions .link-signin{
+  border:1.5px solid #173a72;color:#10295c;background:#fff
+}
+.home-refresh .nav-actions .link-signup{
+  background:linear-gradient(120deg,#12aaa4,#087f82);border-color:#0a9a98;
+  box-shadow:0 5px 14px rgba(3,126,129,.16)
+}
+.home-refresh .nav-actions .link-signup:hover{background:#087f82}
+
+.home-refresh .hero-photo-home{
+  min-height:430px;
+  background:
+    radial-gradient(ellipse at 94% 70%,rgba(190,239,246,.62),transparent 22%),
+    radial-gradient(ellipse at 69% 22%,rgba(219,239,215,.64),transparent 25%),
+    linear-gradient(105deg,#fffdfa 0%,#fffdf8 54%,#fff8eb 100%);
+}
+.home-refresh .hero-photo-home::before{
+  background:linear-gradient(90deg,#fffdfa 0%,rgba(255,253,248,.99) 31%,
+    rgba(255,253,248,.82) 43%,rgba(255,253,248,.16) 62%,transparent 78%);
+}
+.home-refresh .hero-photo-content{
+  min-height:430px;padding-block:32px 46px
+}
+.home-refresh .hero-photo-content .hero-copy{width:56%;max-width:700px;flex:0 1 56%}
+.home-refresh .hero-photo-illustration{width:61%;background:#fffaf0}
+.home-refresh .hero-photo-illustration img{
+  object-fit:cover;object-position:center 50%;filter:none
+}
+.home-refresh .hero-photo-home h1{
+  max-width:690px;margin:18px 0 14px;font-size:clamp(2.35rem,3.6vw,3.65rem);
+  font-weight:650;line-height:1.13;letter-spacing:-.045em;color:#10295c
+}
+.home-refresh .hero-photo-home h1 .hero-h1-sub{
+  display:inline;font-size:1em;line-height:inherit;font-weight:650;letter-spacing:inherit
+}
+.home-refresh .hero-photo-home h1 .bright,
+.home-refresh .hero-photo-home h1 .tomorrow{color:#10295c;font-weight:650}
+.home-refresh .hero-photo-home p.lead{
+  max-width:610px;color:#142d58;font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.48;font-weight:600
+}
+.home-refresh .hero-overline{
+  background:linear-gradient(100deg,#e5f7f1,#d1f2ee);border:0;color:#10295c;
+  font-size:.82rem;letter-spacing:0;padding:8px 18px
+}
+.home-refresh .hero-photo-home .hero-actions{margin-top:20px;gap:14px}
+.home-refresh .hero-photo-home .button{min-height:50px;font-size:1rem;padding-inline:28px}
+.home-refresh .hero-photo-home .button-primary{
+  background:linear-gradient(120deg,#10aaa4,#087f82);box-shadow:0 8px 20px rgba(2,127,130,.16)
+}
+.home-refresh .hero-photo-home .button-primary:hover{box-shadow:0 11px 24px rgba(2,127,130,.22)}
+.home-refresh .hero-photo-home .hero-secondary{
+  border:1.5px solid #0878c7;color:#10295c;background:rgba(255,255,255,.88)
+}
+.home-refresh .hero-highlights{color:#142d58;gap:24px;margin-top:16px;font-size:.88rem}
+.home-refresh .hero-highlights span::first-letter{color:#0b9a7c}
+
+.home-refresh .grade-section{
+  margin-top:0;padding:18px 0 30px;
+  background:linear-gradient(115deg,#f0fbf8 0%,#eaf9f7 52%,#f3fcfa 100%);
+}
+.home-refresh .grade-section>.shell{
+  width:calc(100% - clamp(28px,6vw,120px));padding:0;
+  border-radius:0;background:transparent;box-shadow:none
+}
+.home-refresh .grade-section .section-head{margin:0 auto 16px}
+.home-refresh .grade-section .section-head h2{font-size:clamp(1.7rem,2.5vw,2.2rem);color:#10295c}
+.home-refresh .grade-section .section-head p{font-size:.94rem;color:#18345e}
+.home-refresh .grade-section .grade-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.home-refresh .grade-section .year-image-card{
+  min-height:220px;padding:13px 12px 12px;border:1px solid #dcece9;
+  border-bottom:6px solid var(--year-accent);border-radius:17px;background:#fff!important;
+  box-shadow:0 5px 14px rgba(21,70,80,.06);align-items:center;gap:7px
+}
+.home-refresh .grade-section .year-image-card:hover{
+  transform:translateY(-4px);box-shadow:0 10px 22px rgba(21,70,80,.11)
+}
+.home-refresh .grade-section .year-image-art{
+  width:min(100%,132px);height:122px;align-self:center;margin:0 0 2px;
+  border-radius:50%;background:#e8f7f2
+}
+.home-refresh .grade-section .year-image-art img{width:100%;height:100%;object-fit:contain}
+.home-refresh .grade-section .year-image-card small{margin:0;color:#087f82!important;text-align:center}
+.home-refresh .grade-section .year-image-card b{
+  margin:0;color:#10295c!important;text-align:center;
+  font-size:clamp(1.06rem,1.35vw,1.35rem);line-height:1.12
+}
+.home-refresh .grade-section .year-card-subtitle{display:none}
+.home-refresh .grade-section .year-image-card .grade-go{display:none}
+.home-refresh .grade-section .g-k{--year-accent:#f2c85f}
+.home-refresh .grade-section .g-1{--year-accent:#5dc9e5}
+.home-refresh .grade-section .g-2{--year-accent:#ff9380}
+.home-refresh .grade-section .g-3{--year-accent:#29bfae}
+.home-refresh .grade-section .g-4{--year-accent:#45c7e5}
+.home-refresh .grade-section .g-5{--year-accent:#20ad9e}
+.home-refresh .grade-section .g-6{--year-accent:#f2bf45}
+
+.home-refresh #pathways{
+  padding-top:12px;
+  background:
+    radial-gradient(ellipse at 5% 0%,rgba(255,221,157,.20),transparent 26%),
+    linear-gradient(180deg,#fffdf9 0%,#fff 100%);
+}
+.home-refresh #pathways .section-head{margin-bottom:18px}
+.home-refresh #pathways .section-head .eyebrow{display:none}
+.home-refresh #pathways .section-head h2{font-size:clamp(1.6rem,2.4vw,2.1rem);color:#10295c}
+.home-refresh #pathways .section-head h2 .accent-violet{background:none;color:#10295c}
+.home-refresh .pathway-feature-list{
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
+}
+.home-refresh .pathway-feature-list .path-card,
+.home-refresh .pathway-feature-list .path-card.p-naplan,
+.home-refresh .pathway-feature-list .path-card.p-oc,
+.home-refresh .pathway-feature-list .path-card.p-selective{
+  grid-column:auto;position:relative;display:flex;flex-direction:row;align-items:center;
+  gap:14px;min-height:118px;padding:14px 16px;border:1px solid #c6e5e3;
+  border-radius:16px;background:#fff;color:#10295c;box-shadow:0 4px 12px rgba(23,58,92,.05)
+}
+.home-refresh .pathway-feature-list .path-card.p-oc{border-color:#f0ddb6}
+.home-refresh .pathway-feature-list .path-card.p-selective{border-color:#c6e5df}
+.home-refresh .pathway-feature-list .path-card::before{display:none}
+.home-refresh .pathway-feature-list .path-card::after{
+  content:"→";position:relative;inset:auto;display:block;flex:0 0 auto;
+  color:#eda51a;font-family:'Sora',sans-serif;font-size:1.7rem;font-weight:600
+}
+.home-refresh .pathway-feature-list .path-card .p-icon,
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-icon,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-icon,
+.home-refresh .pathway-feature-list .path-card.p-selective .p-icon{
+  width:54px;height:54px;flex:0 0 54px;border-radius:13px;
+  color:#087f82;background:#e6f7f2
+}
+.home-refresh .pathway-feature-list .path-card.p-oc .p-icon{color:#b9810c;background:#fff5dd}
+.home-refresh .pathway-feature-list .path-card.p-selective .p-icon{color:#088c88;background:#e8f7f3}
+.home-refresh .pathway-feature-list .path-card .p-icon svg{width:38px;height:38px}
+.home-refresh .pathway-feature-list .path-card .p-body,
+.home-refresh .pathway-feature-list .path-card.p-naplan .p-body,
+.home-refresh .pathway-feature-list .path-card.p-oc .p-body,
+.home-refresh .pathway-feature-list .path-card.p-selective .p-body{
+  position:relative;z-index:1;display:flex;flex-direction:column;gap:4px;min-width:0;flex:1
+}
+.home-refresh .pathway-feature-list .path-card .p-flag{display:none}
+.home-refresh .pathway-feature-list .path-card h3{font-size:1.08rem;line-height:1.2;color:#10295c}
+.home-refresh .pathway-feature-list .path-card p,
+.home-refresh .pathway-feature-list .path-card.p-naplan p,
+.home-refresh .pathway-feature-list .path-card.p-oc p,
+.home-refresh .pathway-feature-list .path-card.p-selective p{
+  color:#263e65;font-size:.82rem;line-height:1.36;margin:0
+}
+.home-refresh .pathway-feature-list .path-card .p-link,
+.home-refresh .pathway-feature-list .path-card .button{display:none}
+.home-refresh .pathway-feature-list .path-card:hover{
+  transform:translateY(-3px);box-shadow:0 9px 20px rgba(23,58,92,.09)
+}
+@media(max-width:1050px){
+  .home-refresh .grade-section .grade-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .home-refresh .pathway-feature-list{grid-template-columns:1fr}
+}
+@media(max-width:820px){
+  .home-refresh .nav-shell{height:76px}
+  .home-refresh .hero-photo-home{min-height:440px}
+  .home-refresh .hero-photo-content{min-height:440px}
+  .home-refresh .hero-photo-content .hero-copy{width:74%;flex:0 1 74%}
+  .home-refresh .hero-photo-illustration{width:65%;opacity:1}
+  .home-refresh .hero-photo-home h1{font-size:clamp(2.2rem,5.5vw,3rem)}
+  .home-refresh .grade-section .grade-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .home-refresh .hero-photo-home{min-height:0}
+  .home-refresh .hero-photo-illustration{width:100%;height:215px;opacity:1}
+  .home-refresh .hero-photo-home::before{
+    background:linear-gradient(180deg,#fffdfa 0%,#fffdfa 47%,rgba(255,253,248,.93) 61%,transparent 100%)
+  }
+  .home-refresh .hero-photo-content{min-height:0;padding-top:34px;padding-bottom:225px}
+  .home-refresh .hero-photo-content .hero-copy{width:100%;flex:0 1 100%}
+  .home-refresh .hero-photo-home h1{font-size:clamp(2.15rem,9vw,3rem);line-height:1.12}
+  .home-refresh .hero-photo-home p.lead{font-size:.95rem}
+  .home-refresh .hero-photo-home .hero-actions{flex-direction:row;gap:9px}
+  .home-refresh .hero-photo-home .button{min-height:46px;padding-inline:17px;font-size:.78rem}
+  .home-refresh .hero-highlights{gap:9px;font-size:.74rem}
+  .home-refresh .grade-section .grade-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .home-refresh .grade-section .year-image-card{min-height:185px}
+  .home-refresh .grade-section .year-image-art{width:112px;height:105px}
+  .home-refresh .grade-section .year-image-card b{font-size:1.08rem}
+  .home-refresh .pathway-feature-list .path-card,
+  .home-refresh .pathway-feature-list .path-card.p-naplan,
+  .home-refresh .pathway-feature-list .path-card.p-oc,
+  .home-refresh .pathway-feature-list .path-card.p-selective{min-height:100px;padding:12px}
+  .home-refresh .pathway-feature-list .path-card p{font-size:.79rem}
+}
