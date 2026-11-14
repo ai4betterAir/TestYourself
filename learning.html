@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/learn-hub.css?v=20260926-polishb"><link rel="stylesheet" href="css/learn-library-polish.css?v=20260926b">
 <link rel="stylesheet" href="css/year-cards.css?v=20261114a">
 <link rel="stylesheet" href="css/kindy-reference.css">
+<link rel="stylesheet" href="css/year-one-reference.css">
 </head>
 <body>
 <header class="site-header">
@@ -243,6 +244,14 @@
  if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
  if(sectionCopy) sectionCopy.textContent='Choose a subject and jump straight into the right '+label+' practice.';
+ if(y==='1'){
+   em.textContent='Learn with confidence.';
+   document.getElementById('hub-copy').textContent='Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.';
+   secondary.textContent='Back to home';
+   sectionTitle.innerHTML='Choose your <span class="y5-accent">subject</span>';
+   sectionCopy.textContent='Pick a subject below and start learning at your own pace.';
+   document.querySelector('.y5-dashboard-sample-note').textContent='Sample learning plan';
+ }
  const toolsCopy=document.querySelector('.tools .section-head>p');
  if(toolsCopy) toolsCopy.textContent='Focused practice, progress checks and challenge activities for '+label+'.';
 
@@ -272,7 +281,7 @@
 
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let wordIndex=0;
- if(em&&y!=='K'&&!reduced){
+ if(em&&y!=='1'&&y!=='K'&&!reduced){
    setInterval(()=>{
      em.classList.add('is-changing');
      setTimeout(()=>{
@@ -293,7 +302,7 @@
  }
 
  const subjectCards=[...document.querySelectorAll('.hub-subject-grid [data-subject]')];
- if(subjectCards.length&&y!=='K'&&!reduced){
+ if(subjectCards.length&&y!=='1'&&y!=='K'&&!reduced){
    let featured=0;
    subjectCards[featured].classList.add('auto-featured');
    setInterval(()=>{
