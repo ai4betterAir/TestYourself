@@ -244,16 +244,21 @@
  if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
  if(sectionCopy) sectionCopy.textContent='Choose a subject and jump straight into the right '+label+' practice.';
- const illustratedHub = y==='1' || y==='2';
+ const hubDesigns = {
+   '1': {heading:'Learn with confidence.', copy:'Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.'},
+   '2': {heading:'Build on what you know.', copy:'Explore equal groups, practise spelling patterns and read stories with confidence.', stylesheet:'css/year-two-reference.css'},
+   '3': {heading:'Explore bigger ideas.', copy:'Discover fractions, build strong paragraphs and find clues in what you read.', stylesheet:'css/year-three-reference.css'}
+ };
+ const illustratedHub = hubDesigns[y];
  if(illustratedHub){
-   if(y==='2'){
+   if(illustratedHub.stylesheet){
      const stylesheet=document.createElement('link');
      stylesheet.rel='stylesheet';
-     stylesheet.href='css/year-two-reference.css';
+     stylesheet.href=illustratedHub.stylesheet;
      document.head.appendChild(stylesheet);
    }
-   em.textContent=y==='2'?'Build on what you know.':'Learn with confidence.';
-   document.getElementById('hub-copy').textContent=y==='2'?'Explore equal groups, practise spelling patterns and read stories with confidence.':'Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.';
+   em.textContent=illustratedHub.heading;
+   document.getElementById('hub-copy').textContent=illustratedHub.copy;
    secondary.textContent='Back to home';
    sectionTitle.innerHTML='Choose your <span class="y5-accent">subject</span>';
    sectionCopy.textContent='Pick a subject below and start learning at your own pace.';
