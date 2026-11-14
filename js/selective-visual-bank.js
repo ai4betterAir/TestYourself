@@ -1,4 +1,4 @@
-/* Original LearnAndExcel visual reasoning questions. Created for this project; no textbook images. */
+/* Original Acorn & Shine visual reasoning questions. Created for this project; no textbook images. */
 (function(){
  'use strict';
  const questions=[

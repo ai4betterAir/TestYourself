@@ -1,7 +1,7 @@
-# LearnAndExcel visual identity
+# Acorn & Shine visual identity
 
 - Primary navy: `#0B2A60`
 - Warm gold: `#E9B72A`
 - White: `#FFFFFF`
 
-Use the supplied LearnAndExcel logo image as provided. The wordmark and tagline are part of the image and should not be recreated in page markup. Tagline: **Learn · Grow · Excel**.
+Use the supplied Acorn & Shine logo image as provided. Keep the wordmark and tagline inside the image; do not recreate them in page markup. Tagline: **Learn · Grow · Shine**.

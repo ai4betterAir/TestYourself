@@ -1,4 +1,4 @@
-// Public browser configuration for LearnAndExcel.
+// Public browser configuration for Acorn & Shine.
 // This publishable key is safe to include in browser code when Supabase RLS policies are enabled.
 // Never place a service-role key here.
 window.SKILLUP_SUPABASE = {

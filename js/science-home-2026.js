@@ -15,7 +15,7 @@ const span=document.createElement('span');span.textContent='Science Studio';$('h
 $('heroCopy').textContent='Explore real science topics for '+label+' through original illustrations, practice and discovery.';
 $('hubBack').href='learning.html?year='+encodeURIComponent(year);
 $('learningBack').href='learning.html?year='+encodeURIComponent(year);
-document.title=label+' Science Topics | LearnAndExcel';
+document.title=label+' Science Topics | Acorn & Shine';
 $('yearSelect').addEventListener('change',e=>{location.href='science.html?year='+encodeURIComponent(e.target.value)});
 const all=[...bank[year],...(V?.enrich(year)||[])];
 const topics=[...new Set(all.map(q=>q.topic))];

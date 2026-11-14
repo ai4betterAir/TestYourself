@@ -1,5 +1,5 @@
 // Topic 8 upgrade: Year 5 Multiply & Divide Fractions.
-// Newly written LearnAndExcel material covering the Year 5 curriculum and problem-solving style.
+// Newly written Acorn & Shine material covering the Year 5 curriculum and problem-solving style.
 (function(){
   const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   const pick=a=>a[R(0,a.length-1)];

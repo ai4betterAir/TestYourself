@@ -8,20 +8,20 @@ const root = path.resolve(__dirname, '..');
 const pages = fs.readdirSync(root).filter(file => file.endsWith('.html'));
 
 const descriptions = {
-  'algebra.html': 'LearnAndExcel algebra practice with age-appropriate equations, hints and feedback.',
-  'english-year1-reading.html': 'LearnAndExcel Year 1 reading passages with vocabulary and comprehension practice.',
-  'english-year2-reading.html': 'LearnAndExcel Year 2 reading passages with vocabulary, sequencing and inference questions.',
-  'practice.html': 'LearnAndExcel Maths for Kindergarten to Year 6 with lessons, practice and timed tests.',
-  'selective-practice.html': 'LearnAndExcel Selective preparation with mathematical reasoning, thinking skills, reading and timed mock tests.',
-  'vocabulary-year1-stories.html': 'LearnAndExcel Year 1 vocabulary stories with word meanings and child-friendly practice.',
-  'vocabulary-year2.html': 'LearnAndExcel Year 2 vocabulary lessons with meanings, context, spelling and mixed practice.',
-  'vocabulary-year3.html': 'LearnAndExcel Year 3 vocabulary learning, practice and timed testing.',
-  'vocabulary-year3-complete.html': 'LearnAndExcel Year 3 complete vocabulary library with 240 words and interactive practice.',
-  'vocabulary-year4.html': 'LearnAndExcel Year 4 vocabulary learning, practice, reading vocabulary and timed testing.',
-  'vocabulary-year4-complete.html': 'LearnAndExcel Year 4 complete vocabulary library with 240 words and interactive revision.',
-  'vocabulary-year5-revision.html': 'LearnAndExcel Year 5 vocabulary revision with 240 words, practice and a reading story.',
-  'vocabulary-year6-revision.html': 'LearnAndExcel Year 6 vocabulary revision with 240 words, practice and a reading story.',
-  'word-problems.html': 'LearnAndExcel word-problem practice for primary students across six difficulty levels.'
+  'algebra.html': 'Acorn & Shine algebra practice with age-appropriate equations, hints and feedback.',
+  'english-year1-reading.html': 'Acorn & Shine Year 1 reading passages with vocabulary and comprehension practice.',
+  'english-year2-reading.html': 'Acorn & Shine Year 2 reading passages with vocabulary, sequencing and inference questions.',
+  'practice.html': 'Acorn & Shine Maths for Kindergarten to Year 6 with lessons, practice and timed tests.',
+  'selective-practice.html': 'Acorn & Shine Selective preparation with mathematical reasoning, thinking skills, reading and timed mock tests.',
+  'vocabulary-year1-stories.html': 'Acorn & Shine Year 1 vocabulary stories with word meanings and child-friendly practice.',
+  'vocabulary-year2.html': 'Acorn & Shine Year 2 vocabulary lessons with meanings, context, spelling and mixed practice.',
+  'vocabulary-year3.html': 'Acorn & Shine Year 3 vocabulary learning, practice and timed testing.',
+  'vocabulary-year3-complete.html': 'Acorn & Shine Year 3 complete vocabulary library with 240 words and interactive practice.',
+  'vocabulary-year4.html': 'Acorn & Shine Year 4 vocabulary learning, practice, reading vocabulary and timed testing.',
+  'vocabulary-year4-complete.html': 'Acorn & Shine Year 4 complete vocabulary library with 240 words and interactive revision.',
+  'vocabulary-year5-revision.html': 'Acorn & Shine Year 5 vocabulary revision with 240 words, practice and a reading story.',
+  'vocabulary-year6-revision.html': 'Acorn & Shine Year 6 vocabulary revision with 240 words, practice and a reading story.',
+  'word-problems.html': 'Acorn & Shine word-problem practice for primary students across six difficulty levels.'
 };
 
 function addBeforeHeadEnd(html, markup) {
@@ -31,39 +31,39 @@ function addBeforeHeadEnd(html, markup) {
 for (const file of pages) {
   const filePath = path.join(root, file);
   let html = fs.readFileSync(filePath, 'utf8');
-  const title = html.match(/<title>([^<]+)<\/title>/i)?.[1] || 'LearnAndExcel Learning';
-  const description = descriptions[file] || `LearnAndExcel primary learning activities for ${title.replace(/\s*\|\s*LearnAndExcel.*$/i, '')}.`;
+  const title = html.match(/<title>([^<]+)<\/title>/i)?.[1] || 'Acorn & Shine Learning';
+  const description = descriptions[file] || `Acorn & Shine primary learning activities for ${title.replace(/\s*\|\s*Acorn & Shine.*$/i, '')}.`;
 
   html = html
-    .replaceAll('| TestYourself', '| LearnAndExcel')
-    .replaceAll('TestYourself', 'LearnAndExcel')
-    .replaceAll('https://ai4betterair.github.io/LearnAndExcel/', 'https://ai4betterair.github.io/TestYourself/')
-    .replaceAll('github.com/ai4betterAir/LearnAndExcel', 'github.com/ai4betterAir/TestYourself')
-    .replaceAll('© 2026 Test Yourself', '© 2026 LearnAndExcel')
-    .replaceAll('<span>Test<span>Yourself</span></span>', '<span>Skill<span>UP</span></span>')
+    .replaceAll('| TestYourself', '| Acorn & Shine')
+    .replaceAll('TestYourself', 'Acorn & Shine')
+    .replaceAll('https://ai4betterair.github.io/Acorn & Shine/', 'https://ai4betterair.github.io/TestYourself/')
+    .replaceAll('github.com/ai4betterAir/Acorn & Shine', 'github.com/ai4betterAir/TestYourself')
+    .replaceAll('© 2026 Test Yourself', '© 2026 Acorn & Shine')
+    .replaceAll('<span>Test<span>Yourself</span></span>', '<span>Acorn <span>&amp; Shine</span></span>')
     .replaceAll('href="vocabulary-year1.html"', 'href="vocabulary.html"')
     .replaceAll('<span><b>19</b> practice types</span>', '<span><b>14</b> practice types</span>')
     .replaceAll('<span><b>30</b> practice types</span>', '<span><b>25</b> practice types</span>')
     .replaceAll('<span><b>17</b> practice types</span>', '<span><b>12</b> practice types</span>')
     .replaceAll('<span><b>24</b> source lessons</span>', '<span><b>24</b> revision lessons</span>')
     .replaceAll('Every year has Reading, Grammar, Spelling and Writing pathways. Years 1 and 2 now also have larger reading libraries for regular comprehension practice.', 'Every year has 27 guided Reading, Grammar, Spelling and Writing lessons, followed by a balanced 20-question test. Years 1 and 2 also have larger reading libraries for regular comprehension practice.')
-    .replaceAll('LearnAndExcel Mathematical Reasoning combines the existing Year 5–6 banks with newly written selective-style problems inspired by the uploaded books and trial papers. Numbers, wording and contexts are changed.', 'LearnAndExcel Mathematical Reasoning uses original practice questions written for this website. It is an independent learning resource and does not reproduce official NSW Selective Test questions.');
+    .replaceAll('Acorn & Shine Mathematical Reasoning combines the existing Year 5–6 banks with newly written selective-style problems inspired by the uploaded books and trial papers. Numbers, wording and contexts are changed.', 'Acorn & Shine Mathematical Reasoning uses original practice questions written for this website. It is an independent learning resource and does not reproduce official NSW Selective Test questions.');
 
   if (file === 'vocabulary-year4-complete.html') {
     html = html
       .replaceAll('Grade 4', 'Year 4')
       .replaceAll('GRADE 4', 'YEAR 4')
-      .replace('All 24 lessons from your Year 4 revision book, with meanings and interactive revision.', 'All 24 lessons from the LearnAndExcel Year 4 vocabulary library, with meanings and interactive revision.');
+      .replace('All 24 lessons from your Year 4 revision book, with meanings and interactive revision.', 'All 24 lessons from the Acorn & Shine Year 4 vocabulary library, with meanings and interactive revision.');
   }
 
   if (!/<meta\s+name=["']description["']/i.test(html)) {
     html = html.replace(/(<meta\s+name=["']viewport["'][^>]*>)/i, `$1<meta name="description" content="${description}">`);
   }
   if (!/<link\s+rel=["']icon["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, '<link rel="icon" type="image/png" href="assets/learnandexcel-icon.png">');
+    html = addBeforeHeadEnd(html, '<link rel="icon" type="image/png" href="assets/acorn-and-shine-icon.png">');
   }
   if (!/<link\s+rel=["']apple-touch-icon["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, '<link rel="apple-touch-icon" href="assets/learnandexcel-icon.png">');
+    html = addBeforeHeadEnd(html, '<link rel="apple-touch-icon" href="assets/acorn-and-shine-icon.png">');
   }
   if (!/<link\s+rel=["']manifest["']/i.test(html)) {
     html = addBeforeHeadEnd(html, '<link rel="manifest" href="site.webmanifest"><meta name="theme-color" content="#3767f0">');
@@ -82,10 +82,10 @@ for (const file of pages) {
     html = addBeforeHeadEnd(html, `<meta property="og:url" content="${canonical}">`);
   }
   if (!/<meta\s+property=["']og:image["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, '<meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/learnandexcel-logo.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="LearnAndExcel primary learning for Years 1–6">');
+    html = addBeforeHeadEnd(html, '<meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo.png"><meta property="og:image:width" content="2172"><meta property="og:image:height" content="724"><meta property="og:image:alt" content="Acorn & Shine primary learning for Years 1–6">');
   }
   if (!/<meta\s+name=["']twitter:card["']/i.test(html)) {
-    html = addBeforeHeadEnd(html, `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}"><meta name="twitter:description" content="${pageDescription.replace(/"/g, '&quot;')}"><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/learnandexcel-logo.png">`);
+    html = addBeforeHeadEnd(html, `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}"><meta name="twitter:description" content="${pageDescription.replace(/"/g, '&quot;')}"><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo.png">`);
   }
 
   if (file === 'practice.html' && !html.includes('question-quality-fixes.js')) {

@@ -1,14 +1,14 @@
 {
-  "name": "LearnAndExcel",
-  "short_name": "LearnAndExcel",
-  "description": "Learn, practice, test and improve across primary Maths, English, Science and Selective preparation.",
+  "name": "Acorn & Shine",
+  "short_name": "Acorn Shine",
+  "description": "Learn, practise and build confidence across primary Maths, English, Science, NAPLAN and Selective preparation.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fbff",
   "theme_color": "#0b2a60",
   "icons": [
     {
-      "src": "assets/learnandexcel-icon.png",
+      "src": "assets/acorn-and-shine-icon.png",
       "sizes": "1254x1254",
       "type": "image/png",
       "purpose": "any"
