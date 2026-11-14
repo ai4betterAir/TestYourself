@@ -1,10 +1,10 @@
 /* Shared year-card system: the same seven original SVGs appear on both selectors. */
 .year-image-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;align-items:stretch}
-.year-image-grid .year-image-card{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:265px;padding:15px 15px 14px;overflow:hidden;border:1px solid #e3eaf3;border-radius:20px;background:#fff!important;color:#10295c!important;text-decoration:none;box-shadow:0 8px 22px rgba(18,39,78,.08);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.year-image-grid .year-image-card{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:300px;padding:15px 15px 14px;overflow:hidden;border:1px solid #e3eaf3;border-radius:20px;background:#fff!important;color:#10295c!important;text-decoration:none;box-shadow:0 8px 22px rgba(18,39,78,.08);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
 .year-image-grid .year-image-card::after,.year-image-grid .year-image-card::before{content:none!important;display:none!important}
 .year-image-grid .year-image-card:hover,.year-image-grid .year-image-card:focus-visible{transform:translateY(-4px);border-color:#a8bddb;box-shadow:0 14px 30px rgba(18,39,78,.14);outline:none}
-.year-image-art{display:flex;width:100%;height:112px;align-items:center;justify-content:center;margin:0 0 12px;border-radius:14px;background:linear-gradient(135deg,#f3f7fb,#f8fafc)}
-.year-image-art img{display:block;width:min(100%,158px);height:100%;object-fit:contain}
+.year-image-art{display:flex;width:100%;height:150px;align-items:center;justify-content:center;margin:0 0 12px;border-radius:14px;background:linear-gradient(135deg,#f3f7fb,#f8fafc)}
+.year-image-art img{display:block;width:min(100%,195px);height:100%;object-fit:contain}
 .year-image-grid .year-image-card small{display:block;margin:0 0 5px;color:#60718d!important;font-size:10px;font-weight:800;letter-spacing:.09em;line-height:1.3}
 .year-image-grid .year-image-card b{display:block;margin:0 0 4px;color:#10295c!important;font-size:clamp(17px,1.15vw,22px);font-weight:900;line-height:1.15;letter-spacing:-.025em}
 .year-image-grid .year-card-subtitle{display:block;margin:0;color:#66758a!important;font-size:12px;line-height:1.4}
@@ -21,5 +21,5 @@
 .year-image-grid .year-image-art{background:color-mix(in srgb,var(--year-accent) 10%,white)}
 .year-image-grid .year-image-card::marker{color:var(--year-accent)}
 @media(max-width:1250px){.year-image-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:760px){.year-image-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.year-image-grid .year-image-card{min-height:242px;padding:12px;border-radius:17px}.year-image-art{height:100px}.year-image-grid .year-image-card b{font-size:18px}}
-@media(max-width:390px){.year-image-grid{grid-template-columns:1fr}.year-image-grid .year-image-card{min-height:218px}.year-image-art{height:94px}}
+@media(max-width:760px){.year-image-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.year-image-grid .year-image-card{min-height:275px;padding:12px;border-radius:17px}.year-image-art{height:136px}.year-image-grid .year-image-card b{font-size:18px}}
+@media(max-width:390px){.year-image-grid{grid-template-columns:1fr}.year-image-grid .year-image-card{min-height:245px}.year-image-art{height:128px}}
