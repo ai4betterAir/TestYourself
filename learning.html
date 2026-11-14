@@ -244,9 +244,16 @@
  if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
  if(sectionCopy) sectionCopy.textContent='Choose a subject and jump straight into the right '+label+' practice.';
- if(y==='1'){
-   em.textContent='Learn with confidence.';
-   document.getElementById('hub-copy').textContent='Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.';
+ const illustratedHub = y==='1' || y==='2';
+ if(illustratedHub){
+   if(y==='2'){
+     const stylesheet=document.createElement('link');
+     stylesheet.rel='stylesheet';
+     stylesheet.href='css/year-two-reference.css';
+     document.head.appendChild(stylesheet);
+   }
+   em.textContent=y==='2'?'Build on what you know.':'Learn with confidence.';
+   document.getElementById('hub-copy').textContent=y==='2'?'Explore equal groups, practise spelling patterns and read stories with confidence.':'Build strong skills in numbers, sentences and stories. Choose a subject and practise at your own pace.';
    secondary.textContent='Back to home';
    sectionTitle.innerHTML='Choose your <span class="y5-accent">subject</span>';
    sectionCopy.textContent='Pick a subject below and start learning at your own pace.';
@@ -281,7 +288,7 @@
 
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let wordIndex=0;
- if(em&&y!=='1'&&y!=='K'&&!reduced){
+ if(em&&!illustratedHub&&y!=='K'&&!reduced){
    setInterval(()=>{
      em.classList.add('is-changing');
      setTimeout(()=>{
@@ -302,7 +309,7 @@
  }
 
  const subjectCards=[...document.querySelectorAll('.hub-subject-grid [data-subject]')];
- if(subjectCards.length&&y!=='1'&&y!=='K'&&!reduced){
+ if(subjectCards.length&&!illustratedHub&&y!=='K'&&!reduced){
    let featured=0;
    subjectCards[featured].classList.add('auto-featured');
    setInterval(()=>{
