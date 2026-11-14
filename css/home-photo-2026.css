@@ -3,7 +3,7 @@
 body{background:#f8fbff}
 :where(.site-header,.hero-photo-home,.grade-section) :focus-visible{outline:3px solid #0a67eb;outline-offset:4px}
 .site-header{background:rgba(255,255,255,.98);border-bottom:1px solid #e5ebf3;box-shadow:0 3px 14px rgba(18,42,79,.04)}
-.nav-shell{height:86px}
+.nav-shell{height:96px}
 .brand img{width:275px}
 .main-nav{gap:3px}
 .main-nav a{padding:10px 12px;font-size:.86rem;color:#24395e}
@@ -96,8 +96,8 @@ body{background:#f8fbff}
  .grade-section>.shell{width:min(calc(100% - 28px),700px);padding:17px}
 }
 @media(max-width:600px){
- .nav-shell{height:72px}
- .nav-menu{top:72px}
+ .nav-shell{height:92px}
+ .nav-menu{top:92px}
  .hero-photo-home{min-height:0}
  .hero-photo-illustration{top:auto;bottom:0;width:100%;height:220px;opacity:.88}
  .hero-photo-illustration img{object-position:center 53%}
