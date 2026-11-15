@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Topic lesson | Acorn &amp; Shine</title>
+<link rel="icon" href="assets/acorn-and-shine-icon.png">
+<link rel="stylesheet" href="css/early-topic.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap">
+</head>
+<body><div id="lesson"><a href="learning.html">Choose your year</a></div>
+<script src="design/year1.js"></script>
+<script src="js/early-lessons.js"></script>
+<script src="js/early-topic.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const year = params.get('year');
+const subject = params.get('subject');
+const lesson = ['K','1'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
+  ? earlyTopicPage(year,subject,Number(params.get('lesson'))) : null;
+if (lesson) {
+  document.title = lesson.title + ' · ' + (year === 'K' ? 'Kindergarten' : 'Year 1') + ' | Acorn & Shine';
+  document.getElementById('lesson').innerHTML = lesson.html;
+  const form = document.querySelector('form');
+  const status = form.querySelector('output');
+  form.onchange = () => { status.textContent = ''; };
+  form.onsubmit = event => {
+    event.preventDefault();
+    status.textContent = new FormData(form).get('choice') === form.dataset.key
+      ? 'Correct! ' + lesson.explanation : 'Have another look at the example, then try again.';
+  };
+}
+</script>
+</body></html>

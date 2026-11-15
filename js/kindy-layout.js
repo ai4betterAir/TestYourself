@@ -11,7 +11,7 @@
     if (active) stage.querySelector('form').scrollIntoView();
   });
   function update() {
-    const slug = grade === 'K' && KINDY_MATHS.has(topic) ? topic : '';
+    const slug = grade === 'K' && KINDY_MATHS.has(topic) && document.getElementById('k-'+topic) ? topic : '';
     if (slug === active) return;
     active = slug;
     document.body.classList.toggle('kindy-live', Boolean(slug));

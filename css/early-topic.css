@@ -1,0 +1,27 @@
+* {box-sizing:border-box}
+body {margin:0;color:#102950;background:#fffdfa;font-family:Nunito,Arial,sans-serif}
+header,.early-next,.crumb {display:flex;align-items:center;gap:clamp(12px,2vw,34px);flex-wrap:wrap}
+header {justify-content:space-between;padding:14px 4%;background:white}
+header img {display:block;width:clamp(160px,18vw,280px)}
+header nav {display:flex;gap:clamp(12px,2vw,36px);align-items:center}
+a {color:inherit;font-weight:800;text-decoration:none}
+a:hover {text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible {outline:3px solid #0979a7;outline-offset:3px}
+.early-hero {display:grid;grid-template-columns:1.05fr 1fr;background:var(--tint);align-items:stretch}
+.early-hero>div {padding:clamp(24px,4vw,74px)}
+.crumb {gap:8px;font-size:clamp(15px,1.15vw,19px)}
+.early-hero h1 {font-size:clamp(42px,5.4vw,88px);letter-spacing:-.045em;line-height:1.04;margin:22px 0 12px}
+.early-hero p {font-size:clamp(20px,1.7vw,29px);line-height:1.4;margin:0 0 22px;max-width:32em}
+.early-hero img {width:100%;height:100%;max-height:460px;min-height:240px;object-fit:cover}
+.action {display:inline-block;background:var(--ink);color:white;padding:12px 22px;border:0;border-radius:13px;font:800 18px Nunito,Arial,sans-serif;cursor:pointer}
+.early-work {display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(16px,2vw,36px);padding:clamp(18px,3vw,56px) 4%;align-items:start}
+.early-work article,.early-work form {border:1px solid #dae3e4;border-radius:20px;padding:clamp(20px,2.5vw,42px);background:white}
+.early-work article {background:linear-gradient(155deg,var(--tint),white);border-top:5px solid var(--ink)}
+.early-work h2,.early-work legend {font-size:clamp(24px,2.1vw,36px);font-weight:900;line-height:1.2;margin:0 0 16px}
+.early-work article p {font-size:clamp(21px,1.85vw,32px);line-height:1.55;margin:0;white-space:pre-line}
+.early-work fieldset {margin:0 0 16px;padding:0;border:0;min-width:0}
+.early-work label {display:flex;gap:10px;align-items:center;border:1px solid #aabcd0;border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;font-size:clamp(17px,1.4vw,24px)}
+.early-work label:has(:checked) {background:var(--tint);outline:2px solid var(--ink)}
+output:not(:empty) {display:block;margin-top:12px;font-weight:800}
+.early-next {padding:18px 4%;justify-content:space-between;border-top:1px solid #dde5e9;background:white}
+@media(max-width:680px){.early-hero,.early-work{grid-template-columns:1fr}.early-hero img{min-height:0;height:180px}.early-next{align-items:flex-start;flex-direction:column}}

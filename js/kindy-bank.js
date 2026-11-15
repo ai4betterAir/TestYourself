@@ -4,7 +4,8 @@ window.KINDY_MATHS = (() => {
     ['number-order','↗','Number Order','Find a missing number'],
     ['simple-addition','+','Simple Addition','Join two groups'],
     ['shapes','△','Shapes','Look at sides and corners'],
-    ['patterns','●','Patterns','Continue a repeating pattern']
+    ['patterns','●','Patterns','Continue a repeating pattern'],
+    ['measurement','↔','Measurement','Compare length using equal units']
   ];
   const pick = list => list[Math.floor(Math.random() * list.length)];
   function question(id) {
@@ -23,6 +24,11 @@ window.KINDY_MATHS = (() => {
       text = a + ' + ' + (n-a) + ' = ?';
       answer = n;
       tip = 'Count the first group, then count on for the second group.';
+    } else if (id === 'measurement') {
+      text = 'Two ribbons start at the same line. One is ' + n + ' blocks long. The other is ' + (n+2) + ' blocks long. How many blocks long is the longer ribbon?';
+      answer = n+2;
+      options = [n,n+1,n+2];
+      tip = 'When the blocks are the same size, the longer ribbon covers more blocks.';
     } else if (id === 'shapes') {
       const [symbol,name] = pick([['○','Circle'],['△','Triangle'],['□','Square'],['▭','Rectangle']]);
       text = 'What shape is this?  ' + symbol;

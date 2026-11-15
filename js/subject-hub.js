@@ -116,6 +116,12 @@ if(dashboardKicker) dashboardKicker.textContent=label.toUpperCase()+' · '+meta.
 
 function hrefFor(title,index){
  const slug=title.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ if(year==='K'||year==='1'){
+   if(subject==='english' && title==='Reading')return 'subject.html?year='+year+'&subject=reading';
+   if(subject==='maths' && year==='K' && index<5)return 'practice.html?year=K&topic='+slug;
+   const lesson=(subject==='english'?index-1:index);
+   return 'early-topic.html?year='+year+'&subject='+subject+'&lesson='+lesson;
+ }
  if(subject==='maths')return 'practice.html?year='+encodeURIComponent(year)+'&topic='+encodeURIComponent(slug);
  if(subject==='reading'||(subject==='english'&&title==='Reading')){
    if(year==='1')return 'english-year1-reading.html';
