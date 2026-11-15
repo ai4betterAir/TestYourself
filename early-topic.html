@@ -13,12 +13,13 @@
 <script src="js/early-lessons.js"></script>
 <script src="js/year23-lessons.js"></script>
 <script src="js/year45-lessons.js"></script>
-<script src="js/early-topic.js?v=year45"></script>
+<script src="js/year6-lessons.js"></script>
+<script src="js/early-topic.js?v=year6"></script>
 <script>
 const params = new URLSearchParams(location.search);
 const year = params.get('year');
 const subject = params.get('subject');
-const lesson = ['K','1','2','3','4','5'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
+const lesson = ['K','1','2','3','4','5','6'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
   ? earlyTopicPage(year,subject,Number(params.get('lesson'))) : null;
 if (lesson) {
   document.title = lesson.title + ' · ' + (year === 'K' ? 'Kindergarten' : 'Year '+year) + ' | Acorn & Shine';

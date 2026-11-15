@@ -5,7 +5,7 @@ function earlyTopicPage(year, subject, index) {
   const esc = text => String(text).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const label = year==='K'?'Kindergarten':'Year '+year;
   const group = subject==='general-knowledge'?'gk':subject;
-  const rows = year==='K'?kindergartenActivities[subject]:year==='1'?year1Topics.filter(t=>t.id.startsWith(group+'-')):(Number(year)<=3?year23Lessons:year45Lessons)[year]?.[subject];
+  const rows = year==='K'?kindergartenActivities[subject]:year==='1'?year1Topics.filter(t=>t.id.startsWith(group+'-')):(year==='6'?year6Lessons:Number(year)<=3?year23Lessons:year45Lessons)[year]?.[subject];
   if (!rows || !Number.isInteger(index) || !rows[index]) return null;
   const row=rows[index];
   let title, model, question, answers, correct, explanation, lead, image;
@@ -33,7 +33,7 @@ function earlyTopicPage(year, subject, index) {
   }
   if(year==='1' && subject==='reading'){more='english-year1-reading.html';action='Open the reading library';}
   if(year==='1' && subject==='vocabulary'){more='vocabulary-year1-stories.html';action='Explore vocabulary stories';}
-  if (['2','3','4','5'].includes(year)) {
+  if (['2','3','4','5','6'].includes(year)) {
     if (subject==='english') {
       const skill=/spell/i.test(id)?'spelling':/writ|edit|paragraph/i.test(id)?'writing':'grammar';
       more='english-practice.html?grade='+year+'&skill='+skill;
