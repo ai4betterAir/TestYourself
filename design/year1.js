@@ -33,7 +33,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Make numbers with tens and ones.",
       "model": "23 = 2 tens + 3 ones",
-      "tip": "Three tens make 30. Add 2 ones to make 32."
+      "tip": "Two tens make 20. Add three ones to make 23."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -70,7 +70,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Join two groups and count the total.",
       "model": "5 + 3 = 8",
-      "tip": "Start at 6 and count on two: 7, 8."
+      "tip": "Count five counters, then three more. There are eight altogether."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -107,7 +107,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Take some away and find what is left.",
       "model": "9 − 4 = 5",
-      "tip": "Count back three from 8: 7, 6, 5."
+      "tip": "Start with nine counters. Cross out four. Five counters are left."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -144,7 +144,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Look for shapes and repeating rules.",
       "model": "circle · square · circle · square · …",
-      "tip": "The rule repeats circle, then square. A circle comes next."
+      "tip": "Say the pattern aloud: circle, square. Repeat that same pair."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -181,7 +181,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Compare length, mass and capacity.",
       "model": "Line up the ends → compare the lengths",
-      "tip": "When the starting points match, the ribbon that reaches further is longer."
+      "tip": "Put the ends of two objects together before comparing their lengths."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -218,7 +218,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Recognise Australian coins and count small amounts.",
       "model": "10c + 10c = 20c",
-      "tip": "Add 5 cents and 5 cents to make 10 cents."
+      "tip": "Each coin is worth ten cents. Two ten-cent coins make twenty cents."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -255,7 +255,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Read o’clock and half-past times.",
       "model": "Short hand at 3 · long hand at 12 → 3 o’clock",
-      "tip": "At o’clock, the long hand points to 12. The short hand tells the hour."
+      "tip": "The long hand points to 12 for o’clock. The short hand tells the hour."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -292,7 +292,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Sort information and compare groups.",
       "model": "Apples: 4 votes · Bananas: 2 votes",
-      "tip": "Four is greater than two, so apples have more votes."
+      "tip": "Four votes for apples is more than two votes for bananas."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -329,7 +329,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Draw a picture and work out one small step.",
       "model": "3 red blocks + 2 blue blocks → 5 blocks",
-      "tip": "Draw four cars, then three more. Count all seven."
+      "tip": "Draw three red blocks and two blue blocks. Count all five."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -366,7 +366,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Make a sentence that shares a complete idea.",
       "model": "The dog runs.",
-      "tip": "The bird sings tells us who and what happens."
+      "tip": "The dog runs is a complete idea. It begins with a capital and ends with a full stop."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -403,7 +403,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Meet naming words and action words.",
       "model": "Naming word: cat · Action word: jumps",
-      "tip": "Dog is a naming word, or noun. Run and jump are action words."
+      "tip": "Cat names an animal. Jumps tells us what something does."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -440,7 +440,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Listen to the sounds and check the letters.",
       "model": "sun → s · u · n",
-      "tip": "Sun is spelled s-u-n."
+      "tip": "Say sun slowly and match each sound to a letter."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -477,7 +477,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Say an idea, write it and read it back.",
       "model": "My pet is a cat. She likes to nap.",
-      "tip": "This sentence introduces the kitten and a problem for the story."
+      "tip": "The first sentence tells us about the pet. The next sentence adds a detail."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -514,7 +514,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Match letters with the sounds you hear.",
       "model": "cat → /c/ · /a/ · /t/",
-      "tip": "Sun and sock begin with the /s/ sound."
+      "tip": "Listen for the first, middle and last sounds in cat."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -551,7 +551,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Use capitals and marks to make meaning clear.",
       "model": "Can you see the bird?",
-      "tip": "A question mark shows that a sentence asks something."
+      "tip": "This sentence asks a question, so it ends with a question mark."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -588,7 +588,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Enjoy a short story and talk about it.",
       "model": "Ben has a red ball. He rolls it to his sister. They play in the park.",
-      "tip": "The first sentence tells us Ben has a red ball."
+      "tip": "Read the short story aloud. Who is playing? Where are they?"
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -625,7 +625,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Find what the whole text is mostly about.",
       "model": "Bees visit flowers. They collect nectar. They carry pollen between flowers.",
-      "tip": "Every sentence tells us something about bees and flowers."
+      "tip": "All three sentences describe bees. That helps us find the main idea."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -662,7 +662,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Meet the people and animals in a story.",
       "model": "Lily and her dog Pip went to the beach. Pip ran to the water.",
-      "tip": "The text says Lily and her dog Pip went to the beach."
+      "tip": "Look for the names in the story. Lily is a person and Pip is her dog."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -699,7 +699,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Tell what happens first, next and last.",
       "model": "First, Ava puts soil in a pot. Next, she plants a seed. Last, she waters it.",
-      "tip": "The word last tells us that watering happens at the end."
+      "tip": "The words first, next and last help us follow the steps."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -736,7 +736,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Look back at the text for the answer.",
       "model": "The school picnic is on Friday. Bring a hat and a water bottle.",
-      "tip": "The first sentence gives the day: Friday."
+      "tip": "Look back at the notice. It tells us when the picnic is and what to bring."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -773,7 +773,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Use the sentence to help work out a word.",
       "model": "The tiny ant crawled under a leaf. It was much smaller than the beetle.",
-      "tip": "The next sentence says the ant is much smaller than the beetle."
+      "tip": "The words much smaller help us understand tiny."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -810,7 +810,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Learn a useful word inside a small story.",
       "model": "The puppy was eager to play. It ran to the ball with a wagging tail.",
-      "tip": "Running to the ball and wagging its tail show that it is excited and ready."
+      "tip": "The puppy’s wagging tail and quick movement are clues to how it feels."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -847,7 +847,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Match a word to what it means.",
       "model": "A path is a track you can walk along.",
-      "tip": "A path is a track or way that people can walk along."
+      "tip": "Imagine walking along a track in a park. That track is a path."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -884,7 +884,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Find words with similar meanings.",
       "model": "happy ↔ glad",
-      "tip": "Happy and glad both describe feeling pleased."
+      "tip": "Happy and glad are words with similar meanings."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -921,7 +921,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Find words with opposite meanings.",
       "model": "hot ↔ cold",
-      "tip": "Up and down describe opposite directions."
+      "tip": "Hot and cold have opposite meanings. Can you think of something hot and something cold?"
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -958,7 +958,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Build a word, then check each letter.",
       "model": "fish → f · i · s · h",
-      "tip": "Fish is spelled f-i-s-h."
+      "tip": "Look at the order of the letters: f, i, s, h. Say the word and check it."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -995,7 +995,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Choose a word that fits the whole sentence.",
       "model": "We wear a coat when it is cold.",
-      "tip": "Ice is cold. The word fits what we know about ice."
+      "tip": "Cold fits the sentence because a coat helps us stay warm."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1032,7 +1032,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Notice what plants and animals need.",
       "model": "Plants need water, light and air to grow.",
-      "tip": "Water is one of the things plants need to grow."
+      "tip": "Notice three things a plant needs: water, light and air."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1069,7 +1069,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Explore how your senses help you.",
       "model": "Eyes → see · Ears → hear · Nose → smell",
-      "tip": "Your ears detect sounds, including the sound of a bell."
+      "tip": "Point to your eyes, ears and nose. Tell what each helps you do."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1106,7 +1106,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Notice the weather and how it changes.",
       "model": "Sunny · cloudy · rainy · windy",
-      "tip": "A raincoat helps keep rain off your clothes."
+      "tip": "Look outside together. Which word describes today’s weather?"
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1143,7 +1143,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Look at what familiar objects are made from.",
       "model": "A wooden spoon is made from wood.",
-      "tip": "A clear drinking glass is commonly made from glass."
+      "tip": "An object’s name and its material are different. A spoon can be made from wood."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1180,7 +1180,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Discover the Sun, Moon and the sky.",
       "model": "The Sun gives Earth light and warmth.",
-      "tip": "The Sun is Earth’s main source of daylight."
+      "tip": "The Sun gives us light and warmth. Never look directly at the Sun."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1217,7 +1217,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Try a gentle push or pull and notice movement.",
       "model": "Push → away · Pull → towards you",
-      "tip": "A push can move an object away from you."
+      "tip": "A push moves something away. A pull brings it towards you."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1254,7 +1254,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Discover Australian places and symbols.",
       "model": "Australia has six states and two mainland territories.",
-      "tip": "Kangaroos are native Australian animals."
+      "tip": "Look at a simple map of Australia. Notice the states and territories."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1291,7 +1291,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Use simple maps to explore places.",
       "model": "A map helps us find places.",
-      "tip": "A map shows where places are."
+      "tip": "Find a familiar place on a map. Look at what is nearby."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1328,7 +1328,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Discover animals and how they live.",
       "model": "Birds have feathers. Fish have gills.",
-      "tip": "A parrot is a bird. Birds have feathers."
+      "tip": "Name a bird you know. Think about its feathers."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1365,7 +1365,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Explore plants, water and natural places.",
       "model": "Forests are places with many trees.",
-      "tip": "A forest is an area with many trees."
+      "tip": "Imagine a forest. Describe the trees and other living things you might find."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1402,7 +1402,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Meet the people who help a community.",
       "model": "A librarian helps people find and borrow books.",
-      "tip": "A librarian helps library visitors find and borrow books."
+      "tip": "Talk about a visit to a library. What did the librarian help you do?"
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   },
@@ -1439,7 +1439,7 @@ const year1Topics = [
     "lesson": {
       "heading": "Ask a question and discover something new.",
       "model": "An octopus has eight arms.",
-      "tip": "An octopus has eight arms."
+      "tip": "Count to eight on your fingers. That is how many arms an octopus has."
     },
     "nextTip": "Make up another example with a grown-up. Say how you worked it out."
   }
