@@ -99,6 +99,11 @@ const gkCommon={
  '5':[['Australia','Geography, government, history and culture.'],['World knowledge','Countries, capitals, regions and landmarks.'],['History','Connect key periods, people and events.'],['Environment','Explore global ecosystems and sustainability.'],['Science & innovation','Discover major ideas and inventions.'],['Civics & society','Understand institutions, communities and citizenship.']],
  '6':[['Australia & civics','Build knowledge of geography, history and government.'],['World geography','Countries, regions, capitals and global patterns.'],['History & culture','Connect significant events, people and ideas.'],['Environment','Explore sustainability and global challenges.'],['Science & innovation','Understand influential discoveries and technologies.'],['Global awareness','Build transition-ready knowledge of the wider world.']]
 };
+if (subject === 'general-knowledge') {
+  renderSubjectHomepage({year, topics: gkCommon[year], hrefFor, subject});
+  return;
+}
+
 const banks={maths,english,reading,vocabulary:vocab,science:scienceCommon,'general-knowledge':gkCommon};
 const topics=banks[subject][year]||banks[subject]['1'];
 const topicTotal=document.getElementById('topic-total');

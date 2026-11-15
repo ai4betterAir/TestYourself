@@ -27,6 +27,15 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
     '5': 'Connect scientific ideas with the world around you.',
     '6': 'Evaluate evidence and explain a changing world.'
   };
+  const gkCopy = {
+    K: 'Discover the people, places and wonders around you.',
+    '1': 'Meet amazing animals and explore new places.',
+    '2': 'Explore countries, communities and stories from the past.',
+    '3': 'Connect places, cultures and ideas across our world.',
+    '4': 'Discover how places, people and ideas shape our world.',
+    '5': 'Explore our world through history, science and society.',
+    '6': 'Build a broader understanding of a connected world.'
+  };
   const grade = year === 'K' ? '1' : year;
   const presentations = {
     maths: {
@@ -52,6 +61,11 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
       practiceLabel: 'Start an activity'
     }
   };
+  presentations['general-knowledge'] = {
+    label: 'General Knowledge', copy: gkCopy,
+    topicHeading: 'Choose a topic to explore', callout: 'A world of discovery',
+    practiceHref: '#topics', practiceLabel: 'Explore topics'
+  };
   const presentation = presentations[subject];
   const subjectLabel = presentation.label;
   const copy = presentation.copy;
@@ -59,7 +73,7 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
   const escape = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
-  stylesheet.href = 'css/maths-homepages.css?v=20261115-science';
+  stylesheet.href = 'css/maths-homepages.css?v=20261115-gk';
   document.head.append(stylesheet);
   document.body.classList.add('maths-homepage');
   document.body.dataset.mathsYear = year;
@@ -74,18 +88,27 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
       <a href="learning.html?year=${year}">Learn</a>
       <a class="maths-signin" href="sign-in.html">Sign In</a>
     </nav>`;
-  const cards = topics.map(([title, description], index) => `
-    <a class="maths-topic" href="${escape(hrefFor(title, index))}" aria-label="${escape(title + '. ' + description)}">
-      <img src="assets/${assetFolder}/${year}-${index}.webp" alt="" width="360" height="132">
-      <h3>${escape(title)}</h3><span aria-hidden="true">→</span>
-    </a>`).join('');
+  const cards = topics.map(([title, description], index) => {
+    const href = hrefFor(title, index);
+    const artwork = `<img src="assets/${assetFolder}/${year}-${index}.webp" alt="" width="480" height="132">`;
+    const heading = `<h3>${escape(title)}</h3><span aria-hidden="true">→</span>`;
+    if (href === '#') {
+      return `<details class="maths-topic maths-overview">
+        <summary>${artwork}${heading}</summary>
+        <p>${escape(description)}<small>Lessons coming soon</small></p>
+      </details>`;
+    }
+    return `<a class="maths-topic" href="${escape(href)}" aria-label="${escape(title + '. ' + description)}">
+      ${artwork}${heading}
+    </a>`;
+  }).join('');
   const main = document.querySelector('main');
   main.className = 'maths-main';
   main.innerHTML = `
     <section class="maths-hero">
       <div class="maths-copy">
         <div class="maths-crumb"><a href="index.html">Home</a> / <a href="learning.html?year=${year}">${label}</a> / ${subjectLabel}</div>
-        <h1>${label} ${subjectLabel}</h1>
+        <h1>${label}${subject === 'general-knowledge' ? '<br>' : ' '}${subjectLabel}</h1>
         <p>${copy[year]}</p>
         <div class="maths-actions">
           <a class="maths-button maths-primary" href="#topics">Choose a topic</a>
