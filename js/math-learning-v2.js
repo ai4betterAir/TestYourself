@@ -23,7 +23,14 @@ const oldRender=render;render=function(){oldRender();resetExplain();$('practiceS
 $('explainBtn').onclick=()=>{if(!completed.has(idx)){$('explainBox').hidden=false;$('explainBox').textContent='Answer the question and press Check Answer first. Then open the explanation.';return}const q=questions[idx];$('explainBox').hidden=!$('explainBox').hidden;$('explainBox').innerHTML=`<b>Worked explanation</b><p>${explanation(q)}</p>`;$('explainBtn').textContent=$('explainBox').hidden?'📘 Show worked explanation':'Hide explanation'};
 $('newPracticeBtn').onclick=()=>{buildSet();switchMode('practice')};
 let testQs=[],testIndex=0,testAnswers=[],seconds=600,timer=null,testScope='mixed',testLength=10,testMinutes=10;
-function testSettings(){if(grade==='K')return{count:8,minutes:8};if(['1','2'].includes(grade))return{count:10,minutes:10};if(['3','4'].includes(grade))return{count:15,minutes:15};return{count:20,minutes:20}}
+function testSettings() {
+  const count = new URLSearchParams(location.search).get('count');
+  if (count === '20') return {count: 20, minutes: 20};
+  if (grade === 'K') return {count: 8, minutes: 8};
+  if (['1', '2'].includes(grade)) return {count: 10, minutes: 10};
+  if (['3', '4'].includes(grade)) return {count: 15, minutes: 15};
+  return {count: 20, minutes: 20};
+}
 function showTestIntro(){clearInterval(timer);const settings=testSettings();testLength=settings.count;testMinutes=settings.minutes;seconds=testMinutes*60;$('testIntro').hidden=false;$('testBody').hidden=true;$('testResult').hidden=true;$('testTimer').textContent=`${testMinutes}:00`;$('yearTestHeading').textContent=`${testLength}-question ${cfg[grade].label} Test`;$('testQuestionCount').textContent=testLength;$('testDuration').textContent=testMinutes;$('startTestBtn').textContent=`Start ${testLength}-question test →`;if($('testScopeHint'))$('testScopeHint').textContent=testScope==='specific'?'Only questions from the current topic will be used.':'Questions will be mixed across the selected year.'}
 function buildTest(){const settings=testSettings();testLength=settings.count;testMinutes=settings.minutes;const all=topicList().filter(x=>x[0]!=='mixed');const list=testScope==='specific'&&topic!=='mixed'?all.filter(x=>x[0]===topic):all;const seen=new Set();testQs=[];let guard=0;while(testQs.length<testLength&&guard++<150){const x=list[Math.floor(Math.random()*list.length)],old=topic;topic=x[0];let q=makeQuestion();topic=old;const key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);q._topic=x[0];q._name=x[2];testQs.push(q)}while(testQs.length<testLength){const x=list[testQs.length%list.length],old=topic;topic=x[0];let q=makeQuestion();topic=old;q._topic=x[0];q._name=x[2];testQs.push(q)}testAnswers=Array(testLength).fill(null);testIndex=0;seconds=testMinutes*60}
 function clock(){const m=Math.floor(seconds/60),s=seconds%60;$('testTimer').textContent=`${m}:${String(s).padStart(2,'0')}`}
@@ -103,5 +110,7 @@ const requestedTopic=new URLSearchParams(location.search).get('topic');
 const resolvedTopic=resolveRequestedTopic(requestedTopic);
 if(resolvedTopic)topic=resolvedTopic;
 if(new URLSearchParams(location.search).get('focus')||requestedTopic){document.body.classList.add('focus-learn');window.scrollTo({top:0});}
-buildTopics();buildSet();guide();updateMark();switchMode('learn');
+buildTopics();buildSet();guide();updateMark();
+const entryMode = new URLSearchParams(location.search).get('mode');
+switchMode(['practice', 'test'].includes(entryMode) ? entryMode : 'learn');
 })();

@@ -39,6 +39,11 @@ const maths={
  '5':[['Whole numbers','Read, compare and calculate with large numbers.'],['Operations','Use efficient strategies for all four operations.'],['Fractions & decimals','Compare, add and represent fractions and decimals.'],['Percentages','Connect common fractions, decimals and percentages.'],['Measurement','Area, perimeter, volume and units.'],['Geometry','Angles, transformations and coordinates.'],['Data & chance','Interpret data and probability situations.'],['Problem solving','Apply maths in multi-step contexts.']],
  '6':[['Number & place value','Work flexibly with large numbers and decimals.'],['Fractions, decimals & percentages','Convert, compare and calculate.'],['Operations','Solve complex multi-step calculations.'],['Patterns & algebra','Describe patterns and unknown values.'],['Measurement','Area, volume, scale and unit conversions.'],['Geometry','Angles, coordinates and transformations.'],['Data & chance','Analyse data and probability.'],['Problem solving','Reason through unfamiliar real-world problems.']]
 };
+if (subject === 'maths') {
+  renderMathsHomepage({year, topics: maths[year], hrefFor});
+  return;
+}
+
 const english={
  K:[['Letters & sounds','Recognise letters and common sounds.'],['Words','Build and read simple words.'],['Sentences','Understand what makes a sentence.'],['Capital letters','Use capitals for names and sentence starts.'],['Full stops','Know when a sentence ends.'],['Early writing','Write simple words and messages.']],
  '1':[['Sentences','Build complete simple sentences.'],['Grammar','Use nouns, verbs and simple sentence rules.'],['Spelling','Practise common words and sound patterns.'],['Writing','Plan and write short texts.'],['Phonics','Connect letters and sounds.'],['Punctuation','Use capitals, full stops and question marks.']],
