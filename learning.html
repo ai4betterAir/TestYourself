@@ -46,7 +46,7 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-menu" id="navMenu">
-      <nav class="main-nav"><a href="index.html">Home</a></nav>
+      <nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a></nav>
       <div class="nav-actions">
         <a class="link-signin" href="sign-in.html">Sign In</a>
         <a class="link-signup" href="sign-up.html">Sign Up</a>
@@ -244,6 +244,21 @@
  };
  document.getElementById('hub-year').textContent=label;document.getElementById('crumb-year').textContent=label;document.getElementById('hub-tagline').textContent=text[y][0];document.getElementById('hub-copy').textContent=text[y][1];
  document.body.dataset.year=y;
+
+ const pathwayLinks = [
+   {label: 'Selective', href: 'selective.html', years: ['5', '6']},
+   {label: 'NAPLAN', href: 'naplan.html', years: ['3', '5']},
+   {label: 'OC', href: 'oc.html', years: ['4']}
+ ];
+ const navigation = document.querySelector('.site-header .main-nav');
+ for (const pathway of pathwayLinks) {
+   if (pathway.years.includes(y)) {
+     const link = document.createElement('a');
+     link.href = pathway.href;
+     link.textContent = pathway.label;
+     navigation.append(link);
+   }
+ }
  const yearPlans={
    K:{hero:'discover & grow.',words:['discover & grow.','play with ideas.','build confidence.','keep exploring.'],maths:'Counting & numbers',english:'Letters & sounds',challenge:'Story skills',challengeSubject:'reading',score:'64',goal:'3 of 5 sessions'},
    '1':{hero:'learn with confidence.',words:['learn with confidence.','build foundations.','try new ideas.','keep growing.'],maths:'Addition basics',english:'Strong sentences',challenge:'Reading practice',challengeSubject:'reading',score:'68',goal:'3 of 5 sessions'},
