@@ -422,7 +422,10 @@ wrong.forEach((w,i)=>{
 localStorage.setItem(`skillup-${exam}-${stream}-last`,JSON.stringify({score:totalScore,total,pct,date:new Date().toISOString()}))}
 $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').onclick=()=>{if(mockIndex){mockIndex--;renderMock()}};$('mockNext').onclick=()=>{if(mockIndex===mockTarget()-1)finishMock();else{mockIndex++;renderMock()}};
 if(exam==='oc'&&stream==='writing')stream='thinking';
+if (exam === 'oc' && stream === 'reading' && reading().some(entry => entry[0] === pageParams.get('topic'))) {
+  topic = pageParams.get('topic');
+}
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(requestedStream==='thinking'&&thinkingTopicIds.has(pageParams.get('topic'))&&requestedView==='practice')showQuiz();
+if(topic !== 'mixed' && requestedView === 'practice')showQuiz();
 })();

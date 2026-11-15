@@ -349,4 +349,8 @@ $('mockNext').onclick=()=>{if(mockIndex===cfg().mockTarget-1)finishMock();else{m
 
 setMode(mode);
 if(requestedView==='mock')setView('mock');
+else if (lockedMode === 'oc4') {
+  const requested = new URLSearchParams(location.search).get('topic');
+  qsa('#topicGroups button').find(button => button.dataset.topic === requested)?.click();
+}
 })();
