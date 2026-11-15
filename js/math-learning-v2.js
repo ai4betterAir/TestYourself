@@ -1,7 +1,7 @@
 (function(){
 const $=id=>document.getElementById(id),shuffle=a=>[...a].sort(()=>Math.random()-.5);
 const originalMake=makeQuestion;
-makeQuestion=function(){const extra=window.SKILLUP_MATH?.enhanced?.(grade,topic);return extra&&Math.random()<.45?extra:originalMake()};
+makeQuestion=function(){if(grade==='K'&&KINDY_MATHS.has(topic))return KINDY_MATHS.question(topic);const extra=window.SKILLUP_MATH?.enhanced?.(grade,topic);return extra&&Math.random()<.45?extra:originalMake()};
 const strands=[
  {id:'number',icon:'123',name:'Number & Algebra',desc:'Numbers, operations, fractions, patterns and algebra',topics:new Set(['number','numeration','placevalue','compare','beforeafter','skipcount','evenodd','basicfacts','doubles','make10','addition','addition2','subtraction','subtraction2','addsub','addsubconcepts','patterns','missing','equations','algebra','integers','equalgroups','multiplication','sharing','division','division2digit','fractions','fractionconcepts','fractionoperations','fractiondecimal','decimals','factors','order','operations','rounding','powers','ratio','percentage','ratiopercent','g2facts','g2place100','g2add2','g2subtract2','g2place1000','g2addsub3','g2fractionschance','g2multdiv','g2advancedaddsub','g2advancedfractions','g2advancedmultdiv'])},
  {id:'measure',icon:'◫',name:'Measurement & Space',desc:'Money, time, measurement, shapes, angles and location',topics:new Set(['money','time','elapsed','calendar','length','measurement','mass','capacity','area','perimeter','perimeterarea','volume','rate','speed','shapes2d','shapes3d','geometry','angles','position','coordinates','symmetry','solids','circles','scale','g2geometry','g2moneytime','g2measurement','g2advancedmeasure','g2advancedgeometry'])},

@@ -1,0 +1,36 @@
+#kindyLesson:empty { display:none }
+body.kindy-live .practice-main { width:100%; max-width:none; margin:0; padding:0 }
+body.kindy-live #practiceHero { display:block; order:3; min-height:0; padding:12px 4%; background:white; }
+body.kindy-live #practiceHero :is(.year-tag,h1,#welcomeText),body.kindy-live #practiceHero:before,body.kindy-live #practiceHero:after { display:none }
+body.kindy-live #practiceHero .year-switch { color:#122957 }
+body.kindy-live #learnPanel { display:none }
+.k-preview { margin:0; font-family:Nunito,Arial,sans-serif }
+.k-preview header { display:flex; justify-content:space-between; align-items:center; padding:15px 4% }
+#kindyLesson,.k-preview { color:#10234e; font-family:Nunito,Arial,sans-serif }
+.k-hero { background:var(--tone); display:grid; grid-template-columns:1fr 1fr; overflow:hidden; align-items:stretch }
+.k-hero>div { padding:clamp(18px,3vw,52px) 7% }
+.k-hero img { width:100%; height:100%; min-height:0; object-fit:cover; max-height:460px }
+.k-hero nav { font-size:clamp(14px,1.25vw,20px) }
+.k-hero nav a,.k-back { color:#123e74 }
+.k-hero h1 { margin:22px 0 8px; font-size:clamp(40px,5vw,80px); line-height:1.04; letter-spacing:-.04em }
+.k-hero p,.k-activity p { margin:8px 0 18px; font-size:clamp(20px,1.9vw,30px); line-height:1.35 }
+.k-start,.k-check { display:inline-block; background:#102c59; border:0; border-radius:14px; color:white; padding:12px 30px; font:800 clamp(18px,1.5vw,24px) Nunito,Arial,sans-serif; text-decoration:none; cursor:pointer }
+.k-activity { margin:clamp(12px,1.6vw,28px); background:white; border:1px solid #cad6e0; border-radius:20px; padding:clamp(16px,2vw,32px); text-align:center; box-shadow:0 4px 16px #10234e10 }
+.k-activity h2 { margin:0; font-size:clamp(30px,3.6vw,58px); line-height:1.12 }
+.k-activity-art { display:block; margin:12px auto; max-width:92%; max-height:clamp(110px,14vw,230px); object-fit:contain }
+.k-activity strong { font-size:clamp(26px,3.2vw,50px) }
+.k-activity fieldset { border:0; margin:12px auto; padding:0; display:flex; gap:12px; max-width:850px }
+.k-activity label { flex:1; position:relative; min-width:0 }
+.k-activity label span { display:block; border:2px solid #9bbbd0; border-radius:12px; padding:8px; font-size:clamp(20px,2.4vw,38px); font-weight:900; cursor:pointer }
+.k-activity input { position:absolute; opacity:0 }
+.k-activity :checked+span { background:#d9f1ff; border-color:#164f86 }
+.k-activity :focus-visible+span { outline:3px solid #104b8a }
+.k-activity i { display:block; width:clamp(32px,5vw,76px); aspect-ratio:1; margin:5px auto; background:#1987df }
+.k-circle,.k-blue,.k-red,.k-yellow { border-radius:50% }
+.k-triangle { clip-path:polygon(50% 0,100% 100%,0 100%); background:#ed8528!important }
+.k-square { background:#5dbb85!important }
+.k-red { background:#ce3839!important }.k-yellow { background:#efbb22!important }
+.k-activity output:not(:empty) { display:block; margin-top:12px; font-weight:800 }
+.k-back { display:block; text-align:left; margin-top:12px }
+@media(max-width:680px){.k-hero{grid-template-columns:1fr}.k-hero img{height:155px}.k-activity fieldset{gap:6px}.k-activity label span{padding:8px 2px}}
+body:not(.kindy-live) #practiceNav .k-nav-item,.kindy-live #practiceNav a:not(.k-nav-item),.kindy-live .student-chip { display:none }
