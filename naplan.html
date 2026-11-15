@@ -1,119 +1,163 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#2f6bff">
-<meta name="description" content="Acorn &amp; Shine NAPLAN preparation with focused numeracy, reading, writing, language and timed practice.">
-<title>NAPLAN Preparation | Acorn &amp; Shine</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Year 3 NAPLAN practice | Acorn &amp; Shine</title>
+<meta name="description" content="Read a story, try a writing prompt or solve a number problem. Choose a skill to get started.">
 <link rel="icon" href="assets/acorn-and-shine-icon.png">
-<link rel="stylesheet" href="css/home.css?v=20260925-redesign">
-<link rel="stylesheet" href="css/selective-landing.css?v=20260926-light">
-<link rel="stylesheet" href="css/assessment-landing.css?v=20260926-v1">
-<link rel="stylesheet" href="css/site-viewport.css?v=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/exam-homepages.css?v=1">
 </head>
-<body class="assessment-landing naplan-page">
-<header class="site-header">
-  <div class="shell nav-shell">
-    <a class="brand" href="index.html"><img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine"></a>
-    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
-    <div class="nav-menu" id="navMenu">
-      <nav class="main-nav"><a href="index.html">Home</a></nav>
-      <div class="nav-actions"><a class="link-signin" href="sign-in.html">Sign In</a><a class="link-signup" href="sign-up.html">Start free</a></div>
-    </div>
-  </div>
+<body>
+<a class="skip" href="#skills">Skip to skills</a>
+<header class="exam-header">
+<a href="index.html" class="brand">
+<img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine">
+</a>
+<nav aria-label="Main navigation">
+<a href="index.html">Home</a>
+<a href="#skills">Practice</a>
+<a href="#tests">Tests</a>
+<a class="signin" href="sign-in.html">Sign In</a>
+</nav>
 </header>
-
-<main>
-<section class="sel-hero reveal">
-  <div class="shell sel-hero-grid">
-    <div class="sel-hero-copy">
-      <span class="sel-badge">NAPLAN Preparation</span>
-      <h1>NAPLAN<br><span class="green">Preparation</span></h1>
-      <p class="sel-lead">Build skills, confidence and test readiness with one clear NAPLAN practice pathway.</p>
-      <div class="sel-hero-cta">
-        <a class="button button-primary" href="naplan-practice.html">Start NAPLAN practice &rarr;</a>
-        <a class="button button-light" href="#pathways">Explore NAPLAN pathways &rarr;</a>
-      </div>
-      <ul class="sel-trust">
-        <li><span class="t-ic g"><svg><use href="assets/skillup-icons.svg#target"/></svg></span><div><b>Curriculum aligned</b><small>Year-level skill practice</small></div></li>
-        <li><span class="t-ic b"><svg><use href="assets/skillup-icons.svg#progress"/></svg></span><div><b>Original test-style questions</b><small>Build confidence steadily</small></div></li>
-        <li><span class="t-ic p"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span><div><b>One clear pathway</b><small>Practice, challenge and timed work</small></div></li>
-      </ul>
-      <span class="assessment-mini"><i></i> Acorn &amp; Shine practice only — not official NAPLAN material.</span>
-    </div>
-    <div class="sel-hero-art">
-      <img src="assets/naplan-hero.svg?v=realistic-v2" alt="Realistic NAPLAN study scene with a trophy, numeracy, reading, writing and language panels, checklist and clock">
-    </div>
-  </div>
+<main class="exam-page naplan3"  data-page="naplan3">
+<section class="hero">
+<div class="hero-copy">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / NAPLAN / Year 3</div>
+<nav class="year-switch" aria-label="NAPLAN year">
+<a href="naplan.html?year=3" aria-current="page">Year 3</a>
+<a href="naplan.html?year=5">Year 5</a>
+</nav>
+<h1>Year 3 NAPLAN practice</h1>
+<p>Read a story, try a writing prompt or solve a number problem. Choose a skill to get started.</p>
+<div class="actions">
+<a class="button primary" href="#skills">Choose a skill</a>
+<a class="button secondary" href="naplan-practice.html?year=3&amp;view=mock">View practice tests</a>
+</div>
+</div>
+<img class="hero-art" src="assets/exam-homepages/naplan3-hero.webp" alt="A notebook and learning materials" width="890" height="440">
 </section>
-
-<section class="sel-chips-wrap reveal">
-  <div class="shell sel-chips">
-    <a class="chip k-blue" href="#pathways"><span class="c-ic"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span><span><b>Numeracy</b><small>Number, measurement &amp; problem solving</small></span><span class="c-go">&rsaquo;</span></a>
-    <a class="chip k-green" href="subject.html?year=3&subject=reading"><span class="c-ic"><svg><use href="assets/skillup-icons.svg#reading"/></svg></span><span><b>Reading</b><small>Comprehension &amp; text analysis</small></span><span class="c-go">&rsaquo;</span></a>
-    <a class="chip k-amber" href="subject.html?year=5&subject=english"><span class="c-ic"><svg><use href="assets/skillup-icons.svg#english"/></svg></span><span><b>Writing</b><small>Planning, structure &amp; expression</small></span><span class="c-go">&rsaquo;</span></a>
-    <a class="chip k-green" href="subject.html?year=5&subject=vocabulary"><span class="c-ic"><svg><use href="assets/skillup-icons.svg#vocab"/></svg></span><span><b>Language Conventions</b><small>Grammar, spelling &amp; vocabulary</small></span><span class="c-go">&rsaquo;</span></a>
-    <a class="chip k-purple" href="naplan-practice.html?view=mock"><span class="c-ic"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span><span><b>Timed Mock Tests</b><small>Mixed practice without hints</small></span><span class="c-go">&rsaquo;</span></a>
-  </div>
-</section>
-
-<section class="section reveal" id="pathways">
-  <div class="shell">
-    <div class="sel-sec-head"><h2>Choose how to prepare</h2><p>Move from focused topic practice into mixed questions and timed NAPLAN work.</p></div>
-    <div class="sel-paths4">
-      <a class="pathc k-blue" href="naplan-practice.html"><span class="p-ic"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span><h3>Topic Practice</h3><p>Choose a skill and practice it with hints and feedback.</p><span class="p-go">&rsaquo;</span></a>
-      <a class="pathc k-green" href="naplan-practice.html"><span class="p-ic"><svg><use href="assets/skillup-icons.svg#target"/></svg></span><h3>Mixed Practice</h3><p>Work across the complete NAPLAN pool and switch between question types.</p><span class="p-go">&rsaquo;</span></a>
-      <a class="pathc k-purple" href="naplan-practice.html?view=mock"><span class="p-ic"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></span><h3>Timed Mock</h3><p>Take a timed mixed test without hints, then review your performance.</p><span class="p-go">&rsaquo;</span></a>
-      <a class="pathc k-amber" href="naplan-practice.html"><span class="p-ic"><svg><use href="assets/skillup-icons.svg#progress"/></svg></span><h3>Review &amp; Improve</h3><p>Use feedback and results to return to weaker skills and try again.</p><span class="p-go">&rsaquo;</span></a>
-    </div>
-    <div class="scope-note"><b>NAPLAN practice:</b> one combined Acorn &amp; Shine question pool with core skills, challenge questions and timed mixed sets.</div>
-  </div>
-</section>
-
-<section class="section reveal">
-  <div class="shell">
-    <div class="sel-sec-head"><h2>Why families choose Acorn &amp; Shine</h2><p>A clear, supportive preparation pathway that keeps practice focused.</p></div>
-    <div class="sel-why">
-      <div class="whyc k-green"><span class="w-ic"><svg><use href="assets/skillup-icons.svg#progress"/></svg></span><h3>Track real progress</h3><p>See results and revisit weaker areas over time.</p></div>
-      <div class="whyc k-blue"><span class="w-ic"><svg><use href="assets/skillup-icons.svg#english"/></svg></span><h3>Structured practice</h3><p>Work through clear skill groups instead of random question overload.</p></div>
-      <div class="whyc k-purple"><span class="w-ic"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span><h3>Right-level challenge</h3><p>Start with the correct year and stretch into carefully selected harder work.</p></div>
-      <div class="whyc k-blue"><span class="w-ic"><svg><use href="assets/skillup-icons.svg#shield"/></svg></span><h3>Build confidence</h3><p>Practice familiar question styles and timed sets before test day.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section reveal">
-  <div class="shell">
-    <div class="sel-cta">
-      <div class="cta-text"><h2>Ready to start NAPLAN practice?</h2><p>Choose a NAPLAN skill and begin with one focused set.</p></div>
-      <a class="button button-green" href="naplan-practice.html">Start NAPLAN practice &rarr;</a>
-    </div>
-  </div>
+<section class="skills">
+<h2>What would you like to practise?</h2>
+<div class="skill-grid">
+<a class="skill-card card-0" href="subject.html?year=3&amp;subject=reading">
+<img src="assets/exam-homepages/naplan3-0.webp" alt="" width="480" height="240">
+<div>
+<h3>Reading</h3>
+<p>Find meaning in a text</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-1" href="subject.html?year=3&amp;subject=english">
+<img src="assets/exam-homepages/naplan3-1.webp" alt="" width="480" height="240">
+<div>
+<h3>Writing</h3>
+<p>Plan and write a response</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-2" href="subject.html?year=3&amp;subject=vocabulary">
+<img src="assets/exam-homepages/naplan3-2.webp" alt="" width="480" height="240">
+<div>
+<h3>Conventions of Language</h3>
+<p>Spelling, grammar and punctuation</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-3" href="naplan-practice.html?year=3">
+<img src="assets/exam-homepages/naplan3-3.webp" alt="" width="480" height="240">
+<div>
+<h3>Numeracy</h3>
+<p>Work with numbers and shapes</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+</div>
+<aside class="test-banner">
+<div>
+<h2>Year 3 practice tests</h2>
+<p>Practise under timed conditions and review your answers.</p>
+</div>
+<a class="button" href="naplan-practice.html?year=3&amp;view=mock">Explore tests →</a>
+</aside>
 </section>
 </main>
-
+<main class="exam-page naplan5" hidden data-page="naplan5">
+<section class="hero">
+<div class="hero-copy">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / NAPLAN / Year 5</div>
+<nav class="year-switch" aria-label="NAPLAN year">
+<a href="naplan.html?year=3">Year 3</a>
+<a href="naplan.html?year=5" aria-current="page">Year 5</a>
+</nav>
+<h1>Year 5 NAPLAN practice</h1>
+<p>Read between the lines, build an argument and solve multi-step problems.</p>
+<div class="actions">
+<a class="button primary" href="#skills">Choose a skill</a>
+<a class="button secondary" href="naplan-practice.html?year=5&amp;view=mock">View practice tests</a>
+</div>
+</div>
+<img class="hero-art" src="assets/exam-homepages/naplan5-hero.webp" alt="A notebook and learning materials" width="890" height="440">
+</section>
+<section class="skills">
+<h2>What would you like to practise?</h2>
+<div class="skill-grid">
+<a class="skill-card card-0" href="subject.html?year=5&amp;subject=reading">
+<img src="assets/exam-homepages/naplan5-0.webp" alt="" width="480" height="240">
+<div>
+<h3>Reading</h3>
+<p>Use clues to infer meaning</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-1" href="subject.html?year=5&amp;subject=english">
+<img src="assets/exam-homepages/naplan5-1.webp" alt="" width="480" height="240">
+<div>
+<h3>Writing</h3>
+<p>Craft a story or an argument</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-2" href="subject.html?year=5&amp;subject=vocabulary">
+<img src="assets/exam-homepages/naplan5-2.webp" alt="" width="480" height="240">
+<div>
+<h3>Conventions of Language</h3>
+<p>Practise spelling, grammar and punctuation</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+<a class="skill-card card-3" href="naplan-practice.html?year=5">
+<img src="assets/exam-homepages/naplan5-3.webp" alt="" width="480" height="240">
+<div>
+<h3>Numeracy</h3>
+<p>Explore fractions, measures and data</p>
+<span class="arrow" aria-hidden="true">→</span>
+</div>
+</a>
+</div>
+<aside class="test-banner">
+<div>
+<h2>Year 5 practice tests</h2>
+<p>Practise under timed conditions and review your answers.</p>
+</div>
+<a class="button" href="naplan-practice.html?year=5&amp;view=mock">Explore tests →</a>
+</aside>
+</section>
+</main>
 <footer>
-  <div class="shell">
-    <div class="footer-grid">
-      <div class="footer-brand"><img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine"><p>Colourful, modern learning for Australian primary students — small steps, brighter futures.</p></div>
-      <div class="footer-col"><h4>Learn</h4><a href="learning.html">Learning Hub</a><a href="learning.html?year=3">Year 3</a><a href="learning.html?year=5">Year 5</a><a href="practice.html">Maths Practice</a></div>
-      <div class="footer-col"><h4>Tests</h4><a href="naplan.html">NAPLAN</a><a href="oc.html">Opportunity Class</a><a href="selective.html">Selective</a><a href="naplan-practice.html">Practice</a></div>
-      <div class="footer-col"><h4>More</h4><a href="accounts.html?role=teacher">For Teachers</a><a href="parents.html">For Parents</a><a href="about.html">About</a><a href="support.html">Support</a></div>
-    </div>
-    <div class="footer-bottom"><span>© <span id="year"></span> Acorn &amp; Shine. All rights reserved.</span><span><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></span></div>
-  </div>
+<a href="learning.html">Learning hub</a>
+<a href="naplan.html?year=3">Year 3 NAPLAN</a>
+<a href="naplan.html?year=5">Year 5 NAPLAN</a>
+<a href="oc.html">OC</a>
+<a href="selective.html">Selective</a>
+<a href="privacy.html">Privacy</a>
 </footer>
-
-<script>
-(function(){
-  var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
-  var toggle=document.getElementById('navToggle');
-  if(toggle){toggle.addEventListener('click',function(){var open=document.body.classList.toggle('nav-open');toggle.setAttribute('aria-expanded',open?'true':'false');toggle.setAttribute('aria-label',open?'Close menu':'Open menu');});document.querySelectorAll('#navMenu a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('nav-open');toggle.setAttribute('aria-expanded','false');});});}
-  var els=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target);}});},{threshold:.08,rootMargin:'0px 0px -50px'});els.forEach(function(el){io.observe(el);});}else{els.forEach(function(el){el.classList.add('visible');});}
-})();
+<script src="js/exam-homepages.js">
 </script>
 </body>
 </html>

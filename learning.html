@@ -255,7 +255,7 @@
  for (const pathway of pathwayLinks) {
    if (pathway.years.includes(y)) {
      const link = document.createElement('a');
-     link.href = pathway.href;
+     link.href = pathway.label === 'NAPLAN' ? pathway.href + '?year=' + encodeURIComponent(y) : pathway.href;
      link.textContent = pathway.label;
      navigation.append(link);
    }
