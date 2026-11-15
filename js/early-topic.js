@@ -3,9 +3,9 @@ function earlyTopicPage(year, subject, index) {
   const colours = {maths:['#e0f4fa','#07597d'],english:['#ffeadb','#924627'],reading:['#e0efe6','#276749'],vocabulary:['#f0e6fa','#704187'],science:['#def1ef','#17675c'],'general-knowledge':['#fff0ce','#865510']};
   const slug = text => text.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   const esc = text => String(text).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const label = year==='K'?'Kindergarten':'Year 1';
+  const label = year==='K'?'Kindergarten':'Year '+year;
   const group = subject==='general-knowledge'?'gk':subject;
-  const rows = year==='K'?kindergartenActivities[subject]:year1Topics.filter(t=>t.id.startsWith(group+'-'));
+  const rows = year==='K'?kindergartenActivities[subject]:year==='1'?year1Topics.filter(t=>t.id.startsWith(group+'-')):year23Lessons[year]?.[subject];
   if (!rows || !Number.isInteger(index) || !rows[index]) return null;
   const row=rows[index];
   let title, model, question, answers, correct, explanation, lead, image;
@@ -33,6 +33,25 @@ function earlyTopicPage(year, subject, index) {
   }
   if(year==='1' && subject==='reading'){more='english-year1-reading.html';action='Open the reading library';}
   if(year==='1' && subject==='vocabulary'){more='vocabulary-year1-stories.html';action='Explore vocabulary stories';}
+  if (year==='2' || year==='3') {
+    if (subject==='english') {
+      const skill=/spell/i.test(id)?'spelling':/writ|edit|paragraph/i.test(id)?'writing':'grammar';
+      more='english-practice.html?grade='+year+'&skill='+skill;
+      action='More English practice';
+    }
+    if (subject==='reading') {
+      more=year==='2'?'english-year2-reading.html':'english-practice.html?grade=3&skill=reading';
+      action='More reading practice';
+    }
+    if (subject==='vocabulary') {
+      more='vocabulary-year'+year+'.html';
+      action='More vocabulary practice';
+    }
+    if (subject==='general-knowledge' && id==='country-capitals') {
+      more='country-capitals.html';
+      action='Practise country capitals';
+    }
+  }
   const nextIndex=(index+1)%rows.length;
   const nextTitle=year==='K'?rows[nextIndex][0]:rows[nextIndex].title;
   function route(i) {

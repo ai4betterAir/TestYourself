@@ -11,15 +11,16 @@
 <body><div id="lesson"><a href="learning.html">Choose your year</a></div>
 <script src="design/year1.js"></script>
 <script src="js/early-lessons.js"></script>
-<script src="js/early-topic.js"></script>
+<script src="js/year23-lessons.js"></script>
+<script src="js/early-topic.js?v=year23"></script>
 <script>
 const params = new URLSearchParams(location.search);
 const year = params.get('year');
 const subject = params.get('subject');
-const lesson = ['K','1'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
+const lesson = ['K','1','2','3'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
   ? earlyTopicPage(year,subject,Number(params.get('lesson'))) : null;
 if (lesson) {
-  document.title = lesson.title + ' · ' + (year === 'K' ? 'Kindergarten' : 'Year 1') + ' | Acorn & Shine';
+  document.title = lesson.title + ' · ' + (year === 'K' ? 'Kindergarten' : 'Year '+year) + ' | Acorn & Shine';
   document.getElementById('lesson').innerHTML = lesson.html;
   const form = document.querySelector('form');
   const status = form.querySelector('output');
