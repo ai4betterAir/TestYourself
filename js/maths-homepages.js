@@ -18,21 +18,48 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
     '5': 'Write with purpose, structure and confidence.',
     '6': 'Refine your language and make every word count.'
   };
-  const isEnglish = subject === 'english';
-  const subjectLabel = isEnglish ? 'English' : 'Maths';
-  const copy = isEnglish ? englishCopy : mathsCopy;
-  const assetFolder = isEnglish ? 'english-homepages' : 'maths-homepages';
+  const scienceCopy = {
+    K: 'Look closely, ask questions and explore your world.',
+    '1': 'Discover living things, weather and everyday science.',
+    '2': 'Explore how things grow, change and move.',
+    '3': 'Investigate patterns and discover how things work.',
+    '4': 'Test ideas, gather evidence and explain what you find.',
+    '5': 'Connect scientific ideas with the world around you.',
+    '6': 'Evaluate evidence and explain a changing world.'
+  };
   const grade = year === 'K' ? '1' : year;
-  const practiceHref = isEnglish
-    ? `english-practice.html?grade=${grade}&skill=grammar`
-    : `practice.html?year=${year}&mode=practice`;
-  const testHref = isEnglish
-    ? `english-practice.html?grade=${grade}&skill=grammar#english-test-start`
-    : `practice.html?year=${year}&mode=test&count=20`;
+  const presentations = {
+    maths: {
+      label: 'Maths', copy: mathsCopy,
+      topicHeading: 'Choose a Maths topic', callout: 'Ready to practise?',
+      practiceHref: `practice.html?year=${year}&mode=practice`,
+      practiceLabel: 'Practice · 10 questions',
+      testHref: `practice.html?year=${year}&mode=test&count=20`,
+      testLabel: 'Test · 20 questions'
+    },
+    english: {
+      label: 'English', copy: englishCopy,
+      topicHeading: 'Choose an English topic', callout: 'Ready to practise?',
+      practiceHref: `english-practice.html?grade=${grade}&skill=grammar`,
+      practiceLabel: 'Start practice',
+      testHref: `english-practice.html?grade=${grade}&skill=grammar#english-test-start`,
+      testLabel: 'Try a test'
+    },
+    science: {
+      label: 'Science', copy: scienceCopy,
+      topicHeading: 'Choose a Science topic', callout: 'Ready to explore?',
+      practiceHref: `science-practice.html?year=${year}`,
+      practiceLabel: 'Start an activity'
+    }
+  };
+  const presentation = presentations[subject];
+  const subjectLabel = presentation.label;
+  const copy = presentation.copy;
+  const assetFolder = subject + '-homepages';
   const escape = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
-  stylesheet.href = 'css/maths-homepages.css?v=20261115-english';
+  stylesheet.href = 'css/maths-homepages.css?v=20261115-science';
   document.head.append(stylesheet);
   document.body.classList.add('maths-homepage');
   document.body.dataset.mathsYear = year;
@@ -68,13 +95,13 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
       <img class="maths-hero-image" src="assets/${assetFolder}/${year}-hero.webp" alt="" width="856" height="367">
     </section>
     <section class="maths-library" id="topics">
-      <h2>Choose ${isEnglish ? 'an English' : 'a Maths'} topic</h2>
+      <h2>${presentation.topicHeading}</h2>
       <div class="maths-topics">${cards}</div>
       <aside class="maths-practice">
-        <h2>Ready to practise?</h2>
+        <h2>${presentation.callout}</h2>
         <div class="maths-actions">
-          <a class="maths-button" href="${escape(practiceHref)}">${isEnglish ? 'Start practice' : 'Practice · 10 questions'}</a>
-          <a class="maths-button" href="${escape(testHref)}">${isEnglish ? 'Try a test' : 'Test · 20 questions'}</a>
+          <a class="maths-button" href="${escape(presentation.practiceHref)}">${presentation.practiceLabel}</a>
+          ${presentation.testHref ? `<a class="maths-button" href="${escape(presentation.testHref)}">${presentation.testLabel}</a>` : ''}
         </div>
       </aside>
     </section>`;

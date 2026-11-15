@@ -115,3 +115,25 @@ body.maths-homepage[data-subject="english"] .maths-topic h3 { margin: 9px 40px 1
   body.maths-homepage[data-subject="english"] .maths-topics { grid-template-columns: 1fr; }
   body.maths-homepage[data-subject="english"] .maths-topic h3 { font-size: 28px; }
 }
+/* Science follows its approved six-topic exploration layout. */
+body.maths-homepage[data-subject="science"] {
+  --maths-accent: #005934;
+  --maths-tone: #d9eef7;
+  --maths-mark: #ffbd00;
+}
+body.maths-homepage[data-subject="science"][data-maths-year="K"] { --maths-tone: #d9ece5; }
+body.maths-homepage[data-subject="science"][data-maths-year="4"] { --maths-tone: #e8e1f1; }
+body.maths-homepage[data-subject="science"][data-maths-year="5"] { --maths-tone: #e1e8da; }
+body.maths-homepage[data-subject="science"] .maths-topics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body.maths-homepage[data-subject="science"] .maths-topic { display: flex; flex-direction: column; align-items: stretch; background: #edf3f2; }
+body.maths-homepage[data-subject="science"] .maths-topic:nth-child(2n) { background: #e6f0f4; }
+body.maths-homepage[data-subject="science"] .maths-topic img { aspect-ratio: 3.93; width: 100%; }
+body.maths-homepage[data-subject="science"] .maths-topic h3 { margin: 9px 40px 18px 22px; font-size: clamp(22px, 2.25vw, 37px); }
+@media (max-width: 950px) {
+  body.maths-homepage[data-subject="science"] .maths-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.maths-homepage[data-subject="science"] .maths-topic h3 { font-size: 25px; }
+}
+@media (max-width: 650px) {
+  body.maths-homepage[data-subject="science"] .maths-topics { grid-template-columns: 1fr; }
+  body.maths-homepage[data-subject="science"] .maths-topic h3 { font-size: 28px; }
+}

@@ -85,6 +85,11 @@ const scienceCommon={
  '5':[['Living world','Investigate adaptations and interdependence.'],['Material world','Explore states, mixtures and material change.'],['Physical world','Investigate light, electricity, forces and energy.'],['Earth & space','Explore the solar system and Earth processes.'],['Sustainability','Connect science with environmental decisions.'],['Scientific inquiry','Design investigations and interpret results.']],
  '6':[['Living systems','Explore complex relationships in ecosystems.'],['Materials','Investigate reversible and irreversible change.'],['Energy & forces','Analyse electricity, energy and motion.'],['Earth & space','Study Earth systems and space science.'],['Science & society','Connect science with technology and decisions.'],['Scientific inquiry','Evaluate evidence and communicate conclusions.']]
 };
+if (subject === 'science') {
+  renderSubjectHomepage({year, topics: scienceCommon[year], hrefFor, subject});
+  return;
+}
+
 const gkCommon={
  K:[['My community','Learn about familiar people and places.'],['Australia','Recognise simple Australian symbols and places.'],['Animals','Discover common animals.'],['Nature','Explore land, water and plants.'],['Celebrations','Learn about familiar cultural events.'],['Everyday facts','Build useful knowledge about daily life.']],
  '1':[['Australia','Learn about Australia, states and symbols.'],['World & places','Discover countries, landmarks and maps.'],['Animals','Meet animals from Australia and the world.'],['Nature','Explore oceans, forests and environments.'],['Community','Learn about helpers, places and everyday life.'],['Fun facts','Discover interesting facts about our world.']],
