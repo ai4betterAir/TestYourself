@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="css/home.css?v=20260925-redesign">
 <link rel="stylesheet" href="css/home-photo-2026.css?v=20261114i">
 <link rel="stylesheet" href="css/year-cards.css?v=20261114a">
+<link rel="stylesheet" href="css/homepage-refresh.css">
 </head>
 <body class="home-refresh">
 <header class="site-header">
@@ -36,132 +37,33 @@
 </header>
 
 <main>
-<!-- ============ PHOTOGRAPHIC HERO ============ -->
-<section class="hero hero-photo-home" aria-labelledby="heroHeadline">
-  <div class="hero-photo-illustration" aria-hidden="true">
-    <img src="assets/home-hero-acorn-shine-reference.svg?v=20261114f"
-      alt="" loading="eager" decoding="async" fetchpriority="high">
-  </div>
-  <div class="hero-photo-shade" aria-hidden="true"></div>
-  <div class="shell hero-photo-content">
-    <div class="hero-copy">
-      <span class="hero-overline">Acorn &amp; Shine · Kindergarten to Year 6</span>
-      <h1 id="heroHeadline">Build Skills <span class="hero-h1-sub">for a <em class="bright">Brighter</em> <em class="tomorrow">Tomorrow</em></span></h1>
-      <p class="lead">From Kindergarten to Year 6, discover engaging learning, practice and challenges for every step — including NAPLAN, OC and Selective preparation.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#grades">Get Started <span aria-hidden="true">→</span></a>
-        <a class="button hero-secondary" href="#pathways">Explore Tests <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="hero-highlights" aria-label="Acorn &amp; Shine learning highlights">
-        <span>✓ Australian curriculum focused</span>
-        <span>✓ Practice and timed tests</span>
-      </div>
-    </div>
+<section class="welcome" aria-labelledby="heroHeadline">
+  <img class="welcome-art" src="assets/homepage/hero.webp" alt="" fetchpriority="high">
+  <div class="welcome-copy">
+    <span>Kindergarten to Year 6</span>
+    <h1 id="heroHeadline">Build Skills for a<br>Brighter Tomorrow</h1>
+    <p>Choose your year to practise Maths, English, Science and more.</p>
+    <div class="welcome-links"><a href="#grades">Choose your year</a><a href="#pathways">Explore tests</a></div>
   </div>
 </section>
-
-<!-- ============ GRADE SELECTION ============ -->
-<section class="section grade-section reveal" id="grades" aria-label="Choose your year level">
-  <div class="shell">
-    <div class="section-head">
-      <span class="eyebrow">Start learning today</span>
-      <h2>Choose your <span class="text-accent">year</span></h2>
-      <p>Every year level from Kindergarten to Year 6 — pick yours and jump straight into the right challenge.</p>
-    </div>
-    <div class="grade-grid year-image-grid">
-      <a class="grade-card year-image-card g-k" href="learning.html?year=K">
-        <span class="year-image-art"><img src="assets/year-levels/kindergarten.webp" alt="" aria-hidden="true"></span>
-        <small>START HERE</small>
-        <b>Kindergarten</b>
-        <span class="year-card-subtitle">Explore & play</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-1" href="learning.html?year=1">
-        <span class="year-image-art"><img src="assets/year-levels/year-1.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 1</small>
-        <b>Year 1</b>
-        <span class="year-card-subtitle">Strong foundations</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-2" href="learning.html?year=2">
-        <span class="year-image-art"><img src="assets/year-levels/year-2.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 2</small>
-        <b>Year 2</b>
-        <span class="year-card-subtitle">Grow core skills</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-3" href="learning.html?year=3">
-        <span class="year-image-art"><img src="assets/year-levels/year-3.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 3</small>
-        <b>Year 3</b>
-        <span class="year-card-subtitle">Bigger ideas</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-4" href="learning.html?year=4">
-        <span class="year-image-art"><img src="assets/year-levels/year-4.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 4</small>
-        <b>Year 4</b>
-        <span class="year-card-subtitle">Think independently</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-5" href="learning.html?year=5">
-        <span class="year-image-art"><img src="assets/year-levels/year-5.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 5</small>
-        <b>Year 5</b>
-        <span class="year-card-subtitle">Aim higher</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-      <a class="grade-card year-image-card g-6" href="learning.html?year=6">
-        <span class="year-image-art"><img src="assets/year-levels/year-6.webp" alt="" aria-hidden="true"></span>
-        <small>LEVEL 6</small>
-        <b>Year 6</b>
-        <span class="year-card-subtitle">Ready for what’s next</span>
-        <span class="grade-go">Explore <span aria-hidden="true">→</span></span>
-      </a>
-    </div>
+<section class="home-years" id="grades" aria-labelledby="years-title">
+  <h2 id="years-title">Choose your year</h2>
+  <div class="home-years-grid">
+      <a href="learning.html?year=K"><img src="assets/homepage/year-K.webp" alt=""><strong>Kindergarten</strong></a>
+      <a href="learning.html?year=1"><img src="assets/homepage/year-1.webp" alt=""><strong>Year 1</strong></a>
+      <a href="learning.html?year=2"><img src="assets/homepage/year-2.webp" alt=""><strong>Year 2</strong></a>
+      <a href="learning.html?year=3"><img src="assets/homepage/year-3.webp" alt=""><strong>Year 3</strong></a>
+      <a href="learning.html?year=4"><img src="assets/homepage/year-4.webp" alt=""><strong>Year 4</strong></a>
+      <a href="learning.html?year=5"><img src="assets/homepage/year-5.webp" alt=""><strong>Year 5</strong></a>
+      <a href="learning.html?year=6"><img src="assets/homepage/year-6.webp" alt=""><strong>Year 6</strong></a>
   </div>
 </section>
-
-<!-- ============ TEST PREPARATION PATHWAYS ============ -->
-<section class="section reveal" id="pathways">
-  <div class="shell">
-    <div class="section-head" id="assessments">
-      <span class="eyebrow">Test preparation</span>
-      <h2>Choose your <span class="accent-violet">pathway to success</span></h2>
-      <p>Focused preparation for NAPLAN, Opportunity Class and Selective School tests.</p>
-    </div>
-    <div class="pathways pathway-feature-list">
-      <a class="path-card p-naplan" href="naplan.html">
-        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#naplan"/></svg></div>
-        <div class="p-body">
-          <span class="p-flag">NAPLAN pathway</span>
-          <h3>NAPLAN Practice</h3>
-          <p>Build confidence in reading, writing, language conventions and numeracy with focused practice and skill drills.</p>
-          <span class="p-link">Practice NAPLAN <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
-        </div>
-        <span class="button button-warm">Explore NAPLAN</span>
-      </a>
-      <a class="path-card p-oc" href="oc.html">
-        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#oc"/></svg></div>
-        <div class="p-body">
-          <span class="p-flag">Opportunity Class pathway</span>
-          <h3>Opportunity Class (OC)</h3>
-          <p>Strengthen thinking skills, mathematical reasoning and reading through targeted questions and timed practice.</p>
-          <span class="p-link">Prepare for OC <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
-        </div>
-        <span class="button button-warm">Explore OC</span>
-      </a>
-      <a class="path-card p-selective" href="selective.html">
-        <div class="p-icon"><svg><use href="assets/skillup-icons.svg#selective"/></svg></div>
-        <div class="p-body">
-          <span class="p-flag">★ Flagship pathway</span>
-          <h3>Selective School Test</h3>
-          <p>Our most complete pathway — Mathematical Reasoning, Thinking Skills, Reading and full-length practice designed for the Selective High School placement test.</p>
-          <span class="p-link">Start Selective prep <svg><use href="assets/skillup-icons.svg#target"/></svg></span>
-        </div>
-        <span class="button button-warm">Explore Selective</span>
-      </a>
-    </div>
+<section class="home-exams" id="pathways" aria-labelledby="assessments">
+  <h2 id="assessments">Prepare for a test</h2>
+  <div class="home-exams-grid">
+    <a class="exam-naplan" href="naplan.html"><span><strong>NAPLAN</strong>Years 3 and 5</span><img src="assets/homepage/naplan.webp" alt=""></a>
+    <a class="exam-oc" href="oc.html"><span><strong>Opportunity Class</strong>Year 4</span><img src="assets/homepage/oc.webp" alt=""></a>
+    <a class="exam-selective" href="selective.html"><span><strong>Selective</strong>Years 5 and 6</span><img src="assets/homepage/selective.webp" alt=""></a>
   </div>
 </section>
 
