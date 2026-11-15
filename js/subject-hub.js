@@ -116,7 +116,7 @@ if(dashboardKicker) dashboardKicker.textContent=label.toUpperCase()+' · '+meta.
 
 function hrefFor(title,index){
  const slug=title.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
- if(['K','1','2','3'].includes(year)){
+ if(['K','1','2','3','4','5'].includes(year)){
    if(subject==='english' && title==='Reading')return 'subject.html?year='+year+'&subject=reading';
    if(subject==='maths' && year==='K' && index<5)return 'practice.html?year=K&topic='+slug;
    const lesson=(subject==='english'?index-1:index);
