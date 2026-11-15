@@ -40,7 +40,7 @@ const maths={
  '6':[['Number & place value','Work flexibly with large numbers and decimals.'],['Fractions, decimals & percentages','Convert, compare and calculate.'],['Operations','Solve complex multi-step calculations.'],['Patterns & algebra','Describe patterns and unknown values.'],['Measurement','Area, volume, scale and unit conversions.'],['Geometry','Angles, coordinates and transformations.'],['Data & chance','Analyse data and probability.'],['Problem solving','Reason through unfamiliar real-world problems.']]
 };
 if (subject === 'maths') {
-  renderMathsHomepage({year, topics: maths[year], hrefFor});
+  renderSubjectHomepage({year, topics: maths[year], hrefFor, subject});
   return;
 }
 
@@ -53,6 +53,11 @@ const english={
  '5':[['Grammar & cohesion','Connect ideas clearly across sentences.'],['Punctuation','Use punctuation for meaning and clarity.'],['Spelling','Use roots, prefixes and suffixes.'],['Paragraph structure','Organise ideas logically.'],['Writing','Develop persuasive, informative and imaginative texts.'],['Editing','Refine vocabulary, grammar and structure.']],
  '6':[['Sentence control','Use varied and sophisticated sentence structures.'],['Grammar','Apply accurate tense, agreement and cohesion.'],['Spelling & morphology','Use roots and word families strategically.'],['Punctuation','Control punctuation for meaning and effect.'],['Writing','Plan and craft extended texts for audience and purpose.'],['Editing','Revise for precision, flow and impact.']]
 };
+if (subject === 'english') {
+  renderSubjectHomepage({year, topics: english[year], hrefFor, subject});
+  return;
+}
+
 const reading={
  K:[['Sounds & words','Blend sounds and recognise simple words.'],['Picture clues','Use pictures to support meaning.'],['Story order','Put simple events in order.'],['Characters','Talk about who is in a story.'],['Key details','Find simple information in a text.'],['Read aloud','Build confidence and fluency.']],
  '1':[['Reading library','Explore short Year 1 passages.'],['Main idea','Find what a short text is mostly about.'],['Characters','Understand who is in the story.'],['Sequence','Put story events in the right order.'],['Find information','Answer questions using the text.'],['New words','Work out simple words from context.']],

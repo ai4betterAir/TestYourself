@@ -91,3 +91,27 @@ body.maths-homepage {
   .maths-practice h2 { font-size: 31px; }
 }
 @media (prefers-reduced-motion: reduce) { .maths-topic { transition: none; } }
+/* English uses the same subject layout with six photographic topic cards. */
+body.maths-homepage[data-subject="english"] {
+  --maths-accent: #005934;
+  --maths-tone: #dcebf2;
+  --maths-mark: #ffbd00;
+}
+body.maths-homepage[data-subject="english"][data-maths-year="K"] { --maths-tone: #ffe1d2; }
+body.maths-homepage[data-subject="english"][data-maths-year="1"] { --maths-tone: #d9eff8; }
+body.maths-homepage[data-subject="english"][data-maths-year="2"] { --maths-tone: #dceee3; }
+body.maths-homepage[data-subject="english"][data-maths-year="3"] { --maths-tone: #ece1f2; }
+body.maths-homepage[data-subject="english"][data-maths-year="4"] { --maths-tone: #d6ebeb; }
+body.maths-homepage[data-subject="english"] .maths-topics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body.maths-homepage[data-subject="english"] .maths-topic { display: flex; flex-direction: column; align-items: stretch; background: #e3eef1; }
+body.maths-homepage[data-subject="english"] .maths-topic:nth-child(2n) { background: #fae9d7; }
+body.maths-homepage[data-subject="english"] .maths-topic img { aspect-ratio: 3.93; width: 100%; }
+body.maths-homepage[data-subject="english"] .maths-topic h3 { margin: 9px 40px 18px 22px; font-size: clamp(22px, 2.25vw, 37px); }
+@media (max-width: 950px) {
+  body.maths-homepage[data-subject="english"] .maths-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.maths-homepage[data-subject="english"] .maths-topic h3 { font-size: 25px; }
+}
+@media (max-width: 650px) {
+  body.maths-homepage[data-subject="english"] .maths-topics { grid-template-columns: 1fr; }
+  body.maths-homepage[data-subject="english"] .maths-topic h3 { font-size: 28px; }
+}

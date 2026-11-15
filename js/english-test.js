@@ -11,9 +11,14 @@
 
   const startButton = document.createElement('button');
   startButton.type = 'button';
+  startButton.id = 'english-test-start';
   startButton.className = 'english-test-launch';
   startButton.textContent = 'Take Year English Test · 20 questions';
   workspaceHead.appendChild(startButton);
+  if (location.hash === '#english-test-start') {
+    startButton.scrollIntoView({block: 'center'});
+    startButton.focus({preventScroll: true});
+  }
 
   const panel = document.createElement('section');
   panel.className = 'english-test-panel';
