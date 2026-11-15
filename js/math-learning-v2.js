@@ -105,7 +105,7 @@ function resolveRequestedTopic(requested){
  if(aliases[requested])return (list.find(x=>x[0]==='mixed')||list[list.length-1])?.[0]||null;
  return null;
 }
-$('gradeSelect').addEventListener('change',()=>setTimeout(()=>{const requested=new URLSearchParams(location.search).get('topic');const resolved=resolveRequestedTopic(requested);if(resolved)topic=resolved;buildTopics();guide();updateMark();switchMode('learn')},0));
+$('gradeSelect').addEventListener('change',()=>setTimeout(()=>{const requested=new URLSearchParams(location.search).get('topic');const resolved=resolveRequestedTopic(requested);if(resolved)topic=resolved;buildTopics();buildSet();guide();updateMark();switchMode('learn')},0));
 const requestedTopic=new URLSearchParams(location.search).get('topic');
 const resolvedTopic=resolveRequestedTopic(requestedTopic);
 if(resolvedTopic)topic=resolvedTopic;
