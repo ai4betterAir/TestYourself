@@ -22,7 +22,7 @@ function renderDemo(role) {
   document.body.dataset.dashboardRole = role;
   const now = Date.now(), iso = offset => new Date(now + offset * 864e5).toISOString();
   let localSession = null;
-  try { localSession = JSON.parse(localStorage.getItem('skillupLocalSession') || 'null'); } catch {}
+  try { if (!demoRole) localSession = JSON.parse(localStorage.getItem('skillupLocalSession') || 'null'); } catch {}
   const previewRole = localSession?.role || role;
   user = {id: previewRole === 'student' ? 'demo-student' : 'demo-user'};
   const localAccounts = readLocal(LOCAL_ACCOUNTS);
@@ -63,6 +63,7 @@ function renderDemo(role) {
     const links = readLocal(LOCAL_LINKS);
     const approved = links.filter(link => link.parentEmail === profile.email && link.status === 'approved');
     children = approved.map(link => { const child = localAccounts.find(item => item.email === link.studentEmail); return child ? {id:child.email,full_name:child.fullName,year_level:child.yearLevel || '4',skillup_id:child.skillupId} : null; }).filter(Boolean);
+    if (!localSession) children = [{id:'demo-student',full_name:'Alex',year_level:'4'}];
   } else children = [];
   $('userName').textContent = profile.full_name;
   $('userRole').textContent = previewRole === 'student' ? `Student preview · ${profile.skillup_id || 'ID pending'}` : previewRole === 'parent' ? 'Parent / guardian preview' : `${previewRole} preview`;
@@ -73,6 +74,12 @@ function renderDemo(role) {
   configureRole();
   render();
   ['mainAction','workAction','addStudentAction'].forEach(id => { $(id).hidden = true; $(id).style.display = 'none'; });
+  if (previewRole === 'teacher') {
+    $('mainAction').hidden = false;
+    $('mainAction').style.display = '';
+    $('mainAction').disabled = true;
+    $('mainAction').title = 'Create assignments from an active teacher account.';
+  }
   $('peopleAction').hidden = false;
   $('peopleAction').style.display = '';
   if (previewRole === 'teacher') { $('peopleAction').hidden = true; $('peopleAction').style.display = 'none'; }
@@ -102,6 +109,10 @@ async function init() {
   user = await requireUser();
   if (!user) return;
   profile = await getProfile(user.id);
+  if (['admin', 'masteradmin'].includes(user.app_metadata?.role)) {
+    location.replace('masteradmin.html');
+    return;
+  }
   document.body.dataset.dashboardRole = profile.role || 'student';
   $('userName').textContent = profile.full_name;
   $('userRole').textContent = profile.role === 'student' ? `Student · ${profile.skillup_id || 'ID pending'}` : profile.role === 'parent' ? 'Parent / guardian' : profile.role;
@@ -153,9 +164,15 @@ async function loadRoleData() {
 
 function configureRole() {
   const teacher = profile.role === 'teacher', student = profile.role === 'student';
+  $('portalRole').textContent = profile.role[0].toUpperCase() + profile.role.slice(1);
+  $('portalSignOut').onclick = () => $('signOut').click();
+  $('pageTitle').textContent = teacher ? 'Teacher dashboard' : student ? 'Student dashboard' : 'Parent dashboard';
+  $('welcomeText').textContent = teacher
+    ? 'See where your class is progressing and who needs support.'
+    : student ? 'Your next learning step starts here.' : 'Follow your child’s progress and find their next learning step.';
   const overviewNav = document.querySelector('[data-section="overview"]');
-  if (overviewNav) overviewNav.textContent = student ? 'Leaderboard' : 'Overview';
-  if (student) { $('pageTitle').textContent = 'Leaderboard'; $('welcomeText').textContent = 'Your achievement, progress and position among learners.'; }
+  if (overviewNav) overviewNav.textContent = student ? 'Dashboard' : 'Overview';
+
   $('workNav').textContent = teacher ? 'Assignments' : 'My work';
   $('peopleNav').textContent = teacher ? 'Classes & students' : student ? 'My classes' : 'My children';
   $('mainAction').hidden = !teacher || profile.status !== 'active';
@@ -200,7 +217,8 @@ function renderTeacher() {
   metrics([{label:'Active classes',value:classes.length,note:'Across Acorn & Shine'},{label:'Students',value:studentIds.size,note:'Unique learners'},{label:'Due this week',value:dueSoon,note:'Published work'},{label:'Submissions',value:submitted,note:'Ready to review'}]);
   $('primaryPanelTitle').textContent = 'Assignment activity';
   $('primaryPanel').innerHTML = assignmentTable(assignments.slice(0,6), true);
-  $('progressPanel').innerHTML = scoreSummary(submissions);
+  $('progressPanel').innerHTML = subjectProgress(submissions);
+  $('progressPanel').closest('.panel').querySelector('h2').textContent = 'Class progress by subject';
   $('quickActions').innerHTML = `<button class="quick-action" data-open="assignmentModal"><strong>Create an assignment</strong><span>Choose content, students and a due date</span></button><button class="quick-action" data-open="addStudentModal"><strong>Add student by Acorn & Shine ID</strong><span>Enter a student’s permanent ID and choose a class</span></button><button class="quick-action" data-open="classModal"><strong>Create a class</strong><span>Generate a private student join code</span></button>`;
   $('insightPanel').innerHTML = submitted ? `<strong>${submitted} submitted attempt${submitted === 1 ? '' : 's'}</strong>Open Assignments to see who has finished and who may need a reminder.` : '<strong>No submissions yet</strong>Publish an assignment to start building class insights.';
 }
@@ -237,7 +255,8 @@ function renderParent() {
   metrics([{label:'Linked children',value:children.length,note:'Family connections'},{label:'Upcoming',value:assignments.filter(item => new Date(item.due_at)>new Date()).length,note:'Assigned work'},{label:'Overdue',value:overdue,note:'May need attention'},{label:'Average',value:scored.length?`${avg}%`:'—',note:'Scored work'}]);
   $('primaryPanelTitle').textContent = 'Family learning overview';
   $('primaryPanel').innerHTML = children.length ? taskCards(assignments.slice(0,6), new Map(childSubs.map(x=>[x.assignment_id,x])), true) : empty('No child linked yet','Use a private family code from your child’s dashboard.');
-  $('progressPanel').innerHTML = scoreSummary(childSubs);
+  $('progressPanel').innerHTML = subjectProgress(childSubs);
+  $('progressPanel').closest('.panel').querySelector('h2').textContent = 'Learning progress';
   $('quickActions').innerHTML = `<button class="quick-action" data-open="familyModal"><strong>Link a child by Acorn & Shine ID</strong><span>Enter the permanent ID shown in your child’s dashboard</span></button><a class="quick-action" href="parents.html"><strong>Parent guide</strong><span>Help with learning without adding pressure</span></a>`;
   $('insightPanel').innerHTML = children.length ? `<strong>${children.length === 1 ? esc(children[0].full_name) : 'Family summary'}</strong>Focus first on overdue work, then celebrate consistent completion and effort.` : '<strong>Connect securely</strong>A family code links only the child who generated it and expires automatically.';
 }
@@ -250,6 +269,23 @@ function assignmentTable(list, teacher = false) {
 function taskCards(list, byAssignment, parentView = false) {
   if (!list.length) return empty('You are all caught up','There is no current work needing attention.');
   return `<div class="task-list">${list.map(item => { const sub=byAssignment.get(item.id), state=assignmentState(item,sub); const href=parentView?'#':`${item.resource_url}${item.resource_url.includes('?')?'&':'?'}assignment=${item.id}`; return `<article class="task-card"><div><h3>${esc(item.title)}</h3><p>${formatDate(item.due_at,true)} · <span class="status-pill ${state}">${state}</span></p></div>${parentView?'':`<a class="primary-link" href="${esc(href)}">${sub?.submitted_at?'Review':'Start'}</a>`}</article>`}).join('')}</div>`;
+}
+
+function subjectProgress(list) {
+  const groups = new Map();
+  list.filter(item => Number(item.max_score) > 0).forEach(item => {
+    const assignment = assignments.find(row => row.id === item.assignment_id);
+    const subject = assignment?.subject || 'Learning';
+    const group = groups.get(subject) || {score: 0, total: 0};
+    group.score += Number(item.score || 0);
+    group.total += Number(item.max_score);
+    groups.set(subject, group);
+  });
+  if (!groups.size) return empty('No scored work yet', 'Subject results will appear after a completed activity.');
+  return '<p class="panel-subtitle">Average recorded result</p>' + [...groups].map(([subject, result]) => {
+    const percent = Math.max(0, Math.min(100, Math.round(result.score / result.total * 100)));
+    return `<div class="subject-progress-row"><b>${esc(subject)}</b><div class="progress-bar"><span style="width:${percent}%"></span></div><strong>${percent}%</strong></div>`;
+  }).join('');
 }
 
 function scoreSummary(list) {
@@ -356,6 +392,10 @@ async function joinClass(event){event.preventDefault();const out=$('joinMessage'
 
 async function renderFamilyModal(){
   const box=$('familyContent');
+  if (demoRole) {
+    box.innerHTML = '<p>Family links are managed from your signed-in account.</p><a class="primary-button" href="sign-in.html">Sign in</a>';
+    return;
+  }
   if(!supabase){
     const accounts=readLocal(LOCAL_ACCOUNTS), links=readLocal(LOCAL_LINKS);
     if(profile.role==='student'){

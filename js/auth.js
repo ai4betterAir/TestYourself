@@ -64,7 +64,7 @@ const hashPassword = async (password) => {
 };
 const localDashboard = (account) => {
   localSession(account);
-  location.replace('dashboard.html?demo=' + encodeURIComponent(account.role));
+  location.replace('dashboard.html');
 };
 const rememberEmail = (email, remember) => {
   if (remember) localStorage.setItem(REMEMBERED_EMAIL, email);

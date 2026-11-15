@@ -1,62 +1,19 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-  <meta name="description" content="Sign in to your Acorn &amp; Shine student, teacher or parent account.">
-  <title>Sign in | Acorn &amp; Shine</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Nunito:wght@500;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/account.css?v=20260925-signin1"><link rel="icon" href="assets/acorn-and-shine-icon.png"><link rel="apple-touch-icon" href="assets/acorn-and-shine-icon.png"><link rel="manifest" href="site.webmanifest"><meta property="og:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo-transparent.png"><meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/site-viewport.css?v=1">
-</head>
-<body class="account-body signin-page">
-  <div class="signin-bg-art" aria-hidden="true"><span class="signin-ribbon ribbon-a"></span><span class="signin-ribbon ribbon-b"></span><span class="signin-ribbon ribbon-c"></span><i class="signin-star s1">✦</i><i class="signin-star s2">✦</i><i class="signin-star s3">•</i></div>
-  <header class="account-topbar signin-topbar"><a class="account-logo" href="index.html"><img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine"></a><div class="signin-top-spacer"></div><a class="signin-create" href="sign-up.html">Create account</a></header>
-  <main class="auth-shell">
-    <section class="auth-copy signin-copy">
-      <span class="eyebrow">WELCOME BACK</span>
-      <h1>Pick up where<br><span id="signinDynamic">you left off.</span></h1>
-      <p>Continue learning, see what needs attention and keep your progress connected across school and home.</p>
-      <div class="signin-benefits">
-        <div><i class="benefit-dot blue"></i><span><b>Continue learning</b><small>Your next task is ready when you are.</small></span></div>
-        <div><i class="benefit-dot green"></i><span><b>See your progress</b><small>Keep track of strengths and next steps.</small></span></div>
-        <div><i class="benefit-dot purple"></i><span><b>Stay connected</b><small>Students, teachers and families in one place.</small></span></div>
-      </div>
-      <div class="signin-visual" aria-hidden="true">
-        <div class="signin-board">
-          <div class="signin-board-head"><span>SAMPLE LEARNING SPACE</span><b>Preview</b></div>
-          <div class="signin-board-row"><span class="signin-icon maths"><svg><use href="assets/skillup-icons.svg#maths"/></svg></span><div><small>MATHS</small><b>Fractions review</b><em>12 min</em></div><strong>82%</strong></div>
-          <div class="signin-board-row"><span class="signin-icon english"><svg><use href="assets/skillup-icons.svg#english"/></svg></span><div><small>ENGLISH</small><b>Paragraph writing</b><em>10 min</em></div><i>Next</i></div>
-          <div class="signin-board-progress"><span><b>Weekly goal</b><em>4 of 5</em></span><i><u></u></i></div>
-        </div>
-        <div class="signin-float-card float-progress"><b>+12 XP</b><span>Keep going</span></div>
-        <div class="signin-float-card float-streak"><b>7 day</b><span>streak</span></div>
-      </div>
-    </section>
-    <section class="auth-card signin-card" aria-labelledby="signInTitle"><div class="signin-card-glow"></div><span class="eyebrow">SIGN IN</span><h2 id="signInTitle">Continue to your dashboard</h2><p class="subcopy">Use the email address connected to your Acorn &amp; Shine account.</p><div id="setupNotice" class="setup-notice" hidden></div>
-      <form id="signInForm" class="auth-form">
-        <label>Email address<div class="signin-input-wrap"><span>✉</span><input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></div></label>
-        <label>Password<div class="signin-input-wrap"><span>⌑</span><input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></div></label>
-        <div class="form-meta"><label class="remember-row"><input type="checkbox" id="rememberMe"><span>Remember me</span></label><a class="forgot-link" href="forgot-password.html">Forgot password?</a></div>
-        <button class="primary-button signin-button" type="submit"><span>Sign in</span><i>→</i></button><p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
-      </form>
-      <p class="auth-switch">New to Acorn &amp; Shine? <a href="sign-up.html">Create an account</a></p>
-    </section>
-  </main>
-  <script>
-(function(){
-  const el=document.getElementById('signinDynamic');
-  if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  const words=['you left off.','your momentum.','your progress.','your next step.'];
-  let i=0;
-  setInterval(()=>{
-    el.classList.add('is-changing');
-    setTimeout(()=>{
-      i=(i+1)%words.length;
-      el.textContent=words[i];
-      el.classList.remove('is-changing');
-    },220);
-  },2800);
-})();
-</script><script src="js/site-shell.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20260927-timeout-fix"></script>
-</body></html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Sign in to your Acorn & Shine account."><meta name="robots" content="noindex">
+<title>Sign In | Acorn &amp; Shine</title>
+<link rel="icon" href="assets/acorn-and-shine-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/portal.css?v=1">
+</head><body class="portal-public signin-page"><header class="portal-header"><a class="portal-brand" href="index.html"><img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine"></a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a class="outline" href="sign-up.html">Sign Up</a></nav></header>
+<main class="portal-auth">
+<section class="auth-intro"><h1>Welcome back.</h1><p>Your next learning step starts here.</p><img class="auth-art" src="assets/portal/signin-desk.webp" alt="An open book, a seedling and learning materials"></section>
+<section class="portal-auth-card"><h2>Sign in to Acorn &amp; Shine</h2><div id="setupNotice" class="notice" hidden></div>
+<form id="signInForm" class="portal-form">
+<label>Email<input id="email" type="email" autocomplete="email" placeholder="Enter your email address" required></label>
+<label>Password<span class="password-field"><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button type="button" data-toggle-password="password" aria-label="Show password">Show</button></span></label>
+<div class="form-meta"><label class="check"><input type="checkbox" id="rememberMe">Remember email</label><a href="forgot-password.html">Forgot password?</a></div>
+<button class="primary" type="submit">Sign In</button><p id="formMessage" role="status" aria-live="polite"></p>
+</form><p class="auth-switch">New here? <a href="sign-up.html">Create an account</a></p><a class="developer-link" href="sign-in.html?next=masteradmin.html">Developer access</a><p id="developerNote" class="helper" hidden>Sign in with your developer account to open MasterAdmin.</p>
+</section></main><footer class="portal-footer"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></footer><script src="js/portal-forms.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=20261115-portal"></script></body></html>

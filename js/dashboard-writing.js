@@ -15,6 +15,7 @@ function mountBox() {
 
 async function init() {
   const demo = new URLSearchParams(location.search).get('demo');
+  if (demo === 'student') return;
   // Public dashboard previews must remain accessible even when Supabase is configured.
   // Only real dashboards should call requireUser(), which redirects signed-out users.
   if (demo === 'teacher' || demo === 'parent') {

@@ -51,9 +51,6 @@ function renderMetrics(own) {
   setText('lbMetricRank', own?.rank_position || '—');
   setText('lbMetricPoints', own ? Math.round(Number(own.total_points || 0)).toLocaleString() : '0');
   setText('lbMetricTests', own?.completed_tests || '0');
-  setText('lbMetricBadges', own ? (Number(own.completed_tests || 0) >= 5 ? 2 : 1) : '0');
-  const rankDelta = $('lbMetricRank')?.parentElement?.nextElementSibling;
-  if (rankDelta) { rankDelta.textContent = own ? 'Performance rank in your age level' : 'No completed tests yet'; rankDelta.className = own ? 'delta up' : 'delta'; }
 }
 function renderPodium(top) {
   const node = $('lbPodium'); if (!node) return;
@@ -63,13 +60,14 @@ function renderPodium(top) {
   }).join('') || '<p class="lb-empty">No completed results in this group yet.</p>';
 }
 function renderList(list, own) {
-  const node = $('lbList'); if (!node) return;
+  const node = $('lbList');
+  if (!node) return;
   const visible = list.slice(0, 10);
-  if (own && !visible.some((r) => r.student_id === own.student_id)) visible.push(own);
-  node.innerHTML = visible.map((r) => {
-    const me = r.student_id === currentStudentId;
-    return '<div class="lb-row ' + (me ? 'is-you ' : '') + (Number(r.rank_position) <= 3 ? 'top' : '') + '"><span class="rk">' + (r.rank_position || '—') + '</span><span class="av">' + esc(initials(r.display_name)) + '</span><span class="who"><b>' + esc(me ? 'You' : r.display_name) + '</b><span>' + yearLabel(r.year_level) + ' · ' + badgePill(r.badge_level) + '</span></span><span class="xp">' + Math.round(Number(r.average_percent || 0)) + '<small>%</small></span><span class="delta same">' + (me ? 'Your result' : '') + '</span></div>';
-  }).join('') || '<div class="lb-empty">No completed results yet. Finish a test to appear here.</div>';
+  if (own && !visible.some(row => row.student_id === own.student_id)) visible.push(own);
+  node.innerHTML = visible.map(row => {
+    const me = row.student_id === currentStudentId;
+    return `<tr class="${me ? 'is-you' : ''}"><td>${Number(row.rank_position) || '—'}</td><td>${esc(me ? 'You' : initials(row.display_name))}</td><td>${esc(yearLabel(row.year_level))}</td><td>${Number(row.total_points) || 0}</td><td>${Number(row.completed_tests) || 0}</td></tr>`;
+  }).join('') || '<tr><td colspan="5">No completed test results in this period yet.</td></tr>';
 }
 function renderRewards(own) {
   const node = $('lbRewards'); if (!node) return;
@@ -109,10 +107,11 @@ function bindFilters() {
   }));
 }
 async function load() {
-  if (!isSupabaseConfigured || !supabase) {
-    rows = sampleRows;
+  if (new URLSearchParams(location.search).get('demo') === 'student' || !isSupabaseConfigured || !supabase) {
+    rows = sampleRows.map(row => ({...row, year_level: currentYear}));
     currentStudentId = 'demo-student';
-    currentYear = '5';
+    setText('lbModeBanner', 'Sample rankings · Preview data');
+    $('lbYearSelect').value = currentYear;
     renderAll();
     return;
   }
@@ -122,6 +121,8 @@ async function load() {
   const profile = await getProfile(user.id);
   currentYear = profile.year_level || '5';
   setText('lbUserName', profile.full_name || 'Student');
+  $('lbYearSelect').value = currentYear;
+  $('lbYearSelect').disabled = true;
   setText('lbUserRole', 'Student · ' + yearLabel(currentYear));
   const { data, error } = await supabase.rpc('get_student_leaderboard', { year_level_input: currentYear, period_input: currentPeriod });
   if (error) {
@@ -133,6 +134,8 @@ async function load() {
   }
   renderAll();
 }
+$('lbYearSelect').value = currentYear;
+$('lbYearSelect').addEventListener('change', async event => { currentYear = event.target.value; await load(); });
 bindFilters();
 load().catch((error) => {
   setText('lbModeBanner', error.message || 'Leaderboard could not load right now.');
