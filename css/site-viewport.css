@@ -1,0 +1,44 @@
+/* The homepage uses this gutter at every viewport size. */
+:root { --page-gutter: clamp(14px, 3vw, 60px); }
+
+/* Full-width page sections retain their backgrounds. Align their content. */
+@media (min-width: 960px) {
+  html body :is(.shell, .header-inner, .studio-container, .wrap, .hero-inner,
+    .story-wrap, .y4wrap, .g3wrap, .layout, .info-page, .register-page,
+    .auth-shell, .accounts-hero, .accounts-cta, .quality-section,
+    .practice-hero, .topic-picker, .learning-workspace,
+    .course-hero, .course-wrap, .section-grid, .learn-bar,
+    .library-overview, .vocab-grid, .practice-panel, .vocabulary-year-test,
+    .browser-heading, .chapter-filters, .lesson-grid, .lesson-workspace,
+    .assessment-subject-strip, .streambar, .top-tabs, .modebar,
+    .path-strip, .return-cta, .footer-bottom),
+  html body #year-selector .year-selector-grid,
+  html body:has(.revhero) > main {
+    box-sizing: border-box;
+    width: calc(100% - 2 * var(--page-gutter)) !important;
+    max-width: none !important;
+    margin-inline: auto !important;
+  }
+
+  /* A section inside an aligned wrapper already has the page gutter. */
+  html body :is(.shell, .wrap, .studio-container, .library-overview, .practice-main)
+    :is(.shell, .wrap, .path-strip, .return-cta, .section-grid) {
+    width: 100% !important;
+  }
+
+  html body > header:has(> nav),
+  html body > .simple-header,
+  html body > .account-topbar {
+    padding-inline: var(--page-gutter) !important;
+  }
+
+  html body :is(.nav-shell, .header-inner),
+  html body > header:has(> nav) {
+    min-height: 76px;
+    height: 76px !important;
+  }
+
+  html body.dashboard-page .dashboard-main {
+    padding-inline: var(--page-gutter) !important;
+  }
+}
