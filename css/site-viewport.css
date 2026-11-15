@@ -42,3 +42,13 @@
     padding-inline: var(--page-gutter) !important;
   }
 }
+
+/* Reading is an English pathway, with five subjects in each year hub. */
+@media (min-width: 951px) {
+  body[data-year] .hub-subject-grid:has(> a[data-subject="english"]) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .library-subject-grid:has(> .library-subject.english) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}

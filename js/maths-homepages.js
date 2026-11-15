@@ -73,7 +73,7 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
   const escape = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
-  stylesheet.href = 'css/maths-homepages.css?v=20261115-gk';
+  stylesheet.href = 'css/maths-homepages.css?v=20261115-reading';
   document.head.append(stylesheet);
   document.body.classList.add('maths-homepage');
   document.body.dataset.mathsYear = year;
@@ -90,7 +90,12 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
     </nav>`;
   const cards = topics.map(([title, description], index) => {
     const href = hrefFor(title, index);
-    const artwork = `<img src="assets/${assetFolder}/${year}-${index}.webp" alt="" width="480" height="132">`;
+    const isReading = subject === 'english' && title === 'Reading';
+    const artworkIndex = subject === 'english' ? index - 1 : index;
+    const artworkSrc = isReading
+      ? `assets/exam-homepages/${Number(year) >= 5 ? 'naplan5' : 'naplan3'}-0.webp`
+      : `assets/${assetFolder}/${year}-${artworkIndex}.webp`;
+    const artwork = `<img src="${artworkSrc}" alt="" width="480" height="132">`;
     const heading = `<h3>${escape(title)}</h3><span aria-hidden="true">→</span>`;
     if (href === '#') {
       return `<details class="maths-topic maths-overview">
@@ -98,7 +103,7 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
         <p>${escape(description)}<small>Lessons coming soon</small></p>
       </details>`;
     }
-    return `<a class="maths-topic" href="${escape(href)}" aria-label="${escape(title + '. ' + description)}">
+    return `<a class="maths-topic" ${isReading ? 'id="english-reading"' : ''} href="${escape(href)}" aria-label="${escape(title + '. ' + description)}">
       ${artwork}${heading}
     </a>`;
   }).join('');

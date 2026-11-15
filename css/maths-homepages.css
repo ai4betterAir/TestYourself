@@ -174,3 +174,15 @@ body.maths-homepage[data-subject="general-knowledge"][data-maths-year="2"] .math
   body.maths-homepage[data-subject="general-knowledge"][data-maths-year="2"] .maths-topics { grid-template-columns: 1fr; }
   body.maths-homepage[data-subject="general-knowledge"] .maths-topic h3 { font-size: 28px; }
 }
+/* Reading leads into the six English skill areas. */
+body.maths-homepage[data-subject="english"] #english-reading {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  align-items: center;
+}
+body.maths-homepage[data-subject="english"] #english-reading img { aspect-ratio: 3; }
+body.maths-homepage[data-subject="english"] #english-reading h3 { margin-left: 25px; }
+@media (max-width: 650px) {
+  body.maths-homepage[data-subject="english"] #english-reading { display: block; }
+}

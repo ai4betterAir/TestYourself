@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#2f6bff">
-<meta name="description" content="Choose a school year and explore Acorn &amp; Shine learning pathways across Maths, English, Reading, Vocabulary, Science and General Knowledge.">
+<meta name="description" content="Choose a school year and explore Acorn &amp; Shine learning pathways across Maths, English, Vocabulary, Science and General Knowledge.">
 <title>Learning Hub | Acorn &amp; Shine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
   #year-hub .year-copy::after {position:static;grid-column:2;grid-row:1 / span 6;align-self:center;width:100%;height:clamp(230px,19vw,370px);aspect-ratio:auto}
 }
 </style>
-<link rel="stylesheet" href="css/site-viewport.css?v=1">
+<link rel="stylesheet" href="css/site-viewport.css?v=20261115-subjects">
 </head>
 <body>
 <header class="site-header">
@@ -113,7 +113,6 @@
       <a class="library-subject maths" href="learning.html?year=5"><span class="mini-icon">＋</span><div><b>Maths</b><small>Number, measurement and problem solving</small></div><span class="open-label">Explore</span></a>
       <a class="library-subject english" href="learning.html?year=5"><span class="mini-icon">文</span><div><b>English</b><small>Reading, grammar and writing</small></div><span class="open-label">Explore</span></a>
       <a class="library-subject vocabulary" href="learning.html?year=5"><span class="mini-icon">Aa</span><div><b>Vocabulary</b><small>Meaning, spelling and word choice</small></div><span class="open-label">Explore</span></a>
-      <a class="library-subject reading" href="learning.html?year=5"><span class="mini-icon">◌</span><div><b>Reading</b><small>Fluency, comprehension and texts</small></div><span class="open-label">Explore</span></a>
       <a class="library-subject science" href="learning.html?year=5"><span class="mini-icon">⌁</span><div><b>Science</b><small>Living things, Earth and materials</small></div><span class="open-label">Explore</span></a>
       <a class="library-subject selective" href="selective.html"><span class="mini-icon">★</span><div><b>Selective</b><small>Reasoning, thinking skills and reading</small></div><span class="open-label">Prepare</span></a>
     </div>
@@ -161,8 +160,7 @@
 <section class="shell hub-section" id="subjects"><div class="section-head"><div><span class="eyebrow">Subjects</span><h2>Choose a subject</h2></div><p>Pick one area and continue at your own pace.</p></div>
 <div class="hub-subject-grid">
 <a class="maths" data-subject="maths" href="#"><span class="subject-status">CORE</span><svg><use href="assets/skillup-icons.svg#maths"/></svg><h3>Maths</h3><p>Number, operations, measurement and problem solving.</p></a>
-<a class="english" data-subject="english" href="#"><span class="subject-status">WRITE</span><svg><use href="assets/skillup-icons.svg#english"/></svg><h3>English</h3><p>Writing, grammar, spelling and language skills.</p></a>
-<a class="reading" data-subject="reading" href="#"><span class="subject-status">READ</span><svg><use href="assets/skillup-icons.svg#reading"/></svg><h3>Reading</h3><p>Fluency, comprehension and understanding texts.</p></a>
+<a class="english" data-subject="english" href="#"><span class="subject-status">READ &amp; WRITE</span><svg><use href="assets/skillup-icons.svg#english"/></svg><h3>English</h3><p>Reading, writing, grammar and spelling.</p></a>
 <a class="vocab" data-subject="vocabulary" href="#"><span class="subject-status">WORDS</span><svg><use href="assets/skillup-icons.svg#vocab"/></svg><h3>Vocabulary</h3><p>Word meaning, spelling and confident use.</p></a>
 <a class="science" data-subject="science" href="#"><span class="subject-status">EXPLORE</span><svg><use href="assets/skillup-icons.svg#science"/></svg><h3>Science</h3><p>Living things, Earth, materials and everyday science.</p></a>
 <a class="gk" data-subject="general-knowledge" href="#"><span class="subject-status">WORLD</span><svg><use href="assets/skillup-icons.svg#gk"/></svg><h3>General Knowledge</h3><p>Australia, places, nature and the wider world.</p></a>
@@ -261,10 +259,10 @@
    }
  }
  const yearPlans={
-   K:{hero:'discover & grow.',words:['discover & grow.','play with ideas.','build confidence.','keep exploring.'],maths:'Counting & numbers',english:'Letters & sounds',challenge:'Story skills',challengeSubject:'reading',score:'64',goal:'3 of 5 sessions'},
-   '1':{hero:'learn with confidence.',words:['learn with confidence.','build foundations.','try new ideas.','keep growing.'],maths:'Addition basics',english:'Strong sentences',challenge:'Reading practice',challengeSubject:'reading',score:'68',goal:'3 of 5 sessions'},
-   '2':{hero:'build strong skills.',words:['build strong skills.','practice smarter.','grow confidence.','keep moving.'],maths:'Multiplication ideas',english:'Spelling patterns',challenge:'Reading fluency',challengeSubject:'reading',score:'70',goal:'4 of 5 sessions'},
-   '3':{hero:'think and progress.',words:['think and progress.','solve with confidence.','write with purpose.','keep improving.'],maths:'Fractions',english:'Paragraph writing',challenge:'Reading comprehension',challengeSubject:'reading',score:'71',goal:'4 of 5 sessions'},
+   K:{hero:'discover & grow.',words:['discover & grow.','play with ideas.','build confidence.','keep exploring.'],maths:'Counting & numbers',english:'Letters & sounds',challenge:'Story skills',challengeSubject:'english',score:'64',goal:'3 of 5 sessions'},
+   '1':{hero:'learn with confidence.',words:['learn with confidence.','build foundations.','try new ideas.','keep growing.'],maths:'Addition basics',english:'Strong sentences',challenge:'Reading practice',challengeSubject:'english',score:'68',goal:'3 of 5 sessions'},
+   '2':{hero:'build strong skills.',words:['build strong skills.','practice smarter.','grow confidence.','keep moving.'],maths:'Multiplication ideas',english:'Spelling patterns',challenge:'Reading fluency',challengeSubject:'english',score:'70',goal:'4 of 5 sessions'},
+   '3':{hero:'think and progress.',words:['think and progress.','solve with confidence.','write with purpose.','keep improving.'],maths:'Fractions',english:'Paragraph writing',challenge:'Reading comprehension',challengeSubject:'english',score:'71',goal:'4 of 5 sessions'},
    '4':{hero:'learn independently.',words:['learn independently.','think more deeply.','build accuracy.','keep progressing.'],maths:'Fractions & decimals',english:'Grammar & writing',challenge:'Logic challenge',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions'},
    '5':{hero:'learn smarter.',words:['learn smarter.','build confidence.','think bigger.','keep growing.'],maths:'Fractions & decimals',english:'Persuasive writing',challenge:'Patterns & logic',challengeSubject:'selective',score:'72',goal:'4 of 5 sessions'},
    '6':{hero:'get ready for next.',words:['get ready for next.','extend your thinking.','master key skills.','finish strong.'],maths:'Percentages & algebra',english:'Writing & grammar',challenge:'Selective thinking',challengeSubject:'selective',score:'76',goal:'4 of 5 sessions'}
@@ -273,7 +271,7 @@
  document.title=label+' Learning Hub | Acorn &amp; Shine';
  document.querySelector('.year-copy .eyebrow').textContent='For '+label+' learners';
  document.getElementById('hub-tagline').textContent='One focused space for stronger '+label+' learning.';
- document.getElementById('hub-copy').textContent=(y==='K'?'Build early confidence across Maths, English, Reading, Vocabulary, Science and General Knowledge — with playful, clear next steps.':'Build confidence across Maths, English, Reading, Vocabulary, Science and General Knowledge — with clear next steps and focused practice.');
+ document.getElementById('hub-copy').textContent=(y==='K'?'Build early confidence across Maths, English, Vocabulary, Science and General Knowledge — with playful, clear next steps.':'Build confidence across Maths, English, Vocabulary, Science and General Knowledge — with clear next steps and focused practice.');
  const em=document.querySelector('.year-copy h1 em');
  if(em){em.id='yearDynamicWord';em.textContent=plan.hero;}
  const primary=document.querySelector('.hero-actions .primary');
@@ -281,7 +279,7 @@
  const secondary=document.querySelector('.hero-actions .secondary');
  if(secondary) secondary.textContent='Back to Acorn & Shine';
  const sectionTitle=document.querySelector('#subjects .section-head h2');
- if(sectionTitle) sectionTitle.innerHTML='Six ways to <span class="y5-accent">level up.</span>';
+ if(sectionTitle) sectionTitle.innerHTML='Five ways to <span class="y5-accent">level up.</span>';
  const sectionCopy=document.querySelector('#subjects .section-head>p');
  if(sectionCopy) sectionCopy.textContent='Choose a subject and jump straight into the right '+label+' practice.';
  const hubDesigns = {
@@ -327,7 +325,7 @@
    taskEnglish.querySelector('b').textContent=plan.english;
  }
  if(taskChallenge){
-   taskChallenge.href=plan.challengeSubject==='selective'?'selective.html':'subject.html?year='+encodeURIComponent(y)+'&subject='+plan.challengeSubject;
+   taskChallenge.href=plan.challengeSubject==='selective'?'selective.html':'subject.html?year='+encodeURIComponent(y)+'&subject='+plan.challengeSubject+(plan.challengeSubject==='english'?'#english-reading':'');
    taskChallenge.querySelector('small').textContent=plan.challengeSubject==='selective'?'THINKING SKILLS':'READING';
    taskChallenge.querySelector('b').textContent=plan.challenge;
    const use=taskChallenge.querySelector('use');

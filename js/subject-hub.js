@@ -54,7 +54,8 @@ const english={
  '6':[['Sentence control','Use varied and sophisticated sentence structures.'],['Grammar','Apply accurate tense, agreement and cohesion.'],['Spelling & morphology','Use roots and word families strategically.'],['Punctuation','Control punctuation for meaning and effect.'],['Writing','Plan and craft extended texts for audience and purpose.'],['Editing','Revise for precision, flow and impact.']]
 };
 if (subject === 'english') {
-  renderSubjectHomepage({year, topics: english[year], hrefFor, subject});
+  const englishTopics = [['Reading', 'Explore stories, fluency and comprehension.'], ...english[year]];
+  renderSubjectHomepage({year, topics: englishTopics, hrefFor, subject});
   return;
 }
 
@@ -116,14 +117,14 @@ if(dashboardKicker) dashboardKicker.textContent=label.toUpperCase()+' · '+meta.
 function hrefFor(title,index){
  const slug=title.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
  if(subject==='maths')return 'practice.html?year='+encodeURIComponent(year)+'&topic='+encodeURIComponent(slug);
- if(subject==='english'){
-   const skill=/spell/i.test(title)?'spelling':/writ|edit|paragraph/i.test(title)?'writing':/phon|sentence|grammar|punct/i.test(title)?'grammar':'reading';
-   return 'english-practice.html?grade='+(year==='K'?'1':year)+'&skill='+skill;
- }
- if(subject==='reading'){
+ if(subject==='reading'||(subject==='english'&&title==='Reading')){
    if(year==='1')return 'english-year1-reading.html';
    if(year==='2')return 'english-year2-reading.html';
    return 'english-practice.html?grade='+(year==='K'?'1':year)+'&skill=reading';
+ }
+ if(subject==='english'){
+   const skill=/spell/i.test(title)?'spelling':/writ|edit|paragraph/i.test(title)?'writing':/phon|sentence|grammar|punct/i.test(title)?'grammar':'reading';
+   return 'english-practice.html?grade='+(year==='K'?'1':year)+'&skill='+skill;
  }
  if(subject==='vocabulary'){
    if(year==='1')return 'vocabulary-year1-stories.html';
