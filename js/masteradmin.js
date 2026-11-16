@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, getProfile } from './supabase-client.js?v=20260927-timeout-fix';
+import { supabase, isSupabaseConfigured, getProfile } from './supabase-client.js?v=profile-setup-fix';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
