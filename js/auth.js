@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=20260927-timeout-fix';
+import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=signup-fix';
 
 const setup = document.getElementById('setupNotice');
 // Always use the public GitHub Pages callback, even when the form was opened from a local copy.
@@ -151,21 +151,38 @@ if (signUpForm) {
       }
     }
 
-    setBusy(signUpForm, true); message('');
-    const { data: result, error } = await supabase.auth.signUp({
-      email, password,
-      options: {
-        emailRedirectTo: publicAuthUrl('dashboard.html'),
-        data: { full_name: fullName, requested_role: role, year_level: yearLevel }
+    if (!fullName) return message('Enter your full name.');
+    if (!['student', 'parent', 'teacher'].includes(role)) return message('Choose an account type.');
+    if (signUpForm.dataset.submitting === 'true') return;
+    signUpForm.dataset.submitting = 'true';
+    setBusy(signUpForm, true);
+    message('Creating your account…');
+    try {
+      const { data: result, error } = await supabase.auth.signUp({
+        email, password,
+        options: {
+          emailRedirectTo: publicAuthUrl('dashboard.html'),
+          data: { full_name: fullName, requested_role: role, year_level: yearLevel }
+        }
+      });
+      if (error) return message(friendlyError(error));
+      const user = result?.user;
+      if (user && Array.isArray(user.identities) && user.identities.length === 0) {
+        return message('An account already exists for this email. Please sign in, or use Forgot password to reset your password.');
       }
-    });
-    setBusy(signUpForm, false);
-    if (error) return message(friendlyError(error));
-    if (result.session) return location.replace('dashboard.html');
-    const note = role === 'teacher'
-      ? 'Check your email to verify the account. Teacher access will activate after approval.'
-      : 'Check your email and click the verification link to finish creating your account.';
-    message(note, true); signUpForm.reset(); updateRoleFields();
+      if (!user) return message('The account service returned no account details. Please try again.');
+      if (result.session) return location.replace('dashboard.html');
+      rememberEmail(email, true);
+      const note = role === 'teacher'
+        ? 'Your registration was received. Check your email, including Spam, for the verification link. Teacher access requires approval after verification.'
+        : 'Your registration was received. Check your email, including Spam, and click the verification link to finish signing up. If you registered earlier, you can also sign in.';
+      message(note, true);
+    } catch (error) {
+      message(friendlyError(error));
+    } finally {
+      signUpForm.dataset.submitting = 'false';
+      setBusy(signUpForm, false);
+    }
   });
 }
 

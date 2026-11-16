@@ -54,9 +54,13 @@ export function friendlyError(error) {
   const message = error?.message || 'Something went wrong. Please try again.';
   if (/invalid login credentials/i.test(message)) return 'The email or password is not correct.';
   if (/email not confirmed/i.test(message)) return 'Please verify your email before signing in.';
-  if (/user already registered/i.test(message)) return 'An account already exists for this email. Try signing in.';
+  if (['user_already_exists', 'email_exists'].includes(error?.code) || /user already registered|already been registered/i.test(message)) return 'An account already exists for this email. Try signing in.';
   if (/password/i.test(message) && /characters/i.test(message)) return 'Use a password with at least 10 characters.';
   if (/504|timeout|timed out|gateway/i.test(message)) return 'The email service took too long to respond. Please check the SMTP settings or try again shortly.';
+  if (error?.status === 429 || /rate limit|too many requests/i.test(message)) return 'Too many attempts. Please wait a few minutes before trying again.';
+  if (/error sending confirmation|error sending.*email/i.test(message)) return 'The account service could not send the verification email. Email delivery needs to be checked in Supabase.';
+  if (/database error saving new user/i.test(message)) return 'The account service could not create your profile. The sign-up database trigger needs to be checked in Supabase.';
+  if (/failed to fetch|network|load failed/i.test(message)) return 'Could not reach the account service. Check your connection and try again.';
   return message;
 }
 
