@@ -1,0 +1,35 @@
+import {PGlite} from '@electric-sql/pglite';import fs from 'node:fs';import assert from 'node:assert/strict';
+const root=new URL('../../',import.meta.url).pathname;const db=new PGlite();
+await db.exec(`create schema auth;create role anon;create role authenticated;
+create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}'::jsonb);
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+grant usage on schema auth to authenticated;
+create function public.gen_random_bytes(n integer) returns bytea language sql as $$ select decode(repeat('ab',n),'hex') $$;`);
+await db.exec(fs.readFileSync(root+'supabase/migrations/202609200001_skillup_accounts.sql','utf8').replace('create extension if not exists pgcrypto;',''));
+await db.exec(fs.readFileSync(root+'supabase/migrations/202609250002_student_skillup_id.sql','utf8'));
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160001_family_homework.sql','utf8'));
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160001_family_homework.sql','utf8')); // safe rerun
+const parent='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222',child='33333333-3333-4333-8333-333333333333',stranger='44444444-4444-4444-8444-444444444444';
+for(const [id,role] of [[parent,'parent'],[other,'parent'],[child,'student'],[stranger,'student']])await db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)`,[id,id+'@example.com',JSON.stringify({requested_role:role,year_level:'2'})]);
+await db.query(`insert into public.guardian_links(parent_id,student_id,status) values($1,$2,'approved')`,[parent,child]);
+async function as(id){await db.exec('reset role');await db.query(`select set_config('request.jwt.claim.sub',$1,false)`,[id]);await db.exec('set role authenticated');}
+const questions=Array.from({length:10},()=>({text:'2 + 2 = ?',choices:['4','5'],answer:0,topic:'addition',hint:'Count on.',passage:''}));
+const call=`select public.create_family_homework($1,'2','Maths',array['addition'],'Addition homework','Try carefully',now()+interval '7 days',true,$2::jsonb) as id`;
+await as(other);await assert.rejects(db.query(call,[child,JSON.stringify(questions)]),/approved family/);
+await as(parent);const created=await db.query(call,[child,JSON.stringify(questions)]);const id=created.rows[0].id;
+assert.equal((await db.query('select * from public.family_homework')).rows.length,1);
+await assert.rejects(db.query('select * from public.family_homework_keys'),/permission denied/);
+await as(stranger);assert.equal((await db.query('select * from public.family_homework')).rows.length,0);
+await assert.rejects(db.query('select public.submit_family_homework($1,$2::jsonb)',[id,JSON.stringify(Array(10).fill(0))]),/not found/);
+await as(child);const visible=(await db.query('select * from public.family_homework')).rows[0];assert.equal(visible.questions[0].answer,undefined);
+await assert.rejects(db.query('select * from public.family_homework_keys'),/permission denied/);
+await assert.rejects(db.query('update public.family_homework set score=10 where id=$1',[id]),/permission denied/);
+await assert.rejects(db.query('select public.submit_family_homework($1,$2::jsonb)',[id,JSON.stringify([0])]),/Answer every/);
+const result=(await db.query('select public.submit_family_homework($1,$2::jsonb) as result',[id,JSON.stringify([0,0,0,0,0,1,1,1,1,1])])).rows[0].result;assert.equal(result.score,5);assert.equal(result.total,10);
+const retry=(await db.query('select public.submit_family_homework($1,$2::jsonb) as result',[id,JSON.stringify(Array(10).fill(0))])).rows[0].result;assert.equal(retry.score,5);
+await as(parent);assert.equal((await db.query('select score from public.family_homework where id=$1',[id])).rows[0].score,5);
+await as(other);assert.equal((await db.query('select * from public.family_homework')).rows.length,0);
+await db.exec('reset role');await db.query(`update public.guardian_links set status='revoked' where parent_id=$1 and student_id=$2`,[parent,child]);
+await as(parent);assert.equal((await db.query('select * from public.family_homework')).rows.length,0);
+await assert.rejects(db.query(call,[child,JSON.stringify(questions)]),/approved family/);
+console.log('PASS: migrations + rerun; approved-parent-only creation; student isolation; hidden answer keys; server grading; no result overwrite; guardian revocation.');await db.close();

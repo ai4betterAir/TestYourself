@@ -1,0 +1,8 @@
+{
+  "name": "acorn-family-homework-tests",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"test": "node bank.mjs && node security.mjs && node interface.mjs"},
+  "devDependencies": {"@electric-sql/pglite": "0.5.16", "jsdom": "31.0.1"}
+}
