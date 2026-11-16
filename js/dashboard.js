@@ -123,7 +123,9 @@ async function init() {
   if (profile.role === 'teacher' && profile.status !== 'active') {
     $('statusBanner').className = 'status-banner pending';
     $('statusBanner').hidden = false;
-    $('statusBanner').textContent = 'Your email is verified. Teacher tools will unlock after Acorn & Shine approves the account.';
+    $('statusBanner').textContent = profile.status === 'suspended'
+      ? 'Your teacher account is suspended. Contact the site owner for help.'
+      : 'Teacher activation setup is incomplete. The site owner needs to run the teacher-auto-approval SQL script.';
   }
   await loadRoleData();
   configureRole(); render(); bindEvents();

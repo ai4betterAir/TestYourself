@@ -1,6 +1,6 @@
 # Student and guardian registration
 
-The public form accepts students and parents/guardians (`parent` in the database). Teacher registration remains subject to administrator approval. MasterAdmin roles are never granted by public registration.
+The public form accepts students and parents/guardians (`parent` in the database). After applying `migrations/202611160003_teacher_auto_approval.sql`, teacher registrations are automatically active. This script also activates existing pending teachers while leaving suspended accounts unchanged. MasterAdmin roles are never granted by public registration.
 
 ## Required Supabase settings
 

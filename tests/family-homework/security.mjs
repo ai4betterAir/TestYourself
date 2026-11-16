@@ -61,4 +61,20 @@ await db.exec('reset role');await db.query('delete from public.class_members whe
 await as(child);assert.equal((await db.query('select * from public.family_homework where id=$1',[teacherWork.id])).rows.length,0);
 await assert.rejects(db.query('select public.submit_family_homework($1,$2::jsonb)',[teacherWork.id,JSON.stringify(Array(10).fill(0))]),/no longer enrolled/);
 console.log('PASS: approved teacher/class scope, atomic recipient validation, private scores, student completion, guardian visibility and enrolment revocation.');
+await db.exec('reset role');
+const pendingTeacher='88888888-8888-4888-8888-888888888888',suspendedTeacher='99999999-9999-4999-8999-999999999999';
+for(const id of [pendingTeacher,suspendedTeacher])await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[id,id+'@example.com',JSON.stringify({requested_role:'teacher'})]);
+await db.query("update public.profiles set status='suspended' where id=$1",[suspendedTeacher]);
+assert.equal((await db.query('select status from public.profiles where id=$1',[pendingTeacher])).rows[0].status,'pending');
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160003_teacher_auto_approval.sql','utf8'));
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160003_teacher_auto_approval.sql','utf8'));
+assert.equal((await db.query('select status from public.profiles where id=$1',[pendingTeacher])).rows[0].status,'active');
+assert.equal((await db.query('select status from public.profiles where id=$1',[suspendedTeacher])).rows[0].status,'suspended');
+for(const [id,requested] of [['aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','teacher'],['bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb','student'],['cccccccc-cccc-4ccc-8ccc-cccccccccccc','admin']]){
+  await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[id,id+'@example.com',JSON.stringify({requested_role:requested,year_level:'3'})]);
+  const row=(await db.query('select * from public.profiles where id=$1',[id])).rows[0];
+  assert.equal(row.status,'active');assert.equal(row.role,requested==='teacher'?'teacher':'student');
+  if(row.role==='student'){assert.match(row.skillup_id,/^SU-\d{8}$/);assert.equal(row.year_level,'3');}
+}
+console.log('PASS: pending teachers activated, suspended teachers unchanged, new teachers active, student IDs preserved and public admin registration blocked.');
 await db.close();
