@@ -51,7 +51,7 @@
     for (const [id,panel] of Object.entries(panels)) {
       panel.hidden=id!==key;
       const tab=document.getElementById('tab-'+id);
-      if(tab){tab.setAttribute('aria-selected',String(id===key)); tab.tabIndex=id===key?0:-1;}
+      if(tab){tab.setAttribute('aria-selected',String(id===key)); tab.tabIndex=id===key || (key==='learn' && id==='practice')?0:-1;}
     }
   }
   for (const [key,name] of [['practice','Practice'],['test','Test Yourself']]) {
@@ -68,11 +68,41 @@
     };
   }
   slot.after(tabs);
+  const examples=[
+    {title:'Make the next ten',sum:'29 + 4 = 33',steps:['Split 4 into 1 and 3.','29 + 1 = 30','30 + 3 = 33'],q:'39 + 5 = ?',answer:'44',choices:['43','44','45'],hint:'Add 1 to reach 40, then add the remaining 4.'},
+    {title:'Add the ones',sum:'36 + 3 = 39',steps:['36 is 3 tens and 6 ones.','6 ones + 3 ones = 9 ones.','Keep 3 tens: 30 + 9 = 39.'],q:'42 + 5 = ?',answer:'47',choices:['45','47','57'],hint:'Keep 4 tens. Add 5 to the 2 ones.'},
+    {title:'Subtract through a ten',sum:'43 − 6 = 37',steps:['Split 6 into 3 and 3.','43 − 3 = 40','40 − 3 = 37'],q:'52 − 7 = ?',answer:'45',choices:['45','49','55'],hint:'Subtract 2 to reach 50, then subtract the remaining 5.'},
+    {title:'Find the missing part',sum:'□ + 8 = 25',steps:['Use subtraction to find the missing part.','25 − 8 = 17','Check: 17 + 8 = 25.'],q:'□ + 6 = 24',answer:'18',choices:['16','18','30'],hint:'Subtract 6 from 24. Then check your answer by adding 6.'}
+  ];
+  let exampleIndex=0;
+  function renderLearning() {
+    const ex=examples[exampleIndex];host.replaceChildren();
+    const model=make('article','',host);
+    make('p','Example '+(exampleIndex+1)+' of '+examples.length,model).className='example-count';
+    make('h2',ex.title,model);
+    make('div',ex.sum,model).className='example-equation';
+    const steps=make('ol','',model);ex.steps.forEach(line=>make('li',line,steps));
+    const tryIt=make('section','',host);tryIt.className='learning-try';
+    make('h2','Try it',tryIt);
+    let chosen=null;
+    const feedback=make('p','');feedback.setAttribute('role','status');
+    choices(tryIt,{...ex,text:ex.q},null,v=>{chosen=v;feedback.textContent='';});
+    const check=make('button','Check answer',tryIt);check.className='action';
+    check.onclick=()=>{feedback.textContent=chosen===null?'Choose an answer first.':chosen===ex.answer?'Correct! '+ex.hint:'Try again. '+ex.hint;};
+    tryIt.append(feedback);
+    const controls=make('div','',host);controls.className='learning-controls';
+    const prev=make('button','Previous example',controls);prev.disabled=exampleIndex===0;prev.onclick=()=>{exampleIndex--;renderLearning();};
+    const next=make('button','Next example',controls);next.disabled=exampleIndex===examples.length-1;next.onclick=()=>{exampleIndex++;renderLearning();};
+    const ready=make('button','Ready to practise',controls);ready.onclick=()=>select('practice');
+  }
+  renderLearning();
   const start=document.querySelector('.early-hero .action'); start.textContent='Start learning'; start.onclick=event=>{event.preventDefault();select('learn');};
   const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   function question(kind) {
     let a=rnd(12,79),b=rnd(2,19),text,answer,hint,why;
-    if(kind===0){text=a+' + '+b+' = ?';answer=a+b;hint='Split the second number into tens and ones.';why=a+' + '+(b-b%10)+' + '+b%10+' = '+answer+'.';}
+    if(kind===0){text=a+' + '+b+' = ?';answer=a+b;if(b<10 && a%10+b<10){hint='Keep '+Math.floor(a/10)+' tens. Add '+b+' to the '+a%10+' ones.';why=a+' + '+b+' = '+answer+'. The tens stay the same.';}
+      else if(b<10 && a%10!==0){const gap=10-a%10;hint='Add '+gap+' to reach '+(a+gap)+', then add the remaining '+(b-gap)+'.';why=a+' + '+gap+' = '+(a+gap)+'; '+(a+gap)+' + '+(b-gap)+' = '+answer+'.';}
+      else {hint='Add '+(b-b%10)+' first'+(b%10?', then add '+b%10+'.':'.');why=a+' + '+b+' = '+answer+'.';}}
     if(kind===1){text=a+' − '+b+' = ?';if(b>a)b=2;text=a+' − '+b+' = ?';answer=a-b;hint='Subtract tens first, then ones. You can count up to check.';why=answer+' + '+b+' = '+a+', so '+a+' − '+b+' = '+answer+'.';}
     if(kind===2){answer=rnd(4,30);text='□ + '+b+' = '+(answer+b)+'. What is missing?';hint='Subtract the known part from the total.';why=(answer+b)+' − '+b+' = '+answer+'.';}
     if(kind===3){b=Math.min(b,a);answer=a-b;text='There are '+a+' books on a shelf. '+b+' are borrowed. How many remain?';hint='The total decreases when books are borrowed.';why=a+' − '+b+' = '+answer+' books.';}
@@ -118,8 +148,8 @@
   function renderTest(){
     test.replaceChildren();make('h2','Test Yourself · Addition & subtraction',test);
     const clock=make('p','',test);clock.id='topic-clock';tick();if(!running)return;
-    make('p','Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered',test);
-    choices(test,testQs[ti],answers[ti],v=>{answers[ti]=v;});
+    const counter=make('p','Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered',test);
+    choices(test,testQs[ti],answers[ti],v=>{answers[ti]=v;counter.textContent='Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered';});
     const controls=make('div','',test);controls.className='topic-controls';
     const prev=make('button','Previous',controls);prev.disabled=ti===0;prev.onclick=()=>{ti--;renderTest();};
     const next=make('button',ti===19?'Review questions':'Next question',controls);next.onclick=()=>{ti=ti===19?0:ti+1;renderTest();};

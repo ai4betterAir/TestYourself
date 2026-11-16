@@ -36,3 +36,23 @@
 .topic-modal .topic-dots button{padding:8px;min-width:40px;font-size:15px}
 .topic-modal .topic-session [role=status]:not(:empty){padding:14px;background:#e4f3ef;border-radius:10px}
 @media(max-width:500px){.topic-modal-bar{padding:12px}.topic-modal-bar strong{max-width:55%}.topic-modal-content{padding:12px 8px}.topic-modal .early-work{grid-template-columns:1fr}}
+.topic-modal{background:radial-gradient(at top left,#d9f1fa,transparent 60%),#f2f7fa}
+.topic-modal .topic-session{border-radius:24px;box-shadow:0 12px 36px #15365414}
+.topic-modal .topic-session fieldset{padding:22px;background:#f1f8fa;border-radius:18px}
+.topic-modal .topic-session label{background:white;border-color:#91b6c3}
+.topic-modal .topic-session label:has(:checked){background:#d8f1ed;outline-color:#078879}
+.topic-modal .topic-session h2{padding-bottom:16px;border-bottom:1px solid #dbe7ee}
+.topic-modal .topic-session [role=status]:not(:empty){background:#fff0c9;border-left:4px solid #dca72d}
+.example-equation{font-size:clamp(32px,4vw,60px);font-weight:900;padding:18px;background:#daf0ef;border-radius:16px;margin:18px 0}
+.example-count{font-size:17px!important;font-weight:900;color:#157577}
+.topic-modal .early-work article{background:white}
+.topic-modal .early-work ol{padding-left:24px;font-size:clamp(19px,1.7vw,26px);line-height:1.7}
+.learning-try{padding:clamp(18px,2.5vw,36px);border-radius:20px;background:#e0f2f0}
+.learning-try h2{margin-top:0}
+.learning-try fieldset{border:0;padding:0;margin:15px 0;min-width:0}
+.learning-try legend{font-weight:900;font-size:28px;margin-bottom:16px}
+.learning-try label{display:inline-flex;gap:8px;margin:5px;padding:12px 16px;background:white;border:1px solid #85b3b2;border-radius:12px;font-size:23px;cursor:pointer}
+.learning-controls{grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;padding:18px;background:white;border-radius:16px}
+.learning-controls button{font:800 17px Nunito,Arial,sans-serif;padding:12px 18px;border:1px solid #abc6d5;border-radius:10px;cursor:pointer;color:#123052;background:white}
+.learning-controls button:last-child{background:#078377;color:white}
+.learning-controls button:disabled{opacity:.45;cursor:default}
