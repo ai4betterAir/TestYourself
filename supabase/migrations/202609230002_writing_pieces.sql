@@ -1,4 +1,6 @@
 -- Selective / workshop writing stored for the assigning teacher and linked parent.
+-- Keep policy replacement in one transaction so reruns preserve access controls.
+begin;
 
 create table if not exists public.writing_pieces (
   id uuid primary key default gen_random_uuid(),
@@ -18,6 +20,7 @@ alter table public.writing_pieces enable row level security;
 revoke all on public.writing_pieces from anon;
 grant select, insert on public.writing_pieces to authenticated;
 
+drop policy if exists writing_pieces_select on public.writing_pieces;
 create policy writing_pieces_select on public.writing_pieces for select to authenticated using (
   student_id = (select auth.uid())
   or public.is_teacher_of(student_id)
@@ -25,6 +28,7 @@ create policy writing_pieces_select on public.writing_pieces for select to authe
   or public.current_role() = 'admin'
 );
 
+drop policy if exists writing_pieces_insert on public.writing_pieces;
 create policy writing_pieces_insert on public.writing_pieces for insert to authenticated with check (
   student_id = (select auth.uid()) and public.current_role() = 'student'
 );
@@ -59,3 +63,4 @@ end $$;
 
 revoke all on function public.submit_writing_piece(text, text, text, integer, uuid) from public;
 grant execute on function public.submit_writing_piece(text, text, text, integer, uuid) to authenticated;
+commit;
