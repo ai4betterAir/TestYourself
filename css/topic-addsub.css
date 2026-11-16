@@ -80,3 +80,11 @@
 .topic-modal .learning-try label{margin:0}
 .topic-modal .learning-try .action:hover,.topic-modal .check-button:hover{filter:brightness(.95)}
 @media(max-width:760px){.topic-modal .question-board{grid-template-columns:1fr;gap:18px}.topic-modal .question-board .question-display{padding:20px}.topic-modal .topic-session .question-board label{min-height:58px}}
+/* Keep prose readable without treating a paragraph as a display equation. */
+.topic-modal .early-work{width:100%;max-width:1440px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(18px,2vw,32px);align-items:start}
+.topic-modal .early-work>article,.topic-modal .learning-try{min-width:0}
+.topic-modal .example-prose{font-size:clamp(21px,1.65vw,28px);line-height:1.5;font-weight:700;letter-spacing:normal;overflow-wrap:anywhere}
+.topic-modal .topic-session .question-prose,.topic-modal .learning-try .question-prose{font-size:clamp(21px,1.8vw,29px);line-height:1.45;font-weight:800;letter-spacing:normal}
+.topic-modal .early-work ol{font-size:clamp(18px,1.35vw,23px);line-height:1.5}
+.topic-modal .early-work article h2{font-size:clamp(25px,2.1vw,36px)}
+@media(max-width:900px){.topic-modal .early-work{grid-template-columns:1fr}.topic-modal .early-work .example-prose{font-size:22px}}

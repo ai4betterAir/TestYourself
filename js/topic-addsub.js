@@ -90,7 +90,7 @@
     const model=make('article','',host);
     make('p','Example '+(exampleIndex+1)+' of '+examples.length,model).className='example-count';
     make('h2',ex.title,model);
-    make('div',ex.sum,model).className='example-equation';
+    make('div',ex.sum,model).className='example-equation'+(ex.sum.length>42?' example-prose':'');
     const steps=make('ol','',model);ex.steps.forEach(line=>make('li',line,steps));
     const tryIt=make('section','',host);tryIt.className='learning-try';
     make('h2','Try it',tryIt);
@@ -132,7 +132,7 @@
   }
   function choices(parent,q,value,onSelect,disabled=false) {
     const board=make('div','',parent);board.className='question-board';
-    make('p',q.text,board).className='question-display';
+    make('p',q.text,board).className='question-display'+(q.text.length>55?' question-prose':'');
     const f=make('fieldset','',board);
     make('legend',q.text,f).className='question-accessible';
     q.choices.forEach(v=>{
