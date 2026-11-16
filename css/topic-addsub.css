@@ -4,13 +4,15 @@
 .topic-session{margin:22px 4%;padding:clamp(18px,3vw,42px);background:white;border:1px solid #c4d9e3;border-radius:18px;scroll-margin-top:18px}
 .topic-session h2{font-size:clamp(26px,3vw,40px);margin-top:0}
 .topic-session p{line-height:1.6;font-size:19px}
-.topic-session fieldset{border:0;padding:0;margin:20px 0}
+.topic-session fieldset{border:0;padding:0;margin:20px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-width:0}
 .topic-session legend{font-size:clamp(22px,2.5vw,32px);font-weight:900;line-height:1.4;margin-bottom:16px}
-.topic-session label{display:flex;gap:12px;align-items:center;padding:15px;border:1px solid #b4c5d3;border-radius:12px;margin:9px 0;font-size:23px;cursor:pointer}
+.topic-session label{display:flex;gap:12px;align-items:center;padding:15px;border:1px solid #b4c5d3;border-radius:12px;margin:0;min-height:60px;min-width:0;font-size:23px;cursor:pointer}
+.topic-session label span{overflow-wrap:anywhere}
+.topic-session label input{flex-shrink:0}
 .topic-session label:has(:checked){background:#e0f4fa;outline:2px solid #07597d}
 .topic-controls,.topic-dots{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
 .topic-session button:disabled{opacity:.5;cursor:default}
 .topic-dots [aria-current]{outline:3px solid #07597d}
 .topic-session details{padding:12px;border-bottom:1px solid #d3dfe7}
 [hidden]{display:none!important}
-@media(max-width:500px){.topic-tabs{gap:5px}.topic-tabs button{padding:10px;font-size:15px}}
+@media(max-width:500px){.topic-session fieldset{grid-template-columns:1fr;gap:8px}.topic-tabs{gap:5px}.topic-tabs button{padding:10px;font-size:15px}}
