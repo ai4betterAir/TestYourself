@@ -56,3 +56,27 @@
 .learning-controls button{font:800 17px Nunito,Arial,sans-serif;padding:12px 18px;border:1px solid #abc6d5;border-radius:10px;cursor:pointer;color:#123052;background:white}
 .learning-controls button:last-child{background:#078377;color:white}
 .learning-controls button:disabled{opacity:.45;cursor:default}
+/* Shared question layout for the pilot's learning, practice and test views. */
+.topic-modal .question-board{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin:24px 0}
+.topic-modal .question-board .question-display{font-size:clamp(28px,3.6vw,54px);line-height:1.25;font-weight:900;letter-spacing:-.025em;background:#daf0ef;border-radius:18px;padding:28px;margin:0}
+.topic-modal .question-board fieldset{margin:0;padding:0;background:transparent}
+.question-accessible{position:absolute;width:1px;height:1px;padding:0!important;margin:-1px!important;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.topic-modal .topic-session .question-board label{justify-content:center;min-height:74px;border:2px solid #70aaa8;font-size:clamp(24px,2.5vw,36px);font-weight:900}
+.topic-modal .topic-session .question-board label input{accent-color:#057d74}
+.topic-modal progress{display:block;width:100%;height:10px;border:0;border-radius:10px;background:#d6e5ef;overflow:hidden;accent-color:#078779}
+.topic-modal progress::-webkit-progress-bar{background:#d6e5ef}
+.topic-modal progress::-webkit-progress-value{background:#078779;border-radius:10px}
+.topic-modal progress::-moz-progress-bar{background:#078779}
+.topic-modal .topic-controls{padding-top:18px;border-top:1px solid #d7e5ed;align-items:center}
+.topic-modal .topic-session .topic-controls button{background:white;color:#123052}
+.topic-modal .topic-session .topic-controls .check-button,.topic-modal .learning-try .action{background:#dba526;color:#102950;border:1px solid #b9840b;box-shadow:0 3px 0 #b9840b;padding:12px 22px;font-weight:900}
+.topic-modal .topic-session .topic-controls .next-button{background:#078779;color:white;border-color:#06685f}
+.topic-modal .topic-session .submit-button{background:#123052;color:white}
+.topic-modal .topic-session .topic-controls .hint-button{background:#fff4d6;border-color:#dfc168;color:#674c17}
+.topic-modal .topic-session button:disabled{opacity:.42;box-shadow:none}
+.topic-modal .learning-try .question-board{display:block;margin:0}
+.topic-modal .learning-try .question-display{padding:14px 0;background:transparent;font-size:32px}
+.topic-modal .learning-try fieldset{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}
+.topic-modal .learning-try label{margin:0}
+.topic-modal .learning-try .action:hover,.topic-modal .check-button:hover{filter:brightness(.95)}
+@media(max-width:760px){.topic-modal .question-board{grid-template-columns:1fr;gap:18px}.topic-modal .question-board .question-display{padding:20px}.topic-modal .topic-session .question-board label{min-height:58px}}

@@ -113,7 +113,10 @@
   }
   function set(count) {const rows=[],seen=new Set();while(rows.length<count){const q=question(rows.length%6);if(seen.has(q.text))continue;seen.add(q.text);rows.push(q);}return rows;}
   function choices(parent,q,value,onSelect,disabled=false) {
-    const f=make('fieldset','',parent);make('legend',q.text,f);
+    const board=make('div','',parent);board.className='question-board';
+    make('p',q.text,board).className='question-display';
+    const f=make('fieldset','',board);
+    make('legend',q.text,f).className='question-accessible';
     q.choices.forEach(v=>{
       const l=make('label','',f),r=make('input','',l);r.type='radio';r.name='response';r.value=v;r.checked=v===value;r.disabled=disabled;
       make('span',v,l);r.onchange=()=>onSelect(v);
@@ -123,11 +126,13 @@
   function renderPractice() {
     practice.replaceChildren();const q=qs[index];
     make('h2','Addition & subtraction practice',practice);
-    make('p','Question '+(index+1)+' of 10 · '+marks.filter(x=>x===true).length+' correct',practice);
+    make('p','Question '+(index+1)+' of 10 · '+marks.filter(x=>x===true).length+' correct',practice).className='session-summary';
+    const progress=make('progress','',practice);progress.max=10;progress.value=index+1;progress.setAttribute('aria-label','Practice progress');
     const status=make('p','');status.setAttribute('role','status');
     choices(practice,q,picked,v=>{picked=v;status.textContent='';},marks[index]!==null);
     const controls=make('div','',practice);controls.className='topic-controls';
     const hint=make('button','Hint',controls),check=make('button','Check answer',controls),reveal=make('button','Show solution',controls),next=make('button',index===9?'Finish practice':'Next question',controls);
+    hint.className='hint-button';check.className='check-button';next.className='next-button';
     reveal.hidden=!missed;check.disabled=marks[index]!==null;next.disabled=marks[index]===null;
     hint.onclick=()=>{status.textContent=q.hint;};
     reveal.onclick=()=>{marks[index]=false;renderPractice();};
@@ -148,14 +153,15 @@
   function renderTest(){
     test.replaceChildren();make('h2','Test Yourself · Addition & subtraction',test);
     const clock=make('p','',test);clock.id='topic-clock';tick();if(!running)return;
-    const counter=make('p','Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered',test);
+    const counter=make('p','Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered',test);counter.className='session-summary';
+    const progress=make('progress','',test);progress.max=20;progress.value=ti+1;progress.setAttribute('aria-label','Test progress');
     choices(test,testQs[ti],answers[ti],v=>{answers[ti]=v;counter.textContent='Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered';});
     const controls=make('div','',test);controls.className='topic-controls';
     const prev=make('button','Previous',controls);prev.disabled=ti===0;prev.onclick=()=>{ti--;renderTest();};
-    const next=make('button',ti===19?'Review questions':'Next question',controls);next.onclick=()=>{ti=ti===19?0:ti+1;renderTest();};
+    const next=make('button',ti===19?'Review questions':'Next question',controls);next.className='next-button';next.onclick=()=>{ti=ti===19?0:ti+1;renderTest();};
     const dots=make('nav','',test);dots.setAttribute('aria-label','Test questions');dots.className='topic-dots';
     testQs.forEach((q,i)=>{const b=make('button',String(i+1)+(answers[i]!==null?' ✓':''),dots);b.setAttribute('aria-label','Question '+(i+1));if(i===ti)b.setAttribute('aria-current','step');b.onclick=()=>{ti=i;renderTest();};});
-    const submit=make('button','Submit test',test);submit.onclick=()=>{
+    const submit=make('button','Submit test',test);submit.className='submit-button';submit.onclick=()=>{
       const missing=answers.filter(x=>x===null).length;
       if(!missing){finish();return;}
       submit.disabled=true;make('p',missing+' unanswered. Submit now or return to the questions.',test);
