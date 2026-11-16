@@ -55,8 +55,7 @@ function earlyTopicPage(year, subject, index) {
   const nextIndex=(index+1)%rows.length;
   const nextTitle=year==='K'?rows[nextIndex][0]:rows[nextIndex].title;
   function route(i) {
-    if (year==='K' && subject==='maths' && i<5)
-      return 'practice.html?year=K&topic='+slug(rows[i][0]);
+
     return 'early-topic.html?year='+year+'&subject='+subject+'&lesson='+i;
   }
   const sectionLabel=subject==='reading'?'Read together':subject==='science'?'Look closely':subject==='maths'?'Work it out':'Explore together';

@@ -1,10 +1,13 @@
 (() => {
   const p = new URLSearchParams(location.search);
-  if (p.get('year') !== '2' || p.get('subject') !== 'maths' || p.get('lesson') !== '1') return;
+  const config=window.TOPIC_MATHS;
+  if(!config)return;
+  const isPilot=config.year==='2'&&p.get('lesson')==='1';
+  const schoolLabel=config.year==='K'?'Kindergarten':'Year '+config.year;
   const host = document.querySelector('.early-work');
   if (!host) return;
   const nav = document.querySelector('header nav');
-  nav.innerHTML = '<a href="index.html">Home</a><a href="learning.html?year=2">Year 2</a><a href="subject.html?year=2&subject=maths">Maths</a><a href="about.html">About</a><a href="sign-in.html">Sign In</a>';
+  nav.innerHTML = '<a href="index.html">Home</a><a href="learning.html?year='+config.year+'">'+schoolLabel+'</a><a href="subject.html?year='+config.year+'&subject=maths">Maths</a><a href="about.html">About</a><a href="sign-in.html">Sign In</a>';
   document.querySelector('.early-next').hidden = true;
   const tabs = document.createElement('div');
   tabs.className = 'topic-tabs';
@@ -13,7 +16,7 @@
   const panels = {learn:host};
   host.id = 'activity';
   host.setAttribute('role','region');
-  host.setAttribute('aria-label','Learn addition and subtraction');
+  host.setAttribute('aria-label','Learn '+config.title);
   const make = (tag,text,parent) => { const e=document.createElement(tag); e.textContent=text; if(parent)parent.append(e); return e; };
   for (const key of ['practice','test']) {
     const panel=make('section','');
@@ -22,9 +25,9 @@
   }
   const modal=make('dialog','',document.body);
   modal.className='topic-modal';
-  modal.setAttribute('aria-label','Addition and subtraction workspace');
+  modal.setAttribute('aria-label',config.title+' workspace');
   const bar=make('div','',modal);bar.className='topic-modal-bar';
-  make('strong','Year 2 · Addition & subtraction',bar);
+  make('strong',config.label,bar);
   const close=make('button','Back to lesson',bar);close.type='button';
   const slot=document.createComment('Lesson tabs');
   host.before(slot);
@@ -74,6 +77,13 @@
     {title:'Subtract through a ten',sum:'43 − 6 = 37',steps:['Split 6 into 3 and 3.','43 − 3 = 40','40 − 3 = 37'],q:'52 − 7 = ?',answer:'45',choices:['45','49','55'],hint:'Subtract 2 to reach 50, then subtract the remaining 5.'},
     {title:'Find the missing part',sum:'□ + 8 = 25',steps:['Use subtraction to find the missing part.','25 − 8 = 17','Check: 17 + 8 = 25.'],q:'□ + 6 = 24',answer:'18',choices:['16','18','30'],hint:'Subtract 6 from 24. Then check your answer by adding 6.'}
   ];
+  if(!isPilot) {
+    examples.splice(0,examples.length,config.first);
+    for(let i=0;i<3;i++){
+      const model=config.generate(),tryIt=config.generate();
+      examples.push({title:'Worked example '+(i+2),sum:model.text+' Answer: '+model.answer,steps:[model.why],q:tryIt.text,answer:tryIt.answer,choices:tryIt.choices,hint:tryIt.hint});
+    }
+  }
   let exampleIndex=0;
   function renderLearning() {
     const ex=examples[exampleIndex];host.replaceChildren();
@@ -99,6 +109,7 @@
   const start=document.querySelector('.early-hero .action'); start.textContent='Start learning'; start.onclick=event=>{event.preventDefault();select('learn');};
   const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   function question(kind) {
+    if(!isPilot)return config.generate();
     let a=rnd(12,79),b=rnd(2,19),text,answer,hint,why;
     if(kind===0){text=a+' + '+b+' = ?';answer=a+b;if(b<10 && a%10+b<10){hint='Keep '+Math.floor(a/10)+' tens. Add '+b+' to the '+a%10+' ones.';why=a+' + '+b+' = '+answer+'. The tens stay the same.';}
       else if(b<10 && a%10!==0){const gap=10-a%10;hint='Add '+gap+' to reach '+(a+gap)+', then add the remaining '+(b-gap)+'.';why=a+' + '+gap+' = '+(a+gap)+'; '+(a+gap)+' + '+(b-gap)+' = '+answer+'.';}
@@ -111,7 +122,14 @@
     const values=new Set([answer]);while(values.size<4)values.add(Math.max(0,answer+rnd(-12,12)));
     return {text,answer:String(answer),choices:[...values].sort(()=>Math.random()-.5).map(String),hint,why};
   }
-  function set(count) {const rows=[],seen=new Set();while(rows.length<count){const q=question(rows.length%6);if(seen.has(q.text))continue;seen.add(q.text);rows.push(q);}return rows;}
+  function set(count) {
+    const rows=[],seen=new Set();
+    for(let attempts=0;rows.length<count&&attempts<2000;attempts++){
+      const q=question(rows.length%6);if(seen.has(q.text))continue;seen.add(q.text);rows.push(q);
+    }
+    while(rows.length<count)rows.push(question(rows.length%6));
+    return rows;
+  }
   function choices(parent,q,value,onSelect,disabled=false) {
     const board=make('div','',parent);board.className='question-board';
     make('p',q.text,board).className='question-display';
@@ -125,7 +143,7 @@
   const practice=panels.practice;let qs=set(10),index=0,marks=Array(10).fill(null),picked=null,missed=false;
   function renderPractice() {
     practice.replaceChildren();const q=qs[index];
-    make('h2','Addition & subtraction practice',practice);
+    make('h2',config.title+' practice',practice);
     make('p','Question '+(index+1)+' of 10 · '+marks.filter(x=>x===true).length+' correct',practice).className='session-summary';
     const progress=make('progress','',practice);progress.max=10;progress.value=index+1;progress.setAttribute('aria-label','Practice progress');
     const status=make('p','');status.setAttribute('role','status');
@@ -151,7 +169,7 @@
   const test=panels.test;let testQs=[],answers=[],ti=0,deadline=0,timer=null,running=false;
   function tick(){const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));const clock=document.getElementById('topic-clock');if(clock)clock.textContent='Time left '+Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left===0)finish();}
   function renderTest(){
-    test.replaceChildren();make('h2','Test Yourself · Addition & subtraction',test);
+    test.replaceChildren();make('h2','Test Yourself · '+config.title,test);
     const clock=make('p','',test);clock.id='topic-clock';tick();if(!running)return;
     const counter=make('p','Question '+(ti+1)+' of 20 · '+answers.filter(x=>x!==null).length+' answered',test);counter.className='session-summary';
     const progress=make('progress','',test);progress.max=20;progress.value=ti+1;progress.setAttribute('aria-label','Test progress');
@@ -177,7 +195,7 @@
     const again=make('button','Try another test',test);again.onclick=intro;
   }
   function intro(){
-    test.replaceChildren();make('h2','Test Yourself · Addition & subtraction',test);
+    test.replaceChildren();make('h2','Test Yourself · '+config.title,test);
     make('p','20 questions · 20 minutes · This topic only. Your timer starts when you press Start test. You can change answers and move between questions.',test);
     const b=make('button','Start test',test);b.onclick=()=>{testQs=set(20);answers=Array(20).fill(null);ti=0;deadline=Date.now()+20*60000;running=true;renderTest();timer=setInterval(tick,1000);};
   }
