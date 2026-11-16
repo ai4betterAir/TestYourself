@@ -9,6 +9,8 @@ await db.exec(fs.readFileSync(root+'supabase/migrations/202609200001_skillup_acc
 await db.exec(fs.readFileSync(root+'supabase/migrations/202609250002_student_skillup_id.sql','utf8'));
 await db.exec(fs.readFileSync(root+'supabase/migrations/202611160001_family_homework.sql','utf8'));
 await db.exec(fs.readFileSync(root+'supabase/migrations/202611160001_family_homework.sql','utf8')); // safe rerun
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160002_teacher_homework.sql','utf8'));
+await db.exec(fs.readFileSync(root+'supabase/migrations/202611160002_teacher_homework.sql','utf8'));
 const parent='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222',child='33333333-3333-4333-8333-333333333333',stranger='44444444-4444-4444-8444-444444444444';
 for(const [id,role] of [[parent,'parent'],[other,'parent'],[child,'student'],[stranger,'student']])await db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)`,[id,id+'@example.com',JSON.stringify({requested_role:role,year_level:'2'})]);
 await db.query(`insert into public.guardian_links(parent_id,student_id,status) values($1,$2,'approved')`,[parent,child]);
@@ -32,4 +34,31 @@ await as(other);assert.equal((await db.query('select * from public.family_homewo
 await db.exec('reset role');await db.query(`update public.guardian_links set status='revoked' where parent_id=$1 and student_id=$2`,[parent,child]);
 await as(parent);assert.equal((await db.query('select * from public.family_homework')).rows.length,0);
 await assert.rejects(db.query(call,[child,JSON.stringify(questions)]),/approved family/);
-console.log('PASS: migrations + rerun; approved-parent-only creation; student isolation; hidden answer keys; server grading; no result overwrite; guardian revocation.');await db.close();
+console.log('PASS: migrations + rerun; approved-parent-only creation; student isolation; hidden answer keys; server grading; no result overwrite; guardian revocation.');
+await db.exec('reset role');
+const teacher='66666666-6666-4666-8666-666666666666',teacher2='77777777-7777-4777-8777-777777777777';
+for(const id of [teacher,teacher2]){
+  await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[id,id+'@example.com',JSON.stringify({requested_role:'teacher'})]);
+  await db.query("update public.profiles set status='active' where id=$1",[id]);
+}
+const class1=(await db.query("insert into public.classes(teacher_id,name,subject,year_level,join_code) values($1,'Class 2','Maths','2','ABC123') returning id",[teacher])).rows[0].id;
+const class2=(await db.query("insert into public.classes(teacher_id,name,subject,year_level,join_code) values($1,'Other class','Maths','2','DEF456') returning id",[teacher2])).rows[0].id;
+await db.query('insert into public.class_members(class_id,student_id) values($1,$2)',[class1,child]);
+const teacherCall="select public.create_teacher_homework($1,$2::uuid[],'2','Maths',array['addition'],'Class homework','Practise',now()+interval '7 days',true,$3::jsonb) as count";
+await as(parent);await assert.rejects(db.query(teacherCall,[class1,[child],JSON.stringify(questions)]),/approved active teachers/);
+await as(teacher2);await assert.rejects(db.query(teacherCall,[class1,[child],JSON.stringify(questions)]),/your active classes/);
+await as(teacher);await assert.rejects(db.query(teacherCall,[class1,[child,stranger],JSON.stringify(questions)]),/Every recipient/);
+assert.equal((await db.query('select * from public.family_homework where teacher_id=$1',[teacher])).rows.length,0);
+assert.equal((await db.query(teacherCall,[class1,[child],JSON.stringify(questions)])).rows[0].count,1);
+const teacherWork=(await db.query('select * from public.family_homework where teacher_id=$1',[teacher])).rows[0];
+await as(teacher2);assert.equal((await db.query('select * from public.family_homework where id=$1',[teacherWork.id])).rows.length,0);
+await as(stranger);assert.equal((await db.query('select * from public.family_homework where id=$1',[teacherWork.id])).rows.length,0);
+await as(child);const marked=(await db.query('select public.submit_family_homework($1,$2::jsonb) as result',[teacherWork.id,JSON.stringify(Array(10).fill(0))])).rows[0].result;assert.equal(marked.score,10);
+await as(teacher);assert.equal((await db.query('select score from public.family_homework where id=$1',[teacherWork.id])).rows[0].score,10);
+await db.exec('reset role');await db.query("update public.guardian_links set status='approved' where parent_id=$1 and student_id=$2",[parent,child]);
+await as(parent);assert.equal((await db.query('select * from public.family_homework where id=$1',[teacherWork.id])).rows.length,1);
+await db.exec('reset role');await db.query('delete from public.class_members where class_id=$1 and student_id=$2',[class1,child]);
+await as(child);assert.equal((await db.query('select * from public.family_homework where id=$1',[teacherWork.id])).rows.length,0);
+await assert.rejects(db.query('select public.submit_family_homework($1,$2::jsonb)',[teacherWork.id,JSON.stringify(Array(10).fill(0))]),/no longer enrolled/);
+console.log('PASS: approved teacher/class scope, atomic recipient validation, private scores, student completion, guardian visibility and enrolment revocation.');
+await db.close();

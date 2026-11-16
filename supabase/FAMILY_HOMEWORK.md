@@ -20,3 +20,9 @@ npm --prefix tests/family-homework test
 ```
 
 The test database is temporary PGlite. Its `auth.uid` stub simulates Supabase JWT user IDs; its test-only random-byte stub is used only to load the existing account migration. No real accounts, emails or project credentials are used.
+
+## Teacher homework
+
+After the family-homework setup, run `migrations/202611160002_teacher_homework.sql`. It adds teacher/class scope without replacing family records. Do not rerun the older family-homework migration after the teacher extension; run migrations in filename order.
+
+Approved active teachers see **Class topic homework → Assign homework** on Overview and Assignments. Choose an owned, active class, then assign to all checked students or uncheck students to choose a subset. The class year determines the question bank. All selected recipients must be active enrolled students; creation is atomic. Supports the same single/mixed subjects, counts, due date and instructions as family homework. Each student has a separate result. Approved guardians can also see their child's class-topic homework progress. Existing teacher assignments remain available.
