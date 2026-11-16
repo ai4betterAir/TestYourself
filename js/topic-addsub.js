@@ -19,9 +19,34 @@
     panel.className='topic-session'; panel.id='topic-'+key; panel.hidden=true;
     panel.setAttribute('role','tabpanel'); host.after(panel); panels[key]=panel;
   }
+  const modal=make('dialog','',document.body);
+  modal.className='topic-modal';
+  modal.setAttribute('aria-label','Addition and subtraction workspace');
+  const bar=make('div','',modal);bar.className='topic-modal-bar';
+  make('strong','Year 2 · Addition & subtraction',bar);
+  const close=make('button','Back to lesson',bar);close.type='button';
+  const slot=document.createComment('Lesson tabs');
+  host.before(slot);
+  const content=make('div','',modal);content.className='topic-modal-content';
+  Object.values(panels).forEach(panel=>content.append(panel));
+  let returnFocus=null;
+  function restore() {
+    slot.after(tabs);
+    document.body.classList.remove('topic-modal-open');
+    returnFocus?.focus();
+  }
+  close.onclick=()=>modal.close();
+  modal.addEventListener('close',restore);
   let mode='learn';
-  function select(key) {
+  function select(key, open=true) {
     mode=key;
+    if(open && !modal.open) {
+      returnFocus=document.activeElement;
+      bar.after(tabs);
+      document.body.classList.add('topic-modal-open');
+      modal.showModal();
+    }
+    content.scrollTop=0;
     for (const [id,panel] of Object.entries(panels)) {
       panel.hidden=id!==key;
       const tab=document.getElementById('tab-'+id);
@@ -41,15 +66,15 @@
       select(ids[i]);document.getElementById('tab-'+ids[i]).focus();
     };
   }
-  host.before(tabs);
-  const start=document.querySelector('.early-hero .action'); start.textContent='Start learning'; start.onclick=()=>select('learn');
+  slot.after(tabs);
+  const start=document.querySelector('.early-hero .action'); start.textContent='Start learning'; start.onclick=event=>{event.preventDefault();select('learn');};
   const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
   function question(kind) {
     let a=rnd(12,79),b=rnd(2,19),text,answer,hint,why;
     if(kind===0){text=a+' + '+b+' = ?';answer=a+b;hint='Split the second number into tens and ones.';why=a+' + '+(b-b%10)+' + '+b%10+' = '+answer+'.';}
     if(kind===1){text=a+' − '+b+' = ?';if(b>a)b=2;text=a+' − '+b+' = ?';answer=a-b;hint='Subtract tens first, then ones. You can count up to check.';why=answer+' + '+b+' = '+a+', so '+a+' − '+b+' = '+answer+'.';}
     if(kind===2){answer=rnd(4,30);text='□ + '+b+' = '+(answer+b)+'. What is missing?';hint='Subtract the known part from the total.';why=(answer+b)+' − '+b+' = '+answer+'.';}
-    if(kind===3){answer=a-b;text='There are '+a+' books on a shelf. '+b+' are borrowed. How many remain?';hint='The total decreases when books are borrowed.';why=a+' − '+b+' = '+answer+' books.';}
+    if(kind===3){b=Math.min(b,a);answer=a-b;text='There are '+a+' books on a shelf. '+b+' are borrowed. How many remain?';hint='The total decreases when books are borrowed.';why=a+' − '+b+' = '+answer+' books.';}
     if(kind===4){answer=a+b;text='A class collects '+a+' cans on Monday and '+b+' on Tuesday. How many altogether?';hint='Altogether asks you to combine the two groups.';why=a+' + '+b+' = '+answer+' cans.';}
     if(kind===5){a=rnd(20,70);b=rnd(2,9);answer=a-b;text='One ribbon is '+a+' cm long. Another is '+b+' cm shorter. How long is the shorter ribbon?';hint='Shorter means subtract the difference.';why=a+' − '+b+' = '+answer+' cm.';}
     const values=new Set([answer]);while(values.size<4)values.add(Math.max(0,answer+rnd(-12,12)));
@@ -119,5 +144,5 @@
     make('p','20 questions · 20 minutes · This topic only. Your timer starts when you press Start test. You can change answers and move between questions.',test);
     const b=make('button','Start test',test);b.onclick=()=>{testQs=set(20);answers=Array(20).fill(null);ti=0;deadline=Date.now()+20*60000;running=true;renderTest();timer=setInterval(tick,1000);};
   }
-  intro();select('learn');
+  intro();select('learn',false);
 })();
