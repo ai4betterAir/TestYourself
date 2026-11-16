@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=signup-fix';
+import { supabase, isSupabaseConfigured, showSetupNotice, friendlyError } from './supabase-client.js?v=profile-setup-fix';
 
 const setup = document.getElementById('setupNotice');
 // Always use the public GitHub Pages callback, even when the form was opened from a local copy.
@@ -115,8 +115,17 @@ if (signUpForm) {
   const updateRoleFields = () => {
     const role = new FormData(signUpForm).get('role');
     if (yearField) yearField.hidden = role !== 'student';
-    const buttonText = document.querySelector('#createAccountButton span');
-    if (buttonText) buttonText.textContent = 'Create ' + role + ' account';
+    const roleLabel = role === 'parent' ? 'parent / guardian' : role;
+    const button = document.getElementById('createAccountButton');
+    if (button && signUpForm.dataset.submitting !== 'true') {
+      button.textContent = 'Create ' + roleLabel + ' account';
+      button.dataset.label = button.textContent;
+    }
+    const help = document.getElementById('roleHelp');
+    if (help) help.textContent = role === 'parent'
+      ? 'Create your own guardian account. After signing in, request a link using your child’s Student ID. Your child must approve the connection.'
+      : role === 'teacher' ? 'Teacher accounts require administrator approval.'
+      : 'Choose your school year to open your student dashboard.';
   };
   signUpForm.addEventListener('change', event => {
     if (event.target.name === 'role') updateRoleFields();
@@ -136,6 +145,11 @@ if (signUpForm) {
     if (password !== confirm) return message('The passwords do not match.');
     if (password.length < 10) return message('Use a password with at least 10 characters.');
 
+    if (!fullName) return message('Enter your full name.');
+    if (!['student', 'parent', 'teacher'].includes(role)) return message('Choose an account type.');
+    if (role === 'student' && !['K', '1', '2', '3', '4', '5', '6'].includes(yearLevel)) return message('Choose your school year.');
+    if (!document.getElementById('terms').checked) return message('Please agree to the Terms and Privacy Policy.');
+
     if (!supabase) {
       if (readLocalAccounts().some((item) => item.email === email)) return message('An account already exists for this email. Sign in instead.');
       setBusy(signUpForm, true); message('');
@@ -151,8 +165,6 @@ if (signUpForm) {
       }
     }
 
-    if (!fullName) return message('Enter your full name.');
-    if (!['student', 'parent', 'teacher'].includes(role)) return message('Choose an account type.');
     if (signUpForm.dataset.submitting === 'true') return;
     signUpForm.dataset.submitting = 'true';
     setBusy(signUpForm, true);
@@ -171,8 +183,11 @@ if (signUpForm) {
         return message('An account already exists for this email. Please sign in, or use Forgot password to reset your password.');
       }
       if (!user) return message('The account service returned no account details. Please try again.');
-      if (result.session) return location.replace('dashboard.html');
       rememberEmail(email, true);
+      if (result.session) {
+        message('Account created. Opening your dashboard…', true);
+        return location.replace('dashboard.html');
+      }
       const note = role === 'teacher'
         ? 'Your registration was received. Check your email, including Spam, for the verification link. Teacher access requires approval after verification.'
         : 'Your registration was received. Check your email, including Spam, and click the verification link to finish signing up. If you registered earlier, you can also sign in.';

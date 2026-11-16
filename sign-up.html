@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Create a student, parent or teacher account with Acorn & Shine.">
+<meta name="description" content="Create a student, parent/guardian or teacher account with Acorn & Shine.">
 <title>Sign Up | Acorn &amp; Shine</title>
 <link rel="icon" href="assets/acorn-and-shine-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 <main class="portal-auth">
 <section class="auth-intro"><h1>Make room for brighter learning.</h1><p>Create an account and choose how you’ll use Acorn &amp; Shine.</p><img class="auth-art" src="assets/portal/signup-desk.webp" alt="Learning notebooks, pencils and an illustrated book"></section>
 <section class="portal-auth-card"><h2>Create your account</h2><div id="setupNotice" class="notice" hidden></div>
-<form id="signUpForm" class="portal-form"><fieldset class="account-types"><legend>Account type</legend><label><input type="radio" name="role" value="student" checked><span>Student</span></label><label><input type="radio" name="role" value="parent" ><span>Parent</span></label><label><input type="radio" name="role" value="teacher" ><span>Teacher</span></label></fieldset>
+<form id="signUpForm" class="portal-form"><fieldset class="account-types"><legend>Account type</legend><label><input type="radio" name="role" value="student" checked><span>Student</span></label><label><input type="radio" name="role" value="parent" ><span>Parent / guardian</span></label><label><input type="radio" name="role" value="teacher" ><span>Teacher</span></label></fieldset><p id="roleHelp" class="account-role-help" aria-live="polite"></p>
 <label>Full name<input id="fullName" autocomplete="name" required maxlength="80"></label>
 <label>Email<input id="email" type="email" autocomplete="email" required></label>
 <label>Password<span class="password-field"><input id="password" type="password" autocomplete="new-password" minlength="10" required><button type="button" data-toggle-password="password" aria-label="Show password">Show</button></span><small>Use at least 10 characters.</small></label>
@@ -18,4 +18,4 @@
 <label id="yearField">School year<select id="yearLevel"><option value="K">Kindergarten</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option><option value="5">Year 5</option><option value="6">Year 6</option></select></label>
 <label class="check"><input id="terms" type="checkbox" required><span>I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span></label>
 <button class="primary" id="createAccountButton" type="submit"><span>Create account</span></button><p id="formMessage" role="status" aria-live="polite"></p></form>
-<p class="auth-switch">Already have an account? <a href="sign-in.html">Sign in</a>.</p></section></main><footer class="portal-footer"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></footer><script src="js/portal-forms.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=signup-fix"></script></body></html>
+<p class="auth-switch">Already have an account? <a href="sign-in.html">Sign in</a>.</p></section></main><footer class="portal-footer"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></footer><script src="js/portal-forms.js"></script><script src="js/supabase-config.js"></script><script type="module" src="js/auth.js?v=guardian-signup"></script></body></html>
