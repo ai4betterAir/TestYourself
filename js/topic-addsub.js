@@ -12,7 +12,8 @@
   tabs.setAttribute('aria-label','Lesson mode');
   const panels = {learn:host};
   host.id = 'activity';
-  host.setAttribute('role','tabpanel');
+  host.setAttribute('role','region');
+  host.setAttribute('aria-label','Learn addition and subtraction');
   const make = (tag,text,parent) => { const e=document.createElement(tag); e.textContent=text; if(parent)parent.append(e); return e; };
   for (const key of ['practice','test']) {
     const panel=make('section','');
@@ -50,19 +51,19 @@
     for (const [id,panel] of Object.entries(panels)) {
       panel.hidden=id!==key;
       const tab=document.getElementById('tab-'+id);
-      tab.setAttribute('aria-selected',String(id===key)); tab.tabIndex=id===key?0:-1;
+      if(tab){tab.setAttribute('aria-selected',String(id===key)); tab.tabIndex=id===key?0:-1;}
     }
   }
-  for (const [key,name] of [['learn','Learn'],['practice','Practice'],['test','Test Yourself']]) {
+  for (const [key,name] of [['practice','Practice'],['test','Test Yourself']]) {
     const b=make('button',name,tabs); b.id='tab-'+key; b.type='button';
     b.setAttribute('role','tab'); b.setAttribute('aria-controls',panels[key].id);
     panels[key].setAttribute('aria-labelledby',b.id);
     b.onclick=()=>select(key);
     b.onkeydown=e=>{
-      const ids=['learn','practice','test']; let i=ids.indexOf(key);
+      const ids=['practice','test']; let i=ids.indexOf(key);
       if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
       e.preventDefault();
-      i=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;
+      i=e.key==='Home'?0:e.key==='End'?1:(i+1)%2;
       select(ids[i]);document.getElementById('tab-'+ids[i]).focus();
     };
   }
@@ -144,5 +145,5 @@
     make('p','20 questions · 20 minutes · This topic only. Your timer starts when you press Start test. You can change answers and move between questions.',test);
     const b=make('button','Start test',test);b.onclick=()=>{testQs=set(20);answers=Array(20).fill(null);ti=0;deadline=Date.now()+20*60000;running=true;renderTest();timer=setInterval(tick,1000);};
   }
-  intro();select('learn',false);
+  intro();select('practice',false);
 })();
