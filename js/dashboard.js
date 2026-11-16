@@ -1,3 +1,4 @@
+import { ensureTeacherGroups } from './teacher-groups-api.js';
 import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfile, formatDate, friendlyError } from './supabase-client.js?v=20260921';
 
 const $ = id => document.getElementById(id);
@@ -127,13 +128,18 @@ async function init() {
       ? 'Your teacher account is suspended. Contact the site owner for help.'
       : 'Teacher activation setup is incomplete. The site owner needs to run the teacher-auto-approval SQL script.';
   }
+  if (profile.role === 'teacher' && profile.status === 'active') {
+    try { await ensureTeacherGroups(supabase); }
+    catch { $('statusBanner').hidden=false; $('statusBanner').className='status-banner pending'; $('statusBanner').textContent='Learning group setup is incomplete. Run the teacher-groups-and-requests SQL script in Supabase.'; }
+  }
   await loadRoleData();
   configureRole(); render(); bindEvents();
+  if (new URLSearchParams(location.search).get('section') === 'people') showSection('people', $('peopleNav').textContent);
 }
 
 async function loadRoleData() {
   if (profile.role === 'teacher') {
-    ({ data: classes = [] } = await supabase.from('classes').select('*').eq('teacher_id', user.id).order('created_at'));
+    ({ data: classes = [] } = await supabase.from('classes').select('*').eq('teacher_id', user.id).is('archived_at',null).order('created_at'));
     const classIds = classes.map(item => item.id);
     if (classIds.length) ({ data: classMembers = [] } = await supabase.from('class_members').select('class_id,student_id,joined_at').in('class_id', classIds));
     ({ data: assignments = [] } = await supabase.from('assignments').select('*').eq('teacher_id', user.id).order('due_at', { ascending: false }));
@@ -176,7 +182,7 @@ function configureRole() {
   if (overviewNav) overviewNav.textContent = student ? 'Dashboard' : 'Overview';
 
   $('workNav').textContent = teacher ? 'Assignments' : 'My work';
-  $('peopleNav').textContent = teacher ? 'Classes & students' : student ? 'My classes' : 'My children';
+  $('peopleNav').textContent = teacher ? 'Groups & students' : student ? 'My classes' : 'My children';
   $('mainAction').hidden = !teacher || profile.status !== 'active';
   $('mainAction').textContent = '＋ Create assignment';
   $('mainAction').dataset.open = 'assignmentModal';
@@ -184,14 +190,14 @@ function configureRole() {
   $('workAction').textContent = '＋ Create assignment';
   $('workAction').dataset.open = 'assignmentModal';
   $('peopleAction').hidden = false;
-  $('peopleAction').textContent = teacher ? '＋ Create class' : student ? 'Join a class' : 'Link a child';
+  $('peopleAction').textContent = teacher ? '＋ Create group' : student ? 'Join a class' : 'Link a child';
   $('peopleAction').dataset.open = teacher ? 'classModal' : student ? 'joinModal' : 'familyModal';
   $('addStudentAction').hidden = !teacher || profile.status !== 'active';
   $('addStudentAction').textContent = '＋ Add student';
   $('addStudentAction').dataset.open = 'addStudentModal';
   $('workTitle').textContent = teacher ? 'Assignments' : 'My work';
-  $('peopleTitle').textContent = teacher ? 'Classes and students' : student ? 'My classes' : 'My children';
-  $('peopleSubtitle').textContent = teacher ? 'Manage class codes and enrolments' : student ? 'Classes you have joined' : 'Read-only progress for linked children';
+  $('peopleTitle').textContent = teacher ? 'Groups and students' : student ? 'My classes' : 'My children';
+  $('peopleSubtitle').textContent = teacher ? 'Manage classes, batches, subjects and student requests' : student ? 'Classes you have joined' : 'Read-only progress for linked children';
 }
 
 function render() {
@@ -221,7 +227,7 @@ function renderTeacher() {
   $('primaryPanel').innerHTML = assignmentTable(assignments.slice(0,6), true);
   $('progressPanel').innerHTML = subjectProgress(submissions);
   $('progressPanel').closest('.panel').querySelector('h2').textContent = 'Class progress by subject';
-  $('quickActions').innerHTML = `<button class="quick-action" data-open="assignmentModal"><strong>Create an assignment</strong><span>Choose content, students and a due date</span></button><button class="quick-action" data-open="addStudentModal"><strong>Add student by Acorn & Shine ID</strong><span>Enter a student’s permanent ID and choose a class</span></button><button class="quick-action" data-open="classModal"><strong>Create a class</strong><span>Generate a private student join code</span></button>`;
+  $('quickActions').innerHTML = `<button class="quick-action" data-open="assignmentModal"><strong>Create an assignment</strong><span>Choose content, students and a due date</span></button><button class="quick-action" data-open="addStudentModal"><strong>Add student by email or ID</strong><span>Enter the registered student email or ID and choose a group</span></button><button class="quick-action" data-open="classModal"><strong>Create a learning group</strong><span>Set up a class, batch, subject or custom group</span></button>`;
   $('insightPanel').innerHTML = submitted ? `<strong>${submitted} submitted attempt${submitted === 1 ? '' : 's'}</strong>Open Assignments to see who has finished and who may need a reminder.` : '<strong>No submissions yet</strong>Publish an assignment to start building class insights.';
 }
 
@@ -300,7 +306,7 @@ function renderWork() { $('workContent').innerHTML = assignmentTable(assignments
 
 function renderPeople() {
   if (profile.role === 'teacher') {
-    $('peopleContent').innerHTML = classes.length ? `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Class</th><th>Year</th><th>Students</th><th>Join code</th></tr></thead><tbody>${classes.map(c=>`<tr><td class="item-title">${esc(c.name)}</td><td>Year ${esc(c.year_level)}</td><td>${classMembers.filter(m=>m.class_id===c.id).length}</td><td><strong>${esc(c.join_code)}</strong></td></tr>`).join('')}</tbody></table></div>` : empty('No classes yet','Create a class to receive a private student join code.');
+    $('peopleContent').innerHTML = classes.length ? `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Learning group</th><th>Year</th><th>Students</th><th>Join code</th></tr></thead><tbody>${classes.map(c=>`<tr><td class="item-title">${esc(c.name)}<small class="item-sub">${esc(c.group_type || 'class')} · ${esc(c.programme || 'K6')}</small></td><td>Year ${esc(c.year_level)}</td><td>${classMembers.filter(m=>m.class_id===c.id).length}</td><td><strong>${esc(c.join_code)}</strong></td></tr>`).join('')}</tbody></table></div>` : empty('No classes yet','Create a class to receive a private student join code.');
   } else if (profile.role === 'student') {
     $('peopleContent').innerHTML = classes.length ? `<div class="task-list">${classes.map(c=>`<article class="task-card"><div><h3>${esc(c.name)}</h3><p>${esc(c.subject)} · Year ${esc(c.year_level)}</p></div><span class="status-pill active">Joined</span></article>`).join('')}</div>` : empty('You have not joined a class','Ask your teacher for a six-character class code.');
   } else {
@@ -327,6 +333,8 @@ function bindEvents() {
   $('signOut').onclick=async()=>{await supabase.auth.signOut();location.replace('sign-in.html')};
   $('profileForm').addEventListener('submit', saveProfile);
   $('classForm').addEventListener('submit', createClass);
+  const updateGroupYear = () => { const programme=$('classProgramme').value; const allowed=programme==='Selective'?['5','6']:programme==='NAPLAN3'?['3']:programme==='NAPLAN5'?['5']:programme==='OC4'?['4']:['K','1','2','3','4','5','6']; for(const option of $('classYear').options){option.disabled=!allowed.includes(option.value);option.hidden=option.disabled;} if(!allowed.includes($('classYear').value)) $('classYear').value=allowed[0]; };
+  $('classProgramme').addEventListener('change',updateGroupYear); updateGroupYear();
   $('assignmentForm').addEventListener('submit', createAssignment);
   $('assignmentClass').addEventListener('change', renderRecipients);
   $('recipientMode').addEventListener('change', renderRecipients);
@@ -371,9 +379,9 @@ async function addStudentBySkillupId(event){
   const out=$('addStudentMessage');
   out.classList.remove('success');
   out.textContent='';
-  const {error}=await supabase.rpc('add_student_to_class_by_skillup_id',{
-    class_uuid:$('addStudentClass').value,
-    skillup_id_input:$('addStudentSkillupId').value.trim().toUpperCase()
+  const {error}=await supabase.rpc('add_student_to_group_by_identifier',{
+    class_input:$('addStudentClass').value,
+    identifier_input:$('addStudentSkillupId').value.trim()
   });
   if(error)return out.textContent=friendlyError(error);
   out.classList.add('success');
@@ -386,7 +394,7 @@ function prepareAssignment(){ $('assignmentClass').innerHTML='<option value="">C
 async function getStudentProfiles(ids){if(!ids.length)return[];const {data=[]}=await supabase.from('profiles').select('id,full_name,year_level').in('id',ids);return data}
 async function renderRecipients(){const box=$('recipientList');if($('recipientMode').value!=='selected'||!$('assignmentClass').value){box.hidden=true;box.innerHTML='';return}const ids=classMembers.filter(x=>x.class_id===$('assignmentClass').value).map(x=>x.student_id),people=await getStudentProfiles(ids);box.hidden=false;box.innerHTML=people.length?people.map(x=>`<label><input type="checkbox" name="recipient" value="${x.id}"><span>${esc(x.full_name)}</span></label>`).join(''):empty('No students in this class','Share the class code first.')}
 
-async function createClass(event){event.preventDefault();const out=$('classMessage');out.textContent='';const {error}=await supabase.from('classes').insert({teacher_id:user.id,name:$('className').value.trim(),subject:$('classSubject').value,year_level:$('classYear').value});if(error)return out.textContent=friendlyError(error);out.classList.add('success');out.textContent='Class created.';setTimeout(()=>location.reload(),500)}
+async function createClass(event){event.preventDefault();const out=$('classMessage');out.textContent='';const {error}=await supabase.from('classes').insert({teacher_id:user.id,name:$('className').value.trim(),subject:$('classSubject').value,year_level:$('classYear').value,group_type:$('classGroupType').value,programme:$('classProgramme').value});if(error)return out.textContent=friendlyError(error);out.classList.add('success');out.textContent='Learning group created.';setTimeout(()=>location.reload(),500)}
 
 async function createAssignment(event){event.preventDefault();const out=$('assignmentMessage');out.textContent='';const classId=$('assignmentClass').value;const cls=classes.find(x=>x.id===classId);const {data,error}=await supabase.from('assignments').insert({teacher_id:user.id,class_id:classId,title:$('assignmentTitle').value.trim(),instructions:$('assignmentInstructions').value.trim(),subject:cls?.subject||'Acorn & Shine',resource_url:$('assignmentResource').value,opens_at:$('assignmentOpens').value?new Date($('assignmentOpens').value).toISOString():new Date().toISOString(),due_at:new Date($('assignmentDue').value).toISOString(),allow_late:$('allowLate').checked,status:'published'}).select().single();if(error)return out.textContent=friendlyError(error);if($('recipientMode').value==='selected'){const ids=[...document.querySelectorAll('input[name="recipient"]:checked')].map(x=>x.value);if(!ids.length){await supabase.from('assignments').delete().eq('id',data.id);return out.textContent='Choose at least one student.'}const {error:targetError}=await supabase.from('assignment_targets').insert(ids.map(student_id=>({assignment_id:data.id,student_id})));if(targetError)return out.textContent=friendlyError(targetError)}out.classList.add('success');out.textContent='Assignment published.';setTimeout(()=>location.reload(),600)}
 

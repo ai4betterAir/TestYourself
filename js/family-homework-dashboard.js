@@ -1,3 +1,4 @@
+import {ensureTeacherGroups} from './teacher-groups-api.js';
 import {supabase, getProfile, friendlyError, formatDate} from './supabase-client.js?v=profile-setup-fix';
 import {subjects, getHomeworkBank, makeHomework} from './homework-bank.js';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -99,6 +100,7 @@ async function init() {
   const {data,error}=await supabase.auth.getUser(); if(error||!data.user)return;
   profile=await getProfile(data.user.id);if(!['student','parent','teacher'].includes(profile.role)||profile.status!=='active')return;
   if(isTeacher()){
+    await ensureTeacherGroups(supabase);
     const classes=await supabase.from('classes').select('id,name,year_level').eq('teacher_id',data.user.id).is('archived_at',null);if(classes.error)throw classes.error;
     classList=classes.data;
     if(classList.length){
