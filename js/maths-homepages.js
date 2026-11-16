@@ -82,7 +82,7 @@ function renderSubjectHomepage({year, topics, hrefFor, subject}) {
   const header = document.querySelector('.site-header');
   header.className = 'maths-header';
   header.innerHTML = `
-    <a href="index.html" class="maths-brand"><img src="assets/acorn-and-shine-logo-transparent.png" alt="Acorn &amp; Shine"></a>
+    <a href="index.html" class="maths-brand"><img src="assets/acorn-and-shine-logo-transparent.png?v=20261116-logo" alt="Acorn &amp; Shine"></a>
     <nav aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="learning.html?year=${year}">Learn</a>
