@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'practice.html'
+      - 'maths-practice.html'
       - 'js/practice.js'
       - 'js/math-learning-v2.js'
       - 'js/geometry-visuals.js'

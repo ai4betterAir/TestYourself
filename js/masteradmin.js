@@ -7,7 +7,7 @@ let authorised = false;
 let selectedRole = 'teacher';
 let viewSequence = 0;
 const pages = [
-  ['Home', 'index.html'], ['Year hubs', 'learning.html'],
+  ['Home', 'index.html'], ['Student practice preview', 'practice.html?preview=1'], ['Year hubs', 'learning.html'],
   ['Subject hubs', 'subject.html?year=3&subject=english'],
   ['Sign In', 'sign-in.html'], ['Sign Up', 'sign-up.html'], ['About', 'about.html'],
   ['Leaderboard', 'leaderboard.html?demo=student']

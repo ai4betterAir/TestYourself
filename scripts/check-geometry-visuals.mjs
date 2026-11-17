@@ -35,7 +35,7 @@ for(const [grade,topics] of grades){
 }
 assert.ok(seen.size>=11,`Only ${seen.size} diagram families generated`);
 assert.equal(api.hasTopic('5','fractions'),false,'Other topics must not be replaced');
-const practice=fs.readFileSync('practice.html','utf8');
+const practice=fs.readFileSync('maths-practice.html','utf8');
 const js=fs.readFileSync('js/practice.js','utf8');
 const flow=fs.readFileSync('js/math-learning-v2.js','utf8');
 for(const id of ['practiceGeometryFigure','guidedGeometryFigure','testGeometryFigure'])

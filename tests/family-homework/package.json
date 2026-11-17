@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "engines": {"node": ">=22"},
-  "scripts": {"test": "node bank.mjs && node security.mjs && node interface.mjs"},
+  "scripts": {"test": "node bank.mjs && node security.mjs && node interface.mjs && node student-practice.mjs"},
   "devDependencies": {"@electric-sql/pglite": "0.5.16", "jsdom": "31.0.1"}
 }

@@ -123,8 +123,7 @@ for (const [relative, fragment] of [
 {
   const context = {window: {}, document: {getElementById() { return null; }}, Event: class Event {}};
   vm.createContext(context);
-  const firstLine = fs.readFileSync(path.join(root, 'js/english-course.js'), 'utf8').split('\n')[0];
-  vm.runInContext(firstLine, context);
+  run('js/english-data.js', context);
   run('js/english-course-expansion.js', context);
   vm.runInContext('window.__DATA=DATA', context);
   for (const year of ['1','2','3','4','5','6']) {
@@ -155,7 +154,7 @@ for (const [relative, fragment] of [
 }
 
 const ordering = {
-  'practice.html': ['js/year5-tests.js', 'js/question-quality-fixes.js', 'js/practice.js', 'js/site-shell.js'],
+  'maths-practice.html': ['js/year5-tests.js', 'js/question-quality-fixes.js', 'js/practice.js', 'js/site-shell.js'],
   'selective-practice.html': ['js/year5-tests.js', 'js/question-quality-fixes.js', 'js/selective-practice.js', 'js/site-shell.js'],
   'english-practice.html': ['js/english-course.js', 'js/english-course-expansion.js', 'js/english-test.js', 'js/site-shell.js'],
   'vocabulary-year4-reading.html': ['js/vocabulary-y4-reading.js', 'js/vocabulary-test.js', 'js/site-shell.js']

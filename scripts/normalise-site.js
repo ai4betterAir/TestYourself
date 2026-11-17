@@ -88,7 +88,7 @@ for (const file of pages) {
     html = addBeforeHeadEnd(html, `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}"><meta name="twitter:description" content="${pageDescription.replace(/"/g, '&quot;')}"><meta name="twitter:image" content="https://ai4betterair.github.io/TestYourself/assets/acorn-and-shine-logo-transparent.png">`);
   }
 
-  if (file === 'practice.html' && !html.includes('question-quality-fixes.js')) {
+  if (file === 'maths-practice.html' && !html.includes('question-quality-fixes.js')) {
     html = html.replace('<script src="js/practice.js">', '<script src="js/question-quality-fixes.js"></script><script src="js/practice.js">');
   }
   if (file === 'selective-practice.html' && !html.includes('question-quality-fixes.js')) {
