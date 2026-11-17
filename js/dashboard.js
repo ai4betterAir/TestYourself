@@ -4,6 +4,8 @@ import { supabase, isSupabaseConfigured, showSetupNotice, requireUser, getProfil
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 let user, profile, classes = [], classMembers = [], assignments = [], submissions = [], children = [], leaderboardRows = [];
+let assignmentBoardRows=null;
+document.addEventListener('assignment-board-data',event=>{if(event.detail?.complete){assignmentBoardRows=event.detail.rows;applyAssignmentBoardSummary();}});
 const requestedDemo = new URLSearchParams(location.search).get('demo');
 const demoRole = ['student','teacher','parent'].includes(requestedDemo) ? requestedDemo : null;
 const LOCAL_ACCOUNTS = 'skillupLocalAccounts';
@@ -205,6 +207,33 @@ function render() {
   else if (profile.role === 'student') renderStudent();
   else renderParent();
   renderWork(); renderPeople(); renderProgress();
+  applyAssignmentBoardSummary();
+}
+
+function applyAssignmentBoardSummary() {
+  if(!profile||!assignmentBoardRows)return;
+  const rows=assignmentBoardRows,complete=rows.filter(r=>r.submitted_at),scored=complete.filter(r=>r.score!=null&&Number(r.total)>0);
+  const pending=rows.filter(r=>!r.submitted_at),overdue=pending.filter(r=>new Date(r.due_at)<new Date());
+  const average=scored.length?Math.round(scored.reduce((sum,r)=>sum+Number(r.score)/Number(r.total)*100,0)/scored.length):0;
+  const marks=scored.reduce((sum,r)=>sum+Number(r.score),0),total=scored.reduce((sum,r)=>sum+Number(r.total),0);
+  const adapted=scored.map(r=>({assignment_id:r.id,student_id:r.student_id,subject:r.subject,score:r.score,max_score:r.total,submitted_at:r.submitted_at}));
+  if(profile.role==='teacher'){
+    metrics([{label:'Active classes',value:classes.length,note:'Your learning groups'},{label:'Students',value:new Set(classMembers.map(m=>m.student_id)).size,note:'Unique learners'},{label:'Awaiting submission',value:pending.length,note:'Student assignments'},{label:'Submissions',value:complete.length,note:'Saved results received'}]);
+    $('insightPanel').innerHTML=complete.length?`<strong>${complete.length} submission${complete.length===1?'':'s'} received</strong>View scores and submitted homework answers on your assignment board.`:'<strong>Waiting for submissions</strong>Published work is listed on your assignment board.';
+  }else if(profile.role==='parent'){
+    metrics([{label:'Linked children',value:children.length,note:'Family connections'},{label:'To complete',value:pending.length,note:'Family and class work'},{label:'Submitted',value:complete.length,note:'Saved results received'},{label:'Average',value:scored.length?average+'%':'—',note:'Submitted scored work'}]);
+  }else{
+    const rank=leaderboardRows.find(r=>r.student_id===user?.id)?.rank_position||'—';
+    metrics([{label:'Acorn & Shine mark',value:total?Math.round(marks/total*100)+'/100':'—',note:'Submitted accuracy'},{label:'Questions answered',value:total,note:'Completed scored work'},{label:'Marks achieved',value:marks,note:'Total correct marks'},{label:'Leaderboard rank',value:rank,note:'Year-level ranking'}]);
+  }
+  if(profile.role!=='student'){
+    $('primaryPanelTitle').textContent='Recent assignment activity';
+    const recent=[...rows].sort((a,b)=>new Date(b.submitted_at||b.created_at||b.due_at)-new Date(a.submitted_at||a.created_at||a.due_at)).slice(0,6);
+    $('primaryPanel').innerHTML=recent.length?`<div class="task-list">${recent.map(r=>`<article class="task-card"><div><h3>${esc(r.title)}</h3><p>${esc(r.student_name)} · ${r.submitted_at?'Submitted '+formatDate(r.submitted_at,true):'Due '+formatDate(r.due_at,true)}</p></div><strong>${r.submitted_at?(r.score!=null&&r.total?Number(r.score)+'/'+Number(r.total):'Received'):'To do'}</strong></article>`).join('')}</div>`:empty('No assigned work yet','Assignments and submitted results will appear here.');
+  }
+  $('progressPanel').innerHTML=profile.role==='student'?scoreSummary(adapted):subjectProgress(adapted);
+  $('fullProgress').innerHTML=`<div class="metric-grid"><article class="metric"><span>Completed</span><strong>${complete.length}</strong><small>Submitted assignments</small></article><article class="metric"><span>Average accuracy</span><strong>${scored.length?average+'%':'—'}</strong><small>Scored work</small></article><article class="metric"><span>Still to do</span><strong>${pending.length}</strong><small>Assigned work</small></article><article class="metric"><span>Past due</span><strong>${overdue.length}</strong><small>Not submitted</small></article></div>${scoreSummary(adapted)}`;
+  $('workContent').innerHTML='<p class="panel-subtitle">Use the assignment board above to open work, filter submissions and review results.</p>';
 }
 
 function assignmentState(item, submission) {
@@ -283,7 +312,7 @@ function subjectProgress(list) {
   const groups = new Map();
   list.filter(item => Number(item.max_score) > 0).forEach(item => {
     const assignment = assignments.find(row => row.id === item.assignment_id);
-    const subject = assignment?.subject || 'Learning';
+    const subject = item.subject || assignment?.subject || 'Learning';
     const group = groups.get(subject) || {score: 0, total: 0};
     group.score += Number(item.score || 0);
     group.total += Number(item.max_score);

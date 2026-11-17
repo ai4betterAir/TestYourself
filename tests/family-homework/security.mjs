@@ -160,4 +160,13 @@ await as(teacher);const examTeacher="select public.create_teacher_homework($1,$2
 assert.equal((await db.query(examTeacher,[class1,[child],JSON.stringify(examQuestions.slice(0,10))])).rows[0].count,1);
 await as(child);assert.equal((await db.query("select * from public.get_student_leaderboard('4','all') where student_id=$1",[child])).rows[0].completed_tests,after.completed_tests);
 console.log('PASS: exam migration reruns, Year 4 OC/Year 5 Selective eligibility, full-set validation, private keys, no hints, parent/teacher creation and exactly-once leaderboard points.');
+await db.exec('reset role');
+const boardSQL=fs.readFileSync(root+'supabase/migrations/202611170003_homework_activity_board.sql','utf8');
+await db.exec(boardSQL);await db.exec(boardSQL);
+await as(parent);const parentFeed=(await db.query('select * from public.get_homework_activity()')).rows;
+assert.ok(parentFeed.some(h=>h.id===examId&&h.score===30&&h.submitted_at));assert.ok(parentFeed.every(h=>h.student_id===child));assert.ok(parentFeed.every(h=>h.sender_name&&h.student_name));
+await as(teacher);const teacherFeed=(await db.query('select * from public.get_homework_activity()')).rows;assert.ok(teacherFeed.length);assert.ok(teacherFeed.every(h=>h.teacher_id===teacher));
+await as(stranger);assert.equal((await db.query('select * from public.get_homework_activity()')).rows.length,0);
+await db.exec('reset role;set role anon');await assert.rejects(db.query('select * from public.get_homework_activity()'),/permission denied/);
+console.log('PASS: named activity feed includes submitted scores, approved guardian/assigning teacher scope, no unrelated student data and no anonymous access.');
 await db.close();

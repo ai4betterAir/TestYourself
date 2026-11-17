@@ -1,3 +1,4 @@
+import {loadAssignmentActivity, renderAssignmentBoard} from './assignment-board.js';
 import {ensureTeacherGroups} from './teacher-groups-api.js';
 import {supabase, getProfile, friendlyError, formatDate} from './supabase-client.js?v=profile-setup-fix';
 import {examProgrammes, getExamHomeworkBank, makeExamHomework} from './exam-homework-bank.js';
@@ -108,17 +109,28 @@ function setupModal() {
   for(const id of ['homeworkProgramme','homeworkSubject','homeworkMode']) $(id).onchange=updateTopics;
   $('familyHomeworkForm').onsubmit=publish;
 }
-async function refresh() {
-  const {data:work,error}=await supabase.from('family_homework').select('id,student_id,teacher_id,class_id,title,subject,year_level,topic_ids,due_at,allow_late,submitted_at,score,questions').order('due_at');
-  document.querySelectorAll('[data-family-homework-list]').forEach(host=>{
-    if(error){host.textContent='Homework is not available yet. The site owner needs to run both the family-homework and teacher-homework SQL setup scripts.';return;}
-    host.innerHTML=work.length?`<div class="task-list">${work.map(item=>{
-      const child=children.find(c=>c.id===item.student_id),closed=!item.allow_late&&new Date(item.due_at)<new Date();
-      const status=item.submitted_at?'Completed':closed?'Closed':new Date(item.due_at)<new Date()?'Overdue':'To do';
-      const details=`${item.teacher_id?'Teacher · ':'Family · '}${item.subject} · ${yearLabel(item.year_level)} · ${['OC','Selective'].includes(item.subject)?(item.questions.length===30?'Full practice set':'Selected section practice'):(item.topic_ids.length>1?'Mixed topics':'One topic')} · ${item.questions.length} questions`;
-      return `<article class="task-card"><div><h3>${esc(item.title)}</h3><p>${child?esc(child.full_name)+' · ':''}${esc(details)}</p><p>Due ${esc(formatDate(item.due_at,true))} · <strong>${status}</strong>${item.submitted_at?' · '+item.score+'/'+item.questions.length:''}</p></div>${profile.role==='student'?`<a class="primary-link" href="family-homework.html?id=${item.id}">${item.submitted_at?'View result':'Open homework'}</a>`:''}</article>`;
-    }).join('')}</div>`:'<p class="panel-subtitle">No family homework yet.</p>';
-  });
+let boardUserId,refreshing=false,boardRows=[],boardSignature='',boardNotice='';
+function mountBoards() {
+  for(const section of ['overviewSection','workSection']){
+    const panel=document.createElement('article');panel.className='panel family-homework-panel';
+    panel.innerHTML=`<div class="panel-heading"><div><h2>Assignment board</h2><p class="panel-subtitle">${profile.role==='student'?'See who sent your work, what is due and what you have submitted.':'See new assignments and completed submissions together.'}</p></div>${profile.role!=='student'?'<button class="primary-button" data-family-homework-open type="button">＋ Assign homework</button>':''}</div><p data-assignment-setup role="status"></p><div data-family-homework-list>Loading assignment activity…</div>`;
+    $(section)?.prepend(panel);
+    panel.querySelector('[data-family-homework-open]')?.addEventListener('click',()=>{if(!$('familyHomeworkModal'))return;openForm();$('closeFamilyHomework').focus();});
+  }
+}
+async function refresh(force=true) {
+  if(refreshing)return;refreshing=true;
+  try{
+    const result=await loadAssignmentActivity(profile.role,boardUserId);
+    const signature=JSON.stringify(result);
+    if(force||signature!==boardSignature){
+      boardRows=result.rows;boardNotice=result.notice;boardSignature=signature;
+      document.dispatchEvent(new CustomEvent('assignment-board-data',{detail:{rows:boardRows,complete:!boardNotice}}));
+      document.querySelectorAll('[data-family-homework-list]').forEach(host=>renderAssignmentBoard(host,boardRows,profile.role,{notice:boardNotice,filter:host.dataset.boardFilter||'all'}));
+    }
+  }catch(error){
+    document.querySelectorAll('[data-family-homework-list]').forEach(host=>renderAssignmentBoard(host,boardRows,profile.role,{notice:'Could not refresh assignment activity. Your last loaded work is still shown. Try Refresh.',filter:host.dataset.boardFilter||'all'}));
+  }finally{refreshing=false;}
 }
 async function init() {
   if(assignmentPreview){
@@ -126,11 +138,27 @@ async function init() {
     children=[{id:'preview-year5',full_name:'Alex · Sample student',year_level:'5'},{id:'preview-year4',full_name:'Jamie · Sample student',year_level:'4'}];
     setupModal();$('familyHomeworkTitle').textContent='Preview an assignment';$('homeworkPublish').textContent='Preview question set';openForm();return;
   }
-  if(new URLSearchParams(location.search).has('demo')||!supabase)return;
+  const demo=new URLSearchParams(location.search).get('demo');
+  if(['student','parent','teacher'].includes(demo)){
+    profile={role:demo,status:'active'};mountBoards();
+    const samples=[{id:'sample-1',key:'sample-1',kind:'homework',student_id:'sample',student_name:'Alex',teacher_id:'sample-teacher',sender_name:'Ms Taylor',title:'Selective · Reading and reasoning',subject:'Selective',year_level:'5',total:20,due_at:new Date(Date.now()+864e5).toISOString(),allow_late:true},{id:'sample-2',key:'sample-2',kind:'homework',student_id:'sample',student_name:'Alex',parent_id:'sample-parent',sender_name:'Sam · Guardian',title:'Fractions review',subject:'Maths',year_level:'5',total:10,score:8,due_at:new Date(Date.now()+864e5).toISOString(),submitted_at:new Date().toISOString()}];
+    document.querySelectorAll('[data-family-homework-list]').forEach(host=>renderAssignmentBoard(host,samples,demo,{preview:true}));
+    document.dispatchEvent(new CustomEvent('assignment-board-data',{detail:{rows:samples,complete:true}}));
+    document.querySelectorAll('[data-family-homework-open]').forEach(button=>{button.disabled=true;button.title='Use the assignment builder preview to try this form.';});return;
+  }
+  if(!supabase)return;
   const {data,error}=await supabase.auth.getUser(); if(error||!data.user)return;
   profile=await getProfile(data.user.id);if(!['student','parent','teacher'].includes(profile.role)||profile.status!=='active')return;
+  boardUserId=data.user.id;mountBoards();await refresh();
+  document.addEventListener('assignment-board-refresh',()=>refresh());
+  window.addEventListener('focus',()=>refresh(false));
+  window.addEventListener('storage',event=>{if(event.key==='acorn-assignment-updated')refresh(false);});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh(false);});
+  document.querySelectorAll('[data-section="overview"],[data-section="work"]').forEach(button=>button.addEventListener('click',()=>refresh(false)));
+  setInterval(()=>{if(!document.hidden)refresh(false);},30000);
+  try {
   if(isTeacher()){
-    await ensureTeacherGroups(supabase);
+    try{await ensureTeacherGroups(supabase);}catch(error){console.warn('Learning groups unavailable:',error.message);}
     const classes=await supabase.from('classes').select('id,name,year_level').eq('teacher_id',data.user.id).is('archived_at',null);if(classes.error)throw classes.error;
     classList=classes.data;
     if(classList.length){
@@ -146,11 +174,9 @@ async function init() {
     if(ids.length){const result=await supabase.from('profiles').select('id,full_name,year_level').in('id',ids).eq('role','student').eq('status','active');if(result.error)throw result.error;children=result.data;}
     setupModal();
   }
-  for(const section of ['overviewSection','workSection']){
-    const panel=document.createElement('article');panel.className='panel family-homework-panel';
-    panel.innerHTML=`<div class="panel-heading"><div><h2>${isTeacher()?'Class topic homework':profile.role==='parent'?'Family and class homework':'Homework from your family and teachers'}</h2><p class="panel-subtitle">${isTeacher()?'Assign school topics, OC or Selective practice and follow every result.':profile.role==='parent'?'Choose school topics or an age-matched exam pathway. Completed homework counts towards leaderboard results.':'Complete the work your guardian or teacher assigned.'}</p></div>${profile.role!=='student'?'<button class="primary-button" data-family-homework-open type="button">＋ Assign homework</button>':''}</div><div data-family-homework-list>Loading homework…</div>`;
-    $(section).prepend(panel);
-    panel.querySelector('[data-family-homework-open]')?.addEventListener('click',()=>{openForm();$('closeFamilyHomework').focus();});
+  } catch(error) {
+    document.querySelectorAll('[data-assignment-setup]').forEach(node=>node.textContent='The assignment form could not load. Existing assignment results remain available below. '+friendlyError(error));
+    document.querySelectorAll('[data-family-homework-open]').forEach(button=>button.disabled=!$('familyHomeworkModal'));
   }
   await refresh();
 }

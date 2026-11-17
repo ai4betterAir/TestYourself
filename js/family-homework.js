@@ -32,6 +32,7 @@ async function submit() {
     const {data,error}=await supabase.rpc('submit_family_homework',{homework_input:work.id,answers_input:answers});
     if(error)throw error;
     work.score=data.score;work.submitted_at=new Date().toISOString();
+    try{localStorage.setItem('acorn-assignment-updated',String(Date.now()));}catch{}
     try{localStorage.removeItem(draftKey(work.id));}catch{}
     result();
   }catch(error){render();status(friendlyError(error));}

@@ -20,7 +20,7 @@ for(const [year,programme] of [['4','OC'],['5','Selective'],['6','Selective']]){
 assert.throws(()=>getExamHomeworkBank('3','Selective'),/Year/);
 const dom=new JSDOM(text('dashboard.html'),{url:'https://example.test/dashboard.html?demo=parent&homework-preview=1',runScripts:'outside-only'}),w=dom.window;
 Object.assign(w,{supabase:null,subjects:['Maths','English','Science'],getHomeworkBank:async()=>({topics:[{id:'x',label:'Topic'}]}),friendlyError:e=>e.message});
-vm.runInContext(source+'\n'+text('js/family-homework-dashboard.js').replace(/^import .*;\n/gm,''),dom.getInternalVMContext());
+vm.runInContext('const loadAssignmentActivity=async()=>({rows:[],notice:""});const renderAssignmentBoard=()=>{};'+source+'\n'+text('js/family-homework-dashboard.js').replace(/^import .*;\n/gm,''),dom.getInternalVMContext());
 await new Promise(resolve=>setTimeout(resolve,0));
 assert.ok(w.document.getElementById('homeworkProgramme').textContent.includes('Selective'));
 w.document.getElementById('homeworkProgramme').value='Selective';await w.updateTopics();
