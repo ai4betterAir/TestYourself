@@ -1,7 +1,8 @@
 import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';
 const root=new URL('../../',import.meta.url);
 const boardSource='(function(){'+fs.readFileSync(new URL('js/assignment-board.js',root),'utf8').replace(/^import .*;\n/gm,'').replaceAll('export ','')+';Object.assign(globalThis,{loadAssignmentActivity,renderAssignmentBoard});})();\n';
-const source=file=>(file==='js/family-homework-dashboard.js'?boardSource:'')+(file==='js/family-homework-dashboard.js'?fs.readFileSync(new URL('js/exam-homework-bank.js',root),'utf8').replaceAll('export ','')+'\n':'')+fs.readFileSync(new URL(file,root),'utf8').replace(/^import .*;\n/gm,'');
+const reviewSource='(function(){'+fs.readFileSync(new URL('js/homework-review.js',root),'utf8').replaceAll('export ','')+';Object.assign(globalThis,{renderHomeworkReview,sampleHomeworkReview});})();\n';
+const source=file=>(file==='js/family-homework.js'?reviewSource:'')+(file==='js/family-homework-dashboard.js'?boardSource:'')+(file==='js/family-homework-dashboard.js'?fs.readFileSync(new URL('js/exam-homework-bank.js',root),'utf8').replaceAll('export ','')+'\n':'')+fs.readFileSync(new URL(file,root),'utf8').replace(/^import .*;\n/gm,'');
 const questions=Array.from({length:10},(_,i)=>({text:`Question ${i+1}`,choices:['Yes','No'],hint:'Think carefully.',topic:'addition',passage:''}));
 const child={id:'33333333-3333-4333-8333-333333333333',full_name:'Child',year_level:'2'};
 const homework={id:'55555555-5555-4555-8555-555555555555',student_id:child.id,title:'Addition homework',subject:'Maths',year_level:'2',topic_ids:['addition'],questions,due_at:new Date(Date.now()+864e5).toISOString(),allow_late:true};
@@ -38,7 +39,7 @@ function query(data){return {select(){return this;},eq(){return this;},in(){retu
 }
 {
  const dom=new JSDOM(fs.readFileSync(new URL('family-homework.html',root),'utf8'),{url:'https://example.test/family-homework.html?id='+homework.id,runScripts:'outside-only'});const w=dom.window;let sent;
- Object.assign(w,{ensureTeacherGroups:async()=>{},supabase:{from:()=>query(structuredClone(homework)),rpc:async(name,input)=>{sent={name,input};return result({score:7,total:10});}},requireUser:async()=>({id:child.id}),getProfile:async()=>({role:'student',status:'active'}),friendlyError:e=>e.message,formatDate:d=>d});
+ Object.assign(w,{ensureTeacherGroups:async()=>{},supabase:{from:()=>query(structuredClone(homework)),rpc:async(name,input)=>{if(name==='review_family_homework')return result({score:7,total:10,questions:questions.map((q,i)=>({...q,number:i+1,chosen_index:0,correct_index:i<7?0:1,is_correct:i<7,explanation:'A strategy.'}))});sent={name,input};return result({score:7,total:10});}},requireUser:async()=>({id:child.id}),getProfile:async()=>({role:'student',status:'active'}),friendlyError:e=>e.message,formatDate:d=>d});
  vm.runInContext(source('js/family-homework.js').replace(/init\(\)\.catch\([\s\S]*$/,'globalThis.initialiseHomework=init;'),dom.getInternalVMContext());
  await w.initialiseHomework();assert.equal(w.document.querySelectorAll('[name="answer"]').length,2);
  await w.submit();assert.equal(sent,undefined);assert.match(w.document.getElementById('homeworkStatus').textContent,/Answer all/);

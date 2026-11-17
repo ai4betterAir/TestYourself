@@ -169,4 +169,18 @@ await as(teacher);const teacherFeed=(await db.query('select * from public.get_ho
 await as(stranger);assert.equal((await db.query('select * from public.get_homework_activity()')).rows.length,0);
 await db.exec('reset role;set role anon');await assert.rejects(db.query('select * from public.get_homework_activity()'),/permission denied/);
 console.log('PASS: named activity feed includes submitted scores, approved guardian/assigning teacher scope, no unrelated student data and no anonymous access.');
+await db.exec('reset role');
+const reviewSQL=fs.readFileSync(root+'supabase/migrations/202611170004_homework_question_review.sql','utf8');await db.exec(reviewSQL);await db.exec(reviewSQL);
+await as(parent);const reviewId=(await db.query(examCall,[child,'4','OC',['reading'],JSON.stringify(examQuestions.slice(0,10))])).rows[0].id;
+await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/Only active students/);
+await as(child);await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/Submit this assignment/);
+await assert.rejects(db.query('select * from public.family_homework_keys'),/permission denied/);
+await db.query('select public.submit_family_homework($1,$2::jsonb)',[reviewId,JSON.stringify([1,...Array(9).fill(0)])]);
+const review=(await db.query('select public.review_family_homework($1) as result',[reviewId])).rows[0].result;
+assert.equal(review.score,9);assert.equal(review.questions.length,10);assert.equal(review.questions[0].chosen_index,1);assert.equal(review.questions[0].correct_index,0);assert.equal(review.questions[0].is_correct,false);assert.equal(review.questions[1].is_correct,true);assert.equal(review.questions[0].explanation,'Hidden in exam');
+assert.equal((await db.query('select questions from public.family_homework where id=$1',[reviewId])).rows[0].questions[0].hint,'');
+const oldReview=(await db.query('select public.review_family_homework($1) as result',[examId])).rows[0].result;assert.equal(oldReview.questions[0].correct_index,0);assert.equal(oldReview.questions[0].explanation,'');
+await as(stranger);await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/Homework not found/);
+await db.exec('reset role;set role anon');await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/permission denied/);
+console.log('PASS: submitted-only question review, canonical saved answers, correct/incorrect flags, private exam strategies, older result support, no peer access and no raw answer-key access.');
 await db.close();

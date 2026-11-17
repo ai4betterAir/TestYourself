@@ -17,3 +17,15 @@ The dashboard now combines topic homework and older activity assignments into a 
 The board reads existing RLS-protected data immediately; no new SQL is needed for submitted results to display. Optional `202611170003_homework_activity_board.sql` provides sender and student names through a small protected feed, without downloading question banks for the feed itself. Without it, account-visible names are used where available, or “your teacher” / “your guardian”. Apply after family and teacher homework SQL. This RPC mirrors the homework access rules; it returns no email addresses or answer keys.
 
 A missing teacher-group setup no longer prevents existing homework from loading. Errors in the assignment form are shown separately from the board. Public sample boards: `dashboard.html?demo=student`, `dashboard.html?demo=teacher`, `dashboard.html?demo=parent`.
+
+## Student question review
+
+Apply `202611170004_homework_question_review.sql` after family homework, teacher homework and `202611170002_exam_homework_leaderboard.sql`. The optional named activity-board migration is independent. The review setup is safe to rerun.
+
+After submission, students see all questions, their saved choices, correct answers, correct/incorrect labels and a strategy where one was stored. **Review mistakes** filters to incorrect responses. **Try this question again** runs revision in the browser without changing the stored answer, score or leaderboard result. Reopening a completed homework item reloads the canonical submitted answers from the database.
+
+`review_family_homework` only releases answers for the caller's own submitted assignment, with an active student account and the existing family/class access checks. It rejects unfinished work, other students, parents, teachers and anonymous callers. The private answer-key table remains unreadable by authenticated clients.
+
+New homework stores review strategies in that private table, including exam strategies that are withheld during the attempt. Older results retain their correct answer keys; available saved hints are used for review, but explanations removed from older exam sets cannot be recovered. Those questions show a next-step prompt instead of an invented explanation.
+
+Public, sample-only design preview: `family-homework.html?preview=review`.

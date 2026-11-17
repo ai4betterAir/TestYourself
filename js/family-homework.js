@@ -1,3 +1,4 @@
+import {renderHomeworkReview, sampleHomeworkReview} from './homework-review.js';
 import {supabase, requireUser, getProfile, friendlyError, formatDate} from './supabase-client.js?v=profile-setup-fix';
 const host=document.getElementById('homeworkApp');
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -5,8 +6,18 @@ let work, answers=[],index=0,busy=false;
 const draftKey=id=>'acorn-family-homework-'+id;
 const status=text=>{const out=document.getElementById('homeworkStatus');if(out)out.textContent=text;};
 function saveDraft(){try{localStorage.setItem(draftKey(work.id),JSON.stringify(answers));}catch{}}
-function result() {
-  host.innerHTML=`<p>HOMEWORK COMPLETE</p><h1>${esc(work.title)}</h1><p class="homework-score">${work.score} / ${work.questions.length}</p><p>Your result has been saved. Your teacher or guardian can see it on their dashboard. Completed homework contributes to your year-level leaderboard after the homework leaderboard setup is applied.</p><a class="secondary-button" href="leaderboard.html">View leaderboard</a><a class="primary-button" href="dashboard.html">Back to dashboard</a>`;
+async function result() {
+  host.innerHTML=`<p>HOMEWORK COMPLETE</p><h1>${esc(work.title)}</h1><p class="homework-score">${work.score} / ${work.questions.length}</p><p>Your result is saved. Loading your question review…</p><p id="homeworkReviewStatus" role="status"></p><button type="button" id="retryHomeworkReview" class="secondary-button" hidden>Load question review</button><a class="primary-button" href="dashboard.html">Back to dashboard</a>`;
+  try {
+    const {data,error}=await supabase.rpc('review_family_homework',{homework_input:work.id});
+    if(error)throw error;
+    if(!data||!Array.isArray(data.questions)||data.questions.length!==work.questions.length||data.questions.some(q=>!Array.isArray(q.choices)||!Number.isInteger(q.correct_index)||q.correct_index<0||q.correct_index>=q.choices.length))throw new Error('Question review could not load.');
+    renderHomeworkReview(host,work,data);
+  } catch(error) {
+    const missing=error.code==='PGRST202'||/review_family_homework.*(not|find|exist)/i.test(error.message||'');
+    document.getElementById('homeworkReviewStatus').textContent=missing?'Your score is saved. Question review needs the homework-question-review SQL setup from the site owner.':'Your score is saved, but the question review could not load. Please try again.';
+    const retry=document.getElementById('retryHomeworkReview');retry.hidden=false;retry.onclick=result;
+  }
 }
 function render(focus=false) {
   if(work.submitted_at)return result();
@@ -34,11 +45,12 @@ async function submit() {
     work.score=data.score;work.submitted_at=new Date().toISOString();
     try{localStorage.setItem('acorn-assignment-updated',String(Date.now()));}catch{}
     try{localStorage.removeItem(draftKey(work.id));}catch{}
-    result();
+    await result();
   }catch(error){render();status(friendlyError(error));}
   finally{busy=false;}
 }
 async function init(){
+  if(new URLSearchParams(location.search).get('preview')==='review'){renderHomeworkReview(host,{title:'Addition & subtraction · Assignment review'},sampleHomeworkReview(),{preview:true});return;}
   if(!supabase)throw new Error('The account service is not configured.');
   const user=await requireUser();if(!user)return;
   const profile=await getProfile(user.id);

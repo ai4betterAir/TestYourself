@@ -1,0 +1,14 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';
+const root=new URL('../../',import.meta.url),dom=new JSDOM('<main id="review"></main>',{url:'https://example.test/family-homework.html',runScripts:'outside-only'}),w=dom.window;
+vm.runInContext(fs.readFileSync(new URL('js/homework-review.js',root),'utf8').replaceAll('export ',''),dom.getInternalVMContext());
+const host=w.document.getElementById('review'),result=w.sampleHomeworkReview(),before=JSON.stringify(result);
+w.renderHomeworkReview(host,{title:'My submitted assignment'},result);
+assert.equal(host.querySelectorAll('.homework-review-item').length,10);assert.match(host.textContent,/Your answer/);assert.match(host.textContent,/Correct answer/);
+host.querySelector('[data-review-filter="mistakes"]').click();assert.equal(host.querySelectorAll('.homework-review-item').length,2);assert.match(host.textContent,/Question 2/);
+const item=host.querySelector('.homework-review-item');item.querySelector('[data-retry-question]').click();assert.equal(item.querySelector('.homework-review-options').hidden,true);
+item.querySelector('[data-check-retry]').click();assert.match(item.querySelector('[data-retry-message]').textContent,/Choose an answer/);
+const input=item.querySelector('input[value="0"]');input.checked=true;item.querySelector('[data-check-retry]').click();assert.match(item.querySelector('[data-retry-message]').textContent,/Correct/);assert.equal(JSON.stringify(result),before);
+item.querySelector('[data-retry-question]').click();assert.equal(item.querySelector('.homework-review-options').hidden,false);
+const perfect={...result,questions:result.questions.map(q=>({...q,is_correct:true}))};w.renderHomeworkReview(host,{title:'Perfect'},perfect,{filter:'mistakes'});assert.match(host.textContent,/No mistakes to review/);
+const unsafe={...result,questions:[{...result.questions[0],text:'<img src=x onerror=alert(1)>',explanation:'<script>bad()</script>'}]};w.renderHomeworkReview(host,{title:'Safe output'},unsafe);assert.equal(host.querySelector('img'),null);assert.equal(host.querySelector('script'),null);
+console.log('PASS: per-question choices, mistake filter, explanation display, revision feedback, immutable saved results, perfect score empty state and safe text rendering.');dom.window.close();
