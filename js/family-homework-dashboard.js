@@ -1,8 +1,11 @@
 import {ensureTeacherGroups} from './teacher-groups-api.js';
 import {supabase, getProfile, friendlyError, formatDate} from './supabase-client.js?v=profile-setup-fix';
+import {examProgrammes, getExamHomeworkBank, makeExamHomework} from './exam-homework-bank.js';
 import {subjects, getHomeworkBank, makeHomework} from './homework-bank.js';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let profile, children = [], classList = [], classMembers = [], bank, bankVersion = 0, busy = false;
+const assignmentPreview = new URLSearchParams(location.search).has('homework-preview');
+const isExam = () => ['OC','Selective'].includes($('homeworkProgramme')?.value);
 const isTeacher = () => profile?.role === 'teacher';
 const target = () => isTeacher() ? classList.find(c => c.id === $('homeworkClass')?.value) : children.find(c => c.id === $('homeworkChild')?.value);
 function renderClassRecipients() {
@@ -18,19 +21,39 @@ function openForm() {
   $('homeworkMessage').textContent = '';
   if (isTeacher() ? !classList.length : !children.length) { $('homeworkMessage').textContent = isTeacher() ? 'Create a class and enrol students first.' : 'Link a child and have the connection approved first.'; return; }
   if (isTeacher()) renderClassRecipients();
+  updateProgrammes();
   updateTopics();
 }
+function updateProgrammes() {
+  const select=$('homeworkProgramme'),previous=select.value;
+  select.innerHTML='<option value="curriculum">School topics</option>'+examProgrammes(target()?.year_level).map(p=>`<option value="${p}">${p==='OC'?'OC preparation':'Selective preparation'}</option>`).join('');
+  if([...select.options].some(o=>o.value===previous))select.value=previous;
+}
+function updateAssignmentDesign() {
+  const exam=isExam();
+  $('homeworkSubject').closest('label').hidden=exam;
+  const mode=$('homeworkMode'),previous=mode.value;
+  mode.innerHTML=exam?'<option value="topic">One section</option><option value="mixed">Selected sections</option><option value="full">Full practice set</option>':'<option value="topic">One topic</option><option value="mixed">Mixed topics</option>';
+  if([...mode.options].some(o=>o.value===previous))mode.value=previous;
+  const count=$('homeworkCount'),oldCount=count.value;
+  count.innerHTML=exam&&mode.value==='full'?'<option value="30">30 questions · 10 per section</option>':'<option value="10">10 questions</option><option value="20">20 questions</option>';
+  if([...count.options].some(o=>o.value===oldCount))count.value=oldCount;
+  $('homeworkBankNote').textContent=exam?'Original Acorn & Shine exam-style questions, not official past papers. A full practice set covers reading, mathematical reasoning and thinking skills; writing is assigned separately.':'Mixed homework combines selected topics within this subject. Small question banks may repeat questions for revision.';
+  $('homeworkTopicsLegend').textContent=exam?'Choose your sections':'Choose your topics';
+  $('familyHomeworkModal').dataset.programme=exam?$('homeworkProgramme').value:'curriculum';
+}
 async function updateTopics() {
+  updateAssignmentDesign();
   const version = ++bankVersion; bank = null;
   const child = target();
   $('homeworkTopics').textContent = 'Loading topics…'; $('homeworkPublish').disabled = true;
   $('homeworkYear').textContent = child?.year_level ? yearLabel(child.year_level) : 'Set a school year in the student profile or class first.';
   if (!child?.year_level) { $('homeworkTopics').textContent = ''; return; }
   try {
-    const loaded = await getHomeworkBank(child.year_level, $('homeworkSubject').value);
+    const loaded = isExam() ? getExamHomeworkBank(child.year_level,$('homeworkProgramme').value) : await getHomeworkBank(child.year_level, $('homeworkSubject').value);
     if (version !== bankVersion) return;
-    bank = loaded; const mixed = $('homeworkMode').value === 'mixed';
-    $('homeworkTopics').innerHTML = bank.topics.map((topic,index) => `<label class="homework-topic"><input type="${mixed?'checkbox':'radio'}" name="homeworkTopic" value="${esc(topic.id)}" ${index===0?'checked':''}><span>${esc(topic.label)}</span></label>`).join('');
+    bank = loaded; const full=isExam()&&$('homeworkMode').value==='full',mixed = $('homeworkMode').value === 'mixed'||full;
+    $('homeworkTopics').innerHTML = bank.topics.map((topic,index) => `<label class="homework-topic"><input type="${mixed?'checkbox':'radio'}" name="homeworkTopic" value="${esc(topic.id)}" ${full||index===0?'checked':''} ${full?'disabled':''}><span>${esc(topic.label)}${topic.note?`<small>${esc(topic.note)}</small>`:''}</span></label>`).join('');
     $('homeworkPublish').disabled = !bank.topics.length || busy;
   } catch(error) { if (version===bankVersion) $('homeworkTopics').textContent=error.message; }
 }
@@ -48,21 +71,22 @@ async function publish(event) {
   if (!Number.isFinite(due.getTime()) || due<=new Date()) return out.textContent='Choose a future due date.';
   busy=true; $('homeworkPublish').disabled=true; out.textContent='Preparing homework…';
   try {
-    const questions=makeHomework(bank,topicIds,count);
+    const questions=isExam()?makeExamHomework(bank,topicIds,count):makeHomework(bank,topicIds,count);
+    if(assignmentPreview){out.textContent=`Preview ready: ${questions.length} questions · ${isExam()?$('homeworkProgramme').value:$('homeworkSubject').value}. Nothing has been assigned.`;out.classList.add('success');return;}
     const {error}=await supabase.rpc(isTeacher() ? 'create_teacher_homework' : 'create_family_homework', {
-      ...(isTeacher() ? {class_input:child.id,students_input:students} : {child_input:child.id}), year_input:child.year_level, subject_input:$('homeworkSubject').value,
+      ...(isTeacher() ? {class_input:child.id,students_input:students} : {child_input:child.id}), year_input:child.year_level, subject_input:isExam()?$('homeworkProgramme').value:$('homeworkSubject').value,
       topics_input:topicIds, title_input:$('homeworkTitle').value.trim(), instructions_input:$('homeworkInstructions').value.trim(),
       due_input:due.toISOString(), allow_late_input:$('homeworkAllowLate').checked, questions_input:questions
     });
     if(error) throw error;
     out.classList.add('success'); out.textContent=isTeacher() ? 'Homework assigned to '+students.length+' students. Results will appear here as they submit.' : 'Homework assigned. It is now on your child’s dashboard.';
     await refresh();
-  } catch(error) { out.textContent=friendlyError(error); }
+  } catch(error) { out.textContent=isExam()&&/supported subject|subject_check|questions_check|10 or 20/.test(error.message||'')?'Exam assignments need the exam-homework leaderboard SQL setup. Ask the site owner to apply 202611170002_exam_homework_leaderboard.sql.':friendlyError(error); }
   finally { busy=false; $('homeworkPublish').disabled=!bank; }
 }
 function setupModal() {
   const modal=document.createElement('div'); modal.id='familyHomeworkModal'; modal.className='modal'; modal.hidden=true;
-  modal.innerHTML=`<section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="familyHomeworkTitle"><div class="modal-heading"><h2 id="familyHomeworkTitle">Assign homework</h2><button class="modal-close" id="closeFamilyHomework" type="button" aria-label="Close homework form">×</button></div><form id="familyHomeworkForm" class="dashboard-form"><label>Child<select id="homeworkChild" required>${children.map(c=>`<option value="${c.id}">${esc(c.full_name)}</option>`).join('')}</select></label><p class="notice">School year: <strong id="homeworkYear"></strong> · From the student’s profile.</p><label>Title<input id="homeworkTitle" required maxlength="120" placeholder="This week’s homework"></label><div class="form-row"><label>Subject<select id="homeworkSubject">${subjects.map(s=>`<option>${s}</option>`).join('')}</select></label><label>Homework type<select id="homeworkMode"><option value="topic">One topic</option><option value="mixed">Mixed topics</option></select></label></div><fieldset><legend>Topics</legend><div id="homeworkTopics" class="homework-topics"></div></fieldset><p class="panel-subtitle">Mixed homework combines selected topics within this subject. Small question banks may repeat questions for revision.</p><div class="form-row"><label>Questions<select id="homeworkCount"><option value="10">10 questions</option><option value="20">20 questions</option></select></label><label>Due date<input id="homeworkDue" type="datetime-local" value="${dueValue()}" required></label></div><label>Instructions<textarea id="homeworkInstructions" maxlength="1000" rows="3"></textarea></label><label class="checkbox-row"><input id="homeworkAllowLate" type="checkbox" checked><span>Allow completion after the due date</span></label><button id="homeworkPublish" class="primary-button" type="submit">Assign to child</button><p id="homeworkMessage" class="form-message" role="status" aria-live="polite"></p></form></section>`;
+  modal.innerHTML=`<section class="modal-card homework-assignment-card" role="dialog" aria-modal="true" aria-labelledby="familyHomeworkTitle"><div class="modal-heading"><h2 id="familyHomeworkTitle">Assign homework</h2><button class="modal-close" id="closeFamilyHomework" type="button" aria-label="Close homework form">×</button></div><div class="homework-builder-intro"><span class="homework-eyebrow">A LITTLE PRACTICE. A BIG STEP FORWARD.</span><p>Choose the right challenge, set a due date and follow their progress.</p></div><form id="familyHomeworkForm" class="dashboard-form"><label>Child<select id="homeworkChild" required>${children.map(c=>`<option value="${c.id}">${esc(c.full_name)}</option>`).join('')}</select></label><p class="notice">School year: <strong id="homeworkYear"></strong> · From the student’s profile.</p><label>Learning pathway<select id="homeworkProgramme"><option value="curriculum">School topics</option></select></label><label>Title<input id="homeworkTitle" required maxlength="120" placeholder="This week’s homework"></label><div class="form-row"><label>Subject<select id="homeworkSubject">${subjects.map(s=>`<option>${s}</option>`).join('')}</select></label><label>Homework type<select id="homeworkMode"><option value="topic">One topic</option><option value="mixed">Mixed topics</option></select></label></div><fieldset><legend id="homeworkTopicsLegend">Choose your topics</legend><div id="homeworkTopics" class="homework-topics"></div></fieldset><p id="homeworkBankNote" class="panel-subtitle">Mixed homework combines selected topics within this subject. Small question banks may repeat questions for revision.</p><div class="form-row"><label>Questions<select id="homeworkCount"><option value="10">10 questions</option><option value="20">20 questions</option></select></label><label>Due date<input id="homeworkDue" type="datetime-local" value="${dueValue()}" required></label></div><label>Instructions<textarea id="homeworkInstructions" maxlength="1000" rows="3"></textarea></label><label class="checkbox-row"><input id="homeworkAllowLate" type="checkbox" checked><span>Allow completion after the due date</span></label><button id="homeworkPublish" class="primary-button" type="submit">Assign to child</button><p id="homeworkMessage" class="form-message" role="status" aria-live="polite"></p></form></section>`;
   document.body.append(modal);
   if (isTeacher()) {
     $('familyHomeworkTitle').textContent='Assign class homework';
@@ -73,14 +97,15 @@ function setupModal() {
     classField.after(recipients);
     $('homeworkPublish').textContent='Assign to selected students';
     $('homeworkYear').parentElement.lastChild.textContent=' · From the selected class.';
-    $('homeworkClass').onchange=()=>{renderClassRecipients();updateTopics();};
+    $('homeworkClass').onchange=()=>{renderClassRecipients();updateProgrammes();updateTopics();};
   }
   $('closeFamilyHomework').onclick=()=>{if(!busy){modal.hidden=true;document.querySelector('[data-family-homework-open]')?.focus();}};
   modal.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&!busy){modal.hidden=true;document.querySelector('[data-family-homework-open]')?.focus();}
-    if(event.key==='Tab'){const focusable=[...modal.querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled);const first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
+    if(event.key==='Tab'){const focusable=[...modal.querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled&&!n.closest('[hidden]'));const first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
   });
-  for(const id of ['homeworkChild','homeworkSubject','homeworkMode']) $(id).onchange=updateTopics;
+  $('homeworkChild').onchange=()=>{updateProgrammes();updateTopics();};
+  for(const id of ['homeworkProgramme','homeworkSubject','homeworkMode']) $(id).onchange=updateTopics;
   $('familyHomeworkForm').onsubmit=publish;
 }
 async function refresh() {
@@ -90,12 +115,17 @@ async function refresh() {
     host.innerHTML=work.length?`<div class="task-list">${work.map(item=>{
       const child=children.find(c=>c.id===item.student_id),closed=!item.allow_late&&new Date(item.due_at)<new Date();
       const status=item.submitted_at?'Completed':closed?'Closed':new Date(item.due_at)<new Date()?'Overdue':'To do';
-      const details=`${item.teacher_id?'Teacher · ':'Family · '}${item.subject} · ${yearLabel(item.year_level)} · ${item.topic_ids.length>1?'Mixed topics':'One topic'} · ${item.questions.length} questions`;
+      const details=`${item.teacher_id?'Teacher · ':'Family · '}${item.subject} · ${yearLabel(item.year_level)} · ${['OC','Selective'].includes(item.subject)?(item.questions.length===30?'Full practice set':'Selected section practice'):(item.topic_ids.length>1?'Mixed topics':'One topic')} · ${item.questions.length} questions`;
       return `<article class="task-card"><div><h3>${esc(item.title)}</h3><p>${child?esc(child.full_name)+' · ':''}${esc(details)}</p><p>Due ${esc(formatDate(item.due_at,true))} · <strong>${status}</strong>${item.submitted_at?' · '+item.score+'/'+item.questions.length:''}</p></div>${profile.role==='student'?`<a class="primary-link" href="family-homework.html?id=${item.id}">${item.submitted_at?'View result':'Open homework'}</a>`:''}</article>`;
     }).join('')}</div>`:'<p class="panel-subtitle">No family homework yet.</p>';
   });
 }
 async function init() {
+  if(assignmentPreview){
+    profile={role:'parent',status:'active'};
+    children=[{id:'preview-year5',full_name:'Alex · Sample student',year_level:'5'},{id:'preview-year4',full_name:'Jamie · Sample student',year_level:'4'}];
+    setupModal();$('familyHomeworkTitle').textContent='Preview an assignment';$('homeworkPublish').textContent='Preview question set';openForm();return;
+  }
   if(new URLSearchParams(location.search).has('demo')||!supabase)return;
   const {data,error}=await supabase.auth.getUser(); if(error||!data.user)return;
   profile=await getProfile(data.user.id);if(!['student','parent','teacher'].includes(profile.role)||profile.status!=='active')return;
@@ -118,7 +148,7 @@ async function init() {
   }
   for(const section of ['overviewSection','workSection']){
     const panel=document.createElement('article');panel.className='panel family-homework-panel';
-    panel.innerHTML=`<div class="panel-heading"><div><h2>${isTeacher()?'Class topic homework':profile.role==='parent'?'Family and class homework':'Homework from your family and teachers'}</h2><p class="panel-subtitle">${isTeacher()?'Assign one topic or a mix, then see each student’s result.':profile.role==='parent'?'Assign year-level topics and follow completion.':'Complete the work your guardian or teacher assigned.'}</p></div>${profile.role!=='student'?'<button class="primary-button" data-family-homework-open type="button">＋ Assign homework</button>':''}</div><div data-family-homework-list>Loading homework…</div>`;
+    panel.innerHTML=`<div class="panel-heading"><div><h2>${isTeacher()?'Class topic homework':profile.role==='parent'?'Family and class homework':'Homework from your family and teachers'}</h2><p class="panel-subtitle">${isTeacher()?'Assign school topics, OC or Selective practice and follow every result.':profile.role==='parent'?'Choose school topics or an age-matched exam pathway. Completed homework counts towards leaderboard results.':'Complete the work your guardian or teacher assigned.'}</p></div>${profile.role!=='student'?'<button class="primary-button" data-family-homework-open type="button">＋ Assign homework</button>':''}</div><div data-family-homework-list>Loading homework…</div>`;
     $(section).prepend(panel);
     panel.querySelector('[data-family-homework-open]')?.addEventListener('click',()=>{openForm();$('closeFamilyHomework').focus();});
   }

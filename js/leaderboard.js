@@ -106,6 +106,17 @@ function bindFilters() {
     }
   }));
 }
+async function renderAssignedHomework(preview=false) {
+  const host=$('lbHomeworkList');if(!host)return;
+  const sample=[{id:'sample',title:'Selective · Reading and reasoning',subject:'Selective',teacher_id:null,questions:Array(20),due_at:new Date(Date.now()+864e5).toISOString(),submitted_at:null}];
+  let work=sample;
+  if(!preview){
+    const result=await supabase.from('family_homework').select('id,title,subject,teacher_id,due_at,submitted_at,score,questions').eq('student_id',currentStudentId).order('due_at');
+    if(result.error){host.textContent='Assignments could not load. Check the homework database setup or try again.';return;}
+    work=result.data||[];
+  }
+  host.innerHTML=work.length?work.map(item=>`<article><div><h3>${esc(item.title)}</h3><p>${item.teacher_id?'Teacher':'Family'} assignment · ${esc(item.subject)} · ${item.questions.length} questions</p><p>${item.submitted_at?`Completed · ${Number(item.score)}/${item.questions.length}`:'To do · Due '+esc(new Date(item.due_at).toLocaleDateString())}</p></div>${preview?'<span>Sample assignment</span>':`<a href="family-homework.html?id=${encodeURIComponent(item.id)}">${item.submitted_at?'View result':'Start assignment'} →</a>`}</article>`).join(''):'<p>No homework assigned yet. Parent and teacher assignments will appear here.</p>';
+}
 async function load() {
   if (new URLSearchParams(location.search).get('demo') === 'student' || !isSupabaseConfigured || !supabase) {
     rows = sampleRows.map(row => ({...row, year_level: currentYear}));
@@ -113,6 +124,7 @@ async function load() {
     setText('lbModeBanner', 'Sample rankings · Preview data');
     $('lbYearSelect').value = currentYear;
     renderAll();
+    await renderAssignedHomework(true);
     return;
   }
   const user = await requireUser();
@@ -130,9 +142,10 @@ async function load() {
     setText('lbModeBanner', 'Your secure leaderboard is ready after the Supabase leaderboard migration is applied.');
   } else {
     rows = data || [];
-    setText('lbModeBanner', 'Live results · Students are compared only with others in the same year level.');
+    setText('lbModeBanner', 'Live results · Submitted tests and homework count after the homework leaderboard migration is applied. Comparisons stay within your school year.');
   }
   renderAll();
+  await renderAssignedHomework();
 }
 $('lbYearSelect').value = currentYear;
 $('lbYearSelect').addEventListener('change', async event => { currentYear = event.target.value; await load(); });

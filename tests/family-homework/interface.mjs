@@ -1,6 +1,6 @@
 import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';
 const root=new URL('../../',import.meta.url);
-const source=file=>fs.readFileSync(new URL(file,root),'utf8').replace(/^import .*;\n/gm,'');
+const source=file=>(file==='js/family-homework-dashboard.js'?fs.readFileSync(new URL('js/exam-homework-bank.js',root),'utf8').replaceAll('export ','')+'\n':'')+fs.readFileSync(new URL(file,root),'utf8').replace(/^import .*;\n/gm,'');
 const questions=Array.from({length:10},(_,i)=>({text:`Question ${i+1}`,choices:['Yes','No'],hint:'Think carefully.',topic:'addition',passage:''}));
 const child={id:'33333333-3333-4333-8333-333333333333',full_name:'Child',year_level:'2'};
 const homework={id:'55555555-5555-4555-8555-555555555555',student_id:child.id,title:'Addition homework',subject:'Maths',year_level:'2',topic_ids:['addition'],questions,due_at:new Date(Date.now()+864e5).toISOString(),allow_late:true};
