@@ -225,6 +225,7 @@ function applyAssignmentBoardSummary() {
   }else{
     const rank=leaderboardRows.find(r=>r.student_id===user?.id)?.rank_position||'—';
     metrics([{label:'Acorn & Shine mark',value:total?Math.round(marks/total*100)+'/100':'—',note:'Submitted accuracy'},{label:'Questions answered',value:total,note:'Completed scored work'},{label:'Marks achieved',value:marks,note:'Total correct marks'},{label:'Leaderboard rank',value:rank,note:'Year-level ranking'}]);
+    $('insightPanel').innerHTML=total?`<strong>${Math.round(marks/total*100)}/100 Acorn & Shine mark</strong>Your submitted assignment scores are saved. Keep going with the work on your board.`:'<strong>Your next learning step</strong>Open an assignment from your board to get started.';
   }
   if(profile.role!=='student'){
     $('primaryPanelTitle').textContent='Recent assignment activity';
