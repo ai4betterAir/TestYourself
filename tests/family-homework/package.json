@@ -6,7 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node bank.mjs && node security.mjs && node interface.mjs && node student-practice.mjs && node exam-homework.mjs && node assignment-board.mjs && node homework-review.mjs"
+    "test": "node bank.mjs && node security.mjs && node interface.mjs && node student-practice.mjs && node exam-homework.mjs && node assignment-board.mjs && node homework-review.mjs && node selective-reading.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.16",

@@ -2,7 +2,8 @@
 const $=id=>document.getElementById(id),shuffle=a=>[...a].sort(()=>Math.random()-.5);
 const pageParams=new URLSearchParams(location.search);
 const exam=pageParams.get('exam')==='oc'?'oc':'selective';
-const requestedStream=pageParams.get('stream');
+const lockedStream=document.body.dataset.practiceStream;
+const requestedStream=lockedStream||pageParams.get('stream');
 const requestedView=pageParams.get('view')==='mock'?'mock':'practice';
 const visualTopicIds=new Set(['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount']);
 const thinkingTopicIds=new Set((window.SKILLUP_THINKING?.topics||[]).map(t=>t[0]));
@@ -52,7 +53,9 @@ function make(id=topic){
    return {...q,_year:modeLabel(),_topic:q.topic,_name:q.name||thinking().find(x=>x[0]===q.topic)?.[2]||q.topic};
  }
  if(stream==='reading'){
-   const q=window.SKILLUP_READING.question(id==='mixed'?'mixed':id,mode);
+   const original=window.SKILLUP_READING.question(id==='mixed'?'mixed':id,mode);
+   const marker='\n\nQUESTION\n',cut=original.text.indexOf(marker);
+   const q={...original,passage:original.passage||(cut>=0?original.text.slice(0,cut):''),text:cut>=0?original.text.slice(cut+marker.length):original.text};
    return {...q,_year:modeLabel(),_topic:q.topic,_name:q.name||reading().find(x=>x[0]===q.topic)?.[2]||q.topic};
  }
  let use=id;
@@ -98,7 +101,7 @@ function updateHeader(){
    document.body.dataset.exam='selective';
    const sw=$('examSwitch');if(sw)sw.hidden=true;
    const streambar=$('streambar');if(streambar)streambar.removeAttribute('aria-hidden');
-   document.title='Selective Practice | Acorn & Shine';
+   document.title=lockedStream==='reading'?'Selective Reading Practice | Acorn & Shine':'Selective Practice | Acorn & Shine';
    const home=$('examHome');if(home){home.href='selective.html';home.textContent='Selective';}
    $('heroTag').textContent=isWriting?'SELECTIVE · WRITING VOCABULARY':isThinking?'SELECTIVE · THINKING SKILLS':isReading?'SELECTIVE · READING':'NSW SELECTIVE · MATHEMATICAL REASONING';
    $('heroTitle').innerHTML=isWriting?'Use precise words.<br><span>Then write with them.</span>':isThinking?'Think clearly.<br><span>Reason carefully.</span>':isReading?'Read closely.<br><span>Find the evidence.</span>':'Build reasoning.<br><span>Then test it.</span>';
@@ -269,9 +272,15 @@ function closePracticeDialog(){
  if(dialog?.open)dialog.close();
  restorePracticeScreen();
 }
+function renderReadingPassage(id,q,beforeId){
+ let box=$(id);
+ if(!box){box=document.createElement('div');box.id=id;box.className='reading-passage';box.setAttribute('aria-label','Reading passage');$(beforeId).before(box);}
+ box.textContent=stream==='reading'?(q.passage||''):'';box.hidden=!box.textContent;
+}
 function nextQ(){
  current=make();selected=null;answerLocked=false;paintLearn();
  $('question').textContent=current.text;
+ renderReadingPassage('readingPassage',current,'question');
  renderReasoningCue(current);
  renderVisual('questionFigure','questionImage',current);
  const worked=$('cubeExplanation');if(worked){worked.hidden=true;worked.textContent='';}
@@ -326,6 +335,7 @@ function showQuiz(){
  $('backToTopics').focus({preventScroll:true});
 }
 function setStream(s){
+ if(lockedStream&&s!==lockedStream)return;
  if(exam==='oc'&&s==='math'){location.href='assessment-practice.html?mode=oc4';return}
  stream=s;topic='mixed';score=attempted=0;qnum=1;mode='mix';
  saveSelectionToUrl();
@@ -333,7 +343,7 @@ function setStream(s){
  updateHeader();buildTopics();nextQ();showMockIntro();setView('practice');showTopics();
 }
 function ensureWritingButton(){
- if(exam==='oc')return;
+ if(exam==='oc'||lockedStream)return;
  const bar=document.querySelector('.streambar');
  if(!bar||bar.querySelector('[data-stream="writing"]'))return;
  const b=document.createElement('button');b.dataset.stream='writing';b.textContent='✍️ Writing Vocabulary';bar.appendChild(b);b.onclick=()=>setStream('writing');
@@ -400,7 +410,7 @@ let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
 function showMockIntro(){clearInterval(mockTimer);mockSeconds=mockDuration();$('mockIntro').hidden=false;$('mockQuiz').hidden=true;$('mockResult').hidden=true;tick()}
 function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'))}
 function tick(){const m=Math.floor(mockSeconds/60),s=mockSeconds%60;$('mockTimer').textContent=`${m}:${String(s).padStart(2,'0')}`;$('timerText').textContent=$('mockTimer').textContent}
-function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
+function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderReadingPassage('mockReadingPassage',q,'mockQuestion');renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
 function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockTimer=setInterval(()=>{mockSeconds--;tick();if(mockSeconds<=0)finishMock()},1000)}
 function finishMock(){clearInterval(mockTimer);let totalScore=0;const by={},wrong=[];mockQs.forEach((q,i)=>{const ci=q.choices.findIndex(v=>String(v)===String(q.answer)),ok=mockAnswers[i]===ci;totalScore+=ok?1:0;by[q._name]??={r:0,t:0};by[q._name].t++;if(ok)by[q._name].r++;else wrong.push({q:q.text,a:q.answer,c:mockAnswers[i]===null?'No answer':q.choices[mockAnswers[i]],n:q._name,image:q.image||null,imageMobile:q.imageMobile||null,imageAlt:q.imageAlt||'',explanation:q.explanation||''})});const total=mockTarget(),pct=Math.round(totalScore/total*100);$('mockQuiz').hidden=true;$('mockResult').hidden=false;$('mockMark').textContent=`${totalScore}/${total}`;$('mockMessage').textContent=pct>=85?'Excellent. Review any missed words, then write two of them in a paragraph.':pct>=70?'Strong result — review the missed words below.':pct>=50?'Revisit the Learn card, then try again.':'Return to Practice with the learn cards first.';$('mockBreakdown').innerHTML=Object.entries(by).sort((a,b)=>(a[1].r/a[1].t)-(b[1].r/b[1].t)).map(([n,v])=>`<p><b>${n}</b> — ${v.r}/${v.t}</p>`).join('');$('mockReview').innerHTML=wrong.length?wrong.map((x,i)=>`<details><summary>${i+1}. ${x.n}: ${x.q}</summary><p>Your answer: <b>${x.c}</b></p><p>Correct answer: <b>${x.a}</b></p></details>`).join(''):'<p>✓ No mistakes.</p>';// Show the actual diagram alongside a missed visual question in mock review.
 wrong.forEach((w,i)=>{
@@ -422,10 +432,10 @@ wrong.forEach((w,i)=>{
 localStorage.setItem(`skillup-${exam}-${stream}-last`,JSON.stringify({score:totalScore,total,pct,date:new Date().toISOString()}))}
 $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').onclick=()=>{if(mockIndex){mockIndex--;renderMock()}};$('mockNext').onclick=()=>{if(mockIndex===mockTarget()-1)finishMock();else{mockIndex++;renderMock()}};
 if(exam==='oc'&&stream==='writing')stream='thinking';
-if (exam === 'oc' && stream === 'reading' && reading().some(entry => entry[0] === pageParams.get('topic'))) {
+if (stream === 'reading' && reading().some(entry => entry[0] === pageParams.get('topic'))) {
   topic = pageParams.get('topic');
 }
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(topic !== 'mixed' && requestedView === 'practice')showQuiz();
+if(requestedView === 'practice' && (topic !== 'mixed'||(lockedStream==='reading'&&pageParams.get('start')==='1')))showQuiz();
 })();
