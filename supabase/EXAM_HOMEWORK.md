@@ -29,3 +29,9 @@ After submission, students see all questions, their saved choices, correct answe
 New homework stores review strategies in that private table, including exam strategies that are withheld during the attempt. Older results retain their correct answer keys; available saved hints are used for review, but explanations removed from older exam sets cannot be recovered. Those questions show a next-step prompt instead of an invented explanation.
 
 Public, sample-only design preview: `family-homework.html?preview=review`.
+
+## Marked submissions for guardians and teachers
+
+Apply `202611170005_guardian_teacher_question_review.sql` **after** `202611170004_homework_question_review.sql`. The dashboard's View submission now uses the submitted-question review RPC, shows Correct/Incorrect per answer and displays the correct choice for mistakes. Saved strategies can be expanded. The original saved score remains unchanged.
+
+The RPC matches homework access rules: assigning guardian (approved link), assigning teacher, the student, approved guardians of an enrolled student on teacher homework, and active administrators. It still refuses unfinished assignments, unrelated accounts and revoked access. Answer-key tables remain private. Without the SQL update, saved student choices remain visible with an explicit marking-unavailable notice; the browser never guesses which answers are correct.

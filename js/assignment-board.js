@@ -28,6 +28,13 @@ export function mergeAssignmentActivity(homework,assignments,submissions,members
  }
  return rows.sort((a,b)=>Number(!!a.submitted_at)-Number(!!b.submitted_at)||(a.submitted_at?new Date(b.submitted_at)-new Date(a.submitted_at):new Date(a.due_at)-new Date(b.due_at)));
 }
+export function renderSubmissionAnswers(box,questions,{notice=''}={}) {
+ box.innerHTML=`${notice?`<p class="homework-notice">${esc(notice)}</p>`:''}<ol class="assignment-board-answers">${questions.map((q,i)=>{
+  const marked=typeof q.is_correct==='boolean';
+  const chosen=q.choices?.[q.chosen_index]??'No answer recorded';
+  return `<li class="${marked?(q.is_correct?'submission-correct':'submission-incorrect'):''}"><div class="submission-answer-heading"><strong>${esc(q.text)}</strong>${marked?`<span class="submission-answer-status">${q.is_correct?'✓ Correct':'✗ Incorrect'}</span>`:''}</div><p>Student answer: <strong>${esc(chosen)}</strong></p>${marked&&!q.is_correct?`<p class="submission-correction">Correct answer: <strong>${esc(q.choices[q.correct_index])}</strong></p>`:''}${q.explanation?`<details class="submission-strategy"><summary>View strategy</summary><p>${esc(q.explanation)}</p></details>`:''}</li>`;
+ }).join('')}</ol>`;
+}
 export function renderAssignmentBoard(host,rows,role,{filter='all',notice='',preview=false}={}) {
  host.dataset.boardFilter=filter;
  const waiting=rows.filter(x=>['waiting','overdue'].includes(assignmentState(x))).length,completed=rows.filter(x=>x.submitted_at).length;
@@ -50,11 +57,19 @@ export function renderAssignmentBoard(host,rows,role,{filter='all',notice='',pre
   const box=button.closest('article').querySelector('[data-review-for]');
   if(!box.hidden){box.hidden=true;button.textContent='View submission';return;}
   box.hidden=false;button.textContent='Hide submission';
-  if(preview){box.textContent='Sample submitted answers · This preview does not read student accounts.';return;}
-  box.textContent='Loading submitted answers…';
-  const {data,error}=await supabase.from('family_homework').select('questions,answers,submitted_at').eq('id',button.dataset.boardReview).maybeSingle();
-  if(error||!data?.submitted_at){box.textContent='The submitted answers could not load. Refresh and try again.';return;}
-  box.innerHTML=`<ol class="assignment-board-answers">${data.questions.map((q,i)=>`<li><strong>${esc(q.text)}</strong><p>Student answer: ${esc(q.choices[data.answers?.[i]]??'No answer recorded')}</p></li>`).join('')}</ol>`;
+  if(preview){renderSubmissionAnswers(box,[{text:'4/5 × 3/6 = ?',choices:['2/5','7/30','3/5','1/5'],chosen_index:1,correct_index:0,is_correct:false,explanation:'Multiply the numerators and denominators: 12/30 simplifies to 2/5.'},{text:'7 ÷ 1/4 = ?',choices:['28','7/4','7','14'],chosen_index:0,correct_index:0,is_correct:true}],{notice:'Sample submitted answers · No student account data is used.'});return;}
+  box.textContent='Loading marked answers…';
+  try {
+    const review=await supabase.rpc('review_family_homework',{homework_input:button.dataset.boardReview});
+    if(!review.error&&Array.isArray(review.data?.questions)){
+      renderSubmissionAnswers(box,review.data.questions);return;
+    }
+    // Older database setups still show the saved choices, never guessed correctness.
+    const {data,error}=await supabase.from('family_homework').select('questions,answers,submitted_at').eq('id',button.dataset.boardReview).maybeSingle();
+    if(error||!data?.submitted_at){box.textContent='The submitted answers could not load. Refresh and try again.';return;}
+    renderSubmissionAnswers(box,data.questions.map((q,i)=>({...q,chosen_index:data.answers?.[i]})),{notice:'Per-question marking is not available yet. The site owner needs to update the question-review setup. These are the saved student answers.'});
+  } catch(error){box.textContent='The submitted answers could not load. Refresh and try again.';}
+
  });
 }
 export async function loadAssignmentActivity(role,userId) {

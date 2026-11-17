@@ -1,4 +1,4 @@
-import {loadAssignmentActivity, renderAssignmentBoard} from './assignment-board.js';
+import {loadAssignmentActivity, renderAssignmentBoard} from './assignment-board.js?v=marked-review-1';
 import {ensureTeacherGroups} from './teacher-groups-api.js';
 import {supabase, getProfile, friendlyError, formatDate} from './supabase-client.js?v=profile-setup-fix';
 import {examProgrammes, getExamHomeworkBank, makeExamHomework} from './exam-homework-bank.js';

@@ -183,4 +183,17 @@ const oldReview=(await db.query('select public.review_family_homework($1) as res
 await as(stranger);await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/Homework not found/);
 await db.exec('reset role;set role anon');await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/permission denied/);
 console.log('PASS: submitted-only question review, canonical saved answers, correct/incorrect flags, private exam strategies, older result support, no peer access and no raw answer-key access.');
+await db.exec('reset role');
+const adultReviewSQL=fs.readFileSync(root+'supabase/migrations/202611170005_guardian_teacher_question_review.sql','utf8');await db.exec(adultReviewSQL);await db.exec(adultReviewSQL);
+await as(parent);const guardianReview=(await db.query('select public.review_family_homework($1) as result',[reviewId])).rows[0].result;
+assert.equal(guardianReview.questions[0].is_correct,false);assert.equal(guardianReview.questions[0].choices[guardianReview.questions[0].correct_index],'Correct');
+await assert.rejects(db.query('select public.review_family_homework($1)',[ocId]),/Submit this assignment/);
+await as(teacher);const teacherReview=(await db.query('select public.review_family_homework($1) as result',[teacherWork.id])).rows[0].result;assert.equal(teacherReview.score,10);
+await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/not available/);
+await as(parent);assert.equal((await db.query('select public.review_family_homework($1) as result',[teacherWork.id])).rows[0].result.score,10);
+for(const id of [other,teacher2,stranger]){await as(id);await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/not available/);}
+await db.exec('reset role');await db.query("update public.guardian_links set status='revoked' where parent_id=$1 and student_id=$2",[parent,child]);
+await as(parent);await assert.rejects(db.query('select public.review_family_homework($1)',[reviewId]),/not available/);
+await assert.rejects(db.query('select * from public.family_homework_keys'),/permission denied/);
+console.log('PASS: assigning guardian/teacher marked review, approved guardian class review, submitted-only answer release, unrelated-account denial and revoked-link denial.');
 await db.close();

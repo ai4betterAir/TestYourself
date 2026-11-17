@@ -14,6 +14,10 @@ w.renderAssignmentBoard(host,rows,'student');assert.match(host.textContent,/You 
 host.querySelector('[data-board-filter="completed"]').click();assert.equal(host.querySelectorAll('.assignment-board-card').length,1);assert.match(host.textContent,/Family fractions/);
 w.renderAssignmentBoard(host,rows,'parent');assert.match(host.textContent,/1 assignment completed/);assert.match(host.textContent,/Alex/);
 host.querySelector('[data-board-review]').click();await new Promise(resolve=>setTimeout(resolve,0));assert.match(host.textContent,/Student answer: 4/);
+assert.match(host.textContent,/Per-question marking is not available/);assert.equal(host.querySelector('.submission-answer-status'),null);
+w.supabase.rpc=async()=>({data:{questions:[{text:'2 + 2?',choices:['4','5'],chosen_index:1,correct_index:0,is_correct:false,explanation:'Add two pairs.'},{text:'3 + 1?',choices:['4','5'],chosen_index:0,correct_index:0,is_correct:true}]},error:null});
+w.renderAssignmentBoard(host,rows,'parent');host.querySelector('[data-board-review]').click();await new Promise(resolve=>setTimeout(resolve,0));
+assert.match(host.textContent,/✗ Incorrect/);assert.match(host.textContent,/✓ Correct/);assert.match(host.textContent,/Student answer: 5/);assert.match(host.textContent,/Correct answer: 4/);assert.equal(host.querySelectorAll('.submission-answer-status').length,2);
 const submitted=w.mergeAssignmentActivity([],assignments,[{assignment_id:'a1',student_id:'child',attempt_no:1,submitted_at:now,score:17,max_score:20}],[],[],people,'teacher','teacher');assert.equal(submitted.length,1);assert.equal(submitted[0].score,17);
 w.renderAssignmentBoard(host,submitted,'teacher');assert.match(host.textContent,/1 submission received/);assert.match(host.textContent,/17.*20.*85%/);
 const other=w.mergeAssignmentActivity([],assignments,[],[{class_id:'c1',student_id:'other'}],[{assignment_id:'a1',student_id:'child'}],people,'parent','parent');assert.equal(other.length,0);
