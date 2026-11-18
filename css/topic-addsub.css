@@ -88,3 +88,18 @@
 .topic-modal .early-work ol{font-size:clamp(18px,1.35vw,23px);line-height:1.5}
 .topic-modal .early-work article h2{font-size:clamp(25px,2.1vw,36px)}
 @media(max-width:900px){.topic-modal .early-work{grid-template-columns:1fr}.topic-modal .early-work .example-prose{font-size:22px}}
+
+/* The first example remains visible on the lesson page. */
+main > .early-work .example-equation {background:#dff1ed;border-radius:16px;padding:22px;font-size:clamp(24px,3vw,40px);font-weight:900;color:#123052}
+main > .early-work .example-prose {font-size:clamp(20px,2vw,27px);line-height:1.5;overflow-wrap:anywhere}
+main > .early-work .concept-explanation,.topic-modal .concept-explanation {font-size:clamp(18px,1.5vw,22px);line-height:1.65;font-weight:500}
+main > .early-work ol {font-size:19px;line-height:1.7;padding-left:25px}
+main > .early-work .learning-try {background:#e0f2ef;padding:28px;border-radius:20px}
+main > .early-work .learning-try fieldset {display:flex;gap:10px;flex-wrap:wrap;border:0;padding:0}
+main > .early-work .learning-try label {display:flex;align-items:center;gap:10px;padding:15px;background:white;border:1px solid #9ebfc6;border-radius:12px}
+main > .early-work .learning-try .action {background:#dba526;color:#102950;border:1px solid #b9840b}
+main > .early-work .question-display {font-size:25px;font-weight:800;line-height:1.4}
+main > .early-work .learning-controls {grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap}
+main > .early-work .learning-controls button {padding:12px 20px;border:1px solid #9ebfc6;border-radius:12px;background:white;color:#123052;font:800 17px Nunito,sans-serif;cursor:pointer}
+main > .early-work .learning-controls button:last-child {background:#078779;color:white}
+main > .early-work .learning-controls button:disabled {opacity:.45;cursor:default}

@@ -35,7 +35,8 @@
   Object.values(panels).forEach(panel=>content.append(panel));
   let returnFocus=null;
   function restore() {
-    slot.after(tabs);
+    slot.after(host, tabs);
+    host.hidden=false;
     document.body.classList.remove('topic-modal-open');
     returnFocus?.focus();
   }
@@ -46,6 +47,7 @@
     mode=key;
     if(open && !modal.open) {
       returnFocus=document.activeElement;
+      content.prepend(host);
       bar.after(tabs);
       document.body.classList.add('topic-modal-open');
       modal.showModal();
@@ -77,7 +79,9 @@
     {title:'Subtract through a ten',sum:'43 − 6 = 37',steps:['Split 6 into 3 and 3.','43 − 3 = 40','40 − 3 = 37'],q:'52 − 7 = ?',answer:'45',choices:['45','49','55'],hint:'Subtract 2 to reach 50, then subtract the remaining 5.'},
     {title:'Find the missing part',sum:'□ + 8 = 25',steps:['Use subtraction to find the missing part.','25 − 8 = 17','Check: 17 + 8 = 25.'],q:'□ + 6 = 24',answer:'18',choices:['16','18','30'],hint:'Subtract 6 from 24. Then check your answer by adding 6.'}
   ];
-  if(!isPilot) {
+  if(config.examples) {
+    examples.splice(0,examples.length,...config.examples);
+  } else if(!isPilot) {
     examples.splice(0,examples.length,config.first);
     for(let i=0;i<3;i++){
       const model=config.generate(),tryIt=config.generate();
@@ -90,6 +94,7 @@
     const model=make('article','',host);
     make('p','Example '+(exampleIndex+1)+' of '+examples.length,model).className='example-count';
     make('h2',ex.title,model);
+    if(ex.explanation) make('p',ex.explanation,model).className='concept-explanation';
     make('div',ex.sum,model).className='example-equation'+(ex.sum.length>42?' example-prose':'');
     const steps=make('ol','',model);ex.steps.forEach(line=>make('li',line,steps));
     const tryIt=make('section','',host);tryIt.className='learning-try';
@@ -199,5 +204,7 @@
     make('p','20 questions · 20 minutes · This topic only. Your timer starts when you press Start test. You can change answers and move between questions.',test);
     const b=make('button','Start test',test);b.onclick=()=>{testQs=set(20);answers=Array(20).fill(null);ti=0;deadline=Date.now()+20*60000;running=true;renderTest();timer=setInterval(tick,1000);};
   }
-  intro();select('practice',false);
+  intro();select('learn',false);
+  slot.after(host,tabs);
+  if(location.hash==='#activity') host.scrollIntoView();
 })();

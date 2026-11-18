@@ -79,5 +79,22 @@
   let first;
   if(year==='K')first={title:'Explore '+title,steps:[seed[1]],q:seed[2],answer:seed[3],choices:seed.slice(3,6),sum:seed[1],hint:seed[1]};
   else first={title:'Explore '+title,steps:[seed.lesson.model],q:seed.question,answer:seed.answers[seed.correct],choices:seed.answers,sum:seed.lesson.model,hint:seed.explain};
-  window.TOPIC_MATHS={year,title,label:(year==='K'?'Kindergarten':'Year '+year)+' · '+title,generate,first};
+  const examples=year==='5'&&index===0 ? [
+    {title:'What are whole numbers?',explanation:'Whole numbers are 0, 1, 2, 3 and so on. They have no fractional or decimal part. We use them to count complete objects.',
+      sum:'0, 1, 2, 3, 4, 5, …',steps:['Zero represents none.','Each next whole number is one more.','For example, 24 books is a whole-number count.'],
+      q:'Which of these is a whole number?',answer:'24',choices:['2.4','24','1/2'],hint:'A whole number has no fractional or decimal part. 24 counts twenty-four complete units.'},
+    {title:'Understand place value',explanation:'A digit’s value depends on its position. Each place to the left is worth ten times as much.',
+      sum:'347,582 = 300,000 + 40,000 + 7,000 + 500 + 80 + 2',
+      steps:['Read the places from right to left: ones, tens, hundreds, thousands, ten-thousands, hundred-thousands.','The digit 4 is in the ten-thousands place.','Its value is 4 × 10,000 = 40,000.'],
+      q:'What is the value of the digit 6 in 562,814?',answer:'60,000',choices:['6,000','60,000','600,000'],hint:'The 6 is in the ten-thousands place, so its value is 6 × 10,000 = 60,000.'},
+    {title:'Compare large numbers',explanation:'Compare numbers with the same number of digits from left to right. The first different digit decides which number is greater.',
+      sum:'428,615 > 425,980',
+      steps:['Both numbers have 4 hundred-thousands and 2 ten-thousands.','Compare the thousands: 8 is greater than 5.','Therefore 428,615 is greater than 425,980.'],
+      q:'Which number is greater?',answer:'673,210',choices:['672,950','673,210','They are equal'],hint:'The hundred-thousands and ten-thousands match. Compare the thousands: 3 is greater than 2.'},
+    {title:'Round to the nearest thousand',explanation:'Rounding gives a nearby, simpler number. To round to the nearest thousand, look at the hundreds digit.',
+      sum:'46,782 ≈ 47,000',
+      steps:['46,782 lies between 46,000 and 47,000.','The hundreds digit is 7. A digit of 5 or more means round up.','Increase the thousands by one and replace the hundreds, tens and ones with zeros.'],
+      q:'Round 83,249 to the nearest thousand.',answer:'83,000',choices:['83,000','84,000','83,200'],hint:'The hundreds digit is 2, which is less than 5. Keep 83 thousand and replace the last three digits with zeros.'}
+  ] : null;
+  window.TOPIC_MATHS={year,title,label:(year==='K'?'Kindergarten':'Year '+year)+' · '+title,generate,first,examples};
 })();
