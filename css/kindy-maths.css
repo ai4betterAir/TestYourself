@@ -34,3 +34,5 @@ body.kindy-live #learnPanel { display:none }
 .k-back { display:block; text-align:left; margin-top:12px }
 @media(max-width:680px){.k-hero{grid-template-columns:1fr}.k-hero img{height:155px}.k-activity fieldset{gap:6px}.k-activity label span{padding:8px 2px}}
 body:not(.kindy-live) #practiceNav .k-nav-item,.kindy-live #practiceNav a:not(.k-nav-item),.kindy-live .student-chip { display:none }
+
+.k-activity output:not(:empty) {display:block;margin-top:0.8rem;padding:0.85rem 1rem;border:1px solid #b6cfca;border-radius:10px;background:#f1f8f6;color:#193e36;line-height:1.5;}

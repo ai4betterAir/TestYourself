@@ -38,16 +38,31 @@
       feedback.setAttribute('role', 'status');
       feedback.setAttribute('aria-live', 'polite');
 
+      let selected;
+      const check = document.createElement('button');
+      check.type = 'button';
+      check.textContent = 'Check answer';
+      check.disabled = true;
       q.choices.forEach((choice, choiceIndex) => {
         const button = document.createElement('button');
         button.type = 'button';
         button.textContent = choice;
         button.onclick = () => {
-          if (card.dataset.answered === 'true') return;
+          selected = choiceIndex;
+          [...answers.children].forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+          check.disabled = false;
+        };
+        button.setAttribute('aria-pressed', 'false');
+        answers.appendChild(button);
+      });
+      check.onclick = () => {
+          if (card.dataset.answered === 'true' || selected === undefined) return;
+          const button = answers.children[selected];
+          check.disabled = true;
           card.dataset.answered = 'true';
           completed += 1;
           const correctIndex = q.choices.findIndex(value => String(value) === String(q.answer));
-          const correct = choiceIndex === correctIndex;
+          const correct = selected === correctIndex;
           if (correct) {
             score += 1;
             button.classList.add('correct');
@@ -55,9 +70,7 @@
           } else {
             button.classList.add('wrong');
             answers.children[correctIndex]?.classList.add('correct');
-            feedback.textContent = type === 'reading'
-              ? `Not quite. ${q.tip}`
-              : `Not quite. Review the rule: ${q.tip}`;
+            feedback.textContent = `Correct answer: ${q.answer}. ${q.tip || lessonData.learn}`;
           }
           [...answers.children].forEach(option => { option.disabled = true; });
           summary.textContent = completed === items.length
@@ -65,10 +78,7 @@
             : `${completed} of ${items.length} questions answered.`;
           if (completed === items.length) setDone(lesson);
         };
-        answers.appendChild(button);
-      });
-
-      card.append(meta, heading, answers, feedback);
+      card.append(meta, heading, answers, check, feedback);
       list.appendChild(card);
     });
     return list;
@@ -96,7 +106,7 @@
     passage.querySelector('p').textContent = current.p;
     const help = document.createElement('p');
     help.className = 'batch-help';
-    help.textContent = `Answer all ${current.qs.length} questions below. Each answer gives immediate feedback.`;
+    help.textContent = `Answer all ${current.qs.length} questions below. Select an answer, then press Check answer.`;
     const listWrap = document.createElement('div');
     listWrap.className = 'batch-question-list';
     const summary = document.createElement('div');
@@ -121,7 +131,7 @@
     host.innerHTML = '';
     const help = document.createElement('p');
     help.className = 'batch-help';
-    help.textContent = `Answer all ${items.length} questions below. Each answer gives immediate feedback.`;
+    help.textContent = `Answer all ${items.length} questions below. Select an answer, then press Check answer.`;
     const listWrap = document.createElement('div');
     listWrap.className = 'batch-question-list';
     const summary = document.createElement('div');

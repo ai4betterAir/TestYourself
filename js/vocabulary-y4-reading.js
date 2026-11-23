@@ -102,7 +102,7 @@ function renderQuiz(kind){
 function check(kind){
   if(checked)return;const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex,prefix=isTest?'test':'practice';if(selected===null){$(prefix+'Feedback').textContent='Choose an answer first.';return;}
   const z=list[index],buttons=[...$(prefix+'Answers').children],correct=z.c.indexOf(z.a),ok=selected===correct;checked=true;if(ok){isTest?testScore++:practiceScore++;}buttons[correct].classList.add('correct');if(!ok)buttons[selected].classList.add('wrong');
-  $(prefix+'Feedback').textContent=ok?`✓ Correct! ${z.why}`:`Not quite. ${z.why}`;$(prefix+'Feedback').classList.add(ok?'right':'try-again');
+  $(prefix+'Feedback').textContent=ok?`✓ Correct! ${z.why}`:`Correct answer: ${z.a}. ${z.why}`;$(prefix+'Feedback').classList.add(ok?'right':'try-again');
 }
 function next(kind){
   const isTest=kind==='test',list=isTest?test:practice,index=isTest?testIndex:practiceIndex;if(!isTest&&!checked){$(kind+'Feedback').textContent='Check your answer before moving on.';return;}

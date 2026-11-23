@@ -103,7 +103,7 @@
     const feedback=make('p','');feedback.setAttribute('role','status');
     choices(tryIt,{...ex,text:ex.q},null,v=>{chosen=v;feedback.textContent='';});
     const check=make('button','Check answer',tryIt);check.className='action';
-    check.onclick=()=>{feedback.textContent=chosen===null?'Choose an answer first.':chosen===ex.answer?'Correct! '+ex.hint:'Try again. '+ex.hint;};
+    check.onclick=()=>{feedback.textContent=chosen===null?'Choose an answer first.':chosen===ex.answer?'Correct! '+ex.hint:'Correct answer: '+ex.answer+'. '+ex.hint;};
     tryIt.append(feedback);
     const controls=make('div','',host);controls.className='learning-controls';
     const prev=make('button','Previous example',controls);prev.disabled=exampleIndex===0;prev.onclick=()=>{exampleIndex--;renderLearning();};
@@ -162,7 +162,7 @@
     check.onclick=()=>{
       if(picked===null){status.textContent='Choose an answer first.';return;}
       if(picked===q.answer){marks[index]=true;renderPractice();}
-      else {missed=true;reveal.hidden=false;status.textContent='Try again. '+q.hint;}
+      else {missed=true;reveal.hidden=false;status.textContent='Correct answer: '+q.answer+'. '+practiceWorking(q.text,q.answer,q.why);}
     };
     practice.append(status);
     if(marks[index]!==null)status.textContent=(marks[index]?'Correct! ':'Answer: '+q.answer+'. ')+q.why;
@@ -196,7 +196,7 @@
     if(!running)return;running=false;clearInterval(timer);test.replaceChildren();
     const score=testQs.filter((q,i)=>q.answer===answers[i]).length;
     make('h2','Your result · '+score+' / 20',test);make('p',Math.round(score/20*100)+'% · Review each answer below.',test);
-    testQs.forEach((q,i)=>{const d=make('details','',test);make('summary',(i+1)+'. '+q.text+' · '+(answers[i]===q.answer?'Correct':'Review'),d);make('p','Your answer: '+(answers[i]??'Unanswered'),d);make('p','Correct answer: '+q.answer+'. '+q.why,d);});
+    testQs.forEach((q,i)=>{const d=make('details','',test);make('summary',(i+1)+'. '+q.text+' · '+(answers[i]===q.answer?'Correct':'Review'),d);make('p','Your answer: '+(answers[i]??'Unanswered'),d);make('p','Correct answer: '+q.answer+'. '+practiceWorking(q.text,q.answer,q.why),d);});
     const again=make('button','Try another test',test);again.onclick=intro;
   }
   function intro(){

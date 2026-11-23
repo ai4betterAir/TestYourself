@@ -40,7 +40,7 @@ function normalise(q, topic) {
   const answer = String(q.answer);
   if (!q.text || choices.length < 2 || !choices.includes(answer)) throw new Error('This question is unavailable. Choose another topic.');
   const shuffled = shuffle(choices);
-  return {text: q.text, passage: q.passage || '', choices: shuffled, answer: shuffled.indexOf(answer), hint: q.tip || q.hint || q.explanation || '', topic};
+  return {text: q.text, passage: q.passage || '', choices: shuffled, answer: shuffled.indexOf(answer), explanation: q.explanation || q.hint || q.tip || '', hint: q.tip || q.hint || q.explanation || '', topic};
 }
 export async function getHomeworkBank(year, subject) {
   if (!['K','1','2','3','4','5','6'].includes(year) || !subjects.includes(subject)) throw new Error('Choose a valid school year and subject.');
@@ -57,7 +57,7 @@ export async function getHomeworkBank(year, subject) {
   }
   if (year === 'K') return {topics:kindyEnglish.map(([id,label]) => ({id,label})), question:id => {
     const [text, answer, choices] = sample(kindyEnglish.find(t => t[0] === id)[2]);
-    return normalise({text, answer, choices, hint:'Say the words slowly, or reread the sentence.'}, id);
+    return normalise({text, answer, choices, hint:'Say the words slowly, or reread the sentence.', explanation:id==='reading' ? text.split('. ')[0]+'.' : id==='rhyming' ? 'Say '+text.split(' ').pop().replace('?','')+' and '+answer+' aloud. Both words end with the same sound.' : 'Look at the start of '+(answer.length===1 ? text.split(' ').pop().replace('?','') : answer)+'. Its first letter is '+answer[0]+'.'}, id);
   }};
   await load('js/english-data.js');
   // DATA is the same classic-script lexical binding used by the English course.
@@ -69,7 +69,7 @@ export async function getHomeworkBank(year, subject) {
       let questions;
       if (skill === 'spelling') questions = lesson.words.map(word => {
         const variants = [word, word + word.slice(-1), word.slice(1), word + 'e'];
-        return {text:'Which spelling is correct?', answer:word, choices:variants, hint:lesson.learn};
+        return {text:'Which spelling is correct?', answer:word, choices:variants, hint:lesson.learn, explanation:'Spell it one letter at a time: '+[...word].join(' – ')+'.'};
       });
       else questions = (lesson.qs || []).map(q => ({text:q[0], choices:q[1], answer:q[1][q[2]], hint:q[3], passage:lesson.p || ''}));
       if (questions.length) pool.push({id, label:skill[0].toUpperCase() + skill.slice(1) + ' · ' + (lesson.t || lesson.title), questions});

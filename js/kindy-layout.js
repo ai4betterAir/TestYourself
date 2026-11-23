@@ -41,7 +41,7 @@
     form.onsubmit = event => {
       event.preventDefault();
       status.textContent = new FormData(form).get('answer') === form.dataset.answer
-        ? 'Correct! ' + form.dataset.explanation : 'Have another look and try again.';
+        ? 'Correct! ' + form.dataset.explanation : 'Correct answer: ' + form.querySelector('input[value="'+form.dataset.answer+'"]').closest('label').textContent.trim() + '. ' + form.dataset.explanation;
     };
   }
   const previous = render;

@@ -58,7 +58,7 @@
     el('readingStoryCopy').closest('details').open=false;
     searchLibrary();setMode('read');
   };
-  el('mainChoices').addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;el('mainFeedback').textContent=button.classList.contains('correct')?'Correct! You found the main idea.':'Look at what the whole story is mostly about. Read it again and try another answer.';});
+  el('mainChoices').addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;el('mainFeedback').textContent=button.classList.contains('correct')?'Correct! You found the main idea.':'The main idea is “'+lessons[current].main[lessons[current].main[4]]+'”. The events in “'+lessons[current].t+'” all help tell that story.';});
   el('fillInput').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();el('fillCheck').click();}});
   render();
 })();

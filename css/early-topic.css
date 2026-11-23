@@ -25,3 +25,5 @@ a:focus-visible,button:focus-visible,input:focus-visible {outline:3px solid #097
 output:not(:empty) {display:block;margin-top:12px;font-weight:800}
 .early-next {padding:18px 4%;justify-content:space-between;border-top:1px solid #dde5e9;background:white}
 @media(max-width:680px){.early-hero,.early-work{grid-template-columns:1fr}.early-hero img{min-height:0;height:180px}.early-next{align-items:flex-start;flex-direction:column}}
+
+output:not(:empty) {display:block;margin-top:0.8rem;padding:0.85rem 1rem;border:1px solid #b6cfca;border-radius:10px;background:#f1f8f6;color:#193e36;line-height:1.5;}

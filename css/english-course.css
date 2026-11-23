@@ -42,3 +42,6 @@ button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible
 .english-test-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
 .english-test-breakdown div{display:flex;justify-content:space-between;padding:13px;border-radius:12px;background:#f2f6fb}
 @media(max-width:620px){.english-test-top{align-items:flex-start}.english-test-breakdown{grid-template-columns:1fr}.english-test-actions button{flex:1}}
+
+.question-card .feedback:not(:empty) {display:block;margin-top:0.8rem;padding:0.85rem 1rem;border:1px solid #b6cfca;border-radius:10px;background:#f1f8f6;color:#193e36;line-height:1.5;}
+.question-card button[aria-pressed="true"] {outline:3px solid #176f60;outline-offset:1px;}

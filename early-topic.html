@@ -7,7 +7,7 @@
 <link rel="icon" href="assets/acorn-and-shine-icon.png">
 <link rel="stylesheet" href="css/early-topic.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap">
-</head>
+<script src="js/practice-working.js"></script></head>
 <body><div id="lesson"><a href="learning.html">Choose your year</a></div>
 <script src="design/year1.js"></script>
 <script src="js/early-lessons.js"></script>
@@ -30,7 +30,7 @@ if (lesson) {
   form.onsubmit = event => {
     event.preventDefault();
     status.textContent = new FormData(form).get('choice') === form.dataset.key
-      ? 'Correct! ' + lesson.explanation : 'Have another look at the example, then try again.';
+      ? 'Correct! ' + lesson.explanation : 'Correct answer: ' + form.querySelectorAll('label span')[Number(form.dataset.key)].textContent + '. ' + lesson.explanation;
   };
 }
 </script>
