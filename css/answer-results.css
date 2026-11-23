@@ -1,0 +1,17 @@
+/* Mark the checked response, independent of the topic's accent colour. */
+[data-result="incorrect"] label:has(input:checked),
+[data-result="incorrect"] output:not(:empty),
+[data-result="incorrect"] [role="status"]:not(:empty),
+button.wrong, label.wrong, .feedback.wrong, .feedback.bad,
+.feedback.retry, .feedback-box.wrong, .reading-feedback.try-again,
+.sp-session-feedback:has(strong), #quiz:has(#answerChoices .wrong) #explainBox {
+  color: #921c23 !important;
+  background: #fff0f1 !important;
+  border: 2px solid #b42330 !important;
+  border-radius: 10px;
+  outline-color: #b42330 !important;
+  opacity: 1;
+}
+[data-result="incorrect"] input:checked, label.wrong input {
+  accent-color: #b42330;
+}

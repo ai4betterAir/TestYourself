@@ -7,7 +7,7 @@
 <link rel="icon" href="assets/acorn-and-shine-icon.png">
 <link rel="stylesheet" href="css/early-topic.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap">
-<script src="js/practice-working.js"></script></head>
+<script src="js/practice-working.js"></script><link rel="stylesheet" href="css/answer-results.css"></head>
 <body><div id="lesson"><a href="learning.html">Choose your year</a></div>
 <script src="design/year1.js"></script>
 <script src="js/early-lessons.js"></script>
@@ -26,11 +26,13 @@ if (lesson) {
   document.getElementById('lesson').innerHTML = lesson.html;
   const form = document.querySelector('form');
   const status = form.querySelector('output');
-  form.onchange = () => { status.textContent = ''; };
+  form.onchange = () => { status.textContent = ''; delete form.dataset.result; };
   form.onsubmit = event => {
     event.preventDefault();
-    status.textContent = new FormData(form).get('choice') === form.dataset.key
-      ? 'Correct! ' + lesson.explanation : 'Correct answer: ' + form.querySelectorAll('label span')[Number(form.dataset.key)].textContent + '. ' + lesson.explanation;
+    const correct = new FormData(form).get('choice') === form.dataset.key;
+    form.dataset.result = correct ? 'correct' : 'incorrect';
+    status.textContent = correct
+      ? 'Correct! ' + lesson.explanation : 'Incorrect. Correct answer: ' + form.querySelectorAll('label span')[Number(form.dataset.key)].textContent.replace(/[.!?]$/, '') + '. ' + lesson.explanation;
   };
 }
 </script>

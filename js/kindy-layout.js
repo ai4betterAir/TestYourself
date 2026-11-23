@@ -37,11 +37,13 @@
     };
     const form = stage.querySelector('form');
     const status = form.querySelector('output');
-    form.onchange = () => { status.textContent = ''; };
+    form.onchange = () => { status.textContent = ''; delete form.dataset.result; };
     form.onsubmit = event => {
       event.preventDefault();
-      status.textContent = new FormData(form).get('answer') === form.dataset.answer
-        ? 'Correct! ' + form.dataset.explanation : 'Correct answer: ' + form.querySelector('input[value="'+form.dataset.answer+'"]').closest('label').textContent.trim() + '. ' + form.dataset.explanation;
+      const correct = new FormData(form).get('answer') === form.dataset.answer;
+    form.dataset.result = correct ? 'correct' : 'incorrect';
+    status.textContent = correct
+        ? 'Correct! ' + form.dataset.explanation : 'Incorrect. Correct answer: ' + form.querySelector('input[value="'+form.dataset.answer+'"]').closest('label').textContent.trim() + '. ' + form.dataset.explanation;
     };
   }
   const previous = render;

@@ -68,9 +68,10 @@
             button.classList.add('correct');
             feedback.textContent = type === 'reading' ? '✓ Correct — well read.' : '✓ Correct!';
           } else {
+            card.dataset.result='incorrect';
             button.classList.add('wrong');
             answers.children[correctIndex]?.classList.add('correct');
-            feedback.textContent = `Correct answer: ${q.answer}. ${q.tip || lessonData.learn}`;
+            feedback.textContent = `Incorrect. Correct answer: ${q.answer}. ${q.tip || lessonData.learn}`;
           }
           [...answers.children].forEach(option => { option.disabled = true; });
           summary.textContent = completed === items.length
