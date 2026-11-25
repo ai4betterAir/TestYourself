@@ -95,6 +95,8 @@
         const row = add(paper, 'details', '');
         add(row, 'summary', 'Question ' + (j + 1) + ' · ' + (String(part.answers[j]) === String(q.answer) ? 'Correct' : 'Review'));
         add(row, 'p', q.text);
+        if(q.image){const diagram=document.createElement('img');diagram.src=q.image;diagram.alt=q.imageAlt||'Question diagram';diagram.style.maxWidth='100%';row.append(diagram);}
+        if(q.explanation||q.tip)add(row,'p',q.explanation||q.tip);
         add(row, 'p', 'Your answer: ' + (part.answers[j] ?? 'Unanswered'));
         add(row, 'p', 'Correct answer: ' + q.answer);
       });
