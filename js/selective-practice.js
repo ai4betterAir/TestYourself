@@ -5,14 +5,15 @@ const exam=pageParams.get('exam')==='oc'?'oc':'selective';
 const lockedStream=document.body.dataset.practiceStream;
 const requestedStream=lockedStream||pageParams.get('stream');
 const requestedView=pageParams.get('view')==='mock'?'mock':'practice';
+const topicWorkspace = exam === 'selective' && Boolean(requestedStream);
 const visualTopicIds=new Set(['visual','cube','ocfigures','symmetry','figurematch','visualpatterns','figureodd','shapecount']);
 const thinkingTopicIds=new Set((window.SKILLUP_THINKING?.topics||[]).map(t=>t[0]));
 let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&thinkingTopicIds.has(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
 const y5base=()=>window.TY_YEARS345?.topics?.['5']||[],y5extra=()=>window.TY_YEAR5_TESTS?.topics||[],y6=()=>window.TY_YEAR6?.topics||[],thinking=()=>window.SKILLUP_THINKING?.topics||[],writing=()=>window.SKILLUP_WRITING_VOCAB?.topics||[],mrExtra=()=>window.SKILLUP_MR_EXTRA?.topics||[],reading=()=>window.SKILLUP_READING?.topics||[];
 function unique(list){const seen=new Set();return list.filter(x=>{if(seen.has(x[0]))return false;seen.add(x[0]);return true})}
-function practiceTarget(){return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
-function mockTarget(){if(stream==='writing')return 20;if(stream==='math')return 35;return 30}
-function mockDuration(){if(stream==='writing')return 1200;if(stream==='math')return 2400;if(stream==='reading')return 2100;return 1800}
+function practiceTarget(){if(topicWorkspace && topic!=='mixed')return 10;return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
+function mockTarget(){if(topicWorkspace && topic!=='mixed')return mockQs.length||20;if(stream==='writing')return 20;if(stream==='math')return 35;return 30}
+function mockDuration(){if(topicWorkspace && topic!=='mixed')return 1200;if(stream==='writing')return 1200;if(stream==='math')return 2400;if(stream==='reading')return 2100;return 1800}
 function modeLabel(){
  if(exam==='oc'){
    if(stream==='thinking')return mode==='5'?'Core Thinking':mode==='6'?'Challenge Thinking':'Mixed OC Thinking';
@@ -408,7 +409,16 @@ $('check').addEventListener('click',()=> {
 $('next').onclick=()=>{const target=practiceTarget();qnum=qnum>=target?1:qnum+1;nextQ()};
 let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
 function showMockIntro(){clearInterval(mockTimer);mockSeconds=mockDuration();$('mockIntro').hidden=false;$('mockQuiz').hidden=true;$('mockResult').hidden=true;tick()}
-function buildMock(){const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'))}
+function buildMock(){
+ if(topicWorkspace && topic!=='mixed'){
+   mockQs=[];const seen=new Set();
+   for(let attempt=0;attempt<180 && mockQs.length<20;attempt++){
+     const q=make(topic);
+     if(!seen.has(q.text)){seen.add(q.text);mockQs.push(q)}
+   }
+   mockAnswers=Array(mockQs.length).fill(null);mockIndex=0;mockSeconds=mockDuration();return;
+ }
+ const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'))}
 function tick(){const m=Math.floor(mockSeconds/60),s=mockSeconds%60;$('mockTimer').textContent=`${m}:${String(s).padStart(2,'0')}`;$('timerText').textContent=$('mockTimer').textContent}
 function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderReadingPassage('mockReadingPassage',q,'mockQuestion');renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
 function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockTimer=setInterval(()=>{mockSeconds--;tick();if(mockSeconds<=0)finishMock()},1000)}
@@ -435,7 +445,63 @@ if(exam==='oc'&&stream==='writing')stream='thinking';
 if (stream === 'reading' && reading().some(entry => entry[0] === pageParams.get('topic'))) {
   topic = pageParams.get('topic');
 }
+if(topicWorkspace && topicsFor(mode).some(entry=>entry[0]===pageParams.get('topic'))) topic=pageParams.get('topic');
+function setupTopicWorkspace(){
+ const names={math:'Mathematical Reasoning',thinking:'Thinking Skills',reading:'Reading',writing:'Writing Vocabulary'};
+ const entry=topicsFor(mode).find(item=>item[0]===topic && topic!=='mixed');
+ const panel=$('practiceView'), quiz=panel.querySelector('.quiz');
+ document.body.classList.add('topic-workspace');
+ const style=document.createElement('style');
+ style.textContent='.topic-workspace .sel-head,.topic-workspace #notice,.topic-workspace .stats{display:none!important}.topic-workspace #practiceView:not([hidden])>.quiz{display:block!important}.topic-nav{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}.topic-nav a,.topic-back{display:inline-block;padding:.55rem .9rem;color:#153c68;font-weight:800}.topic-nav a[aria-current]{background:#173f64;color:white;border-radius:.65rem}.topic-workspace #practiceHeading{margin-top:2rem}.topic-workspace .topic-intro{padding:1rem 0}.topic-workspace .worked-solution{background:#eef6ef;border-radius:.75rem;padding:1rem;white-space:pre-line}';
+ document.head.append(style);
+ function link(label,id,section){
+   const url=new URL(location.href);url.searchParams.delete('start');
+   for(const [key,value] of Object.entries({topic:id,view:section})){
+     if(value)url.searchParams.set(key,value);else url.searchParams.delete(key);
+   }
+   const a=document.createElement('a');a.href=url.href;a.textContent=label;return a;
+ }
+ const intro=document.createElement('header');intro.className='topic-intro';panel.before(intro);
+ const back=entry?link('← All '+names[stream]+' topics'):document.createElement('a');
+ if(!entry){back.href='selective.html';back.textContent='← Selective preparation'}
+ back.className='topic-back';intro.append(back);
+ const heading=document.createElement('h1');heading.textContent=entry?entry[2]:names[stream];intro.append(heading);
+ if(!entry){
+   panel.prepend(quiz);$('practiceHeading').textContent='Choose a subtopic';
+   $('practiceSub').textContent='Select a skill to learn it, practise questions or take a timed test.';
+   for(const button of $('topics').querySelectorAll('[data-topic]')){
+     if(button.dataset.topic==='mixed'){button.remove();continue}
+     button.onclick=()=>location.assign(link('',button.dataset.topic,'learn').href);
+   }
+   return;
+ }
+ const desc=document.createElement('p');desc.textContent=entry[3];intro.append(desc);
+ const section=pageParams.get('view')||'learn';
+ const nav=document.createElement('nav');nav.className='topic-nav';nav.setAttribute('aria-label','Topic activities');
+ for(const [key,label] of [['learn','Learn'],['practice','Practice'],['mock','Test']]){
+   const a=link(label,topic,key);if(section===key)a.setAttribute('aria-current','page');nav.append(a);
+ }
+ intro.append(nav);
+ for(const id of ['practiceHeading','practiceSub','topics'])$(id).style.display='none';
+ if(section==='mock'){
+   $('mockTitle').textContent=entry[2]+' test';
+   $('mockIntroText').textContent='Answer up to 20 different questions on this topic in 20 minutes. Review your answers when you finish.';
+   $('startMock').textContent='Start topic test';$('retryMock').textContent='Try another topic test';return;
+ }
+ if(section==='practice'){
+   const progress=document.createElement('p');intro.append(progress);
+   function status(){progress.textContent='Question '+qnum+' of 10 · '+score+' correct'}
+   status();$('check').addEventListener('click',status);
+   $('next').onclick=()=>{if(!answerLocked)return;if(qnum===10){quiz.hidden=true;quiz.style.setProperty('display','none','important');progress.textContent='Practice complete · '+score+' of 10 correct';return}qnum++;nextQ();status()};return;
+ }
+ const title=document.createElement('h2');title.textContent='Worked example';intro.append(title);
+ for(const el of [$('answers'),$('check').parentElement,$('tip')])if(el)el.hidden=true;
+ const solution=document.createElement('p');solution.className='worked-solution';
+ solution.textContent=[current.tip,current.explanation,'Answer: '+current.answer].filter((v,i,a)=>v&&a.indexOf(v)===i).join('\n\n');
+ quiz.append(solution,link('Practise this skill →',topic,'practice'));
+}
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(requestedView === 'practice' && (topic !== 'mixed'||(lockedStream==='reading'&&pageParams.get('start')==='1')))showQuiz();
+if(topicWorkspace) setupTopicWorkspace();
+else if(requestedView === 'practice' && (topic !== 'mixed'||(lockedStream==='reading'&&pageParams.get('start')==='1')))showQuiz();
 })();
