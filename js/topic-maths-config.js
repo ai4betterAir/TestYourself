@@ -2,8 +2,9 @@
 (() => {
   const params=new URLSearchParams(location.search);
   const year=params.get('year'),index=Number(params.get('lesson'));
-  if(params.get('subject')!=='maths'||!['K','1','2','3','4','5'].includes(year)||!/^\d+$/.test(params.get('lesson')))return;
+  if(params.get('subject')!=='maths'||!['K','1','2','3','4','5','6'].includes(year)||!/^\d+$/.test(params.get('lesson')))return;
   const routes={
+    '6':[['number'],['fractions','ratiopercent'],['number','integers'],['algebra'],['measurement'],['geometry'],['data'],['mixed']],
     K:[['counting'],['number-order'],['simple-addition'],['shapes'],['patterns'],['measurement']],
     '1':[['number','compare','beforeafter'],['addition'],['subtraction'],['shapes2d','patterns'],['length','mass','capacity'],['money'],['time','calendar'],['data'],['wordproblems']],
     '2':[['g2place1000'],['g2facts','g2add2','g2subtract2'],['g2multdiv'],['g2fractionschance'],['g2measurement'],['g2moneytime'],['g2geometry'],['g2datagraphs']],
@@ -12,7 +13,7 @@
     '5':[['extra:numeration','extra:rounding'],['number','extra:operations'],['fractions','decimals','extra:fractiondecimal'],['percentage'],['extra:measurement','extra:perimeterarea','volume'],['geometry','extra:coordinates','extra:symmetry','extra:angles'],['data','extra:graphs','extra:mean','extra:probability'],['wordproblems','extra:wordproblems']]
   };
   const ids=routes[year][index];if(!ids)return;
-  const bank=year==='K'?KINDY_MATHS:year==='1'?TY_YEAR1:year==='2'?TY_YEAR2:year==='4'?TY_YEAR4:{question:id=>id.startsWith('extra:')?TY_YEAR5_TESTS.question(id.slice(6)):TY_YEARS345.question(year,id)};
+  const bank=year==='K'?KINDY_MATHS:year==='1'?TY_YEAR1:year==='2'?TY_YEAR2:year==='4'?TY_YEAR4:year==='6'?TY_YEAR6:{question:id=>id.startsWith('extra:')?TY_YEAR5_TESTS.question(id.slice(6)):TY_YEARS345.question(year,id)};
   let cursor=0;
   const generate=()=>{
     const id=ids[cursor++%ids.length];
@@ -75,7 +76,7 @@
   };
   const source=earlyTopicPage(year,'maths',index);
   const title=source.title;
-  const seed=year==='K'?kindergartenActivities.maths[index]:year==='1'?year1Topics.filter(t=>t.id.startsWith('maths-'))[index]:(Number(year)<=3?year23Lessons:year45Lessons)[year].maths[index];
+  const seed=year==='K'?kindergartenActivities.maths[index]:year==='1'?year1Topics.filter(t=>t.id.startsWith('maths-'))[index]:(year==='6'?year6Lessons:Number(year)<=3?year23Lessons:year45Lessons)[year].maths[index];
   let first;
   if(year==='K')first={title:'Explore '+title,steps:[seed[1]],q:seed[2],answer:seed[3],choices:seed.slice(3,6),sum:seed[1],hint:seed[1]};
   else first={title:'Explore '+title,steps:[seed.lesson.model],q:seed.question,answer:seed.answers[seed.correct],choices:seed.answers,sum:seed.lesson.model,hint:seed.explain};
