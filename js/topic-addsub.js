@@ -197,7 +197,15 @@
     if(!running)return;running=false;clearInterval(timer);test.replaceChildren();
     const score=testQs.filter((q,i)=>q.answer===answers[i]).length;
     make('h2','Your result · '+score+' / 20',test);make('p',Math.round(score/20*100)+'% · Review each answer below.',test);
-    testQs.forEach((q,i)=>{const d=make('details','',test);make('summary',(i+1)+'. '+q.text+' · '+(answers[i]===q.answer?'Correct':'Review'),d);make('p','Your answer: '+(answers[i]??'Unanswered'),d);make('p','Incorrect. Correct answer: '+q.answer+'. '+practiceWorking(q.text,q.answer,q.why),d);});
+    testQs.forEach((q,i)=>{
+      const correct=answers[i]===q.answer;
+      const verdict=correct?'Correct':answers[i]===null?'Unanswered':'Incorrect';
+      const d=make('details','',test);
+      d.dataset.result=correct?'correct':answers[i]===null?'unanswered':'incorrect';
+      make('summary',(i+1)+'. '+q.text+' · '+verdict,d);
+      make('p','Your answer: '+(answers[i]??'Unanswered'),d);
+      make('p',verdict+'. Correct answer: '+q.answer+'. '+practiceWorking(q.text,q.answer,q.why),d);
+    });
     const again=make('button','Try another test',test);again.onclick=intro;
   }
   function intro(){
