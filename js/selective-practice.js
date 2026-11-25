@@ -507,8 +507,42 @@ function setupTopicWorkspace(){
  solution.textContent=[current.tip,current.explanation,'Answer: '+current.answer].filter((v,i,a)=>v&&a.indexOf(v)===i).join('\n\n');
  quiz.append(solution,link('Practise this skill →',topic,'practice'));
 }
+function applySidebar(){
+ const {mount,activities,node}=window.SelectiveLayout;
+ const names={math:'Mathematical Reasoning',reading:'Reading',thinking:'Thinking Skills',writing:'Writing Vocabulary'};
+ const entries=topicsFor(mode).filter(row=>row[0]!=='mixed');
+ function url(id,section){
+   const u=new URL(location.href);u.searchParams.delete('start');
+   if(id==='mixed'){u.searchParams.delete('topic');u.searchParams.delete('view')}
+   else{u.searchParams.set('topic',id);u.searchParams.set('view',section)}
+   return u.href;
+ }
+ const panel=$('practiceView'),intro=document.querySelector('.topic-intro');
+ const main=mount(panel.parentNode,names[stream],[['mixed','Mixed questions'],...entries.map(row=>[row[0],row[2]])],topic,id=>url(id,'learn'));
+ main.append(intro,panel,$('mockView'));intro.querySelector('.topic-back')?.remove();intro.querySelector('h1')?.remove();
+ intro.querySelector('.topic-nav')?.remove();
+ for(const id of ['practiceHeading','practiceSub','topics'])$(id).hidden=true;
+ const phase=pageParams.get('view')||(topic==='mixed'?'practice':'learn');
+ const hint=node('button','Show hint','sl-hint');hint.type='button';hint.setAttribute('aria-controls','tip');
+ $('check').parentNode.prepend(hint);
+ hint.onclick=()=>{const el=$('tip');el.hidden=!el.hidden;hint.textContent=el.hidden?'Show hint':'Hide hint';hint.setAttribute('aria-expanded',String(!el.hidden))};
+ let foot;
+ function refresh(){
+   const id=topic==='mixed'?current._topic:topic;
+   $('badge').textContent=phase==='learn'?'Worked example':stream==='reading'?'Read the passage':topic==='mixed'?'Random question':'Practice question';
+   $('level').textContent=current._name;
+   $('tip').hidden=true;hint.textContent='Show hint';hint.setAttribute('aria-expanded','false');
+   const nav=activities(current._name,key=>url(id,key),topic==='mixed'?'':phase);
+   if(foot)foot.replaceWith(nav);else main.append(nav);foot=nav;
+ }
+ refresh();$('next').addEventListener('click',refresh);
+ if(phase==='learn')intro.querySelector('h2')?.remove();
+}
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
-if(topicWorkspace) setupTopicWorkspace();
+if(topicWorkspace){
+ setupTopicWorkspace();
+ if(window.SelectiveLayout) applySidebar();
+}
 else if(requestedView === 'practice' && (topic !== 'mixed'||(lockedStream==='reading'&&pageParams.get('start')==='1')))showQuiz();
 })();
