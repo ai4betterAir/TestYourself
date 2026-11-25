@@ -11,9 +11,10 @@ const thinkingTopicIds=new Set((window.SKILLUP_THINKING?.topics||[]).map(t=>t[0]
 let stream=['math','thinking','reading','writing'].includes(requestedStream)?requestedStream:'math',mode='mix',topic=(requestedStream==='thinking'&&thinkingTopicIds.has(pageParams.get('topic')))?pageParams.get('topic'):'mixed',current=null,selected=null,score=0,attempted=0,qnum=1,view=requestedView;
 const y5base=()=>window.TY_YEARS345?.topics?.['5']||[],y5extra=()=>window.TY_YEAR5_TESTS?.topics||[],y6=()=>window.TY_YEAR6?.topics||[],thinking=()=>window.SKILLUP_THINKING?.topics||[],writing=()=>window.SKILLUP_WRITING_VOCAB?.topics||[],mrExtra=()=>window.SKILLUP_MR_EXTRA?.topics||[],reading=()=>window.SKILLUP_READING?.topics||[];
 function unique(list){const seen=new Set();return list.filter(x=>{if(seen.has(x[0]))return false;seen.add(x[0]);return true})}
-function practiceTarget(){if(topicWorkspace && topic!=='mixed')return 10;return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
-function mockTarget(){if(topicWorkspace && topic!=='mixed')return mockQs.length||20;if(stream==='writing')return 20;if(stream==='math')return 35;return 30}
-function mockDuration(){if(topicWorkspace && topic!=='mixed')return 1200;if(stream==='writing')return 1200;if(stream==='math')return 2400;if(stream==='reading')return 2100;return 1800}
+let readingItems=[],readingIndex=0;
+function practiceTarget(){if(readingItems.length)return Math.min(10,readingItems.length);if(topicWorkspace && topic!=='mixed')return 10;return stream==='writing'?16:stream==='thinking'||stream==='reading'?30:20}
+function mockTarget(){if(readingItems.length)return Math.min(20,readingItems.length);if(topicWorkspace && topic!=='mixed')return mockQs.length||20;if(stream==='writing')return 20;if(stream==='math')return 35;return 30}
+function mockDuration(){if(readingItems.length)return mockTarget()*75;if(topicWorkspace && topic!=='mixed')return 1200;if(stream==='writing')return 1200;if(stream==='math')return 2400;if(stream==='reading')return 2100;return 1800}
 function modeLabel(){
  if(exam==='oc'){
    if(stream==='thinking')return mode==='5'?'Core Thinking':mode==='6'?'Challenge Thinking':'Mixed OC Thinking';
@@ -278,8 +279,15 @@ function renderReadingPassage(id,q,beforeId){
  if(!box){box=document.createElement('div');box.id=id;box.className='reading-passage';box.setAttribute('aria-label','Reading passage');$(beforeId).before(box);}
  box.textContent=stream==='reading'?(q.passage||''):'';box.hidden=!box.textContent;
 }
+function reasoningFor(q){
+ if(!q)return '';
+ if(q.explanation)return q.explanation;
+ const mean=q.text.match(/^Find the mean of (\d+), (\d+), (\d+)/i);
+ if(mean){const values=mean.slice(1).map(Number),sum=values.reduce((a,b)=>a+b,0);return values.join(' + ')+' = '+sum+'. Divide by 3: '+sum+' ÷ 3 '+(sum%3?'≈ ':'= ')+q.answer+'.'}
+ return q.why||q.tip||'';
+}
 function nextQ(){
- current=make();selected=null;answerLocked=false;paintLearn();
+ current=readingItems.length?readingItems[readingIndex++%readingItems.length]:make();selected=null;answerLocked=false;paintLearn();
  $('question').textContent=current.text;
  renderReadingPassage('readingPassage',current,'question');
  renderReasoningCue(current);
@@ -402,14 +410,15 @@ $('check').onclick=()=>{
 $('check').addEventListener('click',()=> {
   const box=$('cubeExplanation');
   if(!box || !selected?.dataset.checked) return;
-  const explanation=current?.explanation;
+  const explanation=reasoningFor(current);
   box.textContent=explanation||'';
   box.hidden=!explanation;
 });
 $('next').onclick=()=>{const target=practiceTarget();qnum=qnum>=target?1:qnum+1;nextQ()};
-let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null;
+let mockQs=[],mockAnswers=[],mockIndex=0,mockSeconds=1500,mockTimer=null,mockDeadline=0;
 function showMockIntro(){clearInterval(mockTimer);mockSeconds=mockDuration();$('mockIntro').hidden=false;$('mockQuiz').hidden=true;$('mockResult').hidden=true;tick()}
 function buildMock(){
+ if(readingItems.length){mockQs=shuffle(readingItems).slice(0,mockTarget());mockAnswers=Array(mockQs.length).fill(null);mockIndex=0;mockSeconds=mockDuration();return;}
  if(topicWorkspace && topic!=='mixed'){
    mockQs=[];const seen=new Set();
    for(let attempt=0;attempt<180 && mockQs.length<20;attempt++){
@@ -421,9 +430,11 @@ function buildMock(){
  const total=mockTarget();mockQs=[];mockAnswers=Array(total).fill(null);mockIndex=0;mockSeconds=mockDuration();const seen=new Set();let guard=0;while(mockQs.length<total&&guard++<1200){const q=make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'),key=q.text+'|'+q.answer;if(seen.has(key))continue;seen.add(key);mockQs.push(q)}while(mockQs.length<total)mockQs.push(make(stream==='thinking'&&topic!=='mixed'?topic:'mixed'))}
 function tick(){const m=Math.floor(mockSeconds/60),s=mockSeconds%60;$('mockTimer').textContent=`${m}:${String(s).padStart(2,'0')}`;$('timerText').textContent=$('mockTimer').textContent}
 function renderMock(){const q=mockQs[mockIndex],total=mockTarget();$('mockCount').textContent=`Question ${mockIndex+1} of ${total} · ${q._year||modeLabel()} · ${q._name}`;$('mockQuestion').textContent=q.text;renderReadingPassage('mockReadingPassage',q,'mockQuestion');renderVisual('mockQuestionFigure','mockQuestionImage',q);$('mockAnswers').innerHTML='';q.choices.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;if(mockAnswers[mockIndex]===i)b.classList.add('selected');b.onclick=()=>{mockAnswers[mockIndex]=i;renderMock()};$('mockAnswers').appendChild(b)});$('mockPrev').disabled=mockIndex===0;$('mockNext').textContent=mockIndex===total-1?'Finish Mock':'Next →'}
-function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockTimer=setInterval(()=>{mockSeconds--;tick();if(mockSeconds<=0)finishMock()},1000)}
-function finishMock(){clearInterval(mockTimer);let totalScore=0;const by={},wrong=[];mockQs.forEach((q,i)=>{const ci=q.choices.findIndex(v=>String(v)===String(q.answer)),ok=mockAnswers[i]===ci;totalScore+=ok?1:0;by[q._name]??={r:0,t:0};by[q._name].t++;if(ok)by[q._name].r++;else wrong.push({q:q.text,a:q.answer,c:mockAnswers[i]===null?'No answer':q.choices[mockAnswers[i]],n:q._name,image:q.image||null,imageMobile:q.imageMobile||null,imageAlt:q.imageAlt||'',explanation:q.explanation||''})});const total=mockTarget(),pct=Math.round(totalScore/total*100);$('mockQuiz').hidden=true;$('mockResult').hidden=false;$('mockMark').textContent=`${totalScore}/${total}`;$('mockMessage').textContent=pct>=85?'Excellent. Review any missed words, then write two of them in a paragraph.':pct>=70?'Strong result — review the missed words below.':pct>=50?'Revisit the Learn card, then try again.':'Return to Practice with the learn cards first.';$('mockBreakdown').innerHTML=Object.entries(by).sort((a,b)=>(a[1].r/a[1].t)-(b[1].r/b[1].t)).map(([n,v])=>`<p><b>${n}</b> — ${v.r}/${v.t}</p>`).join('');$('mockReview').innerHTML=wrong.length?wrong.map((x,i)=>`<details><summary>${i+1}. ${x.n}: ${x.q}</summary><p>Your answer: <b>${x.c}</b></p><p>Correct answer: <b>${x.a}</b></p></details>`).join(''):'<p>✓ No mistakes.</p>';// Show the actual diagram alongside a missed visual question in mock review.
+function startMock(){clearInterval(mockTimer);buildMock();$('mockIntro').hidden=true;$('mockResult').hidden=true;$('mockQuiz').hidden=false;renderMock();tick();mockDeadline=Date.now()+mockSeconds*1000;mockTimer=setInterval(()=>{mockSeconds=Math.max(0,Math.ceil((mockDeadline-Date.now())/1000));tick();if(mockSeconds<=0)finishMock()},1000)}
+function finishMock(){clearInterval(mockTimer);let totalScore=0;const by={},wrong=[];mockQs.forEach((q,i)=>{const ci=q.choices.findIndex(v=>String(v)===String(q.answer)),ok=mockAnswers[i]===ci;totalScore+=ok?1:0;by[q._name]??={r:0,t:0};by[q._name].t++;if(ok)by[q._name].r++;else wrong.push({passage:q.passage,q:q.text,a:q.answer,c:mockAnswers[i]===null?'No answer':q.choices[mockAnswers[i]],n:q._name,image:q.image||null,imageMobile:q.imageMobile||null,imageAlt:q.imageAlt||'',explanation:q.explanation||''})});const total=mockTarget(),pct=Math.round(totalScore/total*100);$('mockQuiz').hidden=true;$('mockResult').hidden=false;$('mockMark').textContent=`${totalScore}/${total}`;$('mockMessage').textContent=pct>=85?'Excellent. Review any missed words, then write two of them in a paragraph.':pct>=70?'Strong result — review the missed words below.':pct>=50?'Revisit the Learn card, then try again.':'Return to Practice with the learn cards first.';$('mockBreakdown').innerHTML=Object.entries(by).sort((a,b)=>(a[1].r/a[1].t)-(b[1].r/b[1].t)).map(([n,v])=>`<p><b>${n}</b> — ${v.r}/${v.t}</p>`).join('');$('mockReview').innerHTML=wrong.length?wrong.map((x,i)=>`<details><summary>${i+1}. ${x.n}: ${x.q}</summary><p>Your answer: <b>${x.c}</b></p><p>Correct answer: <b>${x.a}</b></p></details>`).join(''):'<p>✓ No mistakes.</p>';// Show the actual diagram alongside a missed visual question in mock review.
 wrong.forEach((w,i)=>{
+  const reviewed=$('mockReview').querySelectorAll('details')[i];
+  if(w.passage && reviewed){const passage=document.createElement('p');passage.className='reading-passage';passage.textContent=w.passage;reviewed.querySelector('summary').after(passage);}
   if(!w.image||!/^assets\/selective\/thinking\/[a-zA-Z0-9_-]+\.(svg|png)$/.test(w.image))return;
   const detail=$('mockReview').querySelectorAll('details')[i];
   if(!detail)return;
@@ -492,19 +503,19 @@ function setupTopicWorkspace(){
  for(const id of ['practiceHeading','practiceSub','topics'])$(id).style.display='none';
  if(section==='mock'){
    $('mockTitle').textContent=entry[2]+' test';
-   $('mockIntroText').textContent='Answer up to 20 different questions on this topic in 20 minutes. Review your answers when you finish.';
+   $('mockIntroText').textContent=readingItems.length?mockTarget()+' questions · '+Math.floor(mockDuration()/60)+' min '+mockDuration()%60+' sec. Review your answers when you finish.':'Answer up to 20 different questions on this topic in 20 minutes. Review your answers when you finish.';
    $('startMock').textContent='Start topic test';$('retryMock').textContent='Try another topic test';return;
  }
  if(section==='practice'){
    const progress=document.createElement('p');intro.append(progress);
-   function status(){progress.textContent='Question '+qnum+' of 10 · '+score+' correct'}
+   function status(){progress.textContent='Question '+qnum+' of '+practiceTarget()+' · '+score+' correct'}
    status();$('check').addEventListener('click',status);
-   $('next').onclick=()=>{if(!answerLocked)return;if(qnum===10){quiz.hidden=true;quiz.style.setProperty('display','none','important');progress.textContent='Practice complete · '+score+' of 10 correct';return}qnum++;nextQ();status()};return;
+   $('next').onclick=()=>{if(!answerLocked)return;if(qnum===practiceTarget()){quiz.hidden=true;quiz.style.setProperty('display','none','important');progress.textContent='Practice complete · '+score+' of '+practiceTarget()+' correct';return}qnum++;nextQ();status()};return;
  }
  const title=document.createElement('h2');title.textContent='Worked example';intro.append(title);
  for(const el of [$('answers'),$('check').parentElement,$('tip')])if(el)el.hidden=true;
  const solution=document.createElement('p');solution.className='worked-solution';
- solution.textContent=[current.tip,current.explanation,'Answer: '+current.answer].filter((v,i,a)=>v&&a.indexOf(v)===i).join('\n\n');
+ solution.textContent=[current.tip,reasoningFor(current),'Answer: '+current.answer].filter((v,i,a)=>v&&a.indexOf(v)===i).join('\n\n');
  quiz.append(solution,link('Practise this skill →',topic,'practice'));
 }
 function applySidebar(){
@@ -537,6 +548,9 @@ function applySidebar(){
  }
  refresh();$('next').addEventListener('click',refresh);
  if(phase==='learn')intro.querySelector('h2')?.remove();
+}
+if(topicWorkspace && stream==='reading' && topic!=='mixed'){
+ readingItems=shuffle(window.SKILLUP_READING.items?.(topic)||[]).map(q=>({...q,_name:q.name,_year:'Reading',_topic:q.topic}));
 }
 ensureWritingButton();
 updateHeader();buildTopics();nextQ();setView(requestedView);
