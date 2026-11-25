@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/early-topic.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap">
 <script src="js/practice-working.js"></script><link rel="stylesheet" href="css/answer-results.css"></head>
-<body><div id="lesson"><a href="learning.html">Choose your year</a></div>
+<body><div id="lesson"><h1>We couldn’t find that lesson</h1><p>Choose a topic from your year page or open the practice hub.</p><a id="lesson-return" href="learning.html">Choose your year</a> · <a href="practice.html">Practice hub</a></div>
 <script src="design/year1.js"></script>
 <script src="js/early-lessons.js"></script>
 <script src="js/year23-lessons.js"></script>
@@ -21,6 +21,12 @@ const year = params.get('year');
 const subject = params.get('subject');
 const lesson = ['K','1','2','3','4','5','6'].includes(year) && Object.hasOwn(kindergartenActivities,subject) && /^\d+$/.test(params.get('lesson'))
   ? earlyTopicPage(year,subject,Number(params.get('lesson'))) : null;
+if (!lesson && ['K','1','2','3','4','5','6'].includes(year)) {
+  const back=document.getElementById('lesson-return');
+  const known=Object.hasOwn(kindergartenActivities,subject);
+  back.href=known?'subject.html?'+new URLSearchParams({year,subject}):'learning.html?'+new URLSearchParams({year});
+  back.textContent=known?'Return to subject topics':'Return to year page';
+}
 if (lesson) {
   document.title = lesson.title + ' · ' + (year === 'K' ? 'Kindergarten' : 'Year '+year) + ' | Acorn & Shine';
   document.getElementById('lesson').innerHTML = lesson.html;
