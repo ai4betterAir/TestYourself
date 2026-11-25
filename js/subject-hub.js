@@ -150,16 +150,6 @@ previewIds.forEach((id,i)=>{
  a.querySelector('b').textContent=t[0];
  if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
 });
-const previewCards=previewIds.map(id=>document.getElementById(id)).filter(Boolean);
-if(previewCards.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
- let pi=0;
- setInterval(()=>{
-   previewCards.forEach(c=>c.classList.remove('is-active'));
-   pi=(pi+1)%previewCards.length;
-   previewCards[pi].classList.add('is-active');
- },2400);
-}
-
 const grid=document.getElementById('topic-grid');
 topics.forEach((t,i)=>{
  const a=document.createElement('a');a.className='topic-card';a.href=hrefFor(t[0],i);
@@ -168,14 +158,4 @@ topics.forEach((t,i)=>{
  if(a.getAttribute('href')==='#')a.addEventListener('click',e=>e.preventDefault());
  grid.appendChild(a);
 });
-const topicCards=[...document.querySelectorAll('.topic-card:not(.coming)')];
-if(topicCards.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
- let activeTopic=0;
- topicCards[activeTopic].classList.add('auto-featured');
- setInterval(()=>{
-   topicCards.forEach(card=>card.classList.remove('auto-featured'));
-   activeTopic=(activeTopic+1)%topicCards.length;
-   topicCards[activeTopic].classList.add('auto-featured');
- },2600);
-}
 })();
