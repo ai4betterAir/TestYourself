@@ -439,6 +439,9 @@ wrong.forEach((w,i)=>{
     detail.appendChild(explanation);
   }
 });
+if(topicWorkspace && topic!=='mixed'){
+ $('mockMessage').textContent=totalScore===total?'You answered every question correctly.':'Open a missed question below to review your answer.';
+}
 localStorage.setItem(`skillup-${exam}-${stream}-last`,JSON.stringify({score:totalScore,total,pct,date:new Date().toISOString()}))}
 $('startMock').onclick=startMock;$('retryMock').onclick=startMock;$('mockPrev').onclick=()=>{if(mockIndex){mockIndex--;renderMock()}};$('mockNext').onclick=()=>{if(mockIndex===mockTarget()-1)finishMock();else{mockIndex++;renderMock()}};
 if(exam==='oc'&&stream==='writing')stream='thinking';
@@ -452,7 +455,7 @@ function setupTopicWorkspace(){
  const panel=$('practiceView'), quiz=panel.querySelector('.quiz');
  document.body.classList.add('topic-workspace');
  const style=document.createElement('style');
- style.textContent='.topic-workspace .sel-head,.topic-workspace #notice,.topic-workspace .stats{display:none!important}.topic-workspace #practiceView:not([hidden])>.quiz{display:block!important}.topic-nav{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}.topic-nav a,.topic-back{display:inline-block;padding:.55rem .9rem;color:#153c68;font-weight:800}.topic-nav a[aria-current]{background:#173f64;color:white;border-radius:.65rem}.topic-workspace #practiceHeading{margin-top:2rem}.topic-workspace .topic-intro{padding:1rem 0}.topic-workspace .worked-solution{background:#eef6ef;border-radius:.75rem;padding:1rem;white-space:pre-line}';
+ style.textContent='.topic-workspace [hidden]{display:none!important}.topic-workspace .sel-head,.topic-workspace #notice,.topic-workspace .stats{display:none!important}.topic-workspace #practiceView:not([hidden])>.quiz{display:block!important}.topic-nav{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}.topic-nav a,.topic-back{display:inline-block;padding:.55rem .9rem;color:#153c68;font-weight:800}.topic-nav a[aria-current]{background:#173f64;color:white;border-radius:.65rem}.topic-workspace #practiceHeading{margin-top:2rem}.topic-workspace .topic-intro{padding:1rem 0}.topic-workspace .worked-solution{background:#eef6ef;border-radius:.75rem;padding:1rem;white-space:pre-line}';
  document.head.append(style);
  function link(label,id,section){
    const url=new URL(location.href);url.searchParams.delete('start');
@@ -467,6 +470,10 @@ function setupTopicWorkspace(){
  back.className='topic-back';intro.append(back);
  const heading=document.createElement('h1');heading.textContent=entry?entry[2]:names[stream];intro.append(heading);
  if(!entry){
+   if(stream==='writing'){
+     const workshop=document.createElement('button');workshop.className='next';workshop.textContent='Open writing workshop';
+     workshop.onclick=()=>document.querySelector('[data-stream="essay"]')?.click();intro.append(workshop);
+   }
    panel.prepend(quiz);$('practiceHeading').textContent='Choose a subtopic';
    $('practiceSub').textContent='Select a skill to learn it, practise questions or take a timed test.';
    for(const button of $('topics').querySelectorAll('[data-topic]')){
