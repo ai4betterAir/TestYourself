@@ -1,4 +1,4 @@
-import {supabase,requireUser,getProfile} from './supabase-client.js?v=profile-setup-fix';
+import {supabase,getProfile} from './supabase-client.js?v=profile-setup-fix';
 import {getHomeworkBank,subjects} from './homework-bank.js';
 import {practiceStore} from './student-practice-store.js';
 import {progress,label,YEARS} from './student-practice-model.js';
@@ -52,11 +52,14 @@ async function previewHub(){
 }
 async function init(){
   if(['grade','year','topic','focus','mode','assignment'].some(k=>new URLSearchParams(location.search).has(k)))return;
-  if(new URLSearchParams(location.search).get('preview')==='1')return previewHub();
+  if(new URLSearchParams(location.search).get('preview')==='1'){document.getElementById('publicPractice')?.setAttribute('hidden','');return previewHub();}
   if(!supabase)throw new Error('Sign-in is temporarily unavailable. Please try again shortly.');
-  const user=await requireUser();if(!user)return;
+  const {data}=await supabase.auth.getUser();
+  const user=data?.user;if(!user)return;
   const profile=await getProfile(user.id);
-  if(profile.role!=='student'||profile.status!=='active'){$('practiceGate').innerHTML='This practice hub is for active student accounts. <a href="dashboard.html">Open your dashboard →</a>';return;}
+  if(profile.role!=='student'||profile.status!=='active'){$('practiceGate').hidden=false;$('practiceGate').innerHTML='This practice hub is for active student accounts. <a href="dashboard.html">Open your dashboard →</a>';return;}
+  document.getElementById('publicPractice')?.setAttribute('hidden','');
+  $('practiceSignOut').hidden=false;
   try{localStorage.setItem('tyProfile',JSON.stringify({studentName:profile.full_name,grade:profile.year_level||'1',guest:false,cloudAccount:true}));}catch{}
   year=YEARS.includes(profile.year_level)?profile.year_level:'1';$('hubYear').value=year;
   $('practiceGreeting').textContent='Welcome back, '+(profile.full_name.trim().split(/\s+/)[0]||'learner')+'.';
@@ -76,4 +79,4 @@ async function init(){
   $('practiceSaveNote').textContent=history.cloud?'Progress is saved to your account. Pending changes are also kept in this browser.':'Cross-device saving is unavailable. New practice can still be saved in this browser.';
   await loadTopics();
 }
-init().catch(error=>{$('practiceGate').textContent=error.message||'Your practice could not load. Please refresh or sign in again.';});
+init().catch(error=>{$('practiceGate').hidden=false;$('practiceGate').textContent=error.message||'Your practice could not load. Please refresh or sign in again.';});
