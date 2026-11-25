@@ -23,7 +23,11 @@ window.SelectiveLayout = (() => {
    for(const [id,label] of items){const a=anchor(label,topicUrl(id));if(id===active)a.setAttribute('aria-current','page');list.append(a)}
    const empty=node('p','No matching topics');empty.hidden=true;
    search.oninput=()=>{const term=search.value.trim().toLowerCase();for(const a of list.children)a.hidden=!a.textContent.toLowerCase().includes(term);empty.hidden=Array.from(list.children).some(a=>!a.hidden)};
-   side.append(heading,search,list,empty);
+   const picker=node('details',null,'sl-picker'), summary=node('summary','Choose topic');
+   picker.append(summary,heading,search,list,empty);side.append(picker);
+   const desktop=matchMedia('(min-width:741px)');
+   function resizePicker(){picker.open=desktop.matches}
+   resizePicker();desktop.addEventListener('change',resizePicker);
    const selected=list.querySelector('[aria-current]');if(selected) list.scrollTop=Math.max(0,selected.offsetTop-list.offsetTop-list.clientHeight/2);
    return main;
  }
