@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en-AU">
-<head>
+<head><style>
+html.preparing-section body{visibility:hidden!important}
+html.preparing-section::before{content:"Loading…";position:fixed;top:1.25rem;left:clamp(1rem,4vw,4rem);color:#355545;font:600 1rem system-ui}
+</style><script>
+document.documentElement.classList.add('preparing-section');
+window.addEventListener('load',()=>document.documentElement.classList.remove('preparing-section'),{once:true});
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Topic lesson | Acorn &amp; Shine</title>
@@ -50,6 +56,17 @@ if (lesson) {
 <script src="js/year2-bank.js"></script>
 <script src="js/kindy-bank.js?v=3"></script>
 <script src="js/topic-maths-config.js?v=20261118"></script>
-<script>if(window.TOPIC_MATHS){const css=document.createElement("link");css.rel="stylesheet";css.href="css/topic-addsub.css?v=20261118";document.head.append(css);const js=document.createElement("script");js.src="js/topic-addsub.js?v=20261118";document.body.append(js);}</script>
+<script>if(window.TOPIC_MATHS){const css=document.createElement("link");css.rel="stylesheet";css.href="css/topic-addsub.css?v=20261118";document.head.append(css);const js=document.createElement("script");js.src="js/topic-addsub.js?v=20261118";window.topicLayoutReady=new Promise(resolve=>{js.onload=resolve;js.onerror=resolve});document.body.append(js);}</script>
 <script defer src="js/fraction-display.js?v=20261118"></script>
-</body></html>
+<script>
+(function(){
+  const root=document.documentElement;
+  const styles=Array.from(document.querySelectorAll('link[rel="stylesheet"]')).filter(link=>!link.sheet && link.href.startsWith(location.origin+'/'));
+  const waiting=styles.map(link=>new Promise(resolve=>{
+    link.addEventListener('load',resolve,{once:true});
+    link.addEventListener('error',resolve,{once:true});
+  }));
+  if(window.topicLayoutReady)waiting.push(window.topicLayoutReady);
+  Promise.all(waiting).then(()=>root.classList.remove('preparing-section'));
+})();
+</script></body></html>
